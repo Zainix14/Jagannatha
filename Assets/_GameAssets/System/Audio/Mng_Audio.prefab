@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5643140180751598040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5643140180751598041}
+  - component: {fileID: 5643140180751598038}
+  - component: {fileID: 114781075543035248}
+  m_Layer: 0
+  m_Name: Mng_Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5643140180751598041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643140180751598040}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 215, y: -60, z: 310.80188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5643140180751598038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643140180751598040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61367dffa6eeafb45933f6a4b9a037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tSounds:
+  - {fileID: 8300000, guid: 0684c7f3b020b0f4483139ce1fb8701a, type: 3}
+  - {fileID: 8300000, guid: 8aaaf91ec4d77a4459949bbe00fa5563, type: 3}
+  - {fileID: 8300000, guid: ba3100fda5ed9d641b1ef3d174cb3b56, type: 3}
+  - {fileID: 8300000, guid: 03e051fc64981e743b4887fa0f361c76, type: 3}
+  - {fileID: 8300000, guid: 720a851e0535b9c4b9290e09ac45be25, type: 3}
+  - {fileID: 8300000, guid: e19242e6908925245b422bb3eadac5de, type: 3}
+  - {fileID: 8300000, guid: 6793ec6f917ebca46821e8926d8bb61a, type: 3}
+  - {fileID: 8300000, guid: cf9946238a09f804ca88286dcb5f3f01, type: 3}
+  tSoundsAmbient: []
+  hAudioSourcePrefab: {fileID: 5001806401243472562, guid: 68ac4e988a21bd94789c1ed545c20803,
+    type: 3}
+  bStartWithNoSound: 0
+  fFirstEnvironmentSoundTimeBeforePlay: 1
+  nNbAudioSource: 50
+  vRandomTimeBetweenAmbianceSound: {x: 2, y: 5}
+  fVolumeAmbiance: 0.5
+  vRandomAndFixedPitchAmbiance: {x: 0.5, y: 0.4}
+--- !u!114 &114781075543035248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643140180751598040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1c07a6449b0ca439ee6fac5f6f7d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
