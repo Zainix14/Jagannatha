@@ -7,8 +7,8 @@ namespace BezierSolution
 
 	public abstract class BezierWalker : MonoBehaviour
 	{
-		public abstract BezierSpline Spline { get; }
-		public abstract bool MovingForward { get; }
+		public abstract BezierSpline Spline { get; set; }
+		public abstract bool MovingForward { get; set; }
 		public abstract float NormalizedT { get; set; }
 
 		public abstract void Execute( float deltaTime );
