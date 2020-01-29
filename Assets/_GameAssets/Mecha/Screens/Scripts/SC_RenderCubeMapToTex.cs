@@ -26,23 +26,43 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
 
     public bool followCam = true;
 
+
+    Coroutine m_renderCor = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        CheckForCamera();
+        m_renderCor = StartCoroutine(Capture360());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Capture360();
+
+        if (cam == null)
+            CheckForCamera();
+
+
+
     }
 
-    public void Capture360()
+    IEnumerator Capture360()
     {
-        CheckForCamera();
-        CaptureCubemaps();
-        ConvertCubeToEquirect();
+        while (true)
+        {
+            if(cam != null)
+            {
+                CaptureCubemaps();
+
+                yield return 0;
+
+                ConvertCubeToEquirect();
+
+                yield return 0;
+            }
+       
+        }
     }
 
     private void CheckForCamera()
@@ -58,6 +78,8 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
         }
     }
 
+    //19 = Left Front Right
+    //63 = all face
     private void CaptureCubemaps()
     {
         switch (renderType)
@@ -66,18 +88,18 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
                 if (followCam)
                 {
                     cam.stereoSeparation = 0f;
-                    cam.RenderToCubemap(cubemapLeft, 63, Camera.MonoOrStereoscopicEye.Left); //because stereo rendering does follow camera
+                    cam.RenderToCubemap(cubemapLeft, 19, Camera.MonoOrStereoscopicEye.Left); //because stereo rendering does follow camera
                 }
                 else
                 {
-                    cam.RenderToCubemap(cubemapLeft, 63, Camera.MonoOrStereoscopicEye.Mono);
+                    cam.RenderToCubemap(cubemapLeft, 19, Camera.MonoOrStereoscopicEye.Mono);
                 }
                 break;
 
             case RenderType.Stereo:
                 cam.stereoSeparation = f_StereoSeparation;
-                cam.RenderToCubemap(cubemapLeft, 63, Camera.MonoOrStereoscopicEye.Left);
-                cam.RenderToCubemap(cubemapRight, 63, Camera.MonoOrStereoscopicEye.Right);
+                cam.RenderToCubemap(cubemapLeft, 19, Camera.MonoOrStereoscopicEye.Left);
+                cam.RenderToCubemap(cubemapRight, 19, Camera.MonoOrStereoscopicEye.Right);
                 if (!followCam)
                 {
                     Debug.LogWarning("Follow Cam is always enabled for Stereo Rendering");
