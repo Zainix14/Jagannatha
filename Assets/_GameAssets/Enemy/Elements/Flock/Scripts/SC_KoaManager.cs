@@ -99,8 +99,8 @@ public class SC_KoaManager : MonoBehaviour
         boidBuffer = new ComputeBuffer(newSpawnCount, BoidData.Size);
         // boidData = new BoidData[newSpawnCount]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
 
-        m_boidCor = StartCoroutine(BoidTest());
-        //GameObject.FindGameObjectWithTag("Mng_Enemy").GetComponent<SC_BoidCompute>().AddNewBoids(_boidsList, _curSettings);
+        //m_boidCor = StartCoroutine(BoidTest());
+        GameObject.FindGameObjectWithTag("Mng_Enemy").GetComponent<SC_BoidCompute>().AddNewBoids(_boidsList, _curSettings);
     }
 
     Coroutine m_boidCor = null;

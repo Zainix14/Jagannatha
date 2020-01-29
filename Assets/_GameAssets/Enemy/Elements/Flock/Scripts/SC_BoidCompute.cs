@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class SC_BoidCompute : MonoBehaviour
 
     void Start()
     {
+        boidData = new BoidData[100];
+
         _boidsList = new List<Boid>();
         _settingList = new List<BoidSettings>();
     }
@@ -36,11 +39,13 @@ public class SC_BoidCompute : MonoBehaviour
             _boidsList.Add(b);
             _settingList.Add(newSettings);
         }
-        
+
 
         //Création du buffer | paramètre 1 count : nombre d'éléments | paramètre 2 stride (type de data en bit) : typage du data de BoidData
         boidBuffer = new ComputeBuffer(_boidsList.Count, BoidData.Size);
         m_boidCor = StartCoroutine(BoidTest());
+ 
+
     }
 
     public void ChangeSettings(List<Boid> boids, BoidSettings newSettings)
@@ -67,8 +72,9 @@ public class SC_BoidCompute : MonoBehaviour
 
 
                 int numBoids = _boidsList.Count; //Conversion en int du nombres selon le nombre de boid
-                //BURST ?
-                boidData = new BoidData[numBoids]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
+
+                Array.Clear(boidData, 0, boidData.Length); //Burst
+                //boidData = new BoidData[numBoids]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
 
 
                 for (int i = 0; i < _boidsList.Count; i++)
@@ -110,7 +116,7 @@ public class SC_BoidCompute : MonoBehaviour
                     _boidsList[i].avgAvoidanceHeading = boidData[i].avoidanceHeading; //Stockage pour chaque boid : moyenne des éléments à éviter
                     _boidsList[i].numPerceivedFlockmates = boidData[i].numFlockmates; //Stockage pour chaque boid : nombre de mate autour
 
-                    _boidsList[i].UpdateBoid(); //Update les boidss
+                    _boidsList[i].UpdateBoid(); //Update les boids
                 }
 
                 yield return 0;
