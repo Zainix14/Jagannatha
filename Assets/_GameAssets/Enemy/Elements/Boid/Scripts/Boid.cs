@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//HEY EN FAIT BAH JE ME SUIS PAS FAIT DELETE C KOOL
 public class Boid : MonoBehaviour {
 
     BoidSettings settings;
