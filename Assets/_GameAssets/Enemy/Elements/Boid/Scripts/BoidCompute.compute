@@ -1,0 +1,51 @@
+﻿//include la fonction CSMain (kernel 0)
+#pragma kernel CSMain 
+//taille de paquets à envoyer 
+static const int threadGroupSize = 3; 
+
+//Structure contenant les variables du compute
+struct Boid {
+    float3 position; //position 
+    float3 direction; //rotation
+
+    float3 flockHeading; //tete du boid
+    float3 flockCentre; //centre du boid
+    float3 separationHeading; //Distance Séparant les tetes
+    int numFlockmates; //Nombre de boid
+};
+//Structure du buffer
+//RW - ReadWrite
+//Typage du buffer selon le type d'objet transité (ici Class Boid)
+//boids nom de la variable
+RWStructuredBuffer<Boid> boids; 
+int numBoids; //Var issu de BoidManager : nombre de boids
+float viewRadius; //Var issu de BoidManager : taille du rayon de la vue
+float avoidRadius; //Var issu de BoidManager : taille du rayon de l'angle mort
+
+//numtread : nombre de tâches réalisées en synchro
+[numthreads(threadGroupSize,1,1)]
+//Fonction CSMain envoie en paramètre 3 int non signé (positif ou nul)
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    for (int indexB = 0; indexB < numBoids; indexB ++)  //Boucle for selon nombre de boid
+	{
+        if (id.x != indexB) //Si numBoids différent de compteur "for"
+		{
+            Boid boidB = boids[indexB]; //Déclaration d'une variable boidB de type Boid égal à chaque indexB du tableau boids
+            float3 offset = boidB.position - boids[id.x].position; //Vector3 offset égal à la différence entre référence du ComputeShader (id.x = à chaque boid) et référence du BoidManager
+            float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z; //Carré de X, carré de Y, carré de Z = carréDistance
+
+            if (sqrDst < viewRadius * viewRadius) //Si carré de la distance est inférieur au carré de l'angle de vue
+			{
+				boids[id.x].numFlockmates += 1; //pour chaque boid (id.x) ajouter un Flockmate
+				boids[id.x].flockHeading += boidB.direction; //pour chaque tete de boid, ajouter une rotation
+				boids[id.x].flockCentre += boidB.position; //pour chaque centre de boid, ajouter la position
+
+                if (sqrDst < avoidRadius * avoidRadius)  //Si carré de la distance est inférieur au carré de l'angle mort
+				{
+					boids[id.x].separationHeading -= offset / sqrDst; //pour chaque boid, ajouter un offset de separation
+                }
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 namespace BezierSolution
 {
+    /*
 	public class BezierWalkerWithTime : BezierWalker
 	{
 		public BezierSpline spline;
@@ -119,5 +120,5 @@ namespace BezierSolution
 				}
 			}
 		}
-	}
+	}*/
 }
