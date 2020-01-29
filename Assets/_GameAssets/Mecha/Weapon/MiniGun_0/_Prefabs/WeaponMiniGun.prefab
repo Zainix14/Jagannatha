@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f86ab7f8d5474d8daee2ad0ecbaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetLimb: {fileID: 0}
+  RotationMode: 0
+  TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
 --- !u!114 &7430929568299829670
 MonoBehaviour:
@@ -60,12 +61,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbeec938173d7240bb255200532eceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_bullet: {fileID: 1542608998790697137, guid: f70ba7849f007164699a5f92ef6999b5,
+  prefab_bullet: {fileID: 6422795900896979926, guid: f70ba7849f007164699a5f92ef6999b5,
     type: 3}
   helper_startPos: {fileID: 6507412288147288599}
   frequency: 30
-  n_fireForce: 4000
-  scattering: 0.02
+  n_fireForce: 32000
+  scattering: 0.005
   n_BulletMagazine: 200
 --- !u!1 &6507412287951247159
 GameObject:
@@ -124,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: da2504eb21622e34da39a79b5c6665ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

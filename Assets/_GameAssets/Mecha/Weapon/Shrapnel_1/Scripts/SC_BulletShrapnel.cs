@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script du Comportement des Bullets |
+/// By Cycy modif par Leni |
+/// </summary>
 public class SC_BulletShrapnel : MonoBehaviour
 {
 
@@ -15,13 +19,18 @@ public class SC_BulletShrapnel : MonoBehaviour
 
     private RaycastHit hit;
 
+    Rigidbody rb = null;
+    MeshRenderer mr = null;
+
+    void Start()
+    {
+        GetReferences();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-
-        Debug.Log(other);
-
         if (!other.CompareTag("MechBullets"))
-            resetPos();
+            ResetPos();
     }
 
     public void ArmShrapnel()
@@ -42,7 +51,7 @@ public class SC_BulletShrapnel : MonoBehaviour
                 Debug.DrawRay(rayStart.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
 
                 shrapnelEffect.Play();
-                Debug.Log("exploded");
+                //Debug.Log("exploded");
 
                 ft += shrapnelArmedDuration;
 
@@ -54,22 +63,46 @@ public class SC_BulletShrapnel : MonoBehaviour
 
         }
 
-        Debug.Log("Disarmed");
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<MeshRenderer>().enabled = false;
-        Invoke("resetPos", stayAfterShrapnelInS);
-        resetPos();
+        //Debug.Log("Disarmed");
+
+        if (rb == null || mr == null)
+            GetReferences();
+        if (rb != null)
+            GetComponent<Rigidbody>().isKinematic = true;
+        if (mr != null)
+            mr.enabled = false;
+        Invoke("ResetPos", stayAfterShrapnelInS);
+        ResetPos();
 
     }
 
-    void resetPos()
+    void ResetPos()
     {
 
         if (ShrapnelCone.activeSelf)
             ShrapnelCone.SetActive(false);
 
-        GetComponent<Rigidbody>().isKinematic = true;
-        transform.position = new Vector3(1000, 1000, 1000);
+        if (rb == null)
+            GetReferences();
+
+        if (rb != null)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            transform.position = new Vector3(1000, 1000, 1000);
+        }        
 
     }
+
+    void GetReferences()
+    {      
+        if (rb == null)
+            rb = GetComponent<Rigidbody>();
+        if (rb == null)
+            Debug.LogWarning("SC_BulletShrapnel - ResetPos - Can't Find RigidBody");
+        if (mr == null)
+            mr = GetComponentInChildren<MeshRenderer>();
+        if (mr == null)
+            Debug.LogWarning("SC_BulletShrapnel - ResetPos - Can't Find MeshRenderer");
+    }
+
 }

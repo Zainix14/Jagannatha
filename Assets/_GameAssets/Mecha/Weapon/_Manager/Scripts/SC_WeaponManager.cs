@@ -10,13 +10,22 @@ public class SC_WeaponManager : MonoBehaviour
     [SerializeField]
     GameObject[] tab_Weapons; //Tableau des cameras
 
-    int n_CurWeapon = 0;
+    public int n_CurWeapon = 0;
+
+    GameObject Mng_CheckList = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        IsCheck();
         CreateWeapon();
         SetWeapon(n_CurWeapon);
+    }
+
+    void IsCheck()
+    {
+        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+        Mng_CheckList.GetComponent<SC_CheckList_Weapons>().Mng_Weapons = this.gameObject;
     }
 
     // Update is called once per frame
@@ -39,6 +48,13 @@ public class SC_WeaponManager : MonoBehaviour
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
     }
 
+    /// <summary>
+    /// Change l'arme equipé selon l'index |
+    /// 0 = MiniGun
+    /// 1 = Shrapnel
+    /// 2 = FlameThrower
+    /// </summary>
+    /// <param name="n_Index"></param>
     public void SetWeapon(int n_Index)
     {
 

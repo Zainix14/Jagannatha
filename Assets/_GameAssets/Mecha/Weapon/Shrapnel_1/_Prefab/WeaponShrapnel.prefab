@@ -87,7 +87,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e2ab1a85da67642458510959a5014b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f86ab7f8d5474d8daee2ad0ecbaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetLimb: {fileID: 0}
+  RotationMode: 0
+  TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
 --- !u!114 &2722858343060249677
 MonoBehaviour:
@@ -167,10 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae55b37d3c5eb3b4d8dfbe47fb24c4e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_bullet: {fileID: 5453470298802710234, guid: 08da21003e7367c46b683063349a23b9,
+  prefab_bullet: {fileID: 7294656815493384297, guid: 08da21003e7367c46b683063349a23b9,
     type: 3}
   helper_startPos: {fileID: 2480682314092823646}
-  frequency: 5
-  n_fireForce: 4000
+  frequency: 1
+  n_fireForce: 8000
   scattering: 0.02
   n_BulletMagazine: 20

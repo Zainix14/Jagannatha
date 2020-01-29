@@ -102,7 +102,7 @@ public class SC_extRayCast : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             //debug
-            Debug.DrawRay(transform.position, ray.direction * hit.distance, Color.yellow);
+            //Debug.DrawRay(transform.position, ray.direction * hit.distance, Color.yellow);
 
             //placement de l'indicateur
             Indicator.transform.position = hit.point;
@@ -113,19 +113,17 @@ public class SC_extRayCast : MonoBehaviour
     void VT3ToRay()
     {
 
-        Debug.Log("SC_extRayCast - VT3ToRay - Enter");
-
         Vector3 hitCockpit = CockpitCam.GetComponent<SC_raycast>().getRayVector3();
         
         if (hitCockpit != null)
         {
 
             hitCockpit = transform.rotation * hitCockpit;
-
-            if(Physics.Raycast(transform.position, hitCockpit, out hit, 5000f))
+            int layerMask = 1 << 21;
+            layerMask = ~layerMask;
+            if (Physics.Raycast(transform.position, hitCockpit, out hit, 5000f, layerMask))
             {
-                Debug.Log("SC_extRayCast - VT3ToRay - Raycast");
-                Debug.DrawRay(transform.position, hitCockpit * hit.distance, Color.yellow);
+                //Debug.DrawRay(transform.position, hitCockpit * hit.distance, Color.yellow);
                 Indicator.transform.position = hit.point;
             }
             

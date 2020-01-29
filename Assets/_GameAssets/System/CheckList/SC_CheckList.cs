@@ -10,6 +10,7 @@ using UnityEngine;
 public class SC_CheckList : MonoBehaviour
 {
 
+    public GameObject Mng_Network = null;
     public GameObject NetworkPlayerPilot = null;
     public GameObject NetworkPlayerOperator = null;
 
@@ -21,6 +22,11 @@ public class SC_CheckList : MonoBehaviour
     public Camera Cam_Mecha = null;
     public Camera Cam_VR = null;
     public Camera Cam_FPS = null;
+
+    public GameObject GetNetworkManager()
+    {
+        return Mng_Network;
+    }
 
     public GameObject GetNetworkPlayerPilot()
     {
