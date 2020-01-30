@@ -27,42 +27,33 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
     public bool followCam = true;
 
 
-    Coroutine m_renderCor = null;
+
 
     // Start is called before the first frame update
     void Start()
     {
         CheckForCamera();
-        m_renderCor = StartCoroutine(Capture360());
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (cam == null)
+
+        if(cam == null)
             CheckForCamera();
 
-
+        Capture360();
 
     }
 
-    IEnumerator Capture360()
-    {
-        while (true)
-        {
-            if(cam != null)
-            {
-                CaptureCubemaps();
+    public void Capture360()
+    {       
+        CaptureCubemaps();
+        ConvertCubeToEquirect();
+    }
 
-                yield return 0;
-
-                ConvertCubeToEquirect();
-
-                yield return 0;
-            }
-       
-        }
+  
     }
 
     private void CheckForCamera()
