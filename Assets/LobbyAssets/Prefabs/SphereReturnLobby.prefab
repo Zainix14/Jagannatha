@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8924523521577415333}
   - component: {fileID: 8924523521576284261}
   - component: {fileID: 8924523521324055840}
+  - component: {fileID: 2072402411610844178}
   m_Layer: 5
   m_Name: SphereReturnLobby
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8924523521574350501}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2512.8474, y: 2512.8474, z: 2512.8474}
+  m_LocalScale: {x: 2500, y: 2500, z: 2500}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,3 +93,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 4cf952a7c89b19d4aae34c359501adac, type: 3}
+--- !u!114 &2072402411610844178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8924523521574350501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1c07a6449b0ca439ee6fac5f6f7d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
