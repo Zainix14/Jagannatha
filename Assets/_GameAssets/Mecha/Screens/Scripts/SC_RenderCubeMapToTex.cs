@@ -29,18 +29,22 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        CheckForCamera();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(cam == null)
+            CheckForCamera();
+
         Capture360();
+
     }
 
     public void Capture360()
-    {
-        CheckForCamera();
+    {       
         CaptureCubemaps();
         ConvertCubeToEquirect();
     }

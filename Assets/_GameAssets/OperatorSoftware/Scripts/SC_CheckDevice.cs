@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.UI;
 
 /// <summary>
 /// Script de gestion du Display Operateur |
@@ -14,6 +15,7 @@ public class SC_CheckDevice : MonoBehaviour
 
     [Header("Configuration des écrans")]
     public DisplayType displayMode; //Modifiable dans l'éditeur | Change selon 1 ecran ou 4 ecrans
+    public bool b_InputToScreen = false;
 
     [Header("Drop the Camera")]
     [Tooltip("Tableau avec toute les Cameras")]
@@ -38,8 +40,18 @@ public class SC_CheckDevice : MonoBehaviour
             MonoScreen();
 
         if (displayMode == DisplayType.fourScreen)
+        {
             MultiScreens();
+            if (b_InputToScreen)
+                DiseableRaycaster(2);
+        }
 
+    }
+
+    void Update()
+    {
+        if (b_InputToScreen)
+            InputToScreen();
     }
 
     void MonoScreen()
@@ -82,13 +94,40 @@ public class SC_CheckDevice : MonoBehaviour
         {
             if (i != TargetCanvIndex)
             {
-                tab_Canv[i].GetComponent<Canvas>().sortingOrder = 0;
+                tab_Canv[i].sortingOrder = 0;
             }
             else if (i == TargetCanvIndex)
             {
-                tab_Canv[i].GetComponent<Canvas>().sortingOrder = 10;
+                tab_Canv[i].sortingOrder = 10;
             }
         }
+    }
+
+    public void DiseableRaycaster(int TargetCanvIndex)
+    {
+        for (int i = 1; i < tab_Canv.Length; i++)
+        {
+            if (i != TargetCanvIndex)
+            {
+                tab_Canv[i].GetComponent<GraphicRaycaster>().enabled = false;
+            }
+            else if (i == TargetCanvIndex)
+            {
+                tab_Canv[i].GetComponent<GraphicRaycaster>().enabled = true;
+            }
+        }
+    }
+
+    void InputToScreen()
+    {
+        if (Input.GetKey(KeyCode.F1))
+            DiseableRaycaster(1);
+        if (Input.GetKey(KeyCode.F2))
+            DiseableRaycaster(2);
+        if (Input.GetKey(KeyCode.F3))
+            DiseableRaycaster(3);
+        if (Input.GetKey(KeyCode.F4))
+            DiseableRaycaster(4);
     }
 
 }
