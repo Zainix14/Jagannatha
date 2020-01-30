@@ -26,6 +26,9 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
 
     public bool followCam = true;
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,7 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
 
         if(cam == null)
             CheckForCamera();
@@ -47,6 +51,9 @@ public class SC_RenderCubeMapToTex : MonoBehaviour
     {       
         CaptureCubemaps();
         ConvertCubeToEquirect();
+    }
+
+  
     }
 
     private void CheckForCamera()
