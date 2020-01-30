@@ -12,11 +12,20 @@ public class SC_TargetHandRotation : MonoBehaviour
 
     public GameObject TargetLimbRot;
     public Transform AimIndicator;
+    public float f_LerpDur = 1;
+
+    Vector3 Vt3_GlobalDir;
+    Vector3 Vt3_ScaleDir;
+    Vector3 TargetPos;
+
+    Rigidbody ConstraintAnchor;
+    ConfigurableJoint ConnectedJoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ConnectedJoint = this.GetComponent<ConfigurableJoint>();
+        ConstraintAnchor = ConnectedJoint.connectedBody;      
     }
 
     // Update is called once per frame
@@ -27,7 +36,10 @@ public class SC_TargetHandRotation : MonoBehaviour
             SetRot();
 
         if (AimIndicator != null && RotationMode == RotationType.LookAt)
+        {
             LookAt();
+            Aiming();
+        }
 
     }
 
@@ -40,6 +52,20 @@ public class SC_TargetHandRotation : MonoBehaviour
     {
         transform.LookAt(AimIndicator);
         transform.rotation *= Quaternion.Euler(0, -90, 90);
+    }
+
+    void Aiming()
+    {
+        Vt3_GlobalDir = AimIndicator.transform.position - ConstraintAnchor.transform.position;
+        if(Vt3_GlobalDir.magnitude <= ConnectedJoint.linearLimit.limit )
+            TargetPos = ConstraintAnchor.transform.position + Vt3_GlobalDir;
+        else
+        {
+            Vt3_ScaleDir = Vt3_GlobalDir.normalized * ConnectedJoint.linearLimit.limit;
+            TargetPos = ConstraintAnchor.transform.position + Vt3_ScaleDir;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, TargetPos, f_LerpDur*Time.deltaTime);
     }
 
 }

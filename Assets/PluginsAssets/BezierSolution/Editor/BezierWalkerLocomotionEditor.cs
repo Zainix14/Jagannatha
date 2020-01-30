@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BezierSolution.Extras
 {
+    /*
 	[CustomEditor( typeof( BezierWalkerLocomotion ) )]
 	[CanEditMultipleObjects]
 	public class BezierWalkerLocomotionEditor : BezierWalkerEditor
@@ -49,5 +50,5 @@ namespace BezierSolution.Extras
 
 			base.Simulate( deltaTime );
 		}
-	}
+	}*/
 }

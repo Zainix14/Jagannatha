@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace BezierSolution
-{
+{/*
 	public class BezierWalkerLocomotion : BezierWalker
 	{
 		public BezierWalker walker;
@@ -142,5 +142,5 @@ namespace BezierSolution
 			}
 		}
 #endif
-	}
+	}*/
 }
