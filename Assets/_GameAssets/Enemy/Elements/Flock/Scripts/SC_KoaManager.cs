@@ -15,14 +15,14 @@ public class SC_KoaManager : MonoBehaviour
 
     int coroutineCount = 0;
 
+    [SerializeField]
+    Boid _boidPrefab; //Prefab du boid
 
-    public Boid _boidPrefab; //Prefab du boid
-    public Boid _koaPrefab; //Prefab du Koa
+    [SerializeField]
+    GameObject _koaPrefab; //Prefab du Koa
 
-    ComputeBuffer boidBuffer;
-    BoidData[] boidData;
 
-    Boid _koa; //Koa du 
+    GameObject _koa; //Koa du 
 
     /// <summary>
     /// Current BoidSettings
@@ -86,20 +86,23 @@ public class SC_KoaManager : MonoBehaviour
         }
 
         //Instantie le Koa
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
         _koa = Instantiate(_koaPrefab);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //Transform(ballec en vrai)
-        _koa.transform.position = transform.position;
-
-        //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-        _koa.Initialize(_curSettings, _curKoaGuide, true);
-
-
-        boidBuffer = new ComputeBuffer(newSpawnCount, BoidData.Size);
+        int index = Random.RandomRange(0, _boidsTab.Length);
+        _curKoaGuide = _boidsTab[index].transform;
         // boidData = new BoidData[newSpawnCount]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
 
     }
 
+
+    void Update()
+    {
+        _koa.transform.position = _curKoaGuide.position;
+    }
     /// <summary>
     /// Lance le split de la nuée en fonction des guides envoyé par le Flock Manager | Param : List<Transform> nouveau guides (la division dépends du nombre de guide)
     /// </summary>
@@ -135,7 +138,6 @@ public class SC_KoaManager : MonoBehaviour
 
         //Affection du guide du Koa
         _curKoaGuide = _guideList[Random.Range(0, _guideList.Count)];
-        _koa.GetComponent<Boid>().target = _curKoaGuide;
     }
 
 
@@ -149,7 +151,6 @@ public class SC_KoaManager : MonoBehaviour
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(newSettings);
-            _koa.SetNewSettings(newSettings, KoaTargetWeight);
             _curSettings = newSettings;
         }
     }
@@ -169,31 +170,5 @@ public class SC_KoaManager : MonoBehaviour
         flockManager.DestroyFlock();
         Destroy(this.gameObject);
 
-    }
-
-
-    /// <summary>
-    /// Structure envoyée dans le ComputeShader 
-    /// </summary>
-    public struct BoidData
-    {
-        public Vector3 position;
-        public Vector3 direction;
-
-        public Vector3 flockHeading;
-        public Vector3 flockCentre;
-        public Vector3 avoidanceHeading;
-
-        public int numFlockmates;
-
-        //sizeof => retourne la mémoire en bit, pour un type de variable
-        //Ici float* 3(Vector3) * 5(nombre de valeurs) + int * 1
-        public static int Size
-        {
-            get
-            {
-                return sizeof(float) * 3 * 5 + sizeof(int);
-            }
-        }
     }
 }

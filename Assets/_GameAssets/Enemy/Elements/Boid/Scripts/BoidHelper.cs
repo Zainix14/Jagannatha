@@ -7,11 +7,12 @@ using UnityEngine;
 /// </summary>
 public static class BoidHelper {
 
-    const int numViewDirections = 500; //Nombre de Directions 
+    const int numViewDirections = 10; //Nombre de Directions 
     public static readonly Vector3[] directions; //Tableau contenant les directions
 
     static BoidHelper ()
     {
+        
         directions = new Vector3[BoidHelper.numViewDirections]; //Remplissage du tableau avec le nombre d'éléments
 
         float goldenRatio = (1 + Mathf.Sqrt (5)) / 2; //Nombre d'or (env 1.61)
