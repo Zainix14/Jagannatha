@@ -12,10 +12,11 @@ using Valve.VR;
 
 public class SC_LobbyManipulation : MonoBehaviour
 {
+    /*
     //Récupération des inputs VR
     public SteamVR_Input_Sources curHandInput;
     public SteamVR_Action_Boolean InputAction;
-
+    */
     //Tableau contenant tous les objets sujettes à la manipulation en VR
     public Collider[] tab_colliders;
 
@@ -45,7 +46,7 @@ public class SC_LobbyManipulation : MonoBehaviour
             //Affichage du Raycast
             ShowLaser(hit_Raycast);
             Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
-
+            /*
             //Si clic gachette
             if (InputAction.GetLastState(curHandInput))
             {
@@ -64,6 +65,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 }
 
             }
+            */
         }
      
     }
