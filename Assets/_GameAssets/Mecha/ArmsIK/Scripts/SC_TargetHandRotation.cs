@@ -51,7 +51,7 @@ public class SC_TargetHandRotation : MonoBehaviour
     void LookAt()
     {
         transform.LookAt(AimIndicator);
-        transform.rotation *= Quaternion.Euler(0, -90, 90);
+        transform.rotation *= Quaternion.Euler(90, -90, 90);
     }
 
     void Aiming()

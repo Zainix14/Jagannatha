@@ -74,7 +74,7 @@ public class SC_FollowHand : MonoBehaviour
         this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
        
         var rotation = TargetHand.transform.rotation;
-        rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
+        rotation *= Quaternion.Euler(90, 0, 180); // this adds a 90 degrees Y rotation
         this.gameObject.transform.rotation = rotation;
 
     }
