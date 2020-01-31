@@ -136,8 +136,6 @@ public class SC_KoaManager : MonoBehaviour
         //Si impaire, réparti le dernier boid sur une target
         _boidsTab[all - 1].GetComponent<Boid>().target = _guideList[div - 1];
 
-        //Affection du guide du Koa
-        _curKoaGuide = _guideList[Random.Range(0, _guideList.Count)];
     }
 
 
