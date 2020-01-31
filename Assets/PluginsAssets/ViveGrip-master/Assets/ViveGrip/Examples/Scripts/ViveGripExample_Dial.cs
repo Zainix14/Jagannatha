@@ -10,7 +10,12 @@ public class ViveGripExample_Dial : MonoBehaviour {
     float g = (joint.angle + 90) / 180;
     float r = 1 - g;
     Color newColor = new Color(r, g, 0);
-    attachedLight.gameObject.GetComponent<Renderer>().material.color = newColor;
-    attachedLight.GetChild(0).GetComponent<Light>().color = newColor;
+        if(attachedLight != null)
+        {
+            attachedLight.gameObject.GetComponent<Renderer>().material.color = newColor;
+            attachedLight.GetChild(0).GetComponent<Light>().color = newColor;
+
+        }
+    
   }
 }
