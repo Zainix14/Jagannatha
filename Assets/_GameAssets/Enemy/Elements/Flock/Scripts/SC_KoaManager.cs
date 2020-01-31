@@ -10,6 +10,10 @@ using UnityEngine;
 public class SC_KoaManager : MonoBehaviour
 {
 
+    GameObject Mng_CheckList;
+    GameObject NetPlayerP;
+    SC_NetPSpawnKoa_P NetPSpawnKoa;
+
     //Tkt ca marche
     const int threadGroupSize = 3;
 
@@ -55,6 +59,8 @@ public class SC_KoaManager : MonoBehaviour
     public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings)
     {
 
+        GetReferences();
+
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         //Instanciation des list de Boid et de Guide
         _boidsTab = GameObject.FindGameObjectWithTag("Mng_Enemy").GetComponent<SC_BoidPool>().GetBoid(newSpawnCount);
@@ -89,7 +95,8 @@ public class SC_KoaManager : MonoBehaviour
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///
         /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
-        _koa = Instantiate(_koaPrefab);
+        //_koa = Instantiate(_koaPrefab);
+        _koa = NetPSpawnKoa.SpawnKoa();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         int index = Random.RandomRange(0, _boidsTab.Length);
@@ -103,6 +110,27 @@ public class SC_KoaManager : MonoBehaviour
     {
         _koa.transform.position = _curKoaGuide.position;
     }
+
+    void GetReferences()
+    {
+
+        if (Mng_CheckList == null)
+            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+        else
+            Debug.LogWarning("SC_KoaManager - Cant Find Mng_CheckList");
+
+        if (Mng_CheckList != null && NetPlayerP == null)
+            NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
+        else
+            Debug.LogWarning("SC_KoaManager - Cant Find NetPlayerP");
+
+        if (NetPlayerP != null && NetPSpawnKoa == null)
+            NetPSpawnKoa = NetPlayerP.GetComponent<SC_NetPSpawnKoa_P>();
+        else
+            Debug.LogWarning("SC_KoaManager - Cant Find SC_NetPSpawnKoa_P");
+
+    }
+
     /// <summary>
     /// Lance le split de la nuée en fonction des guides envoyé par le Flock Manager | Param : List<Transform> nouveau guides (la division dépends du nombre de guide)
     /// </summary>
