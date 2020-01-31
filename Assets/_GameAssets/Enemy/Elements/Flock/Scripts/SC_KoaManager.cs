@@ -96,7 +96,8 @@ public class SC_KoaManager : MonoBehaviour
         ///
         /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
         //_koa = Instantiate(_koaPrefab);
-        _koa = NetPSpawnKoa.SpawnKoa();
+        if(_koa != null)
+            _koa = NetPSpawnKoa.SpawnKoa();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         int index = Random.RandomRange(0, _boidsTab.Length);
@@ -108,7 +109,8 @@ public class SC_KoaManager : MonoBehaviour
 
     void Update()
     {
-        _koa.transform.position = _curKoaGuide.position;
+        if (_koa != null)
+            _koa.transform.position = _curKoaGuide.position;
     }
 
     void GetReferences()
