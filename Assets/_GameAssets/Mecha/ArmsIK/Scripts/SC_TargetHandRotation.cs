@@ -10,9 +10,13 @@ public class SC_TargetHandRotation : MonoBehaviour
     [Header("Configuration des écrans")]
     public RotationType RotationMode;
 
+    public GameObject AimHelper;
+    public GameObject ConstraintHelper;
     public GameObject TargetLimbRot;
     public Transform AimIndicator;
     public float f_LerpDur = 1;
+    public bool b_UseMaxDist = false;
+    public float f_MaxFaceDist = 0.6f;
 
     Vector3 Vt3_GlobalDir;
     Vector3 Vt3_ScaleDir;
@@ -65,7 +69,18 @@ public class SC_TargetHandRotation : MonoBehaviour
             TargetPos = ConstraintAnchor.transform.position + Vt3_ScaleDir;
         }
 
-        transform.position = Vector3.Lerp(transform.position, TargetPos, f_LerpDur*Time.deltaTime);
+        ConstraintHelper.transform.position = ConstraintAnchor.transform.position;
+        AimHelper.transform.position = TargetPos;
+
+        //Debug.Log(ConstraintHelper.transform.localPosition.z - AimHelper.transform.localPosition.z);
+
+        if (b_UseMaxDist && ConstraintHelper.transform.localPosition.z - AimHelper.transform.localPosition.z > 0.6f)
+            AimHelper.transform.localPosition = new Vector3(AimHelper.transform.localPosition.x, AimHelper.transform.localPosition.y, -f_MaxFaceDist);
+
+
+
+        transform.position = Vector3.Lerp(transform.position, AimHelper.transform.position, f_LerpDur*Time.deltaTime);
+
     }
 
 }
