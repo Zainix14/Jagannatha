@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
   m_Name: Split_Sharingan
   m_EditorClassIdentifier: 
-  minSpeed: 15
-  maxSpeed: 25
+  minSpeed: 1
+  maxSpeed: 30
   perceptionRadius: 1
-  avoidanceRadius: 5
-  maxSteerForce: 10
+  avoidanceRadius: 1
+  maxSteerForce: 25
   alignWeight: 0.2
   cohesionWeight: 10
-  seperateWeight: 50
-  targetWeight: 8
+  seperateWeight: 25
+  targetWeight: 15
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -28,7 +28,7 @@ MonoBehaviour:
   avoidCollisionWeight: 1
   collisionAvoidDst: 1
   split: 1
-  splitNumber: 5
+  splitNumber: 7
   curveX:
     serializedVersion: 2
     m_Curve:
@@ -128,7 +128,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 20, y: 20, z: 1}
-  frequence: {x: 0.25, y: 0.25, z: 1}
+  amplitude: {x: 9, y: 9, z: 9}
+  frequence: {x: 0.3, y: 0.3, z: 0.3}
   invert: 0
   invertAxis: {x: 0, y: 0, z: 0}

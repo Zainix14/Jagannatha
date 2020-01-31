@@ -25,7 +25,7 @@ public class SC_BulletMiniGun : MonoBehaviour
             ResetPos();
 
         if (other.gameObject.layer == 25)
-            other.GetComponent<SC_KoaManager>().GetHit();
+            other.GetComponentInParent<SC_KoaManager>().GetHit();
     }
 
     void ResetPos()

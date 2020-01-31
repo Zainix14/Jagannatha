@@ -107,13 +107,13 @@ public class Boid : MonoBehaviour {
 
             //Detection de collision (return bool)
             if (IsHeadingForCollision())
-            {
+            {/*
                 //Nouvelle direction pour éviter obstacle
                 Vector3 collisionAvoidDir = ObstacleRays();
                 //Nouveau déplacement selon la nouvelle direction
                 Vector3 collisionAvoidForce = SteerTowards(collisionAvoidDir) * settings.avoidCollisionWeight;
                 //Ajout de l'évitement dans le déplacement
-                acceleration += collisionAvoidForce;
+                acceleration += collisionAvoidForce;*/
             }
 
             velocity += acceleration * Time.deltaTime; //MaJ de la vélocité du boid
@@ -184,6 +184,7 @@ public class Boid : MonoBehaviour {
     public void DestroyBoid()
     {
         isActive = false;
+        transform.position = new Vector3(0, -2000, 0);
     }
   
 

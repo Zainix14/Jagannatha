@@ -89,10 +89,10 @@ public class SC_KoaManager : MonoBehaviour
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///
         /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
-        _koa = Instantiate(_koaPrefab);
+        _koa = this.gameObject;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        int index = Random.RandomRange(0, _boidsTab.Length);
+        int index = Random.Range(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[index].transform;
         // boidData = new BoidData[newSpawnCount]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
 
