@@ -21,8 +21,6 @@ public class SC_KoaManager : MonoBehaviour
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
 
-    ComputeBuffer boidBuffer;
-    BoidData[] boidData;
 
     GameObject _koa; //Koa du 
 
@@ -96,8 +94,6 @@ public class SC_KoaManager : MonoBehaviour
 
         int index = Random.RandomRange(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[index].transform;
-
-        boidBuffer = new ComputeBuffer(newSpawnCount, BoidData.Size);
         // boidData = new BoidData[newSpawnCount]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
 
     }
@@ -174,31 +170,5 @@ public class SC_KoaManager : MonoBehaviour
         flockManager.DestroyFlock();
         Destroy(this.gameObject);
 
-    }
-
-
-    /// <summary>
-    /// Structure envoyée dans le ComputeShader 
-    /// </summary>
-    public struct BoidData
-    {
-        public Vector3 position;
-        public Vector3 direction;
-
-        public Vector3 flockHeading;
-        public Vector3 flockCentre;
-        public Vector3 avoidanceHeading;
-
-        public int numFlockmates;
-
-        //sizeof => retourne la mémoire en bit, pour un type de variable
-        //Ici float* 3(Vector3) * 5(nombre de valeurs) + int * 1
-        public static int Size
-        {
-            get
-            {
-                return sizeof(float) * 3 * 5 + sizeof(int);
-            }
-        }
     }
 }
