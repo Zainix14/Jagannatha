@@ -5,6 +5,8 @@ using UnityEngine;
 public class SC_FollowHand : MonoBehaviour
 {
 
+    bool b_AlreadyCheck = false;
+
     public enum RotationType { LookAt, SyncRot }
 
     [Header("Configuration des écrans")]
@@ -37,8 +39,10 @@ public class SC_FollowHand : MonoBehaviour
 
         Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
 
-        if (Mng_CheckList == null)
+        if (Mng_CheckList == null && !b_AlreadyCheck)
             Debug.LogWarning("SC_FollowHand - Can't Find Mng_CheckList");
+        if (!b_AlreadyCheck)
+            b_AlreadyCheck = true;
 
     }
 
