@@ -1,17 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &585186676677451626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584497836033698655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73fc6013cb1a582478eb5c1e002c3b0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &585186676677451618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,26 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   VT3_CockpitAimRaycast: {x: 0, y: 0, z: 0}
---- !u!114 &585186677845815005
+--- !u!114 &585186676677451626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585186676677508085}
+  m_GameObject: {fileID: 584497836033698655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b267bdf4a8d70549b50fd9ee5584677, type: 3}
+  m_Script: {fileID: 11500000, guid: 73fc6013cb1a582478eb5c1e002c3b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHandInput: 1
-  InputAction:
-    actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
-  tab_colliders:
-  - {fileID: 0}
-  SC_CustomNetworkManager: {fileID: 0}
-  Laser: {fileID: 1107940701737066, guid: 8edc5e63ea89b7540ae3ec69e9244f51, type: 3}
 --- !u!114 &585186678439958223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,6 +39,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHandInput: 2
+  InputAction:
+    actionPath: /actions/default/in/InteractUI
+    needsReinit: 0
+  tab_colliders:
+  - {fileID: 0}
+  SC_CustomNetworkManager: {fileID: 0}
+  Laser: {fileID: 1107940701737066, guid: 8edc5e63ea89b7540ae3ec69e9244f51, type: 3}
+--- !u!114 &585186677845815005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585186676677508085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b267bdf4a8d70549b50fd9ee5584677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHandInput: 1
   InputAction:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 585186678404155581}
   - component: {fileID: 585186678404155571}
   - component: {fileID: 585186678404155570}
+  - component: {fileID: 7201671026418465235}
   m_Layer: 0
   m_Name: Cam_FPS
   m_TagString: Untagged
@@ -215,7 +216,7 @@ Camera:
   m_GameObject: {fileID: 585186678404155583}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
@@ -282,6 +283,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   VT3_CockpitAimRaycast: {x: 0, y: 0, z: 0}
+--- !u!114 &7201671026418465235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585186678404155583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ed08ed02ad4ee4b98db25cd1122830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axes: 0
+  sensitivityX: 3
+  sensitivityY: 3
+  minimumX: -360
+  maximumX: 360
+  minimumY: -60
+  maximumY: 60
+  frameCounter: 20
 --- !u!1001 &585186676569321602
 PrefabInstance:
   m_ObjectHideFlags: 0
