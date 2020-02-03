@@ -161,10 +161,5 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     {
 
         IsValueOk();
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Flip();
-        }
     }
 }
