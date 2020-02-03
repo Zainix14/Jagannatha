@@ -71,7 +71,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         float newX = gameObject.transform.localPosition.y;
 
         //on envoie la valeur à la syncvar si celle ci a changé
-        if (newX != oldX) sendToSynchVar(gameObject.transform.localPosition.y);
+        if (newX != oldX) sendToSynchVar(Mathf.Round(gameObject.transform.localPosition.y*100)/100);
 
 
 
