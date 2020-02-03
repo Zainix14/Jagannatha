@@ -38,7 +38,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
   }
 
+    public bool isBreakdown()
+    {
 
+        return isEnPanne;
+    }
 
 
     void sendToSynchVar(bool value)

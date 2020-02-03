@@ -115,7 +115,11 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     }
 
+    public bool isBreakdown()
+    {
 
+        return isEnPanne;
+    }
     public void IsValueOk()
     {
 
