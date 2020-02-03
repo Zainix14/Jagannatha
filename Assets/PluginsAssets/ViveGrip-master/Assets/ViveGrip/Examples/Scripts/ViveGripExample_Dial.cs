@@ -34,7 +34,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     void Update()
     {
 
-        Debug.Log(joint.angle);
+       // Debug.Log(joint.angle);
 
         if (joint.angle != oldAngle)
         {
