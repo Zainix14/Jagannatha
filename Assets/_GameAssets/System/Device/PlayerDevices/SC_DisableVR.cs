@@ -52,6 +52,7 @@ public class SC_DisableVR : MonoBehaviour
 
     void DisableVR()
     {
+
         n_SceneIndex = SceneManager.GetActiveScene().buildIndex;
         if(n_SceneIndex != 0)
         {
@@ -59,6 +60,10 @@ public class SC_DisableVR : MonoBehaviour
             VR_Assets.gameObject.SetActive(false);
             Cam_FPS.gameObject.SetActive(true);
         }      
+
+        if(n_SceneIndex == 2 || n_SceneIndex == 4)
+            this.gameObject.SetActive(false);
+
     }
 
 }
