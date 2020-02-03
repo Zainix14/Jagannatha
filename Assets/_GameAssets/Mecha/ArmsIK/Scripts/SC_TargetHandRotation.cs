@@ -57,9 +57,9 @@ public class SC_TargetHandRotation : MonoBehaviour
     void LookAt()
     {
         transform.LookAt(AimIndicator);
-        transform.rotation *= Quaternion.Euler(90, -90, 90);
+        transform.rotation *= Quaternion.Euler(-90, -90, 90);
         TargetHandLeft.transform.LookAt(AimIndicator);
-        TargetHandLeft.transform.rotation *= Quaternion.Euler(90, -90, 90);
+        TargetHandLeft.transform.rotation *= Quaternion.Euler(-90, -90, 90);
     }
 
     void Aiming()
@@ -78,10 +78,10 @@ public class SC_TargetHandRotation : MonoBehaviour
 
         //Debug.Log(AimHelper.transform.localPosition.x);
 
-        if (b_UseMaxDist && ConstraintHelper.transform.localPosition.z - AimHelper.transform.localPosition.z > 0.6f)
+        if (b_UseMaxDist && ConstraintHelper.transform.localPosition.z - AimHelper.transform.localPosition.z > f_MaxFaceDist)
             AimHelper.transform.localPosition = new Vector3(AimHelper.transform.localPosition.x, AimHelper.transform.localPosition.y, -f_MaxFaceDist);
 
-        if(AimHelper.transform.localPosition.x > -0.1f)
+        if(AimHelper.transform.localPosition.x < 0.3f)
         TargetHandLeft.transform.position = Vector3.Lerp(TargetHandLeft.transform.position, AimHelper.transform.position, f_LerpDurLeft * Time.deltaTime);
 
         transform.position = Vector3.Lerp(transform.position, AimHelper.transform.position, f_LerpDur*Time.deltaTime);

@@ -49,9 +49,9 @@ public class SC_RightPoleAnim : MonoBehaviour
 
         float f_CurOffSetX = f_HTNewPosX - f_HTOldPosX;
 
-        if (f_HTNewPosX > HandTargetInitPos.x)
+        if (f_HTNewPosX < HandTargetInitPos.x)
             HandPole.localPosition = new Vector3(HandPole.localPosition.x - (f_CurOffSetX * f_OffSetXFactor), HandPole.localPosition.y, HandPole.localPosition.z);
-        else if (f_HTNewPosX < HandTargetInitPos.x && HandPole.localPosition.x != HandPoleInitPos.x)
+        else if (f_HTNewPosX > HandTargetInitPos.x && HandPole.localPosition.x != HandPoleInitPos.x)
             HandPole.localPosition = new Vector3(HandPoleInitPos.x, HandPole.localPosition.y, HandPole.localPosition.z);
 
         f_HTOldPosX = f_HTNewPosX;
@@ -78,9 +78,21 @@ public class SC_RightPoleAnim : MonoBehaviour
 
         float f_CurOffSetZ = f_HTNewPosZ - f_HTOldPosZ;
 
+        //Debug.Log(HandTarget.localPosition.z);
+        //Debug.Log(HandPole.localPosition.z);
+
         HandPole.localPosition = new Vector3(HandPole.localPosition.x, HandPole.localPosition.y, HandPole.localPosition.z + f_CurOffSetZ * f_OffSetZFactor);
 
+        if (HandTarget.localPosition.z <= 0 && HandPole.localPosition.z < 0)
+            HandPole.localPosition = new Vector3(HandPole.localPosition.x, HandPole.localPosition.y, HandPole.localPosition.z * -1);    
+        else if (HandTarget.localPosition.z >= 0 && HandPole.localPosition.z > 0)
+            HandPole.localPosition = new Vector3(HandPole.localPosition.x, HandPole.localPosition.y, HandPole.localPosition.z * -1);
+
+        
+
         f_HTOldPosZ = f_HTNewPosZ;
+
+        
 
     }
 }

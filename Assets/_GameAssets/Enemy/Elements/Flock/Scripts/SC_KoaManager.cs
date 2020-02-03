@@ -72,8 +72,6 @@ public class SC_KoaManager : MonoBehaviour
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
 
-        //Set le guide du koa au premier guide 
-        _curKoaGuide = newGuide;
 
         //Initialisation de tout les boids
         for (int i = 0; i < newSpawnCount; i++)
@@ -96,21 +94,25 @@ public class SC_KoaManager : MonoBehaviour
         ///
         /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
         //_koa = Instantiate(_koaPrefab);
-        if(_koa != null)
+        if(_koaPrefab != null)
+        {
             _koa = NetPSpawnKoa.SpawnKoa();
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         int index = Random.RandomRange(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[index].transform;
-        // boidData = new BoidData[newSpawnCount]; //Création d'un variable (Type BoidData) contenant un tableau avec le nombre d'éléments actuels
-
+        Debug.Log("_curKoaGuide " + _curKoaGuide);
     }
 
 
     void Update()
     {
         if (_koa != null)
+        {
             _koa.transform.position = _curKoaGuide.position;
+            Debug.Log("_curKoaGuide " + _curKoaGuide);
+        }
     }
 
     void GetReferences()
@@ -166,8 +168,6 @@ public class SC_KoaManager : MonoBehaviour
         //Si impaire, réparti le dernier boid sur une target
         _boidsTab[all - 1].GetComponent<Boid>().target = _guideList[div - 1];
 
-        //Affection du guide du Koa
-        _curKoaGuide = _guideList[Random.Range(0, _guideList.Count)];
     }
 
 
