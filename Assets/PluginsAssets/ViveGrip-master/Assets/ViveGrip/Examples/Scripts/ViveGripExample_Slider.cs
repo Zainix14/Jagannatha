@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ViveGripExample_Slider : MonoBehaviour {
+public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
   private ViveGrip_ControllerHandler controller;
   private float oldX;
   private int VIBRATION_DURATION_IN_MILLISECONDS = 50;
@@ -16,7 +16,26 @@ public class ViveGripExample_Slider : MonoBehaviour {
     public bool _freezeAlongY = false;
     public bool _freezeAlongZ = true;
 
+
+    public float desiredValue = 0;
+    public bool isEnPanne = false;
+    public float precision = 0.05f;
+
+
     private Rigidbody sliderRigidbody;
+
+    private SC_SyncVar_Interactibles sc_syncvar;
+
+    [SerializeField]
+    button bouton;
+
+     enum button
+    {
+        slider1,
+        slider2,
+        slider3
+
+    }
 
     void Start () {
     oldX = transform.position.x;
@@ -35,8 +54,8 @@ public class ViveGripExample_Slider : MonoBehaviour {
     }
 
 	void Update () {
-
-
+        
+        //on traduit la position en position locale pour la freeze
         _localX = transform.localPosition.x;
         _localY = transform.localPosition.y;
         _localZ = transform.localPosition.z;
@@ -45,15 +64,113 @@ public class ViveGripExample_Slider : MonoBehaviour {
         if (_freezeAlongY) _localY = 0;
         if (_freezeAlongZ) _localZ = 0;
         gameObject.transform.localPosition = new Vector3(_localX, _localY, _localZ);
-        Debug.Log(gameObject.transform.localPosition.y);
+
+        
+     
+
+        float newX = gameObject.transform.localPosition.y;
+
+        //on envoie la valeur à la syncvar si celle ci a changé
+        if (newX != oldX) sendToSynchVar(gameObject.transform.localPosition.y);
 
 
-        float newX = transform.position.x;
+
     if (controller != null) {
       float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
       float vibrationStrength = (distance / MAX_VIBRATION_DISTANCE) * MAX_VIBRATION_STRENGTH;
       controller.Vibrate(VIBRATION_DURATION_IN_MILLISECONDS, vibrationStrength);
     }
     oldX = newX;
-	}
+
+ 
+    IsValueOk();
+    }
+
+
+    void sendToSynchVar (float value)
+    {
+
+        if (sc_syncvar == null)
+        {
+
+            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+        }
+        else
+        {
+
+            switch (bouton)
+            {
+                case button.slider1:
+                    sc_syncvar.slider1value = value;
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+            
+
+    }
+
+
+    public void ChangeDesired()
+    {
+        desiredValue = Random.Range(-0.4f, 0.4f);
+        while (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        {
+            desiredValue = Random.Range(-0.4f, 0.4f);
+        }
+
+
+
+         isEnPanne = true;
+
+        sc_syncvar.slider1valueWanted = desiredValue;
+        sc_syncvar.slider1isEnPanne = true;
+
+    }
+
+
+    public void IsValueOk()
+    {
+
+        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        {
+
+            isEnPanne = false;
+
+
+
+            if (sc_syncvar == null)
+            {
+
+                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            }
+            else
+            {
+
+                sc_syncvar.slider1isEnPanne = false;
+
+            }
+        }
+        else
+        {
+            isEnPanne = true;
+
+            if (sc_syncvar == null)
+            {
+
+                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            }
+            else
+            {
+
+                sc_syncvar.slider1isEnPanne = true;
+
+            }
+        }
+
+    }
+
 }
