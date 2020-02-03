@@ -106,8 +106,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 case button.slider2:
                     sc_syncvar.slider2value = value;
                     break;
-                case button.slider2:
-                    sc_syncvar.slider2value = value;
+                case button.slider3:
+                    sc_syncvar.slider3value = value;
                     break;
                 default:
                     break;
