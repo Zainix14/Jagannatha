@@ -20,7 +20,9 @@ public class SC_updateDisplay_float : MonoBehaviour
     {
         slider1,
         slider2,
-        slider3
+        slider3,
+        potar1,
+        inter1,
     }
 
     // Start is called before the first frame update
@@ -46,6 +48,38 @@ public class SC_updateDisplay_float : MonoBehaviour
                     text_component_cur.text = sc_syncvar.slider1value.ToString();
                     text_component_desired.text = sc_syncvar.slider1valueWanted.ToString();
                     if(sc_syncvar.slider1isEnPanne)
+                    {
+                        text_component_cur.color = Color.red;
+                        text_component_desired.color = Color.red;
+                    }
+                    else
+                    {
+
+                        text_component_cur.color = Color.green;
+                        text_component_desired.color = Color.green;
+                    }
+                    break;
+
+                case button.potar1:
+                    text_component_cur.text = sc_syncvar.potar1value.ToString();
+                    text_component_desired.text = sc_syncvar.potar1valueWanted.ToString();
+                    if (sc_syncvar.potar1isEnPanne)
+                    {
+                        text_component_cur.color = Color.red;
+                        text_component_desired.color = Color.red;
+                    }
+                    else
+                    {
+
+                        text_component_cur.color = Color.green;
+                        text_component_desired.color = Color.green;
+                    }
+                    break;
+
+                case button.inter1:
+                    text_component_cur.text = sc_syncvar.inter1value.ToString();
+                    text_component_desired.text = sc_syncvar.inter1valueWanted.ToString();
+                    if (sc_syncvar.inter1isEnPanne)
                     {
                         text_component_cur.color = Color.red;
                         text_component_desired.color = Color.red;

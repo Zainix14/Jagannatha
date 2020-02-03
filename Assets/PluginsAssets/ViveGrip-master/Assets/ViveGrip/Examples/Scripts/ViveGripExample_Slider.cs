@@ -126,8 +126,18 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
          isEnPanne = true;
 
-        sc_syncvar.slider1valueWanted = desiredValue;
-        sc_syncvar.slider1isEnPanne = true;
+
+        switch (bouton)
+        {
+            case button.slider1:
+                sc_syncvar.slider1valueWanted = desiredValue;
+                sc_syncvar.slider1isEnPanne = true;
+                break;
+            default:
+                break;
+
+        }
+        
 
     }
 
@@ -150,7 +160,16 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             else
             {
 
-                sc_syncvar.slider1isEnPanne = false;
+                switch (bouton)
+                {
+                    case button.slider1:
+                        sc_syncvar.slider1isEnPanne = false;
+                        break;
+                    default:
+                        break;
+
+                }
+                
 
             }
         }
@@ -165,8 +184,16 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             }
             else
             {
+                switch (bouton)
+                {
+                    case button.slider1:
+                        sc_syncvar.slider1isEnPanne = true;
+                        break;
+                    default:
+                        break;
 
-                sc_syncvar.slider1isEnPanne = true;
+                }
+                
 
             }
         }
