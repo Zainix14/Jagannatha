@@ -26,6 +26,11 @@ public class SC_FollowHand : MonoBehaviour
         if (Mng_CheckList != null && TargetHand == null)
             GetTargetHand();
 
+    }
+
+    void FixedUpdate()
+    {
+
         if (TargetHand != null && RotationMode == RotationType.SyncRot)
             SetPos();
 
