@@ -86,7 +86,6 @@ public class SC_BoidBehavior : MonoBehaviour
                 int threadGroups = Mathf.CeilToInt(_boidsTab.Length / (float)threadGroupSize); //Nombre de groupe = nombre éléments / nombre tkt
                 compute.Dispatch(0, threadGroups, 1, 1); //Execute le Shader
 
-                yield return 0;
 
 
 
