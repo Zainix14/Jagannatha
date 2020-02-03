@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IInteractible
 {
-    
     void ChangeDesired();
-   
+    bool isBreakdown();
 }

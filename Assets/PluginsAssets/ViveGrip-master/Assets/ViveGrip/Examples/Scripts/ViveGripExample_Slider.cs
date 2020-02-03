@@ -87,6 +87,11 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     }
 
 
+    public bool isBreakdown()
+    {
+        return isEnPanne;
+    }
+
     void sendToSynchVar (float value)
     {
 
