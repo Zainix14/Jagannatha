@@ -76,7 +76,7 @@ public class SC_TargetHandRotation : MonoBehaviour
         ConstraintHelper.transform.position = ConstraintAnchor.transform.position;
         AimHelper.transform.position = TargetPos;
 
-        Debug.Log(AimHelper.transform.localPosition.x);
+        //Debug.Log(AimHelper.transform.localPosition.x);
 
         if (b_UseMaxDist && ConstraintHelper.transform.localPosition.z - AimHelper.transform.localPosition.z > 0.6f)
             AimHelper.transform.localPosition = new Vector3(AimHelper.transform.localPosition.x, AimHelper.transform.localPosition.y, -f_MaxFaceDist);
