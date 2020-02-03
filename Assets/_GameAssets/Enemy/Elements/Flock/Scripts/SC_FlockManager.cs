@@ -27,8 +27,8 @@ public class SC_FlockManager : MonoBehaviour
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
     FlockSettings flockSettings; //Flocksettings de la nuée (défini a la création par le waveSettings)
-    GameObject _Koa; //Stock le Koa de la nuée
-    public SC_KoaManager _KoaManager; //Stock le script KoaManager du Koa
+    GameObject _KoaManager; //Stock le Koa de la nuée
+    public SC_KoaManager _SCKoaManager; //Stock le script KoaManager du Koa
     Transform _mainGuide; //Guide général que suit toujours la nuée (correspond au flock (this) mais pour des pb de lisibilité le Transform est stocké dans une varible Main Guide
 
     SC_WaveManager waveManager;
@@ -95,9 +95,9 @@ public class SC_FlockManager : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
 
 
-        _Koa = Instantiate(_KoaPrefab, transform);//Instantiate Koa
-        _KoaManager = _Koa.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
-        _KoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0]);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
+        _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0]);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
 
 
         pathBehavior.InitializePathBehavior();
@@ -247,7 +247,7 @@ public class SC_FlockManager : MonoBehaviour
         {
             SplitDivision(_curBoidSetting.splitNumber);
         }
-        _KoaManager.SetBehavior(_curBoidSetting);
+        _SCKoaManager.SetBehavior(_curBoidSetting);
 
 
     }
@@ -296,7 +296,7 @@ public class SC_FlockManager : MonoBehaviour
 
         }
 
-        _KoaManager.Split(_GuideList);
+        _SCKoaManager.Split(_GuideList);
 
         //Destroy old useless guides
         foreach (Transform guide in _oldGuideList)
@@ -325,7 +325,7 @@ public class SC_FlockManager : MonoBehaviour
         //Add main guide to guide list
         _GuideList.Add(_mainGuide);
 
-        _KoaManager.Split(_GuideList);
+        _SCKoaManager.Split(_GuideList);
     }
 
     /// <summary>
