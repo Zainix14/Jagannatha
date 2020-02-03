@@ -20,7 +20,7 @@ public class SC_SyncPos : MonoBehaviour
         {
             this.transform.position = Target.position;
             this.transform.rotation = Target.rotation;
-            this.transform.rotation *= Quaternion.Euler(0,180,0);
+            //this.transform.rotation *= Quaternion.Euler(0,180,0);
 
         }
     }
