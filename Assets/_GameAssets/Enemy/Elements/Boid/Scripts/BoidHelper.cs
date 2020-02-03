@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public static class BoidHelper {
 
-    const int numViewDirections = 6; //Nombre de Directions 
+    const int numViewDirections = 10; //Nombre de Directions 
     public static readonly Vector3[] directions; //Tableau contenant les directions
 
     static BoidHelper ()

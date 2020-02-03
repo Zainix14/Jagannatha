@@ -22,7 +22,7 @@ public class FlockSettings : ScriptableObject
 
     [Header("Boids")]
 
-    [Range(10,2000)]
+    [Range(10,100)]
     public int boidSpawn;
 
     [Range(10,200)]

@@ -15,11 +15,11 @@ MonoBehaviour:
   minSpeed: 15
   maxSpeed: 25
   perceptionRadius: 1
-  avoidanceRadius: 25
+  avoidanceRadius: 5
   maxSteerForce: 10
   alignWeight: 0.2
-  cohesionWeight: 8
-  seperateWeight: 100
+  cohesionWeight: 10
+  seperateWeight: 50
   targetWeight: 8
   obstacleMask:
     serializedVersion: 2
@@ -128,7 +128,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 20, y: 20, z: 3}
-  frequence: {x: 0.25, y: 0.25, z: 57.22}
+  amplitude: {x: 20, y: 20, z: 1}
+  frequence: {x: 0.25, y: 0.25, z: 1}
   invert: 0
-  invertAxis: {x: 1, y: 0, z: 0}
+  invertAxis: {x: 0, y: 0, z: 0}
