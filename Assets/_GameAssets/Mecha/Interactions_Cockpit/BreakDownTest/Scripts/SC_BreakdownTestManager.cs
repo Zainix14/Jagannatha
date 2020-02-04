@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_BreakdownTestManager : MonoBehaviour
+public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 {
 
     public bool b_BreakdownTest = false;
@@ -66,7 +66,7 @@ public class SC_BreakdownTestManager : MonoBehaviour
         }
     }
 
-    void CheckBreakdownTest()
+    public void CheckBreakdown()
     {
 
         int n_BreakdownValue = 0;
