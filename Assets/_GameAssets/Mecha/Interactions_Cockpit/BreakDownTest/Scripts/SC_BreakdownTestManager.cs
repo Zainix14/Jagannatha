@@ -82,12 +82,13 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
             }
         }
 
+
         if (n_BreakdownValue > 2 && !b_BreakdownTest)
         {
             b_BreakdownTest = true;
             Mng_BreakdownMain.CheckBreakdown();
         }          
-        else if (b_BreakdownTest)
+        else if (n_BreakdownValue <= 2 && b_BreakdownTest)
         {
             b_BreakdownTest = false;
             Mng_BreakdownMain.CheckBreakdown();

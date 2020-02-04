@@ -170,70 +170,80 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void IsValueOk()
     {
 
-        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision && isEnPanne)
+        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
         {
 
-
-            SetIsEnPanne(false);
-
-
-
-            if (sc_syncvar == null)
+            if (isEnPanne)
             {
+                SetIsEnPanne(false);
 
-                GetReferences();
-            }
-            else
-            {
 
-                switch (bouton)
+
+                if (sc_syncvar == null)
                 {
-                    case button.slider1:
-                        sc_syncvar.slider1isEnPanne = false;
-                        break;
-                    case button.slider2:
-                        sc_syncvar.slider2isEnPanne = false;
-                        break;
-                    case button.slider3:
-                        sc_syncvar.slider3isEnPanne = false;
-                        break;
-                    default:
-                        break;
+
+                    GetReferences();
+                }
+                else
+                {
+
+                    switch (bouton)
+                    {
+                        case button.slider1:
+                            sc_syncvar.slider1isEnPanne = false;
+                            break;
+                        case button.slider2:
+                            sc_syncvar.slider2isEnPanne = false;
+                            break;
+                        case button.slider3:
+                            sc_syncvar.slider3isEnPanne = false;
+                            break;
+                        default:
+                            break;
+
+                    }
+
 
                 }
-                
-
             }
+
+            
         }
-        else if(!isEnPanne)
+        else
         {
-            SetIsEnPanne(true);
 
-            if (sc_syncvar == null)
+            if (!isEnPanne)
             {
+                SetIsEnPanne(true);
 
-                GetReferences();
-            }
-            else
-            {
-                switch (bouton)
+                if (sc_syncvar == null)
                 {
-                    case button.slider1:
-                        sc_syncvar.slider1isEnPanne = true;
-                        break;
-                    case button.slider2:
-                        sc_syncvar.slider2isEnPanne = true;
-                        break;
-                    case button.slider3:
-                        sc_syncvar.slider3isEnPanne = true;
-                        break;
-                    default:
-                        break;
+
+                    GetReferences();
+                }
+                else
+                {
+                    switch (bouton)
+                    {
+                        case button.slider1:
+                            sc_syncvar.slider1isEnPanne = true;
+                            break;
+                        case button.slider2:
+                            sc_syncvar.slider2isEnPanne = true;
+                            break;
+                        case button.slider3:
+                            sc_syncvar.slider3isEnPanne = true;
+                            break;
+                        default:
+                            break;
+
+                    }
+
 
                 }
-                
-
             }
+
+            
         }
 
     }

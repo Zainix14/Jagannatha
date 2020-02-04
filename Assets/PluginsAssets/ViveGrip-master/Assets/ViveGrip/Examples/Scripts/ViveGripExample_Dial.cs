@@ -108,6 +108,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             desiredValue = Random.Range(-70f,70f);
         }
 
+        Debug.Log("Dial - 1");
         SetIsEnPanne(true);
 
         switch (bouton)
@@ -140,56 +141,66 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     public void IsValueOk()
     {
 
-        if (joint.angle >= desiredValue - precision && joint.angle <= desiredValue + precision && isEnPanne)
+        if (joint.angle >= desiredValue - precision && joint.angle <= desiredValue + precision)
         {
-
-            SetIsEnPanne(false);
-
-            if (sc_syncvar == null)
+            if (isEnPanne)
             {
-                switch (bouton)
+                Debug.Log("Dial - 2");
+                SetIsEnPanne(false);
+
+                if (sc_syncvar == null)
                 {
-                    case button.potar1:
-                        sc_syncvar.potar1isEnPanne = false;
-                        break;
-                    case button.potar2:
-                        sc_syncvar.potar2isEnPanne = false;
-                        break;
-                    case button.potar3:
-                        sc_syncvar.potar3isEnPanne = false;
-                        break;
-                    default:
-                        break;
+                    switch (bouton)
+                    {
+                        case button.potar1:
+                            sc_syncvar.potar1isEnPanne = false;
+                            break;
+                        case button.potar2:
+                            sc_syncvar.potar2isEnPanne = false;
+                            break;
+                        case button.potar3:
+                            sc_syncvar.potar3isEnPanne = false;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    GetReferences();
             }
-            else
-                GetReferences();
+            
 
         }
-        else if (!isEnPanne)
+        else
         {
 
-            SetIsEnPanne(true);
-
-            if (sc_syncvar != null)
+            
+            if (!isEnPanne)
             {
-                switch (bouton)
+                Debug.Log("Dial - 3");
+                SetIsEnPanne(true);
+
+                if (sc_syncvar != null)
                 {
-                    case button.potar1:
-                        sc_syncvar.potar1isEnPanne = true;
-                        break;
-                    case button.potar2:
-                        sc_syncvar.potar2isEnPanne = true;
-                        break;
-                    case button.potar3:
-                        sc_syncvar.potar3isEnPanne = true;
-                        break;
-                    default:
-                        break;
+                    switch (bouton)
+                    {
+                        case button.potar1:
+                            sc_syncvar.potar1isEnPanne = true;
+                            break;
+                        case button.potar2:
+                            sc_syncvar.potar2isEnPanne = true;
+                            break;
+                        case button.potar3:
+                            sc_syncvar.potar3isEnPanne = true;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    GetReferences();
             }
-            else
-                GetReferences();
+            
 
         }
 
@@ -197,6 +208,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     void SetIsEnPanne(bool value)
     {
+        
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }

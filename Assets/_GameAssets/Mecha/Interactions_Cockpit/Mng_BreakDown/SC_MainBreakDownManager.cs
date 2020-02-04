@@ -35,7 +35,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     }
 
     public void CheckBreakdown()
-    {     
+    {
+        //Debug.Log("babar");
+
         if(b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
         {
             b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
