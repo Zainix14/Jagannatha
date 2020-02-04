@@ -9,8 +9,14 @@ public class FlockSettings : ScriptableObject
     public bool attackCity;
     public bool attackPlayer;
 
-    
-    
+    [Header("BoidSettings")]
+    [Tooltip("Index 0 : Roam | Index 1 : Direction Joueur | Index 2 : Attaque autour du joueur")]
+    public BoidSettings[] boidSettings;
+
+    [Header("Spawn Position")]
+    public Vector3 spawnPosition = new Vector3(0,0,0);
+
+
     public enum PathPreference
     {
         Line,
@@ -19,15 +25,15 @@ public class FlockSettings : ScriptableObject
 
     public PathPreference pathPreference;
 
-    [Tooltip("inSecond")]
+    [Tooltip("in Second")]
     public int timeBeforeAttack;
 
-    [Tooltip("inSecond")]
+    [Tooltip("in Second")]
     public float attackDuration;
 
     [Header("Boids")]
 
-    [Range(10,100)]
+    [Range(10,200)]
     public int boidSpawn;
 
     [Range(10,200)]

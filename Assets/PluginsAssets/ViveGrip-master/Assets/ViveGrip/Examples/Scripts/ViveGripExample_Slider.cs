@@ -21,35 +21,49 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public bool isEnPanne = false;
     public float precision = 0.05f;
 
-
+    private GameObject Mng_SyncVar;
     private Rigidbody sliderRigidbody;
+    public GameObject LocalBreakdownMng;
 
-    private SC_SyncVar_Interactibles sc_syncvar;
+    private SC_SyncVar_BreakdownTest sc_syncvar;
 
     [SerializeField]
     button bouton;
 
      enum button
-    {
+     {
         slider1,
         slider2,
         slider3
 
+     }
+
+    void Start ()
+    {
+        oldX = transform.position.x;
+        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
+        GetReferences();
     }
 
-    void Start () {
-    oldX = transform.position.x;
+    void GetReferences()
+    {
+        if (LocalBreakdownMng == null)
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+    }
 
-        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
-  }
-
-  void ViveGripGrabStart(ViveGrip_GripPoint gripPoint) {
+    void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
+    {
     controller = gripPoint.controller;
         sliderRigidbody.isKinematic = false;
-  }
+    }
 
-  void ViveGripGrabStop() {
-    controller = null;
+    void ViveGripGrabStop()
+    {
+        controller = null;
         sliderRigidbody.isKinematic = true;
     }
 
@@ -75,15 +89,16 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
 
 
-    if (controller != null) {
-      float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
-      float vibrationStrength = (distance / MAX_VIBRATION_DISTANCE) * MAX_VIBRATION_STRENGTH;
-      controller.Vibrate(VIBRATION_DURATION_IN_MILLISECONDS, vibrationStrength);
-    }
-    oldX = newX;
+        if (controller != null) {
+          float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
+          float vibrationStrength = (distance / MAX_VIBRATION_DISTANCE) * MAX_VIBRATION_STRENGTH;
+          controller.Vibrate(VIBRATION_DURATION_IN_MILLISECONDS, vibrationStrength);
+        }
+        oldX = newX;
 
  
-    IsValueOk();
+        IsValueOk();
+
     }
 
 
@@ -97,12 +112,10 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         if (sc_syncvar == null)
         {
-
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
-
             switch (bouton)
             {
                 case button.slider1:
@@ -116,27 +129,22 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                     break;
                 default:
                     break;
-
             }
-
-        }
-            
+        }          
 
     }
 
 
     public void ChangeDesired()
     {
+
         desiredValue = Random.Range(-0.4f, 0.4f);
         while (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
         {
             desiredValue = Random.Range(-0.4f, 0.4f);
         }
 
-
-
-         isEnPanne = true;
-
+        SetIsEnPanne(true);
 
         switch (bouton)
         {
@@ -154,27 +162,26 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 break;
             default:
                 break;
-
         }
         
-
     }
 
 
     public void IsValueOk()
     {
 
-        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision && isEnPanne)
         {
 
-            isEnPanne = false;
+
+            SetIsEnPanne(false);
 
 
 
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
@@ -198,14 +205,14 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
             }
         }
-        else
+        else if(!isEnPanne)
         {
-            isEnPanne = true;
+            SetIsEnPanne(true);
 
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
@@ -229,6 +236,12 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             }
         }
 
+    }
+
+    void SetIsEnPanne(bool value)
+    {
+        isEnPanne = value;
+        LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }
 
 }

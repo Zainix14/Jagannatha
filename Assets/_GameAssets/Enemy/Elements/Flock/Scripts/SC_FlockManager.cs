@@ -24,7 +24,7 @@ public class SC_FlockManager : MonoBehaviour
 
     GameObject _Player;
 
-    [SerializeField]
+    
     BoidSettings[] _BoidSettings; //Contient toute la liste des Settings de boid possible (Comportement)
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
@@ -59,10 +59,12 @@ public class SC_FlockManager : MonoBehaviour
     {
         circle,
         line,
-        attackPlayer,
+        GoingPlayer,
+        AttackPlayer,
         attackCity
     }
 
+    PathType curtype;
 
 
     #endregion
@@ -87,15 +89,18 @@ public class SC_FlockManager : MonoBehaviour
     {
         waveManager = parent;
         flockSettings = newFlockSettings;
+
+
+        inAttack = false;
         _Player = GameObject.FindGameObjectWithTag("Player");
+        transform.position = flockSettings.spawnPosition;
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
         _curCurveDistanceList = new List<Vector3>(); // Instanciation de la list de distance sur les courbes pour chaque guide
 
-        //DEBUG
-        transform.position = new Vector3(0, 0, 0);
-
+      
+        _BoidSettings = flockSettings.boidSettings;
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
@@ -106,9 +111,8 @@ public class SC_FlockManager : MonoBehaviour
 
         StartNewBehavior(0);
 
-        bezierWalker.NormalizedT = NormalizedT;
+        //bezierWalker.NormalizedT = NormalizedT;
 
-        inAttack = false;
 
     }
     #endregion
@@ -212,24 +216,28 @@ public class SC_FlockManager : MonoBehaviour
             else if (flockSettings.attackPlayer)
             {
 
-                StartNewPath(PathType.attackPlayer);
+                StartNewPath(PathType.GoingPlayer);
             }
             attackTimer = 0;
         }
 
-        if(inAttack)
+        if(inAttack && curtype == PathType.GoingPlayer)
         {
-            transform.position = Vector3.Lerp(transform.position, _Player.transform.position, Time.deltaTime * _curBoidSetting.maxSpeed);
+
+            transform.position = Vector3.Lerp(transform.position, _Player.transform.position, Time.deltaTime * _curBoidSetting.speedToPlayer);
 
             //check les distance entre le flock et le player
             float dist;
             dist = Vector3.Distance(transform.position, _Player.transform.position);
 
+
+
             //Si la distance en inférieure a la distance minimale requise
             if (dist < DistanceGetOnPlayerSpline)
             {
+
                 //Change de spline pour passer sur la spline Cercle
-                pathBehavior.OnAttackPlayer(flockSettings.attackDuration);
+                StartNewPath(PathType.AttackPlayer);
             }
         }
 
@@ -246,18 +254,28 @@ public class SC_FlockManager : MonoBehaviour
 
     void StartNewPath(PathType pathType)
     {
-        switch(pathType)
+        curtype = pathType;
+        switch (pathType)
         {
+            case PathType.circle:
+                inAttack = false;
+                StartNewBehavior(0);
+                break;
+
             case PathType.attackCity:
                 inAttack = true;
                 StartNewBehavior(1);
                 break;
 
-            case PathType.attackPlayer:
+            case PathType.GoingPlayer:
                 inAttack = true;
                 StartNewBehavior(1);
                 pathBehavior.OnStopPath();
 
+                break;
+            case PathType.AttackPlayer:
+                StartNewBehavior(2);
+                pathBehavior.OnAttackPlayer(flockSettings.attackDuration);
                 break;
         }
 
@@ -267,8 +285,12 @@ public class SC_FlockManager : MonoBehaviour
 
     public void StartNewBehavior(int behaviorIndex)
     {
-
         _curBoidSetting = _BoidSettings[behaviorIndex];
+        bezierWalker.speed = _curBoidSetting.speedOnSpline;
+        if(_curBoidSetting.speedOnSpline != 0 && !inAttack)
+        {
+            pathBehavior.GetOnRandomSpline();
+        }
         Reassemble();
         if (_curBoidSetting.split)
         {
@@ -370,6 +392,11 @@ public class SC_FlockManager : MonoBehaviour
         Destroy(this.gameObject);
 
 
+    }
+
+    public void EndAttack()
+    {
+        StartNewPath(PathType.circle);
     }
     #endregion
     //---------------------------------------------------------------------//

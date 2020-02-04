@@ -6,7 +6,9 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     public Transform attachedLight;
     private HingeJoint joint;
 
-    private SC_SyncVar_Interactibles sc_syncvar;
+    private GameObject Mng_SyncVar;
+    private SC_SyncVar_BreakdownTest sc_syncvar;
+    public GameObject LocalBreakdownMng;
 
     [SerializeField]
     button bouton;
@@ -29,6 +31,17 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     void Start()
     {
         joint = GetComponent<HingeJoint>();
+        GetReferences();
+    }
+
+    void GetReferences()
+    {
+        if (LocalBreakdownMng == null)
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
     }
 
     void Update()
@@ -63,15 +76,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     void sendToSynchVar(float value)
     {
-
         if (sc_syncvar == null)
         {
-
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
-
             switch (bouton)
             {
                 case button.potar1:
@@ -85,12 +95,8 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                     break;
                 default:
                     break;
-
             }
-
         }
-
-
     }
 
 
@@ -102,10 +108,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             desiredValue = Random.Range(-70f,70f);
         }
 
-
-
-        isEnPanne = true;
-
+        SetIsEnPanne(true);
 
         switch (bouton)
         {
@@ -131,23 +134,18 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     public bool isBreakdown()
     {
-
         return isEnPanne;
     }
+
     public void IsValueOk()
     {
 
-        if (joint.angle >= desiredValue - precision && joint.angle <= desiredValue + precision)
+        if (joint.angle >= desiredValue - precision && joint.angle <= desiredValue + precision && isEnPanne)
         {
 
-            isEnPanne = false;
-                       
-            if (sc_syncvar == null)
-            {
+            SetIsEnPanne(false);
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
-            }
-            else
+            if (sc_syncvar == null)
             {
                 switch (bouton)
                 {
@@ -162,24 +160,19 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                         break;
                     default:
                         break;
-
                 }
-                
-
-            }
-        }
-        else
-        {
-            isEnPanne = true;
-
-            if (sc_syncvar == null)
-            {
-
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
             }
             else
-            {
+                GetReferences();
 
+        }
+        else if (!isEnPanne)
+        {
+
+            SetIsEnPanne(true);
+
+            if (sc_syncvar != null)
+            {
                 switch (bouton)
                 {
                     case button.potar1:
@@ -193,14 +186,19 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                         break;
                     default:
                         break;
-
                 }
-                
-
             }
+            else
+                GetReferences();
+
         }
 
     }
 
+    void SetIsEnPanne(bool value)
+    {
+        isEnPanne = value;
+        LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
+    }
 
 }

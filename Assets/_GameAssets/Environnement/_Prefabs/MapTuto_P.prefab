@@ -149,11 +149,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 538314061975575715}
     m_Modifications:
-    - target: {fileID: 2932632506465168873, guid: 33f3eedd65ad3964799a51a1985e2d54,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2932632506465168875, guid: 33f3eedd65ad3964799a51a1985e2d54,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -213,11 +208,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GroundCheckTile_04
-      objectReference: {fileID: 0}
-    - target: {fileID: 2932632507674466723, guid: 33f3eedd65ad3964799a51a1985e2d54,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33f3eedd65ad3964799a51a1985e2d54, type: 3}
@@ -293,6 +283,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 5112217688cdde04fa3cea6cd15ae715, type: 3}
       propertyPath: m_LocalScale.z
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 5112217688cdde04fa3cea6cd15ae715, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5112217688cdde04fa3cea6cd15ae715, type: 3}

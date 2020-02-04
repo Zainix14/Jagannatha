@@ -16,7 +16,7 @@ public class SC_EnemyManager : MonoBehaviour
     void Start()
     {
         phaseManager = GetComponent<SC_PhaseManager>();
-
+        Invoke("Initialize", 1);
     }
 
     public void Initialize()
@@ -39,10 +39,6 @@ public class SC_EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            Initialize();
-        }
         
     }
 }
