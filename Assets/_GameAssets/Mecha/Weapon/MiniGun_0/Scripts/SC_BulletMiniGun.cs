@@ -23,7 +23,7 @@ public class SC_BulletMiniGun : MonoBehaviour
 
 
         if (other.gameObject.layer == 25)
-            other.GetComponent<SC_KoaManager>().GetHit();
+            other.GetComponentInParent<SC_KoaCollider>().GetHit();
 
         if (other.gameObject.layer != 21)
             ResetPos();
