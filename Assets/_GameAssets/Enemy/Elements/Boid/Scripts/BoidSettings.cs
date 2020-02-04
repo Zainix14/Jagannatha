@@ -28,6 +28,9 @@ public class BoidSettings : ScriptableObject {
     [Header("Spline Settings")]
     public float speedOnSpline;
 
+    [Header("Attack Settings")]
+    [Range(0,2)]
+    public float speedToPlayer = 1;
 
     [Header("Split Settings")]
 

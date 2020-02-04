@@ -56,7 +56,7 @@ namespace BezierSolution
             {
                 //Récupère le point de la spline le plus proche du flock
                 Vector3 v3 = curSpline.FindNearestPointTo(transform.position, out float normalizedT, 1000f);
-
+  
                 //Se place sur la spline a la position de ce point
                 NormalizedT = normalizedT;
             }
@@ -148,8 +148,9 @@ namespace BezierSolution
                         onPathCompletedCalledAt0 = false;
                     }
                 }
+
             }
-		
-		}
+
+        }
 	}
 }

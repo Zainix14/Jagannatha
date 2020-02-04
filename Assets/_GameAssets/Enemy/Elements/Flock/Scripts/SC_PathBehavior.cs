@@ -67,7 +67,7 @@ public class SC_PathBehavior : MonoBehaviour
     PathType _curPathType; //Type de spline surlequel le flock se déplace actuellement
 
     BezierSolution.BezierWalkerWithSpeed SC_bezier;//Contient le script BezierWalker du flock permettant d'envoyer les informations de changement de spline
-
+    SC_FlockManager FlockManager;
     #endregion
     /////////////////////////////////////////////////////////////////////////
 
@@ -81,12 +81,15 @@ public class SC_PathBehavior : MonoBehaviour
     {
         
         SC_bezier = GetComponent<BezierSolution.BezierWalkerWithSpeed>(); //Récupère le script du flock
-        PathPreference = GetComponent<SC_FlockManager>().GetPathPreference();//Récupère le Path préference du flock (dans le flock manager)
+        FlockManager = GetComponent<SC_FlockManager>(); //Récupère le script du flock
+        PathPreference = FlockManager.GetPathPreference();//Récupère le Path préference du flock (dans le flock manager)
 
         InitTab(); //initialise tout les tableaux
 
+        Debug.Log("InitBabe");
+         
         //Premier comportement quand la nuée est spawn
-        curCircleIndex =0;
+        curCircleIndex = 0;
         newCircleIndex =0;
     }
 
@@ -126,9 +129,6 @@ public class SC_PathBehavior : MonoBehaviour
 
     void Update()
     {
- 
-
-
         //Update des condition de changement de spline en fonction de la spline actuel 
         switch (_curPathType)
         {
@@ -159,7 +159,7 @@ public class SC_PathBehavior : MonoBehaviour
     void PathUpdateCircle()
     {
         //Si le cercle actuel ne correspond pas au cercle voulue
-        if (curCircleIndex != newCircleIndex)
+        if (curCircleIndex != newCircleIndex && curSpline != null)
         {
 
             int nextIndex; //Correspondra à l'index de la line de sortie 
@@ -189,7 +189,8 @@ public class SC_PathBehavior : MonoBehaviour
             }
 
             //Calcul la distance actuel entre le flock et l'intersection
-            dist = Vector3.Distance(_IntersectionTab[curCircleIndex, nextIndex].position, transform.position);
+            if (_IntersectionTab[curCircleIndex, nextIndex] != null) dist = Vector3.Distance(_IntersectionTab[curCircleIndex, nextIndex].position, transform.position);
+            else dist = 10000;
 
 
             //Si la distance en inférieure a la distance minimale requise
@@ -233,16 +234,20 @@ public class SC_PathBehavior : MonoBehaviour
     /// </summary>
     void PathUpdateLine()
     {
-        //check les distance entre le flock et le point d'entrée de la spline
-        float dist;
-        dist = Vector3.Distance(_IntersectionTab[newCircleIndex, curLineIndex].position, transform.position);
-
-        //Si la distance en inférieure a la distance minimale requise
-        if (dist < DistanceChangeSpline)
+        if(curSpline != null)
         {
-            //Change de spline pour passer sur la spline Cercle
-            GetOnCircleSpline(newCircleIndex);
+            //check les distance entre le flock et le point d'entrée de la spline
+            float dist;
+            dist = Vector3.Distance(_IntersectionTab[newCircleIndex, curLineIndex].position, transform.position);
+
+            //Si la distance en inférieure a la distance minimale requise
+            if (dist < DistanceChangeSpline)
+            {
+                //Change de spline pour passer sur la spline Cercle
+                GetOnCircleSpline(newCircleIndex);
+            }
         }
+  
         
     }
 
@@ -255,7 +260,7 @@ public class SC_PathBehavior : MonoBehaviour
         curAttackDuration += Time.deltaTime;
         if(curAttackDuration >= totalAttackDuration)
         {
-            GetOnCircleSpline(0);
+            FlockManager.EndAttack();
         }
     }
 
@@ -371,6 +376,7 @@ public class SC_PathBehavior : MonoBehaviour
     }
     public void GetOnRandomSpline()
     {
+        Debug.Log("GetOnRandomSpline");
         int rnd = Random.Range(0, _circleSplineTab.Length);
         GetOnCircleSpline(rnd);
 

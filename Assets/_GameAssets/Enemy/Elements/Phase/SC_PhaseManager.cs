@@ -45,10 +45,12 @@ public class SC_PhaseManager : MonoBehaviour
         curWaveIndex++;
         if(curWaveIndex<waves.Length)
         {
+
             waveManager.InitializeWave(waves[curWaveIndex]);
         }
         else
         {
+
             enemyManager.EndPhase();
         }
     }
