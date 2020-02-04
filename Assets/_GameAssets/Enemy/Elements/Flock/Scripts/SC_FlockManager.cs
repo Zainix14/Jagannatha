@@ -229,7 +229,7 @@ public class SC_FlockManager : MonoBehaviour
             //check les distance entre le flock et le player
             float dist;
             dist = Vector3.Distance(transform.position, _Player.transform.position);
-            Debug.Log("Distance" + dist);
+
 
 
             //Si la distance en inférieure a la distance minimale requise
