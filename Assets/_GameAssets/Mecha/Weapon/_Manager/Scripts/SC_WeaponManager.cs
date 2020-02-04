@@ -5,6 +5,8 @@ using UnityEngine;
 public class SC_WeaponManager : MonoBehaviour
 {
 
+    bool b_AlreadyCheck = false;
+
     [Header("Drop the Weapon")]
     [Tooltip("Tableau avec toute les Armes")]
     [SerializeField]
@@ -25,7 +27,12 @@ public class SC_WeaponManager : MonoBehaviour
     void IsCheck()
     {
         Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        Mng_CheckList.GetComponent<SC_CheckList_Weapons>().Mng_Weapons = this.gameObject;
+        if (Mng_CheckList != null)
+            Mng_CheckList.GetComponent<SC_CheckList_Weapons>().Mng_Weapons = this.gameObject;
+        else if (!b_AlreadyCheck)
+            Debug.LogWarning("SC_WeaponManager - Can't Find Mng_CheckList");
+        if (!b_AlreadyCheck)
+            b_AlreadyCheck = true;
     }
 
     // Update is called once per frame

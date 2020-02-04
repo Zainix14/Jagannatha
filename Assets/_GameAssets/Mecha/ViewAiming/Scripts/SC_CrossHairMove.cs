@@ -5,6 +5,8 @@ using UnityEngine;
 public class SC_CrossHairMove : MonoBehaviour
 {
 
+    bool b_AlreadyCheck = false;
+
     public GameObject Mng_CheckList = null;
 
     public Camera Cam_Mech = null;
@@ -47,8 +49,10 @@ public class SC_CrossHairMove : MonoBehaviour
 
         Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
 
-        if (Mng_CheckList == null)
+        if (Mng_CheckList == null && !b_AlreadyCheck)
             Debug.LogWarning("SC_CrossHairMove - Can't Find Mng_CheckList");
+        if(!b_AlreadyCheck)
+            b_AlreadyCheck = true;
 
     }
 

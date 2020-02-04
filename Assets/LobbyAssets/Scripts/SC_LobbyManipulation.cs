@@ -12,10 +12,11 @@ using Valve.VR;
 
 public class SC_LobbyManipulation : MonoBehaviour
 {
+    /*
     //Récupération des inputs VR
     public SteamVR_Input_Sources curHandInput;
     public SteamVR_Action_Boolean InputAction;
-
+    */
     //Tableau contenant tous les objets sujettes à la manipulation en VR
     public Collider[] tab_colliders;
 
@@ -37,14 +38,15 @@ public class SC_LobbyManipulation : MonoBehaviour
         //Layer 5 : UI
         int layerMask = 1 << 5;
 
-
-
         RaycastHit hit_Raycast;
         if(Physics.Raycast(transform.position,transform.forward,out hit_Raycast,Mathf.Infinity, layerMask))
         {
             //Affichage du Raycast
-            ShowLaser(hit_Raycast);
-            Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
+            if (T_Laser != null)
+                ShowLaser(hit_Raycast);
+            //Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
+
+            /*
 
             //Si clic gachette
             if (InputAction.GetLastState(curHandInput))
@@ -55,7 +57,6 @@ public class SC_LobbyManipulation : MonoBehaviour
                     //On compare si l'objet collidé se trouve dedans
                     if (hit_Raycast.collider== tab_colliders[i])
                     {
-
                         //Au final on HOST QUELQUE SOIT L'OBJET COLLIDé   <================================= A modifier avec un tag et un appel de méthode de l'objet collidé pour != effets.
                         GameObject curCollider = hit_Raycast.collider.gameObject;
                         SC_CustomNetworkManager.StartHosting();
@@ -64,6 +65,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 }
 
             }
+            */
         }
      
     }

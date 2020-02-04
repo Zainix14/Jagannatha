@@ -9,7 +9,11 @@ using UnityEngine.SceneManagement;
 public class SC_SetPosition : MonoBehaviour
 {
 
+    bool b_PosSet = false;
+
     public float f_CockpitPos = -1000;
+    public Camera cam_VR;
+    public Camera cam_FPS;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +24,18 @@ public class SC_SetPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.transform.position.y != f_CockpitPos && SceneManager.GetActiveScene().name != "Lobby")
-            this.gameObject.transform.position = new Vector3 (0, f_CockpitPos, 0);
+        if (!b_PosSet)
+            SetPos();
+    }
+
+    void SetPos()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != 0 && this.gameObject.transform.position.y != f_CockpitPos)
+        {
+            b_PosSet = true;
+            this.gameObject.transform.position = new Vector3(0, f_CockpitPos, 0);
+            cam_VR.farClipPlane = 15;
+        }
     }
 
 

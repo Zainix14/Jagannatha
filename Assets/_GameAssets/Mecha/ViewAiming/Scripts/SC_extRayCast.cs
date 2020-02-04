@@ -10,6 +10,8 @@ using UnityEngine;
 public class SC_extRayCast : MonoBehaviour
 {
 
+    bool b_AlreadyCheck = false;
+
     GameObject Mng_CheckList = null;
 
     //camera cockpit
@@ -59,8 +61,10 @@ public class SC_extRayCast : MonoBehaviour
 
         Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
 
-        if (Mng_CheckList == null)
+        if (Mng_CheckList == null && !b_AlreadyCheck)
             Debug.LogWarning("SC_extRayCast - Can't Find Mng_CheckList");
+        if (!b_AlreadyCheck)
+            b_AlreadyCheck = true;
 
     }
 

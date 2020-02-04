@@ -14,6 +14,8 @@ public class SC_AttackPathInfo : MonoBehaviour
     int _circleEnterIndex;//Index cercle d'entrée
 
     [SerializeField]
+    Transform Player;
+    [SerializeField]
     int _lineEnterIndex;//Index de line d'entrée
 
     //Get des index par PathBehavior
@@ -25,5 +27,13 @@ public class SC_AttackPathInfo : MonoBehaviour
     {
         return _lineEnterIndex;
     }
+
+
+    void Update()
+    {
+        if (Player != null)
+            transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y +55, Player.transform.position.z);
+    }
+
 
 }

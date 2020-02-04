@@ -47,7 +47,7 @@ public class SC_raycast : MonoBehaviour
         {
             if (hit.collider == Target.GetComponent<Collider>())
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 VT3_CockpitAimRaycast = hit.point - Target.transform.position;
             }
         }

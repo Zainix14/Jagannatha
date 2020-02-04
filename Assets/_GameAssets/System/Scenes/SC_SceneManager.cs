@@ -27,7 +27,7 @@ public class SC_SceneManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby")
+        if (SceneManager.GetActiveScene().buildIndex == 0)
             LobbyUpdate();
     }
 
@@ -42,7 +42,7 @@ public class SC_SceneManager : NetworkBehaviour
         {
 
             //si pas Server on load la scène opérateur
-            if (!isServer && SceneManager.GetActiveScene().name == "Lobby")
+            if (!isServer && SceneManager.GetActiveScene().buildIndex == 0)
                 LoadTutoOperator();
 
             //si server on invoke le chargement de la scène pilote (la scène opérateur necessitant de se lancer en première)
