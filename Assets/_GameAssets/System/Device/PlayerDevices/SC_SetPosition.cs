@@ -13,6 +13,7 @@ public class SC_SetPosition : MonoBehaviour
 
     public float f_CockpitPos = -1000;
     public Camera cam_VR;
+    public Camera cam_FPS;
 
     // Start is called before the first frame update
     void Start()

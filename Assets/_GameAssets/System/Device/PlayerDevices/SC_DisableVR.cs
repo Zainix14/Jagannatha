@@ -14,12 +14,15 @@ public class SC_DisableVR : MonoBehaviour
 
     public GameObject VR_Assets;
     public Camera Cam_FPS;
+    public Camera Cam_Lobby;
 
     int n_SceneIndex = 0;
 
     bool b_IsVR = false;
     bool b_IsFPS = false;
-    bool b_IsDiseable = false;
+    bool b_IsDisable = false;
+    bool b_IsActive = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,10 @@ public class SC_DisableVR : MonoBehaviour
         if (!b_IsFPS && !b_IsVR)
             GetDeviceState();
 
-        if (b_IsFPS && !b_IsDiseable)
+        if (b_IsVR && b_IsActive)
+            DisableFPS();
+
+        if (b_IsFPS && b_IsActive)
             DisableVR();
 
     }
@@ -50,17 +56,30 @@ public class SC_DisableVR : MonoBehaviour
 
     }
 
+    void DisableFPS()
+    {
+        b_IsActive = false;
+        Cam_Lobby.gameObject.SetActive(false);
+        Cam_FPS.gameObject.SetActive(false);
+    }
+
     void DisableVR()
     {
 
         n_SceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if(n_SceneIndex != 0)
-        {
-            b_IsDiseable = true;
-            VR_Assets.gameObject.SetActive(false);
-            Cam_FPS.gameObject.SetActive(true);
-        }      
 
+        if (!b_IsDisable)
+        {
+            b_IsDisable = true;
+            VR_Assets.gameObject.SetActive(false);
+        }
+        
+        if (n_SceneIndex != 0)
+        {
+            b_IsActive = false;        
+            Cam_FPS.gameObject.SetActive(true);
+        }
+               
         if(n_SceneIndex == 2 || n_SceneIndex == 4)
             this.gameObject.SetActive(false);
 
