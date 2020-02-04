@@ -37,7 +37,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     void GetReferences()
     {
         if (LocalBreakdownMng == null)
-            LocalBreakdownMng = gameObject.GetComponentInParent<GameObject>();
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
