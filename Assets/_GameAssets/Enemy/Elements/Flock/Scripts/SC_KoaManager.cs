@@ -51,7 +51,6 @@ public class SC_KoaManager : MonoBehaviour
     /// </summary>
     Boid[] _boidsTab; //Tableau contenant les boids
 
-    bool testCoroutine;
 
     /// <summary>
     /// Avant le start, instanciation
@@ -83,7 +82,7 @@ public class SC_KoaManager : MonoBehaviour
             boid.transform.forward = Random.insideUnitSphere; //Rotation random
 
             //Add le boid a la Boid List
-            _boidsTab[i] = boid;
+           
 
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
             boid.Initialize(_curSettings, _guideList[0]);
@@ -97,12 +96,12 @@ public class SC_KoaManager : MonoBehaviour
         if(_koaPrefab != null)
         {
             _koa = NetPSpawnKoa.SpawnKoa();
+            _koa.GetComponent<SC_KoaCollider>().Initialize(this);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         int index = Random.RandomRange(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[index].transform;
-        Debug.Log("_curKoaGuide " + _curKoaGuide);
     }
 
 
@@ -111,7 +110,7 @@ public class SC_KoaManager : MonoBehaviour
         if (_koa != null)
         {
             _koa.transform.position = _curKoaGuide.position;
-            Debug.Log("_curKoaGuide " + _curKoaGuide);
+
         }
     }
 
