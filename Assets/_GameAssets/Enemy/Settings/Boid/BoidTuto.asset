@@ -10,67 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: _TestCoroutine
+  m_Name: BoidTuto
   m_EditorClassIdentifier: 
-  minSpeed: 0
-  maxSpeed: 0
-  perceptionRadius: 0
+  minSpeed: 10
+  maxSpeed: 12
+  perceptionRadius: 1
   avoidanceRadius: 0
-  maxSteerForce: 0
-  alignWeight: 0
-  cohesionWeight: 0
-  seperateWeight: 0
-  targetWeight: 0
+  maxSteerForce: 10
+  alignWeight: 1
+  cohesionWeight: 30
+  seperateWeight: 9
+  targetWeight: 15
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  boundsRadius: 0
-  avoidCollisionWeight: 0
-  collisionAvoidDst: 0
+  boundsRadius: 10
+  avoidCollisionWeight: 10
+  collisionAvoidDst: 1
+  speedOnSpline: 0
   split: 0
-  splitNumber: 20
+  splitNumber: 0
   curveX:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   curveY:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   curveZ:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

@@ -16,7 +16,7 @@ public class SC_EnemyManager : MonoBehaviour
     void Start()
     {
         phaseManager = GetComponent<SC_PhaseManager>();
-
+        Invoke("Initialize", 1);
     }
 
     public void Initialize()
@@ -41,7 +41,7 @@ public class SC_EnemyManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Initialize();
+           
         }
         
     }

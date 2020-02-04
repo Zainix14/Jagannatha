@@ -35,7 +35,7 @@ public class SC_WaveManager : MonoBehaviour
     //---------------------------------------------------------------------//
 
     #region Start/Update
-    void Start()
+    void Awake()
     {
         _FlockList = new List<GameObject>(); //Instantiation de la list de flock
         
@@ -61,13 +61,10 @@ public class SC_WaveManager : MonoBehaviour
     #region Initialize New Wave
     public void InitializeWave(WaveSettings newWaveSettings)
     {
-        
 
         resetVariables();
         _curWaveSettings = newWaveSettings;
         SpawnInitialFlock();
-
-
         waveStarted = true;
         
     }

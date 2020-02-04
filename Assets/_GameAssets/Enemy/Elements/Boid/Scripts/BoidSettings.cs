@@ -4,7 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu]
 public class BoidSettings : ScriptableObject {
-    // Settings
+    
+    [Header("Basic Settings")]
     public float minSpeed = 2;
     public float maxSpeed = 5;
     public float perceptionRadius = 2.5f;
@@ -17,13 +18,18 @@ public class BoidSettings : ScriptableObject {
 
     public float targetWeight = 1;
 
-    [Header ("Collisions")]
+    [Header ("Collisions Settings")]
     public LayerMask obstacleMask;
     public float boundsRadius = .27f;
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
 
-    [Header("Split Curve")]
+
+    [Header("Spline Settings")]
+    public float speedOnSpline;
+
+
+    [Header("Split Settings")]
 
     public bool split;
     public int splitNumber;

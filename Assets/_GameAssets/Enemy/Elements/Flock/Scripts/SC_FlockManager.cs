@@ -24,7 +24,7 @@ public class SC_FlockManager : MonoBehaviour
 
     GameObject _Player;
 
-    [SerializeField]
+    
     BoidSettings[] _BoidSettings; //Contient toute la liste des Settings de boid possible (Comportement)
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
@@ -87,15 +87,17 @@ public class SC_FlockManager : MonoBehaviour
     {
         waveManager = parent;
         flockSettings = newFlockSettings;
+
+
         _Player = GameObject.FindGameObjectWithTag("Player");
+        transform.position = flockSettings.spawnPosition;
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
         _curCurveDistanceList = new List<Vector3>(); // Instanciation de la list de distance sur les courbes pour chaque guide
 
-        //DEBUG
-        transform.position = new Vector3(0, 0, 0);
-
+      
+        _BoidSettings = flockSettings.boidSettings;
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
@@ -230,6 +232,7 @@ public class SC_FlockManager : MonoBehaviour
             {
                 //Change de spline pour passer sur la spline Cercle
                 pathBehavior.OnAttackPlayer(flockSettings.attackDuration);
+                StartNewBehavior(2);
             }
         }
 
@@ -269,6 +272,11 @@ public class SC_FlockManager : MonoBehaviour
     {
 
         _curBoidSetting = _BoidSettings[behaviorIndex];
+        bezierWalker.speed = _curBoidSetting.speedOnSpline;
+        if(_curBoidSetting.speedOnSpline != 0)
+        {
+            pathBehavior.GetOnRandomSpline();
+        }
         Reassemble();
         if (_curBoidSetting.split)
         {

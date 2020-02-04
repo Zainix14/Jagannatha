@@ -10,14 +10,16 @@ public class SC_PhaseManager : MonoBehaviour
 {
     PhaseSettings curPhaseSettings;
     SC_WaveManager waveManager;
+    SC_EnemyManager enemyManager;
     WaveSettings[] waves;
 
 
     int curWaveIndex;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         waveManager = GetComponent<SC_WaveManager>();
+        enemyManager = GetComponent<SC_EnemyManager>();
         resetVariables();
 
     }
@@ -28,6 +30,7 @@ public class SC_PhaseManager : MonoBehaviour
         curPhaseSettings = newPhaseSettigns;
         resetVariables();
         waves = newPhaseSettigns.waves;
+        
         waveManager.InitializeWave(waves[curWaveIndex]);
     }
 
@@ -43,6 +46,10 @@ public class SC_PhaseManager : MonoBehaviour
         if(curWaveIndex<waves.Length)
         {
             waveManager.InitializeWave(waves[curWaveIndex]);
+        }
+        else
+        {
+            enemyManager.EndPhase();
         }
     }
 
