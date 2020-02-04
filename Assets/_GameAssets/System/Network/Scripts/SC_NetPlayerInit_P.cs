@@ -35,17 +35,6 @@ public class SC_NetPlayerInit_P : NetworkBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (isServer && isLocalPlayer)
-        {
-
-            
-
-        }
-    }
-
     void SpawnInit()
     {
         //SyncVariables Manager

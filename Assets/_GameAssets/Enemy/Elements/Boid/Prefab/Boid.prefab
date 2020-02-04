@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2911231201863585201}
   - component: {fileID: 2911231201862586225}
   - component: {fileID: 3105332923154584235}
-  - component: {fileID: 64649603732474460}
-  m_Layer: 0
+  - component: {fileID: 6587646055761558743}
+  m_Layer: 26
   m_Name: Boid
   m_TagString: Ennemi
   m_Icon: {fileID: 0}
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53657e503d7a4738b0a9fa634fc1b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   position: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
   avgFlockHeading: {x: 0, y: 0, z: 0}
@@ -100,8 +101,8 @@ MonoBehaviour:
   centreOfFlockmates: {x: 0, y: 0, z: 0}
   numPerceivedFlockmates: 0
   target: {fileID: 0}
---- !u!64 &64649603732474460
-MeshCollider:
+--- !u!65 &6587646055761558743
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,11 +110,10 @@ MeshCollider:
   m_GameObject: {fileID: 2911231201864782257}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 7cdeef1ccaf2e1f47abb9500466e795c, type: 3}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.5017143}
+  m_Center: {x: 0, y: 0, z: 0.7412359}
 --- !u!96 &3342998873953289504
 TrailRenderer:
   serializedVersion: 2
@@ -853,6 +853,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cone
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -899,15 +903,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28cb8da9598c9b84a916fa66c373fc01, type: 3}
@@ -937,6 +941,34 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
+      propertyPath: m_Layer
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 609eac6cc2b90cc478927eb0c5e91c00, type: 3}
       propertyPath: m_LocalPosition.x

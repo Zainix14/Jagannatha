@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Sur VR Assets | 
@@ -14,8 +15,11 @@ public class SC_DisableVR : MonoBehaviour
     public GameObject VR_Assets;
     public Camera Cam_FPS;
 
+    int n_SceneIndex = 0;
+
     bool b_IsVR = false;
     bool b_IsFPS = false;
+    bool b_IsDiseable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +34,7 @@ public class SC_DisableVR : MonoBehaviour
         if (!b_IsFPS && !b_IsVR)
             GetDeviceState();
 
-        if (b_IsFPS)
+        if (b_IsFPS && !b_IsDiseable)
             DisableVR();
 
     }
@@ -48,8 +52,18 @@ public class SC_DisableVR : MonoBehaviour
 
     void DisableVR()
     {
-        VR_Assets.gameObject.SetActive(false);
-        Cam_FPS.gameObject.SetActive(true);
+
+        n_SceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if(n_SceneIndex != 0)
+        {
+            b_IsDiseable = true;
+            VR_Assets.gameObject.SetActive(false);
+            Cam_FPS.gameObject.SetActive(true);
+        }      
+
+        if(n_SceneIndex == 2 || n_SceneIndex == 4)
+            this.gameObject.SetActive(false);
+
     }
 
 }

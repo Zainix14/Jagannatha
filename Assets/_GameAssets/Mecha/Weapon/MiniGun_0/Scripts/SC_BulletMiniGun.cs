@@ -18,7 +18,14 @@ public class SC_BulletMiniGun : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("MechBullets"))
+        if (other.gameObject.layer == 26)
+            other.GetComponent<Boid>().DestroyBoid();
+
+
+        if (other.gameObject.layer == 25)
+            other.GetComponent<SC_KoaManager>().GetHit();
+
+        if (other.gameObject.layer != 21)
             ResetPos();
     }
 
