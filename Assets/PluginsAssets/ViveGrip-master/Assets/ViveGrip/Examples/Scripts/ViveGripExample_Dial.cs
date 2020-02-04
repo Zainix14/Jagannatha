@@ -234,16 +234,16 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             
             default:
 
-                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 1)
+                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 3)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0.6f);
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 0.3f, 0.1f, 0.8f);
                     oldAngleForSound = joint.angle;
                 }
                 else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 1)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 0.3f, 0.1f, 0.6f);
                     oldAngleForSound = joint.angle;
                 }
 
