@@ -183,6 +183,7 @@ public class Boid : MonoBehaviour {
     
     public void DestroyBoid()
     {
+        transform.position = new Vector3(0, -2000, 0);
         isActive = false;
     }
   
