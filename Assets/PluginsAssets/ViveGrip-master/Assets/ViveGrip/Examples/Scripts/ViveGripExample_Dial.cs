@@ -13,10 +13,15 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     private float oldAngle = 0;
 
+    private float oldAngleForSound = 0;
+
     public float desiredValue = 0;
 
     public bool isEnPanne = false;
     public float precision = 1f;
+
+
+    private CustomSoundManager sc_audio_mng;
 
     enum button
     {
@@ -29,6 +34,8 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     void Start()
     {
         joint = GetComponent<HingeJoint>();
+
+        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
     }
 
     void Update()
@@ -56,7 +63,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
       }
       */
 
-
+        playSound();
         IsValueOk();
     }
 
@@ -199,6 +206,55 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
             }
         }
+
+    }
+
+
+    void playSound()
+    {
+        
+
+
+        switch (bouton)
+        {
+            case button.potar1:
+                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 10)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0f);
+                    oldAngleForSound = joint.angle;
+                }
+                else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 10)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
+                    oldAngleForSound = joint.angle;
+                }
+                break;
+            
+            default:
+
+                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 1)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0.6f);
+                    oldAngleForSound = joint.angle;
+                }
+                else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 1)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
+                    oldAngleForSound = joint.angle;
+                }
+
+                break;
+
+        }
+
+
+        
+
+
 
     }
 
