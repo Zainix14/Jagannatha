@@ -21,7 +21,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public bool isEnPanne = false;
     public float precision = 0.05f;
 
-
+    private GameObject Mng_SyncVar;
     private Rigidbody sliderRigidbody;
 
     private SC_SyncVar_Interactibles sc_syncvar;
@@ -30,26 +30,37 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     button bouton;
 
      enum button
-    {
+     {
         slider1,
         slider2,
         slider3
 
+     }
+
+    void Start ()
+    {
+        oldX = transform.position.x;
+        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
+        GetReferences();
     }
 
-    void Start () {
-    oldX = transform.position.x;
+    void GetReferences()
+    {
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Interactibles>();
+    }
 
-        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
-  }
-
-  void ViveGripGrabStart(ViveGrip_GripPoint gripPoint) {
+    void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
+    {
     controller = gripPoint.controller;
         sliderRigidbody.isKinematic = false;
-  }
+    }
 
-  void ViveGripGrabStop() {
-    controller = null;
+    void ViveGripGrabStop()
+    {
+        controller = null;
         sliderRigidbody.isKinematic = true;
     }
 
@@ -98,7 +109,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         if (sc_syncvar == null)
         {
 
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
@@ -174,7 +185,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
@@ -205,7 +216,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
