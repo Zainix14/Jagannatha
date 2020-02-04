@@ -9,6 +9,8 @@ public class SC_updateDisplay_float : MonoBehaviour
     SC_SyncVar_Interactibles sc_syncvar;
     Text text_component_cur;
 
+    GameObject Mng_SyncVar = null;
+
 
     [SerializeField]
     Text text_component_desired;
@@ -29,15 +31,19 @@ public class SC_updateDisplay_float : MonoBehaviour
     void Start()
     {
         text_component_cur = gameObject.GetComponent<Text>();
+        Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sc_syncvar == null)
+        if (sc_syncvar == null || Mng_SyncVar == null)
         {
-            
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            if(Mng_SyncVar == null)
+                Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+
+            if(Mng_SyncVar != null)
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Interactibles>();
 
         }
         if( sc_syncvar != null)
