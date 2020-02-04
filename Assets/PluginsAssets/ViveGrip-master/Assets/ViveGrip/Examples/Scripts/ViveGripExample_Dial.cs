@@ -6,6 +6,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     public Transform attachedLight;
     private HingeJoint joint;
 
+    private GameObject Mng_SyncVar;
     private SC_SyncVar_Interactibles sc_syncvar;
 
     [SerializeField]
@@ -29,6 +30,15 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     void Start()
     {
         joint = GetComponent<HingeJoint>();
+        GetReferences();
+    }
+
+    void GetReferences()
+    {
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Interactibles>();
     }
 
     void Update()
@@ -67,7 +77,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         if (sc_syncvar == null)
         {
 
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
@@ -145,7 +155,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
@@ -175,7 +185,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {

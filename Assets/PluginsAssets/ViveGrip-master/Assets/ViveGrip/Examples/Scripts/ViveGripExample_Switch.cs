@@ -10,7 +10,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     private bool desiredValue = false;
 
-
+    private GameObject Mng_SyncVar;
     private SC_SyncVar_Interactibles sc_syncvar;
 
     [SerializeField]
@@ -24,9 +24,20 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     }
 
-    void Start() {}
+    void Start()
+    {
+        GetReferences();
+    }
 
-  public void Flip() {
+    void GetReferences()
+    {
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Interactibles>();
+    }
+
+    public void Flip() {
     Vector3 rotation = transform.localEulerAngles;
     rotation.x *= -1;
     transform.localEulerAngles = rotation;
@@ -51,7 +62,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (sc_syncvar == null)
         {
 
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
@@ -108,7 +119,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
@@ -133,7 +144,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
             if (sc_syncvar == null)
             {
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+                GetReferences();
             }
             else
             {
