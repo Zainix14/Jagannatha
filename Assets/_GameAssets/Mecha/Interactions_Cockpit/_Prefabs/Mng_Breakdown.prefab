@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2653310943489722879}
+  - component: {fileID: 3475608641703514830}
   m_Layer: 9
   m_Name: Mng_Breakdown
-  m_TagString: Untagged
+  m_TagString: Mng_BreakdownMain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,6 +33,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3475608641703514830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672966092027048479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5acd2263c3b9bb84a9009f71e7ac7563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mng_BreakDownAlert: {fileID: 8390699471288869159}
+  Mng_BreakDownTest: {fileID: 0}
+  b_BreakMove: 0
+  b_BreakScreen: 0
+  b_BreakWeapons: 0
+  b_BreakMiniGun: 0
+  b_BreakFlameThrower: 0
+  b_BreakShrapnel: 0
 --- !u!114 &1273988173987932671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d03f9a0d4b694cbc0108cd653f68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_BreakdownTest: 0
   interactible: []
 --- !u!1001 &5975366570111625890
 PrefabInstance:
@@ -174,6 +196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 124fb8fe8a52dc94c8c4f8eff935dc9e, type: 3}
+--- !u!1 &8390699471288869159 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2782385135755217797, guid: 124fb8fe8a52dc94c8c4f8eff935dc9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5975366570111625890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8390699471288869156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2782385135755217798, guid: 124fb8fe8a52dc94c8c4f8eff935dc9e,
