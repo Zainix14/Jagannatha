@@ -7,12 +7,15 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
     public bool b_BreakdownTest = false;
 
+    private IF_BreakdownManager Mng_BreakdownMain;
+
     [SerializeField]
     public GameObject[] interactible;
 
     // Start is called before the first frame update
     void Start()
     {
+        Mng_BreakdownMain = this.transform.parent.gameObject.GetComponent<IF_BreakdownManager>();
         interactible = GameObject.FindGameObjectsWithTag("Interactible");
     }
 
@@ -79,10 +82,17 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
             }
         }
 
-        if (n_BreakdownValue > 2)
+
+        if (n_BreakdownValue > 2 && !b_BreakdownTest)
+        {
             b_BreakdownTest = true;
-        else
+            Mng_BreakdownMain.CheckBreakdown();
+        }          
+        else if (n_BreakdownValue <= 2 && b_BreakdownTest)
+        {
             b_BreakdownTest = false;
+            Mng_BreakdownMain.CheckBreakdown();
+        }           
 
     }
 
