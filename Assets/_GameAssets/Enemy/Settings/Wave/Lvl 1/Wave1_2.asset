@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f853b98b2e469d4682403b69d26ee96, type: 3}
-  m_Name: _TestWaveSettings
+  m_Name: Wave1_2
   m_EditorClassIdentifier: 
   initialSpawnFlockType:
-  - {fileID: 11400000, guid: faa6b3f3e11907a43818f49507796a71, type: 2}
+  - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
   initialSpawnFlockQuantity: 01000000
-  backup: 0
+  backup: 1
   backupSpawnFlockType:
-  - {fileID: 11400000, guid: faa6b3f3e11907a43818f49507796a71, type: 2}
-  backupSpawnFlockQuantity: 05000000
-  timeBeforeBackup: 5
+  - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
+  backupSpawnFlockQuantity: 01000000
+  timeBeforeBackup: 50
   flockLeftBeforeBackup: -1

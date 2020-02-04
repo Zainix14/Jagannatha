@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: settingsMononoke 1
+  m_Name: settingsImplosion
   m_EditorClassIdentifier: 
-  minSpeed: 25
-  maxSpeed: 50
-  perceptionRadius: 1
-  avoidanceRadius: 10
-  maxSteerForce: 2
-  alignWeight: 1
-  cohesionWeight: 9.12
-  seperateWeight: 9.7
-  targetWeight: 10
+  minSpeed: 4.32
+  maxSpeed: 9.89
+  perceptionRadius: 2.5
+  avoidanceRadius: 1
+  maxSteerForce: 5.51
+  alignWeight: -2.33
+  cohesionWeight: 3.77
+  seperateWeight: 4.46
+  targetWeight: 7.91
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1024
   boundsRadius: 5.74
   avoidCollisionWeight: 3.66
   collisionAvoidDst: 2.87
+  speedOnSpline: 0
   split: 0
   splitNumber: 0
   curveX:
