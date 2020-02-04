@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SC_SyncVar_Interactibles : NetworkBehaviour
+public class SC_SyncVar_BreakdownTest : NetworkBehaviour
 {
 
     [SyncVar]
