@@ -14,13 +14,6 @@ public class SC_KoaManager : MonoBehaviour
     GameObject NetPlayerP;
     SC_NetPSpawnKoa_P NetPSpawnKoa;
 
-    //Tkt ca marche
-    const int threadGroupSize = 3;
-
-    int coroutineCount = 0;
-
-    [SerializeField]
-    Boid _boidPrefab; //Prefab du boid
 
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
@@ -33,8 +26,6 @@ public class SC_KoaManager : MonoBehaviour
     /// </summary>
     BoidSettings _curSettings; //Paramètres dans le scriptableObject Settings
 
-    [SerializeField]
-    ComputeShader compute;
     //public ComputeShader compute; //Shader
     SC_FlockManager flockManager;
     /// <summary>
@@ -102,6 +93,7 @@ public class SC_KoaManager : MonoBehaviour
 
         int index = Random.RandomRange(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[index].transform;
+
     }
 
 
@@ -200,4 +192,5 @@ public class SC_KoaManager : MonoBehaviour
         Destroy(this.gameObject);
 
     }
+
 }

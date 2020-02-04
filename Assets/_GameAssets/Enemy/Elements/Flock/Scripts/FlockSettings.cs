@@ -8,6 +8,8 @@ public class FlockSettings : ScriptableObject
     [Header ("Attack")]
     public bool attackCity;
     public bool attackPlayer;
+
+    
     
     public enum PathPreference
     {
@@ -19,6 +21,9 @@ public class FlockSettings : ScriptableObject
 
     [Tooltip("inSecond")]
     public int timeBeforeAttack;
+
+    [Tooltip("inSecond")]
+    public float attackDuration;
 
     [Header("Boids")]
 

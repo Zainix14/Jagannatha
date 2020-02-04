@@ -45,6 +45,9 @@ public class SC_PathBehavior : MonoBehaviour
     int PathPreference; //0 si le flock priorise le passage par les lignes lors d'une attaque (plus rapide), 1 si c'est les cercles qui sont priorisé
 
 
+    float curAttackDuration;
+    float totalAttackDuration;
+
     [SerializeField]
     float DistanceChangeSpline; //Distance à partir de laquelle le flock change de spline lorsqu'il se rapporche d'une intersection a prendre
 
@@ -57,7 +60,8 @@ public class SC_PathBehavior : MonoBehaviour
     {
         Circle,
         Line,
-        AttackPath
+        AttackPath,
+        PlayerPath
     }
 
     PathType _curPathType; //Type de spline surlequel le flock se déplace actuellement
@@ -124,11 +128,7 @@ public class SC_PathBehavior : MonoBehaviour
 
     void Update()
     {
-        //----------DEBUG 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            OnAttack(2);
-
-        //----------DEBUG 
+ 
 
 
         //Update des condition de changement de spline en fonction de la spline actuel 
@@ -143,7 +143,11 @@ public class SC_PathBehavior : MonoBehaviour
                 break;
 
             case PathType.AttackPath:
-                PathUpdateAttack();
+                //PathUpdatePlayerAttack();
+                break;
+
+            case PathType.PlayerPath:
+                PathUpdatePlayerAttack();
                 break;
         }
 
@@ -206,6 +210,8 @@ public class SC_PathBehavior : MonoBehaviour
                 GetOnLineSpline(nextIndex);
             }
         }
+
+        /*
         //Si le flock doit aller sur une spline d'attaque et qu'il est sur le bon index de cercle où ce situe l'entrée de la spline
         else if(isAttacking)
         {
@@ -221,7 +227,7 @@ public class SC_PathBehavior : MonoBehaviour
                 SC_bezier.MovingForward = true;
                 GetOnAttackSpline(newAttackPathIndex);
             }
-        }
+        }*/
     }
 
     /// <summary>
@@ -246,10 +252,15 @@ public class SC_PathBehavior : MonoBehaviour
     /// <summary>
     /// Update lorsque la spline suivi est une Attack, permet de check les conditions de sortie
     /// </summary>
-    void PathUpdateAttack()
+    void PathUpdatePlayerAttack()
     {
-
+        curAttackDuration += Time.deltaTime;
+        if(curAttackDuration >= totalAttackDuration)
+        {
+            GetOnCircleSpline(0);
+        }
     }
+
     #endregion
     /////////////////////////////////////////////////////////////////////////
 
@@ -299,6 +310,16 @@ public class SC_PathBehavior : MonoBehaviour
         SC_bezier.SetNewSpline(curSpline);
 
     }
+
+    void GetOnPlayerSpline(int splineIndex)
+    {
+        _curPathType = PathType.PlayerPath;
+        SC_bezier.travelMode = BezierSolution.TravelMode.Loop;
+        curSpline = _attackSplineTab[splineIndex];
+        SC_bezier.SetNewSpline(curSpline);
+    }
+
+
     #endregion
     /////////////////////////////////////////////////////////////////////////
 
@@ -342,8 +363,18 @@ public class SC_PathBehavior : MonoBehaviour
         isAttacking = true;
     }
 
+    public void OnAttackPlayer(float attackDuration)
+    {
+        isAttacking = true;
+        curAttackDuration = 0;
+        totalAttackDuration = attackDuration;
+        GetOnPlayerSpline(0);
+
+    }
+
     public void OnStopPath()
     {
+        curSpline = null;
         SC_bezier.SetNewSpline(null);
     }
     /////////////////////////////////////////////////////////////////////////
