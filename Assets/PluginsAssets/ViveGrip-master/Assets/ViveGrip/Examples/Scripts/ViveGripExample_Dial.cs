@@ -23,12 +23,24 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     private CustomSoundManager sc_audio_mng;
 
+    private ViveGrip_ControllerHandler controller;
+
     enum button
     {
         potar1,
         potar2,
         potar3
 
+    }
+
+    void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
+    {
+        controller = gripPoint.controller;
+    }
+
+    void ViveGripGrabStop()
+    {
+        controller = null;
     }
 
     void Start()
@@ -223,12 +235,19 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
                     sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0f);
                     oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(50, 0.2f);
+
                 }
                 else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 10)
                 {
 
                     sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
                     oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(50, 0.2f);
                 }
                 break;
             
@@ -239,12 +258,18 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
                     sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0.6f);
                     oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(30, 0.1f);
                 }
                 else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 1)
                 {
 
                     sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
                     oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(30, 0.1f);
                 }
 
                 break;
