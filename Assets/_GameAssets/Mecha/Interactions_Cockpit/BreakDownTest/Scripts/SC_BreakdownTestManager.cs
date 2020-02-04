@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_BreakdownManager : MonoBehaviour
+public class SC_BreakdownTestManager : MonoBehaviour
 {
+
+    public bool b_BreakdownTest = false;
+
     [SerializeField]
     public GameObject[] interactible;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,4 +65,25 @@ public class SC_BreakdownManager : MonoBehaviour
             }
         }
     }
+
+    void CheckBreakdownTest()
+    {
+
+        int n_BreakdownValue = 0;
+
+        for (int j = 0; j < interactible.Length; j++)
+        {
+            if (!interactible[j].GetComponent<IInteractible>().isBreakdown())
+            {
+                n_BreakdownValue++;
+            }
+        }
+
+        if (n_BreakdownValue > 2)
+            b_BreakdownTest = true;
+        else
+            b_BreakdownTest = false;
+
+    }
+
 }

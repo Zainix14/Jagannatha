@@ -37,17 +37,18 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
             sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
     }
 
-    public void Flip() {
-    Vector3 rotation = transform.localEulerAngles;
-    rotation.x *= -1;
-    transform.localEulerAngles = rotation;
+    public void Flip()
+    {
+        Vector3 rotation = transform.localEulerAngles;
+        rotation.x *= -1;
+        transform.localEulerAngles = rotation;
 
 
         curState = !curState;
         sendToSynchVar(curState);
 
 
-  }
+    }
 
     public bool isBreakdown()
     {
@@ -81,9 +82,6 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
 
     }
-
-
-
 
     public void ChangeDesired()
     {
