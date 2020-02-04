@@ -35,6 +35,20 @@ public class SC_SyncVar_Interactibles : NetworkBehaviour
     [SyncVar]
     public bool potar1isEnPanne = false;
 
+    [SyncVar]
+    public float potar2value = 0;
+    [SyncVar]
+    public float potar2valueWanted = 0;
+    [SyncVar]
+    public bool potar2isEnPanne = false;
+
+    [SyncVar]
+    public float potar3value = 0;
+    [SyncVar]
+    public float potar3valueWanted = 0;
+    [SyncVar]
+    public bool potar3isEnPanne = false;
+
 
     [SyncVar]
     public bool inter1value = false;

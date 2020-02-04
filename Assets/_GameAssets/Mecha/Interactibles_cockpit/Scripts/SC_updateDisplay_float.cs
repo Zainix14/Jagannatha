@@ -22,6 +22,8 @@ public class SC_updateDisplay_float : MonoBehaviour
         slider2,
         slider3,
         potar1,
+        potar2,
+        potar3,
         inter1,
     }
 
@@ -96,6 +98,38 @@ public class SC_updateDisplay_float : MonoBehaviour
                     text_component_cur.text = sc_syncvar.potar1value.ToString();
                     text_component_desired.text = sc_syncvar.potar1valueWanted.ToString();
                     if (sc_syncvar.potar1isEnPanne)
+                    {
+                        text_component_cur.color = Color.red;
+                        text_component_desired.color = Color.red;
+                    }
+                    else
+                    {
+
+                        text_component_cur.color = Color.green;
+                        text_component_desired.color = Color.green;
+                    }
+                    break;
+
+                case button.potar2:
+                    text_component_cur.text = sc_syncvar.potar2value.ToString();
+                    text_component_desired.text = sc_syncvar.potar2valueWanted.ToString();
+                    if (sc_syncvar.potar2isEnPanne)
+                    {
+                        text_component_cur.color = Color.red;
+                        text_component_desired.color = Color.red;
+                    }
+                    else
+                    {
+
+                        text_component_cur.color = Color.green;
+                        text_component_desired.color = Color.green;
+                    }
+                    break;
+
+                case button.potar3:
+                    text_component_cur.text = sc_syncvar.potar3value.ToString();
+                    text_component_desired.text = sc_syncvar.potar3valueWanted.ToString();
+                    if (sc_syncvar.potar3isEnPanne)
                     {
                         text_component_cur.color = Color.red;
                         text_component_desired.color = Color.red;
