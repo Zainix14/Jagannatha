@@ -77,6 +77,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 case button.potar1:
                     sc_syncvar.potar1value = Mathf.Round(value*100f)/100f ;
                     break;
+                case button.potar2:
+                    sc_syncvar.potar2value = Mathf.Round(value * 100f) / 100f;
+                    break;
+                case button.potar3:
+                    sc_syncvar.potar3value = Mathf.Round(value * 100f) / 100f;
+                    break;
                 default:
                     break;
 
@@ -106,6 +112,14 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             case button.potar1:
                 sc_syncvar.potar1valueWanted = desiredValue;
                 sc_syncvar.potar1isEnPanne = true;
+                break;
+            case button.potar2:
+                sc_syncvar.potar2valueWanted = desiredValue;
+                sc_syncvar.potar2isEnPanne = true;
+                break;
+            case button.potar3:
+                sc_syncvar.potar3valueWanted = desiredValue;
+                sc_syncvar.potar3isEnPanne = true;
                 break;
             default:
                 break;
@@ -140,6 +154,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                     case button.potar1:
                         sc_syncvar.potar1isEnPanne = false;
                         break;
+                    case button.potar2:
+                        sc_syncvar.potar2isEnPanne = false;
+                        break;
+                    case button.potar3:
+                        sc_syncvar.potar3isEnPanne = false;
+                        break;
                     default:
                         break;
 
@@ -164,6 +184,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 {
                     case button.potar1:
                         sc_syncvar.potar1isEnPanne = true;
+                        break;
+                    case button.potar2:
+                        sc_syncvar.potar2isEnPanne = true;
+                        break;
+                    case button.potar3:
+                        sc_syncvar.potar3isEnPanne = true;
                         break;
                     default:
                         break;
