@@ -31,7 +31,8 @@ public class SC_AttackPathInfo : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y +55, Player.transform.position.z);
+        if (Player != null)
+            transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y +55, Player.transform.position.z);
     }
 
 
