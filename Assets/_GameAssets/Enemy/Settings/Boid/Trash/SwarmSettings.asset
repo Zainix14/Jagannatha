@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: Settings 2
+  m_Name: SwarmSettings
   m_EditorClassIdentifier: 
-  minSpeed: 7.8
-  maxSpeed: 19.74
-  perceptionRadius: 1
-  avoidanceRadius: 2.44
-  maxSteerForce: 7.75
-  alignWeight: -2.9
-  cohesionWeight: 0.37
-  seperateWeight: 3.44
-  targetWeight: 8.98
+  minSpeed: 15
+  maxSpeed: 20
+  perceptionRadius: 2
+  avoidanceRadius: 8
+  maxSteerForce: 11
+  alignWeight: 1
+  cohesionWeight: 0.1
+  seperateWeight: 10
+  targetWeight: 9.84
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1536
-  boundsRadius: 0.43
-  avoidCollisionWeight: 3.48
-  collisionAvoidDst: 4.96
+    m_Bits: 1024
+  boundsRadius: 10
+  avoidCollisionWeight: 10
+  collisionAvoidDst: 1
+  speedOnSpline: 0
   split: 0
   splitNumber: 0
   curveX:
