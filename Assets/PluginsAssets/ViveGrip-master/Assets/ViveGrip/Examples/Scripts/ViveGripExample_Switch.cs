@@ -103,51 +103,67 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     public void IsValueOk()
     {
-        if (desiredValue == curState && isEnPanne)
+        if (desiredValue == curState)
         {
 
-            SetIsEnPanne(false);
-
-            if (sc_syncvar != null)
+            if (isEnPanne)
             {
-                switch (bouton)
+                
+
+                if (sc_syncvar != null)
                 {
-                    case button.inter1:
-                        sc_syncvar.inter1isEnPanne = false;
-                        break;
-                    default:
-                        break;
+
+                    SetIsEnPanne(false);
+
+                    switch (bouton)
+                    {
+                        case button.inter1:
+                            sc_syncvar.inter1isEnPanne = false;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    GetReferences();
             }
-            else
-                GetReferences();
+
+            
 
         }
-        else if(!isEnPanne)
+        else 
         {
 
-            SetIsEnPanne(true);
-
-            if (sc_syncvar == null)
+            if (!isEnPanne)
             {
-                switch (bouton)
-                {
-                    case button.inter1:
-                        sc_syncvar.inter1isEnPanne = true;
-                        break;
-                    default:
-                        break;
+                
 
+                if (sc_syncvar != null)
+                {
+                    SetIsEnPanne(true);
+
+                    switch (bouton)
+                    {
+                        case button.inter1:
+                            sc_syncvar.inter1isEnPanne = true;
+                            break;
+                        default:
+                            break;
+
+                    }
                 }
+                else
+                    GetReferences();
             }
-            else
-                GetReferences();
+
+            
 
         }
     }
  
     void SetIsEnPanne(bool value)
     {
+        Debug.Log("Switch - SetIsPanne");
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }

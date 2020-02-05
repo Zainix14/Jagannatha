@@ -86,8 +86,6 @@ public class SC_PathBehavior : MonoBehaviour
 
         InitTab(); //initialise tout les tableaux
 
-        Debug.Log("InitBabe");
-         
         //Premier comportement quand la nuée est spawn
         curCircleIndex = 0;
         newCircleIndex =0;
@@ -376,7 +374,6 @@ public class SC_PathBehavior : MonoBehaviour
     }
     public void GetOnRandomSpline()
     {
-        Debug.Log("GetOnRandomSpline");
         int rnd = Random.Range(0, _circleSplineTab.Length);
         GetOnCircleSpline(rnd);
 
