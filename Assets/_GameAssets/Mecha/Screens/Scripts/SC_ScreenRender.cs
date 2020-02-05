@@ -8,9 +8,16 @@ using UnityEngine.UI;
 /// Met la Render Texture 2D sur le material | 
 /// Script by Leni |
 /// </summary>
-public class SC_ScreenRender : MonoBehaviour
+public class SC_ScreenRender : MonoBehaviour, IF_BreakdownSystem
 {
 
+    bool b_InBreakdown = false;
+    bool b_BreakEngine = false;
+
+    bool b_IsBreak = false;
+    bool b_IsActive = false;
+
+    public Texture BreakDownTexture;
     public RenderTexture equirect;
     public Renderer renderer;
 
@@ -20,10 +27,38 @@ public class SC_ScreenRender : MonoBehaviour
         SetEquidirect();
     }
 
+    void Update()
+    {
+        if(!b_InBreakdown && !b_IsActive)
+            SetEquidirect();
+        if (b_InBreakdown && !b_IsBreak)
+            SetBreakdownState();
+    }
+
     void SetEquidirect()
     {
+        b_IsBreak = false;
+        b_IsActive = true;
         renderer = this.GetComponent<Renderer>();
         renderer.material.SetTexture("_MainTex", equirect);
+    }
+
+    void SetBreakdownState()
+    {
+        b_IsBreak = true;
+        b_IsActive = false;
+        renderer = this.GetComponent<Renderer>();
+        renderer.material.SetTexture("_MainTex", BreakDownTexture);
+    }
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State)
+    {
+        b_BreakEngine = State;
     }
 
 }

@@ -22,4 +22,19 @@ public class SC_CheckList_Weapons : MonoBehaviour
         return TargetHand;
     }
 
+    public GameObject GetMiniGun()
+    {
+        return MiniGun;
+    }
+
+    public GameObject GetShrapnel()
+    {
+        return Shrapnel;
+    }
+
+    public GameObject GetFlameThrower()
+    {
+        return FlameThrower;
+    }
+
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_WeaponManager : MonoBehaviour
+public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 {
+
+    bool b_InBreakdown = false;
+    bool b_BreakEngine = false;
 
     bool b_AlreadyCheck = false;
 
@@ -39,7 +42,7 @@ public class SC_WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !b_BreakEngine)
             Fire();
     }
 
@@ -74,16 +77,31 @@ public class SC_WeaponManager : MonoBehaviour
     public void SetWeapon(int n_Index)
     {
 
-        n_CurWeapon = n_Index;
-
-        for (int i = 0; i < tab_Weapons.Length; i++)
+        if (!b_InBreakdown)
         {
-            if (i == n_Index)
-                tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = true;
-            else
-                tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = false;
-        }
 
+            n_CurWeapon = n_Index;
+
+            for (int i = 0; i < tab_Weapons.Length; i++)
+            {
+                if (i == n_Index)
+                    tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = true;
+                else
+                    tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = false;
+            }
+
+        }
+       
+    }
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State)
+    {
+        b_BreakEngine = State;
     }
 
 }
