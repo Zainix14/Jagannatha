@@ -21,6 +21,7 @@ public class SC_WeaponManager : MonoBehaviour
     {
         IsCheck();
         CreateWeapon();
+        CheckWeapon();
         SetWeapon(n_CurWeapon);
     }
 
@@ -50,6 +51,14 @@ public class SC_WeaponManager : MonoBehaviour
         }
     }
 
+    void CheckWeapon()
+    {
+        for (int i = 0; i < tab_Weapons.Length; i++)
+        {
+            tab_Weapons[i].SetActive(true);
+        }
+    }
+
     void Fire()
     {
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
@@ -70,9 +79,9 @@ public class SC_WeaponManager : MonoBehaviour
         for (int i = 0; i < tab_Weapons.Length; i++)
         {
             if (i == n_Index)
-                tab_Weapons[i].SetActive(true);
+                tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = true;
             else
-                tab_Weapons[i].SetActive(false);
+                tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = false;
         }
 
     }

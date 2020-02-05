@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_CheckCamVR : MonoBehaviour
+public class SC_ScreensChecking : MonoBehaviour
 {
 
     GameObject Mng_CheckList = null;
@@ -27,9 +27,9 @@ public class SC_CheckCamVR : MonoBehaviour
     void IsCheck()
     {
         if (Mng_CheckList != null)
-            Mng_CheckList.GetComponent<SC_CheckList>().Cam_VR = this.gameObject.GetComponent<Camera>();
+            Mng_CheckList.GetComponent<SC_CheckList_ViewAiming>().Screens = this.gameObject;
         else
-            Debug.LogWarning("SC_TargetCheking - Can't Find Mng_CheckList");
+            Debug.LogWarning("SC_ScreensChecking - Can't Find Mng_CheckList");
     }
 
 }
