@@ -50,8 +50,6 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         joint = GetComponent<HingeJoint>();
 
 
-        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
-
         GetReferences();
     }
 
@@ -91,6 +89,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
       }
       */
 
+
         playSound();
         IsValueOk();
     }
@@ -129,8 +128,6 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         {
             desiredValue = Random.Range(-70f,70f);
         }
-
-        Debug.Log("Dial - 1");
         SetIsEnPanne(true);
 
         switch (bouton)
@@ -167,7 +164,6 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         {
             if (isEnPanne)
             {
-                Debug.Log("Dial - 2");
                 
 
                 if (sc_syncvar != null)
@@ -201,7 +197,6 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             
             if (!isEnPanne)
             {
-                Debug.Log("Dial - 3");
                 
 
                 if (sc_syncvar != null)
@@ -250,7 +245,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 10)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0f);
+                    CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0f);
                     oldAngleForSound = joint.angle;
 
                     if (controller != null)
@@ -260,7 +255,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 10)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
+                    CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
                     oldAngleForSound = joint.angle;
 
                     if (controller != null)
@@ -273,7 +268,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 3)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 0.3f, 0.1f, 0.8f);
+                    CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 0.3f, 0.1f, 0.8f);
                     oldAngleForSound = joint.angle;
 
                     if (controller != null)
@@ -282,7 +277,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                 else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 1)
                 {
 
-                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 0.3f, 0.1f, 0.6f);
+                    CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 0.3f, 0.1f, 0.6f);
                     oldAngleForSound = joint.angle;
 
                     if (controller != null)
