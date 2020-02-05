@@ -22,7 +22,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
     // Start is called before the first frame update
     void Awake()
     {
-                CreateBulletPull();
+        CreateBulletPull();
     }
 
     void CreateBulletPull()

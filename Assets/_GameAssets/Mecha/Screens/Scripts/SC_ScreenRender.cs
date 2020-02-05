@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// Met la Render Texture 2D sur le material | 
 /// Script by Leni |
 /// </summary>
-public class SC_SetScreenRenderMat : MonoBehaviour
+public class SC_ScreenRender : MonoBehaviour
 {
 
     public RenderTexture equirect;
@@ -16,6 +16,11 @@ public class SC_SetScreenRenderMat : MonoBehaviour
 
     // Use this for initialization
     void Start()
+    {
+        SetEquidirect();
+    }
+
+    void SetEquidirect()
     {
         renderer = this.GetComponent<Renderer>();
         renderer.material.SetTexture("_MainTex", equirect);

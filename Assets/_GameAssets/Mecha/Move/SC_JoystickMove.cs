@@ -31,6 +31,11 @@ public class SC_JoystickMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+    void Move()
+    {
 
         //donne une impulsion en proportion à l'axe du joystick
         float f_ImpulseZ = Input.GetAxis("Vertical") * f_Speed;

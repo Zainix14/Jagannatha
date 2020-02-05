@@ -17,9 +17,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public bool b_BreakScreen = false;
 
     public bool b_BreakWeapons = false;
-    public bool b_BreakMiniGun = false;
-    public bool b_BreakFlameThrower = false;
+
+    public bool b_BreakMiniGun = false;  
     public bool b_BreakShrapnel = false;
+    public bool b_BreakFlameThrower = false;
 
 
     // Start is called before the first frame update
@@ -36,8 +37,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     public void CheckBreakdown()
     {
-        //Debug.Log("babar");
 
+        //Engine
         if(b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
         {
             b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
@@ -46,6 +47,25 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             else if (!b_BreakEngine)
                 SC_BreakDownAlert.StopGlobalAlert();
         }
+
+        //Move
+
+
+        //Screen
+
+
+        //Weapons
+
+
+        //MiniGun
+
+
+        //Shrapnel
+
+
+        //FlameThrower
+
+
     }
 
 }
