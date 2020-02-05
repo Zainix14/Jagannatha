@@ -6,6 +6,7 @@ public class SC_FollowHand : MonoBehaviour
 {
 
     bool b_AlreadyCheck = false;
+    public bool b_OnFollow = false;
 
     public enum RotationType { LookAt, SyncRot }
 
@@ -28,14 +29,17 @@ public class SC_FollowHand : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
 
-        if (TargetHand != null && RotationMode == RotationType.SyncRot)
+        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.SyncRot)
             SetPos();
 
-        if (TargetHand != null && RotationMode == RotationType.LookAt)
+        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.LookAt)
             SetPosII();
+
+        if (!b_OnFollow && this.transform.position.y >= 0)
+            ResetPos();
 
     }
 
@@ -58,6 +62,11 @@ public class SC_FollowHand : MonoBehaviour
         if (TargetHand == null)
             Debug.LogWarning("SC_FollowHand - Can't Find TargetLimb");
 
+    }
+
+    void ResetPos()
+    {
+        this.transform.position = new Vector3(0, -100, 0);
     }
 
     void SetPos()

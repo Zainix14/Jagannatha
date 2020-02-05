@@ -7,8 +7,10 @@ using UnityEngine;
 /// Gère le type de Tir |
 /// By Cycy modif par Leni |
 /// </summary>
-public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
+public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
+
+    bool b_InBreakdown = false;
 
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
@@ -60,7 +62,8 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
         if (timer > (1 / frequency))
         {
             timer = 0;
-            Fire();
+            if (!b_InBreakdown)
+                Fire();
         }
 
         timer += Time.deltaTime;
@@ -85,7 +88,16 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
 
         if (n_CurBullet>=n_BulletMagazine)
             n_CurBullet = 0;
- 
+
+        CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.8f);
+
     } 
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State) { }
 
 }
