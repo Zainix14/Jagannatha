@@ -13,10 +13,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public bool b_BreakEngine = false;
 
     public bool b_BreakMove = false;
+
     public bool b_BreakScreen = false;
 
     public bool b_BreakWeapons = false;
-
     public bool b_BreakMiniGun = false;
     public bool b_BreakFlameThrower = false;
     public bool b_BreakShrapnel = false;

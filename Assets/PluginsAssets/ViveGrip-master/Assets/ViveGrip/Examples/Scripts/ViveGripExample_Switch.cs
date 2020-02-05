@@ -10,9 +10,15 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     private bool desiredValue = false;
 
+
+    private CustomSoundManager sc_audio_mng;
+
+
+
     private GameObject Mng_SyncVar;
     private SC_SyncVar_BreakdownTest sc_syncvar;
     public GameObject LocalBreakdownMng;
+
 
     [SerializeField]
     button bouton;
@@ -25,9 +31,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     }
 
-    void Start()
-    {
+
+    void Start() {
+
+        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
         GetReferences();
+
     }
 
     void GetReferences()
@@ -42,6 +51,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     public void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Flip();
+        }
+
         IsValueOk();
     }
 
@@ -55,7 +70,26 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         curState = !curState;
         sendToSynchVar(curState);
 
-    }
+
+
+
+
+
+        //SON
+        if (curState == false)
+        {
+            sc_audio_mng.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, 0.05f, 0.5f);
+        }
+        else
+        {
+            sc_audio_mng.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, 0.05f, 0.4f);
+        }
+        
+
+
+  }
+
+
 
     public bool isBreakdown()
     {
@@ -160,12 +194,14 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
         }
     }
+
  
     void SetIsEnPanne(bool value)
     {
         Debug.Log("Switch - SetIsPanne");
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
+
     }
 
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SC_CheckList_ViewAiming : MonoBehaviour
 {
 
+    public GameObject Screens = null;
     public GameObject Target = null;
 
     public GameObject GetTarget()

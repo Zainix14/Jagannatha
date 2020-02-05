@@ -15,10 +15,17 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     private float oldAngle = 0;
 
+    private float oldAngleForSound = 0;
+
     public float desiredValue = 0;
 
     public bool isEnPanne = false;
     public float precision = 1f;
+
+
+    private CustomSoundManager sc_audio_mng;
+
+    private ViveGrip_ControllerHandler controller;
 
     enum button
     {
@@ -28,9 +35,23 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     }
 
+    void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
+    {
+        controller = gripPoint.controller;
+    }
+
+    void ViveGripGrabStop()
+    {
+        controller = null;
+    }
+
     void Start()
     {
         joint = GetComponent<HingeJoint>();
+
+
+        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
+
         GetReferences();
     }
 
@@ -42,6 +63,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
             sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+
     }
 
     void Update()
@@ -69,7 +91,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
       }
       */
 
-
+        playSound();
         IsValueOk();
     }
 
@@ -216,5 +238,67 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }
+
+    void playSound()
+    {
+        
+
+
+        switch (bouton)
+        {
+            case button.potar1:
+                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 10)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 1, 0.1f, 0f);
+                    oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(50, 0.2f);
+
+                }
+                else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 10)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 1, 0.1f, 0.4f);
+                    oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(50, 0.2f);
+                }
+                break;
+            
+            default:
+
+                if (oldAngleForSound > joint.angle && Mathf.Abs(oldAngleForSound - joint.angle) >= 3)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_1", false, 0.3f, 0.1f, 0.8f);
+                    oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(30, 0.1f);
+                }
+                else if (oldAngleForSound < joint.angle && Mathf.Abs(joint.angle - oldAngleForSound) >= 1)
+                {
+
+                    sc_audio_mng.PlaySound(gameObject, "SFX_p_potentiometer_2", false, 0.3f, 0.1f, 0.6f);
+                    oldAngleForSound = joint.angle;
+
+                    if (controller != null)
+                        controller.Vibrate(30, 0.1f);
+                }
+
+                break;
+
+        }
+
+
+        
+
+
+
+    }
+
 
 }
