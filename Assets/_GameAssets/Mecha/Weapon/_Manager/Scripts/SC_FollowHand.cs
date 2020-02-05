@@ -29,7 +29,7 @@ public class SC_FollowHand : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
 
         if (b_OnFollow && TargetHand != null && RotationMode == RotationType.SyncRot)
