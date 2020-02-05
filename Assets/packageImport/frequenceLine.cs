@@ -35,7 +35,8 @@ public class frequenceLine : MonoBehaviour
     int speed = 1;
 
     GameObject Mng_SyncVar = null;
-    SC_SyncVar_Interactibles sc_syncvar;
+    SC_SyncVar_BreakdownTest sc_syncvar;
+
     void Start()
     {
         line = this.gameObject.GetComponent<LineRenderer>(); //Stockage de lui-meme
@@ -55,7 +56,7 @@ public class frequenceLine : MonoBehaviour
                 Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
 
             if (Mng_SyncVar != null)
-                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Interactibles>();
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
 
         }
         if (sc_syncvar != null)
