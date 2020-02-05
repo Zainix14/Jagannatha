@@ -25,10 +25,14 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
 
+
+    private CustomSoundManager sc_audio_mng;//sound manager
+
     // Start is called before the first frame update
     void Awake()
     {
         CreateBulletPull();
+        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
     }
 
     void CreateBulletPull()
@@ -85,7 +89,12 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
 
         if (n_CurBullet>=n_BulletMagazine)
             n_CurBullet = 0;
- 
+
+
+        //son
+
+        sc_audio_mng.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.8f, 0.1f, 0f);
+
     } 
 
 }
