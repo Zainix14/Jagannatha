@@ -17,7 +17,8 @@ public class SC_ScreenRender : MonoBehaviour, IF_BreakdownSystem
     bool b_IsBreak = false;
     bool b_IsActive = false;
 
-    public Texture BreakDownTexture;
+    public Material BreakDownMat;
+    public Material RenderMat;
     public RenderTexture equirect;
     public Renderer renderer;
 
@@ -29,26 +30,29 @@ public class SC_ScreenRender : MonoBehaviour, IF_BreakdownSystem
 
     void Update()
     {
-        if(!b_InBreakdown && !b_IsActive)
+        if(!b_InBreakdown && !b_BreakEngine && !b_IsActive)
             SetEquidirect();
-        if (b_InBreakdown && !b_IsBreak)
+        if ((b_InBreakdown || b_BreakEngine) && !b_IsBreak)
             SetBreakdownState();
     }
 
     void SetEquidirect()
     {
+        Debug.Log("SetEqui");
         b_IsBreak = false;
         b_IsActive = true;
         renderer = this.GetComponent<Renderer>();
-        renderer.material.SetTexture("_MainTex", equirect);
+        renderer.material = RenderMat;
+        renderer.material.SetTexture("_MainTex", equirect);     
     }
 
     void SetBreakdownState()
     {
+        Debug.Log("SetBreak");
         b_IsBreak = true;
         b_IsActive = false;
         renderer = this.GetComponent<Renderer>();
-        renderer.material.SetTexture("_MainTex", BreakDownTexture);
+        renderer.material = BreakDownMat;
     }
 
     public void SetBreakdownState(bool State)
