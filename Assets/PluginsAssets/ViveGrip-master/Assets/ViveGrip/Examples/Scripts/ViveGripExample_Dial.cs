@@ -6,7 +6,9 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     public Transform attachedLight;
     private HingeJoint joint;
 
-    private SC_SyncVar_Interactibles sc_syncvar;
+    private GameObject Mng_SyncVar;
+    private SC_SyncVar_BreakdownTest sc_syncvar;
+    public GameObject LocalBreakdownMng;
 
     [SerializeField]
     button bouton;
@@ -47,7 +49,21 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     {
         joint = GetComponent<HingeJoint>();
 
+
         sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
+
+        GetReferences();
+    }
+
+    void GetReferences()
+    {
+        if (LocalBreakdownMng == null)
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+
     }
 
     void Update()
@@ -82,15 +98,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     void sendToSynchVar(float value)
     {
-
         if (sc_syncvar == null)
         {
-
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            GetReferences();
         }
         else
         {
-
             switch (bouton)
             {
                 case button.potar1:
@@ -104,12 +117,8 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
                     break;
                 default:
                     break;
-
             }
-
         }
-
-
     }
 
 
@@ -121,10 +130,8 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             desiredValue = Random.Range(-70f,70f);
         }
 
-
-
-        isEnPanne = true;
-
+        Debug.Log("Dial - 1");
+        SetIsEnPanne(true);
 
         switch (bouton)
         {
@@ -150,77 +157,87 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     public bool isBreakdown()
     {
-
         return isEnPanne;
     }
+
     public void IsValueOk()
     {
 
         if (joint.angle >= desiredValue - precision && joint.angle <= desiredValue + precision)
         {
-
-            isEnPanne = false;
-                       
-            if (sc_syncvar == null)
+            if (isEnPanne)
             {
-
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
-            }
-            else
-            {
-                switch (bouton)
-                {
-                    case button.potar1:
-                        sc_syncvar.potar1isEnPanne = false;
-                        break;
-                    case button.potar2:
-                        sc_syncvar.potar2isEnPanne = false;
-                        break;
-                    case button.potar3:
-                        sc_syncvar.potar3isEnPanne = false;
-                        break;
-                    default:
-                        break;
-
-                }
+                Debug.Log("Dial - 2");
                 
 
+                if (sc_syncvar != null)
+                {
+
+                    SetIsEnPanne(false);
+                    switch (bouton)
+                    {
+                        case button.potar1:
+                            sc_syncvar.potar1isEnPanne = false;
+                            break;
+                        case button.potar2:
+                            sc_syncvar.potar2isEnPanne = false;
+                            break;
+                        case button.potar3:
+                            sc_syncvar.potar3isEnPanne = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                    GetReferences();
             }
+            
+
         }
         else
         {
-            isEnPanne = true;
 
-            if (sc_syncvar == null)
+            
+            if (!isEnPanne)
             {
-
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
-            }
-            else
-            {
-
-                switch (bouton)
-                {
-                    case button.potar1:
-                        sc_syncvar.potar1isEnPanne = true;
-                        break;
-                    case button.potar2:
-                        sc_syncvar.potar2isEnPanne = true;
-                        break;
-                    case button.potar3:
-                        sc_syncvar.potar3isEnPanne = true;
-                        break;
-                    default:
-                        break;
-
-                }
+                Debug.Log("Dial - 3");
                 
 
+                if (sc_syncvar != null)
+                {
+
+                    SetIsEnPanne(true);
+                    switch (bouton)
+                    {
+                        case button.potar1:
+                            sc_syncvar.potar1isEnPanne = true;
+                            break;
+                        case button.potar2:
+                            sc_syncvar.potar2isEnPanne = true;
+                            break;
+                        case button.potar3:
+                            sc_syncvar.potar3isEnPanne = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                    GetReferences();
             }
+            
+
         }
 
     }
 
+    void SetIsEnPanne(bool value)
+    {
+        
+        isEnPanne = value;
+        LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
+    }
 
     void playSound()
     {

@@ -13,10 +13,21 @@ public class SC_AttackPathInfo : MonoBehaviour
     [SerializeField]
     int _circleEnterIndex;//Index cercle d'entrée
 
-    [SerializeField]
-    Transform Player;
+
     [SerializeField]
     int _lineEnterIndex;//Index de line d'entrée
+
+    SC_CheckList_Mecha checklist;
+
+    Transform Player;
+
+
+    void Start()
+    {
+        checklist = GameObject.FindGameObjectWithTag("Mng_CheckList").GetComponent<SC_CheckList_Mecha>();
+        if(checklist != null)
+        Player = checklist.GetMechCollider().transform;
+    }
 
     //Get des index par PathBehavior
     public int GetCircleEnterIndex()
