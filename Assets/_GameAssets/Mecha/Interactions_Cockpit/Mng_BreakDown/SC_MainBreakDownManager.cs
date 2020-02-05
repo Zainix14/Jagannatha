@@ -77,6 +77,17 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 SC_BreakDownAlert.LaunchGlobalAlert();
             else if (!b_BreakEngine)
                 SC_BreakDownAlert.StopGlobalAlert();
+
+            if (MoveSystem == null || RenderSystem == null || WeaponSystem == null)
+                GetReferences();
+
+            if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
+            {
+                MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+                RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+                WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+            }
+            
         }
 
         //Move
