@@ -51,6 +51,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     public void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Flip();
+        }
+
         IsValueOk();
     }
 
@@ -187,23 +193,6 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
             
 
         }
-    }
-
-
-
-
-
-
-    public void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Flip();
-        }
-
-        IsValueOk();
-
     }
 
  
