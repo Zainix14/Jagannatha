@@ -103,12 +103,15 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     public void ChangeDesired()
     {
         desiredValue = Random.Range(-70f, 70f);
+        //Debug.Log("DESIRED VALUE : " + desiredValue);
         while (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
         {
             desiredValue = Random.Range(-70f,70f);
+            
         }
 
         Debug.Log("Dial - 1");
+        
         SetIsEnPanne(true);
 
         switch (bouton)

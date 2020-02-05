@@ -56,7 +56,9 @@ public class SC_updateDisplay_float : MonoBehaviour
         {
             switch (bouton)
             {
+
                 #region Slider
+                /*
                 case button.slider1:
                     text_component_cur.text = sc_syncvar.slider1value.ToString();
                     text_component_desired.text = sc_syncvar.slider1valueWanted.ToString();
@@ -104,9 +106,11 @@ public class SC_updateDisplay_float : MonoBehaviour
                         text_component_desired.color = Color.green;
                     }
                     break;
+                    */
                 #endregion
 
                 #region Potar Frequence
+                /*
                 case button.potar1:
                     text_component_cur.text = sc_syncvar.potar1value.ToString();
                     text_component_desired.text = sc_syncvar.potar1valueWanted.ToString();
@@ -140,10 +144,11 @@ public class SC_updateDisplay_float : MonoBehaviour
                         text_component_desired.color = Color.green;
                     }
                     break;
-
+                   */
                 #endregion
 
                 #region Potar Solo
+                /*
                 case button.potar3:
                     text_component_cur.text = sc_syncvar.potar3value.ToString();
                     text_component_desired.text = sc_syncvar.potar3valueWanted.ToString();
@@ -159,6 +164,7 @@ public class SC_updateDisplay_float : MonoBehaviour
                         text_component_desired.color = Color.green;
                     }
                     break;
+                    */
                 #endregion
 
                 #region Interrupteur
