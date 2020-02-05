@@ -88,8 +88,10 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         if (n_CurBullet>=n_BulletMagazine)
             n_CurBullet = 0;
- 
-    }
+
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.8f);
+
+        } 
 
     public void SetBreakdownState(bool State)
     {

@@ -11,8 +11,6 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     private bool desiredValue = false;
 
 
-    private CustomSoundManager sc_audio_mng;
-
 
 
     private GameObject Mng_SyncVar;
@@ -34,7 +32,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     void Start() {
 
-        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
+        
         GetReferences();
 
     }
@@ -78,11 +76,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         //SON
         if (curState == false)
         {
-            sc_audio_mng.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, 0.05f, 0.5f);
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, 0.05f, 0.5f);
         }
         else
         {
-            sc_audio_mng.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, 0.05f, 0.4f);
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, 0.05f, 0.4f);
         }
         
 
