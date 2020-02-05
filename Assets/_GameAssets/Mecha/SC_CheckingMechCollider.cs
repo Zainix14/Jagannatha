@@ -13,7 +13,6 @@ public class SC_CheckingMechCollider : MonoBehaviour
         GetReferences();
     }
 
-
     void Update()
     {
         if (Mng_CheckList == null)
@@ -32,6 +31,5 @@ public class SC_CheckingMechCollider : MonoBehaviour
             Mng_CheckList.GetComponent<SC_CheckList_Mecha>().MechCollider = this.gameObject;
         else
             Debug.LogWarning("SC_TargetCheking - Can't Find Mng_CheckList");
-
     }
 }
