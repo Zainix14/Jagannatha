@@ -108,10 +108,13 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
             if (isEnPanne)
             {
-                SetIsEnPanne(false);
+                
 
                 if (sc_syncvar != null)
                 {
+
+                    SetIsEnPanne(false);
+
                     switch (bouton)
                     {
                         case button.inter1:
@@ -133,10 +136,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
             if (!isEnPanne)
             {
-                SetIsEnPanne(true);
+                
 
-                if (sc_syncvar == null)
+                if (sc_syncvar != null)
                 {
+                    SetIsEnPanne(true);
+
                     switch (bouton)
                     {
                         case button.inter1:

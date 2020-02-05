@@ -146,10 +146,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             if (isEnPanne)
             {
                 Debug.Log("Dial - 2");
-                SetIsEnPanne(false);
+                
 
-                if (sc_syncvar == null)
+                if (sc_syncvar != null)
                 {
+
+                    SetIsEnPanne(false);
                     switch (bouton)
                     {
                         case button.potar1:
@@ -178,10 +180,12 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             if (!isEnPanne)
             {
                 Debug.Log("Dial - 3");
-                SetIsEnPanne(true);
+                
 
                 if (sc_syncvar != null)
                 {
+
+                    SetIsEnPanne(true);
                     switch (bouton)
                     {
                         case button.potar1:
