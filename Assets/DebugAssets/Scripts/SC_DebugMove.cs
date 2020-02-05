@@ -8,8 +8,11 @@ using UnityEngine;
 /// Deplacements Generiques a mettre sur un objet. | 
 /// Script by Leni |
 /// </summary>
-public class SC_DebugMove : MonoBehaviour
+public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
 {
+
+    bool b_InBreakdown = false;
+    bool b_BreakEngine = false;
 
     public float f_Speed = 10f;
     public float f_RotFactor = 1f;
@@ -24,7 +27,8 @@ public class SC_DebugMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
+        if (!b_InBreakdown && !b_BreakEngine)
+            Move();
     }
 
     void Move()
@@ -55,6 +59,16 @@ public class SC_DebugMove : MonoBehaviour
         {
             rb.AddTorque(transform.up * f_Speed * f_RotFactor, ForceMode.Force);
         }
+    }
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State)
+    {
+        b_BreakEngine = State;
     }
 
 }

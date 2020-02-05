@@ -13,4 +13,9 @@ public class SC_CheckList_ViewAiming : MonoBehaviour
         return Target;
     }
 
+    public GameObject GetScreens()
+    {
+        return Screens;
+    }
+
 }
