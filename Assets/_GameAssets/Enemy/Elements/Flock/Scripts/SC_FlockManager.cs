@@ -22,6 +22,7 @@ public class SC_FlockManager : MonoBehaviour
     GameObject _GuidePrefab;
 
 
+
     GameObject _Player;
 
     
@@ -40,6 +41,11 @@ public class SC_FlockManager : MonoBehaviour
 
     bool inAttack;
     float DistanceGetOnPlayerSpline = 20;
+
+    //Attack
+    float attackDelay = 9f;
+    float attackTimer = 0;
+
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
     [HideInInspector]
@@ -53,7 +59,7 @@ public class SC_FlockManager : MonoBehaviour
     [HideInInspector]
     public bool _merged = false;  //Booléen d'état : nuée fusionnée avec une/des autre(s)
 
-    float attackTimer =0;
+    float startAttackTimer =0;
 
     enum PathType
     {
@@ -204,9 +210,9 @@ public class SC_FlockManager : MonoBehaviour
     void AttackUpdate()
     {
 
-        if(inAttack == false) attackTimer += Time.deltaTime;
+        if(inAttack == false) startAttackTimer += Time.deltaTime;
 
-        if(attackTimer >= flockSettings.timeBeforeAttack )
+        if(startAttackTimer >= flockSettings.timeBeforeAttack )
         {
             if (flockSettings.attackCity)
             {
@@ -218,7 +224,7 @@ public class SC_FlockManager : MonoBehaviour
 
                 StartNewPath(PathType.GoingPlayer);
             }
-            attackTimer = 0;
+            startAttackTimer = 0;
         }
 
         if(inAttack && curtype == PathType.GoingPlayer)
@@ -238,6 +244,15 @@ public class SC_FlockManager : MonoBehaviour
 
                 //Change de spline pour passer sur la spline Cercle
                 StartNewPath(PathType.AttackPlayer);
+            }
+        }
+        if(inAttack && curtype == PathType.AttackPlayer)
+        {
+            attackTimer += Time.deltaTime;
+            if(attackTimer >= attackDelay)
+            {
+                attackTimer = 0;
+                SC_BreakdownTestManager.Instance.StartNewBreakdown(1);
             }
         }
 

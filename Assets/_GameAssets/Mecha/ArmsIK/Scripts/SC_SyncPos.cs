@@ -14,7 +14,7 @@ public class SC_SyncPos : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(Target != null)
         {

@@ -196,7 +196,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
  
     void SetIsEnPanne(bool value)
     {
-        Debug.Log("Switch - SetIsPanne");
+
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
 

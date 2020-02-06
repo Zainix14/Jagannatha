@@ -42,7 +42,7 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && !b_BreakEngine)
+        if ((Input.GetKey(KeyCode.Alpha0) || Input.GetAxis("Fire1") > 0) && !b_BreakEngine)
             Fire();
     }
 
