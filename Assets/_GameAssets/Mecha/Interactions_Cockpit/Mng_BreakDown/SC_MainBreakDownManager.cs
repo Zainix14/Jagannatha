@@ -31,8 +31,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     // Start is called before the first frame update
     void Start()
-    {
-        SC_BreakDownAlert = Mng_BreakDownAlert.GetComponent<SC_BreakdownOnBreakdownAlert>();
+    {       
         GetReferences();
     }
 
@@ -46,6 +45,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     {
         if (Mng_Checklist == null)
             Mng_Checklist = GameObject.FindGameObjectWithTag("Mng_CheckList");
+
+        if(SC_BreakDownAlert == null)
+            SC_BreakDownAlert = Mng_BreakDownAlert.GetComponent<SC_BreakdownOnBreakdownAlert>();
 
         if (Mng_Checklist != null && MoveSystem == null)
             MoveSystem = Mng_Checklist.GetComponent<SC_CheckList_Mecha>().GetMechCollider();
@@ -69,8 +71,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
+        if(SC_BreakDownAlert == null || MoveSystem == null || RenderSystem == null || WeaponSystem == null)
+            GetReferences();
+
         //Engine
-        if(b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
+        if (b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
         {
             b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
             if (b_BreakEngine)
@@ -78,11 +83,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             else if (!b_BreakEngine)
                 SC_BreakDownAlert.StopGlobalAlert();
 
-            if (MoveSystem == null || RenderSystem == null || WeaponSystem == null)
-                GetReferences();
-
             if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
             {
+                Debug.Log("blabla");
                 MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
                 RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
                 WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);

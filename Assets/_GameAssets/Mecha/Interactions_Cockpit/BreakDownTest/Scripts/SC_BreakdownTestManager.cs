@@ -15,6 +15,8 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
     private IF_BreakdownManager Mng_BreakdownMain;
 
+    bool b_InitPanne = false;
+
     [SerializeField]
     public GameObject[] interactible;
 
@@ -37,10 +39,18 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
+        //Panne On Init
+        if (!b_InitPanne)
+            InitBreakdown();
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
             StartNewBreakdown(2);
-        }
+    }
+
+    void InitBreakdown()
+    {
+        b_InitPanne = true;
+        StartNewBreakdown(interactible.Length);
     }
 
     public void StartNewBreakdown(int nbBreakdown)
