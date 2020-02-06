@@ -38,7 +38,7 @@ public class SC_ScreenRender : MonoBehaviour, IF_BreakdownSystem
 
     void SetEquidirect()
     {
-        Debug.Log("SetEqui");
+
         b_IsBreak = false;
         b_IsActive = true;
         renderer = this.GetComponent<Renderer>();
@@ -48,7 +48,7 @@ public class SC_ScreenRender : MonoBehaviour, IF_BreakdownSystem
 
     void SetBreakdownState()
     {
-        Debug.Log("SetBreak");
+
         b_IsBreak = true;
         b_IsActive = false;
         renderer = this.GetComponent<Renderer>();

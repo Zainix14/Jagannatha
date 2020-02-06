@@ -130,10 +130,6 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             desiredValue = Random.Range(-70f,70f);
             
         }
-
-
-        Debug.Log("Dial - 1");
-        
         SetIsEnPanne(true);
 
         switch (bouton)
