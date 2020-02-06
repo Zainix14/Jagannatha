@@ -231,7 +231,8 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
     void SetIsEnPanne(bool value)
     {
-        
+        if(LocalBreakdownMng == null)
+            GetReferences();
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }
