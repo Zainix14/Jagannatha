@@ -57,6 +57,34 @@ public class SC_SyncVar_BreakdownTest : NetworkBehaviour
     [SyncVar]
     public bool inter1isEnPanne = false;
 
+    [SyncVar]
+    public bool inter2value = false;
+    [SyncVar]
+    public bool inter2valueWanted = false;
+    [SyncVar]
+    public bool inter2isEnPanne = false;
+
+    [SyncVar]
+    public bool inter3value = false;
+    [SyncVar]
+    public bool inter3valueWanted = false;
+    [SyncVar]
+    public bool inter3isEnPanne = false;
+
+    [SyncVar]
+    public bool inter4value = false;
+    [SyncVar]
+    public bool inter4valueWanted = false;
+    [SyncVar]
+    public bool inter4isEnPanne = false;
+
+    [SyncVar]
+    public bool inter5value = false;
+    [SyncVar]
+    public bool inter5valueWanted = false;
+    [SyncVar]
+    public bool inter5isEnPanne = false;
+
 
 
 
