@@ -168,6 +168,7 @@ public class SC_updateDisplay_float : MonoBehaviour
                 #endregion
 
                 #region Interrupteur
+                /*
                 case button.inter1:
                     text_component_cur.text = sc_syncvar.inter1value.ToString();
                     text_component_desired.text = sc_syncvar.inter1valueWanted.ToString();
@@ -185,6 +186,7 @@ public class SC_updateDisplay_float : MonoBehaviour
                     break;
                 default:
                     break;
+                    */
                     #endregion
             }
 
