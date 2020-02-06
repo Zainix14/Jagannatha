@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon
+public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
+
+    bool b_InBreakdown = false;
+
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
 
@@ -54,7 +57,8 @@ public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon
         if (timer > (1 / frequency))
         {
             timer = 0;
-            Fire();
+            if (!b_InBreakdown)
+                Fire();
         }
 
         timer += Time.deltaTime;
@@ -83,4 +87,12 @@ public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon
             n_CurBullet = 0;
 
     }
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State) { }
+
 }
