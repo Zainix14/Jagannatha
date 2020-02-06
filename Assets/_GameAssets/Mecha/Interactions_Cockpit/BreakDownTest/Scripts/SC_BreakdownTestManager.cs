@@ -5,6 +5,12 @@ using UnityEngine;
 public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 {
 
+    #region Singleton
+
+    private static SC_BreakdownTestManager _instance;
+    public static SC_BreakdownTestManager Instance { get { return _instance; } }
+
+    #endregion
     public bool b_BreakdownTest = false;
 
     private IF_BreakdownManager Mng_BreakdownMain;
@@ -15,6 +21,15 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     // Start is called before the first frame update
     void Start()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
         Mng_BreakdownMain = this.transform.parent.gameObject.GetComponent<IF_BreakdownManager>();
         interactible = GameObject.FindGameObjectsWithTag("Interactible");
     }
@@ -28,7 +43,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    void StartNewBreakdown(int nbBreakdown)
+    public void StartNewBreakdown(int nbBreakdown)
     {
       
         int curBreakdown = nbBreakdown;
