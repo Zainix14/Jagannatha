@@ -8,11 +8,10 @@ using UnityEngine;
 /// Auteur : Cyrille
 /// </summary>
 
-public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
+public class SC_JoystickMove : MonoBehaviour
 {
     [HideInInspector]
-    bool b_InBreakdown = false;
-    bool b_BreakEngine = false;
+    public bool b_MoveBreakdown = false;
 
     [SerializeField]
     float f_Speed = 10.0f;
@@ -32,12 +31,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     // Update is called once per frame
     void Update()
     {
-        if(!b_InBreakdown && !b_BreakEngine)
-            Move();
-    }
-
-    void Move()
-    {
 
         //donne une impulsion en proportion à l'axe du joystick
         float f_ImpulseZ = Input.GetAxis("Vertical") * f_Speed;
@@ -46,7 +39,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         float f_Torque = Input.GetAxis("Rotation") * f_RotationSpeed;
 
         //Translation
-        if (GetComponent<Rigidbody>().velocity.magnitude < f_MaxSpeed)
+        if (GetComponent<Rigidbody>().velocity.magnitude < f_MaxSpeed && !b_MoveBreakdown)
         {
 
             //Le joystick en diagonale => 1/1 à -1/-1 besoin de clamp l'addition des 2 vecteurs
@@ -58,21 +51,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
 
         //Rotation
-        if (GetComponent<Rigidbody>().angularVelocity.magnitude < f_MaxRotSpeed)
+        if (GetComponent<Rigidbody>().angularVelocity.magnitude < f_MaxRotSpeed && !b_MoveBreakdown)
         {
             GetComponent<Rigidbody>().AddTorque(transform.up * f_RotationSpeed * f_Torque, ForceMode.Impulse);
         }
 
-    }
-
-    public void SetBreakdownState(bool State)
-    {
-        b_InBreakdown = State;
-    }
-
-    public void SetEngineBreakdownState(bool State)
-    {
-        b_BreakEngine = State;
     }
 
 }

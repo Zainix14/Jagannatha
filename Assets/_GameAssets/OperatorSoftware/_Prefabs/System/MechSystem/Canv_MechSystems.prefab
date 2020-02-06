@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7534594990169769453}
   - component: {fileID: 7534594990169769454}
   - component: {fileID: 7534594990169769455}
+  - component: {fileID: 7534594990169769440}
   m_Layer: 5
   m_Name: Canv_MechSystems
   m_TagString: Untagged
@@ -112,6 +113,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7534594990169769442}
   m_CullTransparentMesh: 0
+--- !u!114 &7534594990169769440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534594990169769442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.503916, g: 0.7169812, b: 0.56096375, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1001 &267907513863339434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,11 +272,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7534594990169769441}
     m_Modifications:
-    - target: {fileID: 2803010507599511179, guid: a0e47d0d631f926469202ef2f02a6d69,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7070655555890904674, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
       propertyPath: m_Name

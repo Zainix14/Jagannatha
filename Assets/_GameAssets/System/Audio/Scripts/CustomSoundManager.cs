@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class CustomSoundManager : MonoBehaviour
 {
-    #region Singleton
 
-    private static CustomSoundManager _instance;
-    public static CustomSoundManager Instance { get { return _instance; } }
-
-    #endregion
     GameObject Mng_CheckList = null;
 
     [SerializeField] AudioClip[] tSounds = new AudioClip[0];
@@ -35,6 +30,8 @@ public class CustomSoundManager : MonoBehaviour
 
 
 
+    private static CustomSoundManager _instance;
+    public static CustomSoundManager Instance { get { return _instance; } }
     private void Awake()
     {
 
@@ -116,14 +113,14 @@ public class CustomSoundManager : MonoBehaviour
         }
 
         #endregion
-        /*
+
         // --- Joue un son d'environnement tout les "fTimerBeforeNextSound"
         fCurrentTimerSound += Time.deltaTime;
         if (fCurrentTimerSound > fTimerBeforeNextSound) environmentSound();
 
-    */
+
     }
-    /*
+
     void environmentSound()
     {
         if (tSoundsAmbient.Length != 0)
@@ -132,7 +129,7 @@ public class CustomSoundManager : MonoBehaviour
             fTimerBeforeNextSound = Random.Range(vRandomTimeBetweenAmbianceSound.x, vRandomTimeBetweenAmbianceSound.y);
             PlaySound(GameObject.Find("Main Camera"), tSoundsAmbient[Random.Range(0, tSoundsAmbient.Length)], false, fVolumeAmbiance, vRandomAndFixedPitchAmbiance.x, vRandomAndFixedPitchAmbiance.y);
         }
-    }*/
+    }
 
     public GameObject PlaySound(GameObject hSource, string sSoundName, bool bLoop, float fVolume, float fPitchRandom = 0, float fPitchConstantModifier = 0)
     {

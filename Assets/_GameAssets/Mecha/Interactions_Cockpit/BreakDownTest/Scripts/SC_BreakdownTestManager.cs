@@ -72,7 +72,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
-
+        Debug.Log("babarEstIci");
 
         int n_BreakdownValue = 0;
 
@@ -97,7 +97,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         }
 
 
-
+        Debug.Log(n_BreakdownValue);
     }
 
     

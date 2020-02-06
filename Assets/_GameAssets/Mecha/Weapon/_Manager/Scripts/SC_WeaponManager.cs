@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
+public class SC_WeaponManager : MonoBehaviour
 {
-
-    bool b_InBreakdown = false;
-    bool b_BreakEngine = false;
 
     bool b_AlreadyCheck = false;
 
@@ -24,7 +21,6 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     {
         IsCheck();
         CreateWeapon();
-        CheckWeapon();
         SetWeapon(n_CurWeapon);
     }
 
@@ -42,7 +38,7 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && !b_BreakEngine)
+        if (Input.GetKey(KeyCode.Space))
             Fire();
     }
 
@@ -51,14 +47,6 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
         for (int i = 0; i < tab_Weapons.Length; i++)
         {
             tab_Weapons[i] = Instantiate(tab_Weapons[i]);
-        }
-    }
-
-    void CheckWeapon()
-    {
-        for (int i = 0; i < tab_Weapons.Length; i++)
-        {
-            tab_Weapons[i].SetActive(true);
         }
     }
 
@@ -77,31 +65,16 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     public void SetWeapon(int n_Index)
     {
 
-        if (!b_InBreakdown)
+        n_CurWeapon = n_Index;
+
+        for (int i = 0; i < tab_Weapons.Length; i++)
         {
-
-            n_CurWeapon = n_Index;
-
-            for (int i = 0; i < tab_Weapons.Length; i++)
-            {
-                if (i == n_Index)
-                    tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = true;
-                else
-                    tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = false;
-            }
-
+            if (i == n_Index)
+                tab_Weapons[i].SetActive(true);
+            else
+                tab_Weapons[i].SetActive(false);
         }
-       
-    }
 
-    public void SetBreakdownState(bool State)
-    {
-        b_InBreakdown = State;
-    }
-
-    public void SetEngineBreakdownState(bool State)
-    {
-        b_BreakEngine = State;
     }
 
 }

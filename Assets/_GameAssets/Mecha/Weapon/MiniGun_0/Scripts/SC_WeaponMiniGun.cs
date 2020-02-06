@@ -7,10 +7,8 @@ using UnityEngine;
 /// Gère le type de Tir |
 /// By Cycy modif par Leni |
 /// </summary>
-public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
+public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon
 {
-
-    bool b_InBreakdown = false;
 
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
@@ -27,10 +25,14 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
 
+
+    private CustomSoundManager sc_audio_mng;//sound manager
+
     // Start is called before the first frame update
     void Awake()
     {
         CreateBulletPull();
+        sc_audio_mng = GameObject.FindGameObjectWithTag("Mng_Audio").GetComponent<CustomSoundManager>();
     }
 
     void CreateBulletPull()
@@ -62,8 +64,7 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         if (timer > (1 / frequency))
         {
             timer = 0;
-            if (!b_InBreakdown)
-                Fire();
+            Fire();
         }
 
         timer += Time.deltaTime;
@@ -89,15 +90,11 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         if (n_CurBullet>=n_BulletMagazine)
             n_CurBullet = 0;
 
-        CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.8f);
+
+        //son
+
+        sc_audio_mng.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.8f, 0.1f, 0f);
 
     } 
-
-    public void SetBreakdownState(bool State)
-    {
-        b_InBreakdown = State;
-    }
-
-    public void SetEngineBreakdownState(bool State) { }
 
 }
