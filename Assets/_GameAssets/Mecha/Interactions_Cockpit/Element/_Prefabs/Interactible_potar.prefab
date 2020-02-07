@@ -124,7 +124,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.12, y: 1.146, z: 0.864}
+  m_ConnectedAnchor: {x: -0.0009999941, y: 0.0010000472, z: -0.0069999695}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -181,10 +181,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedLight: {fileID: 0}
+  LocalBreakdownMng: {fileID: 0}
   bouton: 0
   desiredValue: 0
   isEnPanne: 0
-  precision: 1
+  precision: 10
 --- !u!114 &3986168225215474543
 MonoBehaviour:
   m_ObjectHideFlags: 0
