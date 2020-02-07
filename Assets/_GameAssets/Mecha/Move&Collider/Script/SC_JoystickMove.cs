@@ -35,18 +35,18 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         //donne une impulsion en proportion à l'axe du joystick
         float f_ImpulseZ = Input.GetAxis("Vertical") * f_Speed;
-        float f_ImpulseX = Input.GetAxis("Horizontal") * f_Speed;
+        //float f_ImpulseX = Input.GetAxis("Horizontal") * f_Speed;
 
-        float f_Torque = Input.GetAxis("Rotation") * f_RotationSpeed;
+        float f_Torque = Input.GetAxis("Horizontal") * f_RotationSpeed;
 
         //Translation
         if (GetComponent<Rigidbody>().velocity.magnitude < f_MaxSpeed)
         {
 
             //Le joystick en diagonale => 1/1 à -1/-1 besoin de clamp l'addition des 2 vecteurs
-            Vector3 V3_ClampedVector = Vector3.ClampMagnitude((transform.forward * f_ImpulseZ) + (transform.right * f_ImpulseX), f_Speed);
+            //Vector3 V3_ClampedVector = Vector3.ClampMagnitude((transform.forward * f_ImpulseZ) + (transform.right * f_ImpulseX), f_Speed);
 
-            GetComponent<Rigidbody>().AddForce(V3_ClampedVector, ForceMode.Impulse);
+            //GetComponent<Rigidbody>().AddForce(V3_ClampedVector, ForceMode.Impulse);
 
         }
 
