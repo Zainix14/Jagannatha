@@ -41,6 +41,11 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         {
             StartNewBreakdown(2);
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log(GameObject.Find("Slider").GetComponent<ViveGripExample_Slider>().desiredValue);
+        }
     }
 
     public void StartNewBreakdown(int nbBreakdown)

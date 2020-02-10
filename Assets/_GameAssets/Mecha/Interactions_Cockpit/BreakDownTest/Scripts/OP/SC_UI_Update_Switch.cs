@@ -7,16 +7,18 @@ public class SC_UI_Update_Switch : MonoBehaviour
 {
     SC_SyncVar_BreakdownTest sc_syncvar;
     GameObject Mng_SyncVar = null;
-
+    /*
     [SerializeField]
     button bouton;
-
+    */
     Color curColor = new Color(255, 159, 0, 255);
     Color panneColor = new Color(255, 0, 0, 255);
 
     [SerializeField]
     Image stateInterrupteur;
 
+     public int index;
+    /*
     enum button
     {
         inter1,
@@ -24,7 +26,7 @@ public class SC_UI_Update_Switch : MonoBehaviour
         inter3,
         inter4,
         inter5,
-    }
+    }*/
     // Start is called before the first frame update
     void Start()
     {
@@ -40,28 +42,25 @@ public class SC_UI_Update_Switch : MonoBehaviour
 
         if (sc_syncvar != null)
         {
-            switch (bouton)
+
+
+           // Debug.Log("CLIENT : NB éléments ds struc : " + sc_syncvar.m_pows[index].power);
+            
+         
+
+
+
+            if (sc_syncvar.SL_switches[index].isEnPanne)
             {
-                
-                case button.inter1:
-                    if (sc_syncvar.inter1isEnPanne)
-                    {
-                        stateInterrupteur.color = panneColor;
-                    }
-                    //NO PANNE
-                    else
-                    {
-                        stateInterrupteur.color = curColor;
-                    }
-
-                    break;
-                
-
-
-
-
-
+                stateInterrupteur.color = panneColor;
             }
+            //NO PANNE
+            else
+            {
+                stateInterrupteur.color = curColor;
+            }
+
+
 
         }
     }

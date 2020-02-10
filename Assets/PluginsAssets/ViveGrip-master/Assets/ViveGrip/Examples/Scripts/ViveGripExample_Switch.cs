@@ -17,7 +17,8 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     private SC_SyncVar_BreakdownTest sc_syncvar;
     public GameObject LocalBreakdownMng;
 
-
+    public int index;
+    /*
     [SerializeField]
     button bouton;
 
@@ -28,12 +29,14 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         inter3
 
     }
-
+    */
 
     void Start() {
 
         
         GetReferences();
+
+        
 
     }
 
@@ -44,15 +47,32 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();      
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+
+       
     }
 
     public void Update()
     {
+        
+       
 
         if (Input.GetKeyDown(KeyCode.C))
         {
             Flip();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            /*
+            SC_SyncVar_BreakdownTest.Pow babar = sc_syncvar.m_pows[index] ;
+            babar.setPower(3);
+            Debug.Log("Valeur de babar  : " + babar.power);
+            Debug.Log("wesh : " + sc_syncvar.m_pows[index].power);
+            sc_syncvar.m_pows.RemoveAt(index);
+            sc_syncvar.m_pows.Insert(index, babar);
+            Debug.Log("Valeur de sync  : " + sc_syncvar.m_pows[index].power);
+            */
         }
 
         IsValueOk();
@@ -100,6 +120,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
         if (sc_syncvar != null)
         {
+            /*
             switch (bouton)
             {
                 case button.inter1:
@@ -107,7 +128,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
                     break;
                 default:
                     break;
-            }
+            }*/
+
+
+            
+
         }
         else
             GetReferences();
@@ -121,15 +146,10 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
         SetIsEnPanne(true);
 
-        switch (bouton)
-        {
-            case button.inter1:
-                sc_syncvar.inter1valueWanted = desiredValue;
-                sc_syncvar.inter1isEnPanne = true;
-                break;
-            default:
-                break;
-        }
+
+        sc_syncvar.SwitchChangeValueWanted(index, desiredValue);
+        sc_syncvar.SwitchChangeIsPanne(index, true);
+
 
     }
 
@@ -147,14 +167,10 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
                     SetIsEnPanne(false);
 
-                    switch (bouton)
-                    {
-                        case button.inter1:
-                            sc_syncvar.inter1isEnPanne = false;
-                            break;
-                        default:
-                            break;
-                    }
+
+                    sc_syncvar.SwitchChangeIsPanne(index, false);
+
+
                 }
                 else
                     GetReferences();
@@ -174,15 +190,9 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
                 {
                     SetIsEnPanne(true);
 
-                    switch (bouton)
-                    {
-                        case button.inter1:
-                            sc_syncvar.inter1isEnPanne = true;
-                            break;
-                        default:
-                            break;
 
-                    }
+                    sc_syncvar.SwitchChangeIsPanne(index, true);
+
                 }
                 else
                     GetReferences();
