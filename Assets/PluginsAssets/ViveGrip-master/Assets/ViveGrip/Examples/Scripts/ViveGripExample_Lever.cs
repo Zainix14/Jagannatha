@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ViveGripExample_Lever : MonoBehaviour
+public class ViveGripExample_Lever : MonoBehaviour, IInteractible
 {
     private ViveGrip_ControllerHandler controller;
     private float oldXRotation;
@@ -17,6 +17,19 @@ public class ViveGripExample_Lever : MonoBehaviour
     private BoxCollider BotBox;
 
 
+    public bool isEnPanne = false;
+
+    private bool curState = false;
+
+    private bool desiredValue = false;
+
+
+    private GameObject Mng_SyncVar;
+    private SC_SyncVar_BreakdownTest sc_syncvar;
+    public GameObject LocalBreakdownMng;
+
+    public int index;
+
 
     void Start()
     {
@@ -25,6 +38,20 @@ public class ViveGripExample_Lever : MonoBehaviour
         leverRigidBody = gameObject.GetComponent<Rigidbody>();
         TopBox = TopCollider.GetComponent<BoxCollider>();
         BotBox = BotCollider.GetComponent<BoxCollider>();
+
+        GetReferences();
+    }
+
+    void GetReferences()
+    {
+        if (LocalBreakdownMng == null)
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+
+
     }
 
     void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
@@ -51,19 +78,93 @@ public class ViveGripExample_Lever : MonoBehaviour
         }
         oldXRotation = newXRotation;
 
+        IsValueOk();
+
+    }
+
+    public bool isBreakdown()
+    {
+        return isEnPanne;
+    }
+
+
+    public void ChangeDesired()
+    {
+
+        desiredValue = !curState;
+
+        SetIsEnPanne(true);
+
+
+        sc_syncvar.SwitchChangeValueWanted(index, desiredValue);
+        sc_syncvar.SwitchChangeIsPanne(index, true);
 
 
     }
+
+    void sendToSynchVar(bool value)
+    {
+
+        if (sc_syncvar != null)
+        {
+            sc_syncvar.SwitchChangeValue(index, value);
+        }
+        else
+            GetReferences();
+
+    }
+
+
+    public void IsValueOk()
+    {
+        if (desiredValue == curState)
+        {
+            if (isEnPanne)
+            {
+                if (sc_syncvar != null)
+                {
+                    SetIsEnPanne(false);
+                    sc_syncvar.SwitchChangeIsPanne(index, false);
+                }
+                else
+                    GetReferences();
+            }
+        }
+        else
+        {
+            if (!isEnPanne)
+            {
+                if (sc_syncvar != null)
+                {
+                    SetIsEnPanne(true);
+                    sc_syncvar.SwitchChangeIsPanne(index, true);
+                }
+                else
+                    GetReferences();
+            }
+        }
+    }
+
+    void SetIsEnPanne(bool value)
+    {
+
+        isEnPanne = value;
+        LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other == TopBox)
         {
-            Debug.Log("Top");
+            curState = false;
+            sendToSynchVar(curState);
 
         }
         if (other == BotBox)
         {
-            Debug.Log("Bottom");
+            curState = true;
+            sendToSynchVar(curState);
 
         }
     }

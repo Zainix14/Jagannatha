@@ -120,17 +120,8 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
         if (sc_syncvar != null)
         {
-            /*
-            switch (bouton)
-            {
-                case button.inter1:
-                    sc_syncvar.inter1value = value;
-                    break;
-                default:
-                    break;
-            }*/
 
-
+            sc_syncvar.SwitchChangeValue(index,value);
             
 
         }
@@ -157,48 +148,33 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     {
         if (desiredValue == curState)
         {
-
             if (isEnPanne)
-            {
-                
+            {         
 
                 if (sc_syncvar != null)
                 {
-
                     SetIsEnPanne(false);
-
-
                     sc_syncvar.SwitchChangeIsPanne(index, false);
-
-
                 }
                 else
                     GetReferences();
-            }
-
-            
+            }          
 
         }
         else 
         {
 
             if (!isEnPanne)
-            {
-                
+            {              
 
                 if (sc_syncvar != null)
                 {
                     SetIsEnPanne(true);
-
-
                     sc_syncvar.SwitchChangeIsPanne(index, true);
-
                 }
                 else
                     GetReferences();
-            }
-
-            
+            }          
 
         }
     }
