@@ -31,7 +31,17 @@ public class SC_BoidBehavior : MonoBehaviour
     Coroutine m_boidCor = null;
 
 
-
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     public void Initialize(Boid[] boidPool)
     {
         _boidsTab = boidPool;

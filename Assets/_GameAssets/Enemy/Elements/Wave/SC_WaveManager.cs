@@ -42,6 +42,16 @@ public class SC_WaveManager : MonoBehaviour
     #region Start/Update
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+
         _FlockList = new List<GameObject>(); //Instantiation de la list de flock
         
         resetVariables();
