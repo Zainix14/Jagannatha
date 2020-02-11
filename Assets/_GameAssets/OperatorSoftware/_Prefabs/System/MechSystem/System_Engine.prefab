@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b548be3b3c17966498bd525bb9d5ade9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouton: 0
+  index: 0
   barrettePanne: {fileID: 7514858736109414442}
 --- !u!1 &582904730750302049
 GameObject:
@@ -1115,8 +1115,8 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.62352943, b: 0, a: 1}
+  m_Material: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1409,7 +1409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8588236, g: 0.8117648, b: 0.7254902, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1534,7 +1534,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4699255254042668426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6573991950678496564}
@@ -1766,8 +1766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 477df86b555a135419ecc7236c767eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouton: 0
   stateInterrupteur: {fileID: 7132658196334137978}
+  curMat: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
+  breakdownMat: {fileID: 2100000, guid: 97e03cbd94065564ea4d3417797d06e4, type: 2}
+  index: 0
 --- !u!1 &5834636281559313397
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,7 +3077,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -3102,7 +3104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b548be3b3c17966498bd525bb9d5ade9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouton: 2
+  index: 2
   barrettePanne: {fileID: 26159769330453591}
 --- !u!1 &6541981726718709384
 GameObject:
@@ -4026,7 +4028,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -4053,7 +4055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b548be3b3c17966498bd525bb9d5ade9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouton: 1
+  index: 1
   barrettePanne: {fileID: 6693837605317361927}
 --- !u!1 &8190578428046934164
 GameObject:
@@ -4176,7 +4178,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa90469962b931942a75625f15e8b8d7, type: 2}
+  - {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4375,7 +4377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8588236, g: 0.8117648, b: 0.7254902, a: 1}
+  m_Color: {r: 1, g: 0.62352943, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

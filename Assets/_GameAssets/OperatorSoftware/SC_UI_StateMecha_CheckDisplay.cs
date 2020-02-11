@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SC_UI_Update_Switch : MonoBehaviour
+public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
 {
-    SC_SyncVar_BreakdownTest sc_syncvar;
+    SC_SyncVar_StateMecha_Display sc_syncvar;
     GameObject Mng_SyncVar = null;
 
-    Color curColor = new Color(255, 159, 0, 255);
-    Color panneColor = new Color(255, 0, 0, 255);
+    Image curImage;
 
-    [SerializeField]
-    Image stateInterrupteur;
-
-    [SerializeField]
     Material curMat;
     [SerializeField]
     Material breakdownMat;
-     public int index;
 
+    public int index;
+    // Start is called before the first frame update
     void Start()
     {
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
+        curImage = this.GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -34,17 +31,7 @@ public class SC_UI_Update_Switch : MonoBehaviour
 
         if (sc_syncvar != null)
         {
-           // Debug.Log("CLIENT : NB éléments ds struc : " + sc_syncvar.m_pows[index].power);
-
-            if (sc_syncvar.SL_switches[index].isEnPanne)
-            {
-                stateInterrupteur.material = breakdownMat;
-            }
-            //NO PANNE
-            else
-            {
-                stateInterrupteur.material = curMat;
-            }
+            
         }
     }
 
@@ -53,6 +40,12 @@ public class SC_UI_Update_Switch : MonoBehaviour
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_StateMecha_Display>();
+    }
+
+    public void changeColorOnDisplayBreakdown()
+    {
+            curImage.material = breakdownMat;
+        
     }
 }
