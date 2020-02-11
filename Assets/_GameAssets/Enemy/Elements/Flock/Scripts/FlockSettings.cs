@@ -17,6 +17,15 @@ public class FlockSettings : ScriptableObject
     public Vector3 spawnPosition = new Vector3(0,0,0);
 
 
+    [Header("Spline Settings")]
+    public float speedOnSpline;
+
+    [Header("Attack Settings")]
+    [Range(0, 2)]
+    public float speedToPlayer = 1;
+
+
+
     public enum PathPreference
     {
         Line,
