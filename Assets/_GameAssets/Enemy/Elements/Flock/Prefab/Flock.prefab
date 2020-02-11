@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8703027724778714921}
   - component: {fileID: 2865312559487441127}
   - component: {fileID: 114714860802865328}
+  - component: {fileID: 114248703974702296}
   m_Layer: 0
   m_Name: Flock
   m_TagString: Untagged
@@ -49,11 +50,7 @@ MonoBehaviour:
     type: 3}
   _GuidePrefab: {fileID: 8901173849441854128, guid: 4f1849f585a71774a8f82c51e19c4e61,
     type: 3}
-  _BoidSettings:
-  - {fileID: 11400000, guid: e27d5e7b61a799d4395ca3524ee8b576, type: 2}
-  - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
-  - {fileID: 11400000, guid: 6f5b22aa0ffa509478c751f23e078739, type: 2}
-  _KoaManager: {fileID: 0}
+  _SCKoaManager: {fileID: 0}
   _splited: 0
   _merged: 0
 --- !u!114 &2865312559487441127
@@ -89,3 +86,23 @@ MonoBehaviour:
   onPathCompleted:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &114248703974702296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285113734633859291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe81c20e4894e646806229729b420cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserPrefab: {fileID: 1107940701737066, guid: 0a0191a953741d940be3195a87c4d91f,
+    type: 3}
+  laserFxPrefab: {fileID: 8640183350906000953, guid: 8d8b3451f168ce74faa33ef569493eea,
+    type: 3}
+  bulletPrefab: {fileID: 6422795900896979926, guid: fefc51e1fd4225a42b3c4730a22b58b7,
+    type: 3}
+  bulletContainer: {fileID: 4527829448466270418, guid: 45dbf9ebe4483f84c819073a513e34cf,
+    type: 3}
