@@ -405,8 +405,6 @@ public class SC_FlockManager : MonoBehaviour
     {
         waveManager.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
-
-
     }
 
     public void EndAttack()
