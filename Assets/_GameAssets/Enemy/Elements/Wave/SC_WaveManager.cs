@@ -10,6 +10,13 @@ using UnityEngine;
 /// </summary>
 public class SC_WaveManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_WaveManager _instance;
+    public static SC_WaveManager Instance { get { return _instance; } }
+
+    #endregion
     //---------------------------------------------------------------------//
     //---------------------------- VARIABLES ------------------------------//
     //---------------------------------------------------------------------//
@@ -157,7 +164,7 @@ public class SC_WaveManager : MonoBehaviour
         if (_FlockList.Count == 0 && backupSend )
         {
             waveEnded = true;
-            GetComponent<SC_PhaseManager>().EndWave();
+            SC_PhaseManager.Instance.EndWave();
            
 
         }
@@ -189,7 +196,7 @@ public class SC_WaveManager : MonoBehaviour
 
         
         //Initialize flock
-        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT,this.GetComponent<SC_WaveManager>());
+        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT);
     }
 
 

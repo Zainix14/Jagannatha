@@ -53,7 +53,7 @@ public class SC_KoaManager : MonoBehaviour
 
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         //Instanciation des list de Boid et de Guide
-        _boidsTab = GameObject.FindGameObjectWithTag("Mng_Enemy").GetComponent<SC_BoidPool>().GetBoid(newSpawnCount);
+        SC_BoidPool.Instance.GetBoid(newSpawnCount);
         _guideList = new List<Transform>();
 
         //Récupération du comportement initial

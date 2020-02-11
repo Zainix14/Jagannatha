@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class SC_BoidPool : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_BoidPool _instance;
+    public static SC_BoidPool Instance { get { return _instance; } }
+
+    #endregion
+
     [SerializeField]
     int poolNumber;
 
@@ -35,7 +43,7 @@ public class SC_BoidPool : MonoBehaviour
         }
 
 
-        this.GetComponent<SC_BoidBehavior>().Initialize(boidPool);
+        SC_BoidBehavior.Instance.Initialize(boidPool);
     }
 
 

@@ -34,7 +34,7 @@ public class SC_FlockManager : MonoBehaviour
     public SC_KoaManager _SCKoaManager; //Stock le script KoaManager du Koa
     Transform _mainGuide; //Guide général que suit toujours la nuée (correspond au flock (this) mais pour des pb de lisibilité le Transform est stocké dans une varible Main Guide
 
-    SC_WaveManager waveManager;
+   
 
     BezierSolution.BezierWalkerWithSpeed bezierWalker;
     SC_PathBehavior pathBehavior;
@@ -91,9 +91,8 @@ public class SC_FlockManager : MonoBehaviour
     /// <summary>
     /// Initialisation du Flock
     /// </summary>
-    public void InitializeFlock(FlockSettings newFlockSettings,float NormalizedT, SC_WaveManager parent)
+    public void InitializeFlock(FlockSettings newFlockSettings,float NormalizedT)
     {
-        waveManager = parent;
         flockSettings = newFlockSettings;
 
 
@@ -403,7 +402,7 @@ public class SC_FlockManager : MonoBehaviour
 
     public void DestroyFlock()
     {
-        waveManager.FlockDestroyed(this.gameObject);
+        SC_WaveManager.Instance.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
 

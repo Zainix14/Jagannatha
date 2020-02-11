@@ -9,13 +9,20 @@ using UnityEngine;
 /// </summary>
 public class SC_EnemyManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_EnemyManager _instance;
+    public static SC_EnemyManager Instance { get { return _instance; } }
+
+    #endregion
+
     public PhaseSettings[] phases;
-    SC_PhaseManager phaseManager;
+  
     int curPhaseIndex;
 
     void Start()
     {
-        phaseManager = GetComponent<SC_PhaseManager>();
         Invoke("Initialize", 1);
     }
 
@@ -26,7 +33,7 @@ public class SC_EnemyManager : MonoBehaviour
 
     public void InitNewPhase(int phaseIndex)
     {
-        phaseManager.Initialize(phases[phaseIndex]);
+        SC_PhaseManager.Instance.Initialize(phases[phaseIndex]);
     }
 
 
