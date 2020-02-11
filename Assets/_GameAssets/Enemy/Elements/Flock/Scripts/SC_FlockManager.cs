@@ -230,7 +230,7 @@ public class SC_FlockManager : MonoBehaviour
         if(inAttack && curtype == PathType.GoingPlayer)
         {
 
-            transform.position = Vector3.Lerp(transform.position, _Player.transform.position, Time.deltaTime * _curBoidSetting.speedToPlayer);
+            transform.position = Vector3.Lerp(transform.position, _Player.transform.position, Time.deltaTime * flockSettings.speedToPlayer);
 
             //check les distance entre le flock et le player
             float dist;
@@ -301,8 +301,8 @@ public class SC_FlockManager : MonoBehaviour
     public void StartNewBehavior(int behaviorIndex)
     {
         _curBoidSetting = _BoidSettings[behaviorIndex];
-        bezierWalker.speed = _curBoidSetting.speedOnSpline;
-        if(_curBoidSetting.speedOnSpline != 0 && !inAttack)
+        bezierWalker.speed = flockSettings.speedOnSpline;
+        if(flockSettings.speedOnSpline != 0 && !inAttack)
         {
             pathBehavior.GetOnRandomSpline();
         }
@@ -405,8 +405,6 @@ public class SC_FlockManager : MonoBehaviour
     {
         waveManager.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
-
-
     }
 
     public void EndAttack()
