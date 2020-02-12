@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d89286e30a111f14cbdde113f04bc4aa, type: 3}
-  m_Name: FlockTuto
+  m_Name: Flock1_2
   m_EditorClassIdentifier: 
-  spawnPosition: {x: 0, y: 50, z: 50}
-  speedOnSpline: 0
-  attackType: 0
-  timeBetweenAttacks: 5
-  fireRate: 5
-  nbBulletToShoot: 50
-  chargingAttackTime: 5
+  spawnPosition: {x: -90, y: 50, z: 20}
+  speedOnSpline: 10
+  attackType: 1
+  timeBetweenAttacks: 3
+  fireRate: 3
+  nbBulletToShoot: 0
+  chargingAttackTime: 2
   activeDuration: 1
   boidSettings:
-  - {fileID: 11400000, guid: 867f544dcc2ed6c4486e2817fa7c1516, type: 2}
+  - {fileID: 11400000, guid: 790db41fbac060d41964033b3867d415, type: 2}
   - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
-  boidSpawn: 50
+  - {fileID: 11400000, guid: 6f5b22aa0ffa509478c751f23e078739, type: 2}
+  boidSpawn: 100
   maxBoid: 200
-  regenerationRate: 800
+  regenerationRate: 4
   sensitivity: {x: 0, y: 0, z: 0}
