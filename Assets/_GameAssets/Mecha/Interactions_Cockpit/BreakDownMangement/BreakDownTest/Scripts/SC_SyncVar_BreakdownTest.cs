@@ -10,7 +10,7 @@ public class SC_SyncVar_BreakdownTest : NetworkBehaviour
     /// </summary>
 
         //nombre de sliders pour l'init
-    public int slidersNb = 3;
+    public int slidersNb = 6;
 
     public struct Slider
     {
@@ -108,7 +108,7 @@ public class SC_SyncVar_BreakdownTest : NetworkBehaviour
 
 
 
-
+        /*
     [SyncVar]
     public float potar1value = 0;
     [SyncVar]
@@ -129,7 +129,7 @@ public class SC_SyncVar_BreakdownTest : NetworkBehaviour
     public float potar3valueWanted = 0;
     [SyncVar]
     public bool potar3isEnPanne = false;
-
+    */
 
 
     void Start()
