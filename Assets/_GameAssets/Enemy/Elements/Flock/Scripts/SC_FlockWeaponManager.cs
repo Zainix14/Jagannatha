@@ -190,10 +190,18 @@ public class SC_FlockWeaponManager : MonoBehaviour
     public void DestroyFx()
     {
         isFiring = false;
-        laser.transform.localScale = new Vector3(0, 0, 0);
-        laser.transform.position = new Vector3(0, -2000, 0);
-        laserFx.transform.localScale = new Vector3(0, 0, 0);
-        laserFx.transform.position = new Vector3(0, -2000, 0);
+        if(laser != null)
+        {
+
+            laser.transform.localScale = new Vector3(0, 0, 0);
+            laser.transform.position = new Vector3(0, -2000, 0);
+        }
+        if(laserFx != null)
+        {
+
+            laserFx.transform.localScale = new Vector3(0, 0, 0);
+            laserFx.transform.position = new Vector3(0, -2000, 0);
+        }
     }
 
 
