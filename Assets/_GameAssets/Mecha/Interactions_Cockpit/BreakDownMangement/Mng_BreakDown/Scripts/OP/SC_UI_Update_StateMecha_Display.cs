@@ -55,6 +55,10 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
                 {
                     displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayBreakdown();
                 }
+                else
+                {
+                    displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayNeutral();
+                }
             }
             
         }

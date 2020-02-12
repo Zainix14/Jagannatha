@@ -41,7 +41,7 @@ public class SC_UI_Update_PotarSolo : MonoBehaviour
         if (sc_syncvar != null)
         {
             updatePotarRender();
-
+            /*
             //PANNE
             if (sc_syncvar.potar1isEnPanne)
             {
@@ -53,14 +53,17 @@ public class SC_UI_Update_PotarSolo : MonoBehaviour
             {
                 textWanted.enabled = false;
             }
+            */
         }
     }
 
     void updatePotarRender()
     {
+        /*
         textValue.text = sc_syncvar.potar1value.ToString();
         float rotZ = sc_syncvar.potar1value;
 
         disquePotar.gameObject.transform.eulerAngles = new Vector3(270, rotZ, 0);
+        */
     }
 }

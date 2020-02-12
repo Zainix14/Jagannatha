@@ -58,7 +58,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
         }
         if (sc_syncvar != null)
-        {
+        {/*
             frequence = sc_syncvar.potar2value + 110;
             amplitude = sc_syncvar.potar3value/100 + 0.8f ;
             //PANNE
@@ -75,11 +75,12 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             {
                 lineWanted.enabled = false;
             }
+            */
         }
 
 
         //securityCheck();
-
+        
     }
 
     void updateLineRender()
