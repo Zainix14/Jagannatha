@@ -125,21 +125,6 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         {
 
             sc_syncvar.SliderChangeValue(index, value);
-            /*
-            switch (bouton)
-            {
-                case button.slider1:
-                    sc_syncvar.slider1value = value;
-                    break;
-                case button.slider2:
-                    sc_syncvar.slider2value = value;
-                    break;
-                case button.slider3:
-                    sc_syncvar.slider3value = value;
-                    break;
-                default:
-                    break;
-            }*/
 
         }          
 
@@ -159,25 +144,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         sc_syncvar.SliderChangeValueWanted(index, desiredValue);
         sc_syncvar.SliderChangeIsPanne(index, true);
-        /*
-        switch (bouton)
-        {
-            case button.slider1:
-                sc_syncvar.slider1valueWanted = desiredValue;
-                sc_syncvar.slider1isEnPanne = true;
-                break;
-            case button.slider2:
-                sc_syncvar.slider2valueWanted = desiredValue;
-                sc_syncvar.slider2isEnPanne = true;
-                break;
-            case button.slider3:
-                sc_syncvar.slider3valueWanted = desiredValue;
-                sc_syncvar.slider3isEnPanne = true;
-                break;
-            default:
-                break;
-        }
-        */
+
     }
 
 
@@ -202,23 +169,6 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 {
 
                     sc_syncvar.SliderChangeIsPanne(index, false);
-                    /*
-                    switch (bouton)
-                    {
-                        case button.slider1:
-                            sc_syncvar.slider1isEnPanne = false;
-                            break;
-                        case button.slider2:
-                            sc_syncvar.slider2isEnPanne = false;
-                            break;
-                        case button.slider3:
-                            sc_syncvar.slider3isEnPanne = false;
-                            break;
-                        default:
-                            break;
-
-                    }
-                    */
 
                 }
             }
@@ -241,23 +191,6 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 {
 
                     sc_syncvar.SliderChangeIsPanne(index, true);
-                    /*
-                    switch (bouton)
-                    {
-                        case button.slider1:
-                            sc_syncvar.slider1isEnPanne = true;
-                            break;
-                        case button.slider2:
-                            sc_syncvar.slider2isEnPanne = true;
-                            break;
-                        case button.slider3:
-                            sc_syncvar.slider3isEnPanne = true;
-                            break;
-                        default:
-                            break;
-
-                    }
-                    */
 
                 }
             }

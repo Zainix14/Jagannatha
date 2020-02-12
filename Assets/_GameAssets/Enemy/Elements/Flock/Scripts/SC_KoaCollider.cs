@@ -9,6 +9,7 @@ public class SC_KoaCollider : MonoBehaviour
     public void Initialize(SC_KoaManager manager)
     {
         this.manager = manager;
+
     }
 
     // Update is called once per frame

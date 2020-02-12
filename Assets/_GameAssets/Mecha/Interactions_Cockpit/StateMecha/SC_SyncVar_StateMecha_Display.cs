@@ -27,6 +27,39 @@ public class SC_SyncVar_StateMecha_Display : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            randomDisplayDesactivate();
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            reactivateAllDispay();
+        }
+    }
 
+    void reactivateAllDispay()
+    {
+        Debug.Log("BACK TO REALITY");
+        for (int i = 0; i < nbDisplay; i++)
+        {
+            displayAll[i] = false;
+        }
+    }
+
+    void randomDisplayDesactivate()
+    {
+        float randomDisplay = Random.Range(0, nbDisplay);
+        int randInt = (int)Mathf.Round(randomDisplay);
+
+        if(displayAll[randInt] == false)
+        {
+            displayAll[randInt] = true;
+        }
+        else
+        {
+            randomDisplay = Random.Range(0, nbDisplay);
+            randInt = (int)Mathf.Round(randomDisplay);
+        }
+        
     }
 }

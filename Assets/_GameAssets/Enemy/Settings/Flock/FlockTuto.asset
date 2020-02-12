@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPosition: {x: 0, y: 50, z: 50}
   speedOnSpline: 0
-  attackType: 1
+  attackType: 0
   timeBetweenAttacks: 5
   fireRate: 5
   nbBulletToShoot: 50
@@ -23,7 +23,7 @@ MonoBehaviour:
   boidSettings:
   - {fileID: 11400000, guid: 867f544dcc2ed6c4486e2817fa7c1516, type: 2}
   - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
-  boidSpawn: 200
-  maxBoid: 150
-  regenerationRate: 2
+  boidSpawn: 10
+  maxBoid: 200
+  regenerationRate: 800
   sensitivity: {x: 0, y: 0, z: 0}

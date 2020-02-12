@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 
 
 public class ViveGripExample_Dial : MonoBehaviour, IInteractible
@@ -87,7 +88,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
             }
 
       }
-      */
+      
 
 
         playSound();
@@ -300,3 +301,4 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
 
 
 }
+*/
