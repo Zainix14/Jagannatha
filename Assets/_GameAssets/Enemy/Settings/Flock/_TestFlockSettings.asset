@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89286e30a111f14cbdde113f04bc4aa, type: 3}
   m_Name: _TestFlockSettings
   m_EditorClassIdentifier: 
-  attackCity: 0
-  attackPlayer: 1
-  pathPreference: 0
-  timeBeforeAttack: 15
-  attackDuration: 60
+  spawnPosition: {x: 0, y: 0, z: 0}
+  speedOnSpline: 0
+  attackType: 0
+  timeBetweenAttacks: 0
+  fireRate: 0
+  nbBulletToShoot: 0
+  chargingAttackTime: 0
+  activeDuration: 0
+  boidSettings: []
   boidSpawn: 100
   maxBoid: 150
   regenerationRate: 2
+  sensitivity: {x: 0, y: 0, z: 0}

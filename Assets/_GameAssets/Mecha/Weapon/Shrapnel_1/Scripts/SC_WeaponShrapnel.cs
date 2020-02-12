@@ -20,6 +20,8 @@ public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     float timer = 0;
 
+    Vector3Int sensitivity;
+
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
     Rigidbody[] t_RbBullet;
     MeshRenderer[] t_MrBullet;
@@ -101,5 +103,8 @@ public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     }
 
     public void SetEngineBreakdownState(bool State) { }
+
+    public Vector3Int GetWeaponSensitivity() { return sensitivity; }
+    public void SetSensitivity(Vector3Int value) { sensitivity = value; }
 
 }

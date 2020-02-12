@@ -23,6 +23,8 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     [SerializeField]
     GameObject _bulletContainer;
 
+    Vector3Int sensitivity;
+
 
     float timer = 0;
 
@@ -109,4 +111,6 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public void SetEngineBreakdownState(bool State) { }
 
+    public Vector3Int GetWeaponSensitivity() { return sensitivity; }
+    public void SetSensitivity(Vector3Int value) { sensitivity = value; }
 }

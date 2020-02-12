@@ -24,7 +24,8 @@ public class SC_KoaManager : MonoBehaviour
     /// <summary>
     /// Current BoidSettings
     /// </summary>
-    BoidSettings _curSettings; //Paramètres dans le scriptableObject Settings
+    BoidSettings curBoidSettings; //Paramètres dans le scriptableObject Settings
+    FlockSettings curFlockSettings; //Paramètres dans le scriptableObject Settings
 
     //public ComputeShader compute; //Shader
     SC_FlockManager flockManager;
@@ -42,27 +43,29 @@ public class SC_KoaManager : MonoBehaviour
     /// </summary>
     Boid[] _boidsTab; //Tableau contenant les boids
 
+    float respawnTimer;
 
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
-    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings)
+    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings)
     {
 
         GetReferences();
 
         flockManager = newGuide.GetComponent<SC_FlockManager>();
+        curFlockSettings = flockSettings;
         //Instanciation des list de Boid et de Guide
-        _boidsTab = SC_BoidPool.Instance.GetBoid(newSpawnCount);
+        _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
         _guideList = new List<Transform>();
 
         //Récupération du comportement initial
-        _curSettings = newSettings;
+        curBoidSettings = newSettings;
 
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
 
-
+        respawnTimer = 0;
         //Initialisation de tout les boids
         for (int i = 0; i < newSpawnCount; i++)
         {
@@ -76,7 +79,7 @@ public class SC_KoaManager : MonoBehaviour
            
 
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(_curSettings, _guideList[0]);
+            boid.Initialize(curBoidSettings, _guideList[0]);
         }
 
         //Instantie le Koa
@@ -92,7 +95,7 @@ public class SC_KoaManager : MonoBehaviour
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         int index = Random.RandomRange(0, _boidsTab.Length);
-        _curKoaGuide = _boidsTab[index].transform;
+        _curKoaGuide = _boidsTab[1].transform;
 
     }
 
@@ -102,8 +105,17 @@ public class SC_KoaManager : MonoBehaviour
         if (_koa != null)
         {
             _koa.transform.position = _curKoaGuide.position;
+        }
+        respawnTimer += Time.deltaTime;
+        if(respawnTimer > (60f/curFlockSettings.regenerationRate))
+        {
+            respawnTimer = 0;
+            GenerateNewBoid();
+
 
         }
+        
+
     }
 
     void GetReferences()
@@ -144,7 +156,16 @@ public class SC_KoaManager : MonoBehaviour
 
 
         //---------------------- Répartition des boids sur les guides de facon proportionnel
-        int all = _boidsTab.Length; //Total des boids
+        int nbActiveBoid = 0;
+        for(int i = 0; i<_boidsTab.Length; i++)
+        {
+            if(_boidsTab[i].isActive)
+            {
+                nbActiveBoid++;
+            }
+        }
+
+        int all = nbActiveBoid; //Total des boids
         int div = splitNumber; //Total de guides
         float val = all / div; //Nombre de boids par Guides
 
@@ -172,11 +193,29 @@ public class SC_KoaManager : MonoBehaviour
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(newSettings);
-            _curSettings = newSettings;
+            curBoidSettings = newSettings;;
         }
     }
 
-
+    public void GenerateNewBoid()
+    {
+        
+        for(int i=0;i<curFlockSettings.maxBoid; i++)
+        {
+            if(!_boidsTab[i].isActive)
+            { 
+                _boidsTab[i].transform.position = _koa.transform.position; //Déplacement à la position
+                _boidsTab[i].transform.forward = Random.insideUnitSphere; //Rotation random
+                int rnd = 0;
+                if(_guideList.Count>1)
+                {
+                    rnd = Random.Range(1, _guideList.Count);
+                }
+                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd]);
+                return;
+            }
+        }
+    }
 
     public void GetHit()
     {
@@ -192,5 +231,7 @@ public class SC_KoaManager : MonoBehaviour
         Destroy(this.gameObject);
 
     }
+
+
 
 }
