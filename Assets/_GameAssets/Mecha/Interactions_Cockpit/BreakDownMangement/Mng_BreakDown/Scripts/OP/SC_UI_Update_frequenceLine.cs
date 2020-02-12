@@ -28,12 +28,16 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     float frequenceWanted = 110;
     float amplitudeWanted = 0.8f;
 
+    public int indexDouble1;
+    public int indexDouble2;
     [Range(1,15)]
     //[SerializeField]
     int speed = 1;
 
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownTest sc_syncvar;
+
+    public int offset;
 
     void Start()
     {
@@ -58,16 +62,22 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
         }
         if (sc_syncvar != null)
-        {/*
-            frequence = sc_syncvar.potar2value + 110;
-            amplitude = sc_syncvar.potar3value/100 + 0.8f ;
+        {
+
+            //frequence = sc_syncvar.potar2value + 110;
+            //amplitude = sc_syncvar.potar3value/100 + 0.8f ;
+
+            frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
+            amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
             //PANNE
-            if (sc_syncvar.potar3isEnPanne || sc_syncvar.potar2isEnPanne)
+
+
+            if (sc_syncvar.SL_sliders[indexDouble1].isEnPanne || sc_syncvar.SL_sliders[indexDouble2].isEnPanne)
             {
 
                 lineWanted.enabled = true;
-                amplitudeWanted = sc_syncvar.potar3valueWanted / 100 + 0.8f;
-                frequenceWanted = sc_syncvar.potar2valueWanted + 110;
+                frequenceWanted = sc_syncvar.SL_sliders[indexDouble1].valueWanted * 155 + 110;
+                amplitudeWanted = sc_syncvar.SL_sliders[indexDouble2].valueWanted * 1.5f + 0.8f;
 
             }
             //NO PANNE
@@ -75,7 +85,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             {
                 lineWanted.enabled = false;
             }
-            */
+
         }
 
 

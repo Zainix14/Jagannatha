@@ -59,7 +59,7 @@ public class SC_UI_Update_Slider : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                Debug.Log(sc_syncvar.SL_sliders[0].isEnPanne);
+                //Debug.Log(sc_syncvar.SL_sliders[0].isEnPanne);
             }
 
             if (sc_syncvar.SL_sliders[index].isEnPanne)
@@ -80,7 +80,6 @@ public class SC_UI_Update_Slider : MonoBehaviour
     {
 
         float posY1 = sc_syncvar.SL_sliders[index].value * tktEtienne;
-        Debug.Log("VALEUR Y : " + posY1);
         this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, posY1, this.gameObject.transform.localPosition.z);
 
     }
