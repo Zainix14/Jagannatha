@@ -61,7 +61,7 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     {
         
         textValue.text = sc_syncvar.SL_sliders[index].value.ToString();
-        float rotZ = sc_syncvar.SL_sliders[index].value;
+        float rotZ = sc_syncvar.SL_sliders[index].value * 100;
 
         disquePotar.gameObject.transform.eulerAngles = new Vector3(270, rotZ, 0);
         
