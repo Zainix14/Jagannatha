@@ -13,7 +13,7 @@ public class SC_KoaManager : MonoBehaviour
     GameObject Mng_CheckList;
     GameObject NetPlayerP;
     SC_NetPSpawnKoa_P NetPSpawnKoa;
-
+    Vector3Int sensitivity;
 
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
@@ -52,9 +52,9 @@ public class SC_KoaManager : MonoBehaviour
     {
 
         GetReferences();
-
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         curFlockSettings = flockSettings;
+        sensitivity = curFlockSettings.sensitivity;
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
         _guideList = new List<Transform>();
@@ -79,7 +79,7 @@ public class SC_KoaManager : MonoBehaviour
            
 
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(curBoidSettings, _guideList[0]);
+            boid.Initialize(curBoidSettings, _guideList[0],sensitivity);
         }
 
         //Instantie le Koa
@@ -91,6 +91,7 @@ public class SC_KoaManager : MonoBehaviour
         {
             _koa = NetPSpawnKoa.SpawnKoa();
             _koa.GetComponent<SC_KoaCollider>().Initialize(this);
+            _koa.GetComponent<SC_MoveKoaSync>().InitOPKoaSettings(sensitivity);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -211,7 +212,7 @@ public class SC_KoaManager : MonoBehaviour
                 {
                     rnd = Random.Range(1, _guideList.Count);
                 }
-                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd]);
+                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity);
                 return;
             }
         }
@@ -223,7 +224,7 @@ public class SC_KoaManager : MonoBehaviour
         //SetBehavior(DeathSettings);
         foreach (Boid b in _boidsTab)
         {
-            b.DestroyBoid();
+            b.DestrotBoid();
 
         }
         Destroy(_koa.gameObject);
