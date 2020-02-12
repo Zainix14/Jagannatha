@@ -177,8 +177,8 @@ public class SC_FlockWeaponManager : MonoBehaviour
                                                 Vector3.Distance(transform.position, target.transform.position));
         if (laserTimer >= flockSettings.activeDuration)
         {
-            laser.transform.localScale = new Vector3(0, 0, 0);
-            laserFx.transform.localScale = new Vector3(0, 0, 0);
+
+            DestroyFx();
             EndOfAttack();
         }
 
@@ -187,7 +187,14 @@ public class SC_FlockWeaponManager : MonoBehaviour
     }
     #endregion
 
-
+    public void DestroyFx()
+    {
+        isFiring = false;
+        laser.transform.localScale = new Vector3(0, 0, 0);
+        laser.transform.position = new Vector3(0, -2000, 0);
+        laserFx.transform.localScale = new Vector3(0, 0, 0);
+        laserFx.transform.position = new Vector3(0, -2000, 0);
+    }
 
 
 
@@ -200,7 +207,6 @@ public class SC_FlockWeaponManager : MonoBehaviour
     void Reset()
     {
         laserFire = false;
-        if(laserFx != null)
         n_CurBullet = 0;
         nbBulletFire = 0;
         timer = 0;

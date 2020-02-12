@@ -355,6 +355,7 @@ public class SC_FlockManager : MonoBehaviour
 
     public void DestroyFlock()
     {
+        GetComponent<SC_FlockWeaponManager>().DestroyFx();
         SC_WaveManager.Instance.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
