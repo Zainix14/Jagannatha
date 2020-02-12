@@ -89,6 +89,7 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         t_Bullet[n_CurBullet].transform.rotation = helper_startPos.transform.rotation;
         t_MrBullet[n_CurBullet].enabled = true;
         t_RbBullet[n_CurBullet].isKinematic = false;
+        t_Bullet[n_CurBullet].GetComponent<SC_BulletMiniGun>().sensitivity = sensitivity;
 
         //noise
         Vector3 dir = new Vector3(transform.forward.x+Random.Range(-scattering,+scattering), transform.forward.y + Random.Range(-scattering, +scattering), transform.forward.z + Random.Range(-scattering, +scattering));

@@ -67,11 +67,6 @@ public class FlockSettings : ScriptableObject
 
     [SerializeField]
     [Tooltip("Value : 0 - 5")]
-    Vector3Int sensitivity;
+    public Vector3Int sensitivity;
 
-
-    public Vector3 GetFlockSensitivity()
-    {
-        return sensitivity;
-    }
 }

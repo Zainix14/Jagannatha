@@ -8,6 +8,9 @@ public class Boid : MonoBehaviour {
     bool isKoa = false;
     bool koaTargetWeight = false;
     public bool isActive = false;
+
+    int life = 2;
+    Vector3Int sensitivity;
     // State
     [HideInInspector]
     public Vector3 position;
@@ -44,9 +47,8 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="target"></param>
-    public void Initialize (BoidSettings settings, Transform target, bool isKoa=false)
+    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity)
     {
-        this.isKoa = isKoa;
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
 
@@ -181,7 +183,19 @@ public class Boid : MonoBehaviour {
     }
 
     
-    public void DestroyBoid()
+    public void HitBoid(Vector3Int GunSensitivity)
+    {
+        life--;
+        if (GunSensitivity == sensitivity)
+            life--;
+
+        if(life <= 0)
+        {
+            DestrotBoid();
+        }
+    }
+
+    public void DestrotBoid()
     {
         transform.position = new Vector3(0, -2000, 0);
         isActive = false;
