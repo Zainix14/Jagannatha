@@ -60,7 +60,7 @@ public class FlockSettings : ScriptableObject
     [Range(10,200)]
     public int maxBoid;
 
-    [Tooltip("boids per 10sec")]
+    [Tooltip("boids per min")]
     public int regenerationRate;
 
     [Header("Sensitivity")]

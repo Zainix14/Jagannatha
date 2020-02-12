@@ -108,7 +108,7 @@ public class SC_FlockManager : MonoBehaviour
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
-        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0]);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0],newFlockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
         pathBehavior.InitializePathBehavior();
