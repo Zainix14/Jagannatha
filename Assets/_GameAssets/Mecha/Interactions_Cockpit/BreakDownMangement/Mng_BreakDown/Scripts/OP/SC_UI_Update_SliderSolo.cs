@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SC_UI_Update_PotarSolo : MonoBehaviour
+public class SC_UI_Update_SliderSolo : MonoBehaviour
 {
     [SerializeField]
     GameObject disquePotar;
@@ -14,10 +14,10 @@ public class SC_UI_Update_PotarSolo : MonoBehaviour
     [SerializeField]
     Text textWanted;
 
-
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownTest sc_syncvar;
 
+    public int index;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,27 +40,30 @@ public class SC_UI_Update_PotarSolo : MonoBehaviour
         }
         if (sc_syncvar != null)
         {
-            updatePotarRender();
-
+            updateSliderSolo();
+            
             //PANNE
-            if (sc_syncvar.potar1isEnPanne)
+            if (sc_syncvar.SL_sliders[index].isEnPanne)
             {
                 textWanted.enabled = true;
-                textWanted.text = sc_syncvar.potar1valueWanted.ToString();
+                textWanted.text = sc_syncvar.SL_sliders[index].valueWanted.ToString();
             }
             //NO PANNE
             else
             {
                 textWanted.enabled = false;
             }
+            
         }
     }
 
-    void updatePotarRender()
+    void updateSliderSolo()
     {
-        textValue.text = sc_syncvar.potar1value.ToString();
-        float rotZ = sc_syncvar.potar1value;
+        
+        textValue.text = sc_syncvar.SL_sliders[index].value.ToString();
+        float rotZ = sc_syncvar.SL_sliders[index].value * 100;
 
         disquePotar.gameObject.transform.eulerAngles = new Vector3(270, rotZ, 0);
+        
     }
 }

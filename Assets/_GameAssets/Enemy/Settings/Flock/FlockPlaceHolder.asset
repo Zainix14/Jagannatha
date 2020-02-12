@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89286e30a111f14cbdde113f04bc4aa, type: 3}
   m_Name: FlockPlaceHolder
   m_EditorClassIdentifier: 
-  attackCity: 0
-  attackPlayer: 1
+  spawnPosition: {x: 0, y: 90, z: 100}
+  speedOnSpline: 10
+  attackType: 0
+  timeBetweenAttacks: 3
+  fireRate: 3
+  nbBulletToShoot: 10
+  chargingAttackTime: 0
+  activeDuration: 0
   boidSettings:
   - {fileID: 11400000, guid: 790db41fbac060d41964033b3867d415, type: 2}
   - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
   - {fileID: 11400000, guid: 6f5b22aa0ffa509478c751f23e078739, type: 2}
-  spawnPosition: {x: -430, y: 90, z: -200}
-  speedOnSpline: 10
-  speedToPlayer: 1
-  pathPreference: 1
-  timeBeforeAttack: 15
-  attackDuration: 30
   boidSpawn: 100
   maxBoid: 150
   regenerationRate: 2
+  sensitivity: {x: 0, y: 0, z: 0}

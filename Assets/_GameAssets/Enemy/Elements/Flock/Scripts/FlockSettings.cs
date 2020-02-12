@@ -49,6 +49,8 @@ public class FlockSettings : ScriptableObject
 
     [Header("Boids")]
 
+
+
     [Tooltip("Index 0 : Roam | Index 1 : Attack")]
     public BoidSettings[] boidSettings;
 
@@ -58,6 +60,13 @@ public class FlockSettings : ScriptableObject
     [Range(10,200)]
     public int maxBoid;
 
-    [Tooltip("boids per 10sec")]
+    [Tooltip("boids per min")]
     public int regenerationRate;
+
+    [Header("Sensitivity")]
+
+    [SerializeField]
+    [Tooltip("Value : 0 - 5")]
+    public Vector3Int sensitivity;
+
 }

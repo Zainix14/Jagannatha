@@ -17,6 +17,8 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
     public int n_fireForce;
     public float scattering;
 
+    Vector3Int sensitivity;
+
     float timer = 0;
 
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
@@ -98,4 +100,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
 
     public void SetEngineBreakdownState(bool State){}
 
+
+    public Vector3Int GetWeaponSensitivity(){return sensitivity;}
+    public void SetSensitivity(Vector3Int value){sensitivity = value;}
 }

@@ -33,7 +33,7 @@ public class SC_FlockManager : MonoBehaviour
     GameObject _KoaManager; //Stock le Koa de la nuée
     public SC_KoaManager _SCKoaManager; //Stock le script KoaManager du Koa
     Transform _mainGuide; //Guide général que suit toujours la nuée (correspond au flock (this) mais pour des pb de lisibilité le Transform est stocké dans une varible Main Guide
-
+    
    
 
     BezierSolution.BezierWalkerWithSpeed bezierWalker;
@@ -108,7 +108,7 @@ public class SC_FlockManager : MonoBehaviour
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
-        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0]);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0],newFlockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
         pathBehavior.InitializePathBehavior();
@@ -355,6 +355,7 @@ public class SC_FlockManager : MonoBehaviour
 
     public void DestroyFlock()
     {
+        GetComponent<SC_FlockWeaponManager>().DestroyFx();
         SC_WaveManager.Instance.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
