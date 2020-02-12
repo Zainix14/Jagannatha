@@ -42,7 +42,7 @@ public class SC_PathBehavior : MonoBehaviour
     int newLineIndex; //Index de la ligne vers lequel le flock doit aller
 
     bool isAttacking; //Le flock se dirige vers une spline d'attack
-    int PathPreference; //0 si le flock priorise le passage par les lignes lors d'une attaque (plus rapide), 1 si c'est les cercles qui sont priorisé
+   
 
 
     float curAttackDuration;
@@ -82,7 +82,6 @@ public class SC_PathBehavior : MonoBehaviour
         
         SC_bezier = GetComponent<BezierSolution.BezierWalkerWithSpeed>(); //Récupère le script du flock
         FlockManager = GetComponent<SC_FlockManager>(); //Récupère le script du flock
-        PathPreference = FlockManager.GetPathPreference();//Récupère le Path préference du flock (dans le flock manager)
 
         InitTab(); //initialise tout les tableaux
 
@@ -169,7 +168,7 @@ public class SC_PathBehavior : MonoBehaviour
 
 
             //Si le Flock est en mode attaque et que le Path Preference est Line
-            if (isAttacking && PathPreference == 0)
+            if (isAttacking)
             {
                 //L'index de sortie est l'index correspondant a la line sur lequel le path d'attaque est situé
                 nextIndex = newLineIndex;
@@ -364,14 +363,6 @@ public class SC_PathBehavior : MonoBehaviour
         isAttacking = true;
     }
 
-    public void OnAttackPlayer(float attackDuration)
-    {
-        isAttacking = true;
-        curAttackDuration = 0;
-        totalAttackDuration = attackDuration;
-        GetOnPlayerSpline(0);
-
-    }
     public void GetOnRandomSpline()
     {
         int rnd = Random.Range(0, _circleSplineTab.Length);

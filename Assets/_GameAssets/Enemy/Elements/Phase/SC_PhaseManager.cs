@@ -8,9 +8,14 @@ using UnityEngine;
 /// </summary>
 public class SC_PhaseManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_PhaseManager _instance;
+    public static SC_PhaseManager Instance { get { return _instance; } }
+
+    #endregion
     PhaseSettings curPhaseSettings;
-    SC_WaveManager waveManager;
-    SC_EnemyManager enemyManager;
     WaveSettings[] waves;
 
 
@@ -18,10 +23,16 @@ public class SC_PhaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        waveManager = GetComponent<SC_WaveManager>();
-        enemyManager = GetComponent<SC_EnemyManager>();
-        resetVariables();
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
 
+        resetVariables();
     }
 
     public void Initialize(PhaseSettings newPhaseSettigns)
@@ -31,7 +42,7 @@ public class SC_PhaseManager : MonoBehaviour
         resetVariables();
         waves = newPhaseSettigns.waves;
         
-        waveManager.InitializeWave(waves[curWaveIndex]);
+        SC_WaveManager.Instance.InitializeWave(waves[curWaveIndex]);
     }
 
     // Update is called once per frame
@@ -46,12 +57,12 @@ public class SC_PhaseManager : MonoBehaviour
         if(curWaveIndex<waves.Length)
         {
 
-            waveManager.InitializeWave(waves[curWaveIndex]);
+            SC_WaveManager.Instance.InitializeWave(waves[curWaveIndex]);
         }
         else
         {
 
-            enemyManager.EndPhase();
+            SC_EnemyManager.Instance.EndPhase();
         }
     }
 

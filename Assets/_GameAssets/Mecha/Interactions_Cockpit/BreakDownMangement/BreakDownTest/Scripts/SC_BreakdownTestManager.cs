@@ -1,4 +1,4 @@
-﻿    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +14,6 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     public bool b_BreakdownTest = false;
 
     private IF_BreakdownManager Mng_BreakdownMain;
-
-    bool b_InitPanne = false;
 
     [SerializeField]
     public GameObject[] interactible;
@@ -39,23 +37,20 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        //Panne On Init
-        if (!b_InitPanne)
-            InitBreakdown();
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if(Input.GetKeyDown(KeyCode.A))
+        {
             StartNewBreakdown(2);
-    }
+        }
 
-    void InitBreakdown()
-    {
-        b_InitPanne = true;
-        //StartNewBreakdown(interactible.Length);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log(GameObject.Find("Slider").GetComponent<ViveGripExample_Slider>().desiredValue);
+        }
     }
 
     public void StartNewBreakdown(int nbBreakdown)
     {
-
+      
         int curBreakdown = nbBreakdown;
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
@@ -128,3 +123,4 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     
 
 }
+

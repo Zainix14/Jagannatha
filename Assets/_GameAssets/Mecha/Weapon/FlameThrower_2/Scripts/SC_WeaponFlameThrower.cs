@@ -10,9 +10,14 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
 
+    [SerializeField]
+    GameObject _bulletContainer;
+
     public float frequency;
     public int n_fireForce;
     public float scattering;
+
+    Vector3Int sensitivity;
 
     float timer = 0;
 
@@ -31,6 +36,8 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
     void CreateBulletPull()
     {
 
+        GameObject bulletContainer = Instantiate(_bulletContainer);
+
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
         t_RbBullet = new Rigidbody[n_BulletMagazine];
@@ -41,6 +48,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
 
             //Initialisation du Prefab BallePilote par le Serveur pour la scene pilote et la scene opérateur
             GameObject curBullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
+            curBullet.transform.SetParent(bulletContainer.transform);
             t_Bullet[i] = curBullet;
             t_RbBullet[i] = curBullet.GetComponent<Rigidbody>();
             t_MrBullet[i] = curBullet.GetComponentInChildren<MeshRenderer>();
@@ -92,4 +100,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
 
     public void SetEngineBreakdownState(bool State){}
 
+
+    public Vector3Int GetWeaponSensitivity(){return sensitivity;}
+    public void SetSensitivity(Vector3Int value){sensitivity = value;}
 }

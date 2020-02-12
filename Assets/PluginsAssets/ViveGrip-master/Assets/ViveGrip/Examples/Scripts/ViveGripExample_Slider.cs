@@ -16,6 +16,12 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public bool _freezeAlongY = false;
     public bool _freezeAlongZ = true;
 
+    /// <summary>
+    /// Index du slider pour sa structList
+    /// </summary>
+    /// 
+
+    public int index;
 
     public float desiredValue = 0;
     public bool isEnPanne = false;
@@ -26,10 +32,11 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public GameObject LocalBreakdownMng;
 
     private SC_SyncVar_BreakdownTest sc_syncvar;
-
+    /*
     [SerializeField]
     button bouton;
 
+    
      enum button
      {
         slider1,
@@ -37,7 +44,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         slider3
 
      }
-
+     */
     void Start ()
     {
         oldX = transform.position.x;
@@ -116,6 +123,9 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         }
         else
         {
+
+            sc_syncvar.SliderChangeValue(index, value);
+            /*
             switch (bouton)
             {
                 case button.slider1:
@@ -129,7 +139,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                     break;
                 default:
                     break;
-            }
+            }*/
+
         }          
 
     }
@@ -146,6 +157,9 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         SetIsEnPanne(true);
 
+        sc_syncvar.SliderChangeValueWanted(index, desiredValue);
+        sc_syncvar.SliderChangeIsPanne(index, true);
+        /*
         switch (bouton)
         {
             case button.slider1:
@@ -163,7 +177,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             default:
                 break;
         }
-        
+        */
     }
 
 
@@ -187,6 +201,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 else
                 {
 
+                    sc_syncvar.SliderChangeIsPanne(index, false);
+                    /*
                     switch (bouton)
                     {
                         case button.slider1:
@@ -202,7 +218,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                             break;
 
                     }
-
+                    */
 
                 }
             }
@@ -223,6 +239,9 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                 }
                 else
                 {
+
+                    sc_syncvar.SliderChangeIsPanne(index, true);
+                    /*
                     switch (bouton)
                     {
                         case button.slider1:
@@ -238,7 +257,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
                             break;
 
                     }
-
+                    */
 
                 }
             }

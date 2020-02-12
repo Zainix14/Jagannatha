@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f86ab7f8d5474d8daee2ad0ecbaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_OnFollow: 0
   RotationMode: 0
   TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
@@ -68,6 +69,8 @@ MonoBehaviour:
   frequency: 30
   n_fireForce: 32000
   scattering: 0.005
+  _bulletContainer: {fileID: 920854382642673552, guid: a8eabc3929c5ee7458055af2eab1eae7,
+    type: 3}
   n_BulletMagazine: 200
 --- !u!114 &6477627954815851500
 MonoBehaviour:
@@ -182,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6507412288147288599}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.572}
+  m_LocalPosition: {x: 0, y: 0, z: 9.23}
   m_LocalScale: {x: 0.4, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 5511048538182451901}

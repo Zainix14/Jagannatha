@@ -10,7 +10,12 @@ using UnityEngine;
 /// </summary>
 public class SC_BoidBehavior : MonoBehaviour
 {
+    #region Singleton
 
+    private static SC_BoidBehavior _instance;
+    public static SC_BoidBehavior Instance { get { return _instance; } }
+
+    #endregion
     //Tkt ca marche
     const int threadGroupSize = 3;
     ComputeBuffer boidBuffer;
@@ -26,7 +31,17 @@ public class SC_BoidBehavior : MonoBehaviour
     Coroutine m_boidCor = null;
 
 
-
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     public void Initialize(Boid[] boidPool)
     {
         _boidsTab = boidPool;

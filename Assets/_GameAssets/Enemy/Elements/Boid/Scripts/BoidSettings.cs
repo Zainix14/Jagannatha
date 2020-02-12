@@ -25,13 +25,6 @@ public class BoidSettings : ScriptableObject {
     public float collisionAvoidDst = 5;
 
 
-    [Header("Spline Settings")]
-    public float speedOnSpline;
-
-    [Header("Attack Settings")]
-    [Range(0,2)]
-    public float speedToPlayer = 1;
-
     [Header("Split Settings")]
 
     public bool split;

@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: BoidTuto
   m_EditorClassIdentifier: 
   minSpeed: 15
-  maxSpeed: 25
+  maxSpeed: 20
   perceptionRadius: 1
   avoidanceRadius: 5
   maxSteerForce: 10
-  alignWeight: 0.2
-  cohesionWeight: 10
+  alignWeight: 1
+  cohesionWeight: 20
   seperateWeight: 10
-  targetWeight: 20
+  targetWeight: 15
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
-  boundsRadius: 1
-  avoidCollisionWeight: 1
-  collisionAvoidDst: 1
-  speedOnSpline: 0
-  speedToPlayer: 1
+    m_Bits: 67108864
+  boundsRadius: 0.1
+  avoidCollisionWeight: 5
+  collisionAvoidDst: 5
   split: 0
   splitNumber: 1
   curveX:
