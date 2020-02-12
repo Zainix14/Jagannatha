@@ -21,6 +21,7 @@ public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         curImage = this.GetComponent<Image>();
+        curMat = this.GetComponent<Image>().material;
     }
 
     // Update is called once per frame
@@ -47,5 +48,10 @@ public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
     {
             curImage.material = breakdownMat;
         
+    }
+    public void changeColorOnDisplayNeutral()
+    {
+            curImage.material = curMat;
+
     }
 }
