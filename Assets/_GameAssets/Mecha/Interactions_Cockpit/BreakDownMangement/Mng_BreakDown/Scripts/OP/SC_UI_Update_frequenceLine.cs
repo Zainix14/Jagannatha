@@ -15,7 +15,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
     [Range(0.1f,1.5f)]
     [SerializeField]
-    float amplitude; //Hauteur de la courbe ---- POTAR2
+    float amplitude; //Hauteur de la courbe
 
     [Range(0.1f, 200)]
     //[SerializeField]
@@ -23,7 +23,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
     [Range(40, 180)]
     [SerializeField]
-    float frequence; //Frequence de la courbe ---- POTAR3
+    float frequence; //Frequence de la courbe 
 
     float frequenceWanted = 110;
     float amplitudeWanted = 0.8f;
@@ -37,7 +37,6 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownTest sc_syncvar;
 
-    public int offset;
 
     void Start()
     {
@@ -45,6 +44,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     
         lineWanted.enabled = false;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        GetReferences();
     }
 
     void Update()
@@ -54,23 +54,13 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         
         if (sc_syncvar == null || Mng_SyncVar == null)
         {
-            if (Mng_SyncVar == null)
-                Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-
-            if (Mng_SyncVar != null)
-                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            GetReferences();
 
         }
         if (sc_syncvar != null)
         {
-
-            //frequence = sc_syncvar.potar2value + 110;
-            //amplitude = sc_syncvar.potar3value/100 + 0.8f ;
-
             frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
             amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
-            //PANNE
-
 
             if (sc_syncvar.SL_sliders[indexDouble1].isEnPanne || sc_syncvar.SL_sliders[indexDouble2].isEnPanne)
             {
@@ -114,6 +104,14 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             float yWanted = Mathf.Sin(Time.time + i * speed) * amplitudeWanted; //Valeur de Y
             lineWanted.SetPosition(i, new Vector3(yWanted, 0f, xWanted));
         }
+    }
+
+    void GetReferences()
+    {
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
     }
 
     void securityCheck()

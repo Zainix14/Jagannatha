@@ -1,5 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3157846064470919096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1421818250078810676}
+  m_Layer: 5
+  m_Name: childContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1421818250078810676
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157846064470919096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7534594990621651752}
+  - {fileID: 7534594989682600109}
+  - {fileID: 7534594991068894672}
+  - {fileID: 7534594989199811662}
+  - {fileID: 7534594990323443021}
+  m_Father: {fileID: 7534594990169769441}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7534594990169769442
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,11 +72,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 7534594990621651752}
-  - {fileID: 7534594989682600109}
-  - {fileID: 7534594991068894672}
-  - {fileID: 7534594989199811662}
-  - {fileID: 7534594990323443021}
+  - {fileID: 1421818250078810676}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,7 +181,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7534594990169769441}
+    m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
     - target: {fileID: 7721296559958792676, guid: fd6ca9e382de6c84ca6409e7237d6332,
         type: 3}
@@ -270,7 +306,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7534594990169769441}
+    m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
     - target: {fileID: 2803010507599511179, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
@@ -400,7 +436,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7534594990169769441}
+    m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
     - target: {fileID: 5169861611795617336, guid: 953684a80472adf41b9a1eb0d111ec03,
         type: 3}
@@ -525,7 +561,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7534594990169769441}
+    m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
     - target: {fileID: 2967783774989897980, guid: c835727dca7340f4eb6a398e403ac93b,
         type: 3}
@@ -550,17 +586,17 @@ PrefabInstance:
     - target: {fileID: 2967783774989897983, guid: c835727dca7340f4eb6a398e403ac93b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2967783774989897983, guid: c835727dca7340f4eb6a398e403ac93b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2967783774989897983, guid: c835727dca7340f4eb6a398e403ac93b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2967783774989897983, guid: c835727dca7340f4eb6a398e403ac93b,
         type: 3}
@@ -650,7 +686,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7534594990169769441}
+    m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
     - target: {fileID: 240054877426665222, guid: 12148f9c83273904cb296a347b7dfbdc,
         type: 3}
