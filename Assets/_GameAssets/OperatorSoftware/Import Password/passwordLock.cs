@@ -24,16 +24,16 @@ public class passwordLock : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                canvasMng.GetComponent<canvasManager>().activateChild(i);
+                //canvasMng.GetComponent<canvasManager>().activateChild(i);
             }
-            canvasMng.GetComponent<canvasManager>().checkTaskBeforeGo();
+            //canvasMng.GetComponent<canvasManager>().checkTaskBeforeGo();
             gameObject.SetActive(false);
             unlock = false;
             countTime = 0;
         }
         else
         {
-            canvasMng.GetComponent<canvasManager>().lockScreenDisplay();
+            //canvasMng.GetComponent<canvasManager>().lockScreenDisplay();
         }
 
     }
@@ -52,7 +52,7 @@ public class passwordLock : MonoBehaviour
             }
             if (countTime > 4f) //Fin de compteur
             {
-                canvasMng.GetComponent<canvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
+                //canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
                 gameObject.SetActive(false); //désactivation du canvas de mot de passe (ContainerPassword)
                 unlock = false; //Sécurité
                 countTime = 0; //RaZ compteur
