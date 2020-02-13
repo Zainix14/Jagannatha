@@ -30,7 +30,7 @@ public class SC_CanvasManager : MonoBehaviour
     {
         for (int i = 0; i < numRealDisplay; i++)
         {
-            canvas[i].GetComponent<Image>().color = new Color32(0, 0, 0, 255); //Active l'alpha sans couleur, sinon sprite n'apparait pas 
+            canvas[i].GetComponent<Image>().color = backgroundColor; //Active l'alpha sans couleur, sinon sprite n'apparait pas 
             canvas[i].GetComponent<Image>().material = null; //Désactiver le material (renderTexture)
             activateChild(i); //Activation des enfants
         }
