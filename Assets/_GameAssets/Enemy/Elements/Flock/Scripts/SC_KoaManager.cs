@@ -95,8 +95,8 @@ public class SC_KoaManager : MonoBehaviour
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        int index = Random.RandomRange(0, _boidsTab.Length);
         _curKoaGuide = _boidsTab[1].transform;
+        _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
 
     }
 
