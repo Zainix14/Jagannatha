@@ -9,18 +9,24 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     bool b_BreakEngine = false;
 
     [SerializeField]
-    float f_Speed = 10.0f;
+    float f_RotationSpeedH = 1.0f;
     [SerializeField]
-    float f_RotationSpeed = 1.0f;
-    [SerializeField]
-    float f_MaxSpeed;
+    float f_RotationSpeedV = 1.0f;
     [SerializeField]
     float f_MaxRotSpeed;
+
+    float f_MaxRotH = 0.4f;
+    public float f_LerpRotH = 1f;
+    public float f_LerpRotV = 1f;
+
+    public Transform TargetTRS;
+
+    Quaternion OriginalRotH;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        OriginalRotH = TargetTRS.transform.rotation;
     }
 
     // Update is called once per frame
@@ -34,27 +40,27 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
 
         //donne une impulsion en proportion à l'axe du joystick
-        float f_ImpulseZ = Input.GetAxis("Vertical") * f_Speed;
-        //float f_ImpulseX = Input.GetAxis("Horizontal") * f_Speed;
+        float f_ImpulseZ = (Input.GetAxis("Vertical") * f_MaxRotH) * f_RotationSpeedV;
+        float f_ImpulseX = Input.GetAxis("Horizontal") * f_RotationSpeedH;
 
-        float f_Torque = Input.GetAxis("Horizontal") * f_RotationSpeed;
-
-        //Translation
-        if (GetComponent<Rigidbody>().velocity.magnitude < f_MaxSpeed)
+        //Rotation V
+        if (f_ImpulseZ != 0)
         {
-
-            //Le joystick en diagonale => 1/1 à -1/-1 besoin de clamp l'addition des 2 vecteurs
-            //Vector3 V3_ClampedVector = Vector3.ClampMagnitude((transform.forward * f_ImpulseZ) + (transform.right * f_ImpulseX), f_Speed);
-
-            //GetComponent<Rigidbody>().AddForce(V3_ClampedVector, ForceMode.Impulse);
-
+            float rotationY = f_RotationSpeedV * f_ImpulseZ;
+            Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
+            Quaternion targetRot = OriginalRotH * yQuaternion;
+            //TargetTRS.localRotation = yQuaternion;
+            if (targetRot.x < OriginalRotH.x)
+                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, yQuaternion, f_LerpRotH);
+            else if (targetRot.x > OriginalRotH.x)
+                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, OriginalRotH, f_LerpRotH);
         }
 
-
-        //Rotation
-        if (GetComponent<Rigidbody>().angularVelocity.magnitude < f_MaxRotSpeed)
+        //Rotation H
+        if (f_ImpulseX != 0)
         {
-            GetComponent<Rigidbody>().AddTorque(transform.up * f_RotationSpeed * f_Torque, ForceMode.Impulse);
+            Quaternion yQuaternion = Quaternion.AngleAxis(f_ImpulseX, Vector3.up);
+            transform.rotation *= Quaternion.Lerp(transform.rotation, yQuaternion, f_LerpRotV);
         }
 
     }
