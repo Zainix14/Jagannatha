@@ -37,7 +37,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             StartNewBreakdown(2);
         }
