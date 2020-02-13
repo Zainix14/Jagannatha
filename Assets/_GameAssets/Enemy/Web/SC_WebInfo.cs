@@ -9,6 +9,13 @@ using UnityEngine;
 /// </summary>
 public class SC_WebInfo : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_WebInfo _instance;
+    public static SC_WebInfo Instance { get { return _instance; } }
+
+    #endregion
     //Tableaux stockant toutes les splines de déplacement par catégorie
     BezierSolution.BezierSpline[] _TabCircle; //Stock les Circle Spline
     BezierSolution.BezierSpline[] _TabLine; //Stock les Line Spline
@@ -17,6 +24,14 @@ public class SC_WebInfo : MonoBehaviour
 
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         //Récupère les enfants contenant chacun en enfant l'intégralité des splines d'un type 
         GameObject circleParent = transform.GetChild(0).gameObject; //Parent des Cercles
         GameObject lineParent = transform.GetChild(1).gameObject; //Parent des Lines
