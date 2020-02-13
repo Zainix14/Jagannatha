@@ -7,10 +7,6 @@ public class FlockSettings : ScriptableObject
 {
 
 
-    [Header("Spline Settings")]
-    public float speedOnSpline;
-
-
 
 
     [Header("General Attack Settings")]

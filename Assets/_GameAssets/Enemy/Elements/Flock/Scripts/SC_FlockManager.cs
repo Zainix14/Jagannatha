@@ -269,6 +269,10 @@ public class SC_FlockManager : MonoBehaviour
             _curSpline.transform.position = transform.position;
             bezierWalker.SetNewSpline(_curSpline);
         }
+        else
+        {
+            bezierWalker.speed = 0;
+        }
 
 
          
