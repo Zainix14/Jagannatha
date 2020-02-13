@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FlockSettings : ScriptableObject
 {
-    [Header("Spawn Position")]
-    public Vector3 spawnPosition = new Vector3(0,0,0);
 
 
     [Header("Spline Settings")]
     public float speedOnSpline;
+
+
 
 
     [Header("General Attack Settings")]
