@@ -14,7 +14,7 @@ public class SC_TargetHandRotation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (AimIndicator != null)
             LookAt();

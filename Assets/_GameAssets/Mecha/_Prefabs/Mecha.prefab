@@ -129,15 +129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1003718387063319601}
     m_Modifications:
-    - target: {fileID: 1283266316766246384, guid: 40df416a96288ba44964e1d529b4e10b,
+    - target: {fileID: 639575597096402306, guid: 40df416a96288ba44964e1d529b4e10b,
         type: 3}
-      propertyPath: m_Center.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1283266316766246386, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 50
+      propertyPath: m_Constraints
+      value: 94
       objectReference: {fileID: 0}
     - target: {fileID: 1283266316766246387, guid: 40df416a96288ba44964e1d529b4e10b,
         type: 3}
@@ -163,41 +158,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mecha_Collider
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9210480277877844010, guid: 40df416a96288ba44964e1d529b4e10b,
         type: 3}
@@ -233,6 +193,12 @@ Rigidbody:
     type: 3}
   m_PrefabInstance: {fileID: 2027463591453456468}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1003718388625542566 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1283266316766246386, guid: 40df416a96288ba44964e1d529b4e10b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2027463591453456468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6586435945758841688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,45 +206,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1003718387063319601}
     m_Modifications:
+    - target: {fileID: 980412258698061968, guid: d1a44925895a3c34dbf52d7fab4cbc18,
+        type: 3}
+      propertyPath: Target
+      value: 
+      objectReference: {fileID: 7201480549305192574}
     - target: {fileID: 2866185673104034091, guid: d1a44925895a3c34dbf52d7fab4cbc18,
         type: 3}
       propertyPath: m_Name
       value: Mecha_IK
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4061190831643280268, guid: d1a44925895a3c34dbf52d7fab4cbc18,
         type: 3}
@@ -320,6 +256,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1003718387063319601}
     m_Modifications:
+    - target: {fileID: 6828529470131184935, guid: 8f438fd168dd8c74c86df0242609ad77,
+        type: 3}
+      propertyPath: Target
+      value: 
+      objectReference: {fileID: 1003718388625542566}
     - target: {fileID: 8146274502873430609, guid: 8f438fd168dd8c74c86df0242609ad77,
         type: 3}
       propertyPath: m_Name
