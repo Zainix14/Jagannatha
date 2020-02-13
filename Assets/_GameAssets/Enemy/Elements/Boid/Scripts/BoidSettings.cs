@@ -42,4 +42,12 @@ public class BoidSettings : ScriptableObject {
     [Tooltip("Axe d'inversion")]
     public Vector3 invertAxis;
 
+
+    [Header("Spline Settings")]
+    public float speedOnSpline;
+    public BezierSolution.BezierSpline spline;
+
+
+
+
 }
