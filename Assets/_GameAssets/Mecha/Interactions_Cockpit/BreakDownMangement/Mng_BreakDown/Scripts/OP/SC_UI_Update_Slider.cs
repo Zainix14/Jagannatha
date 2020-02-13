@@ -27,7 +27,7 @@ public class SC_UI_Update_Slider : MonoBehaviour
     Image barrettePanne;
 
     //va te te faire
-    float tktEtienne = 254;
+    float offSetMultiplier = 254;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +65,7 @@ public class SC_UI_Update_Slider : MonoBehaviour
             if (sc_syncvar.SL_sliders[index].isEnPanne)
             {
                 barrettePanne.enabled = true;
-                float posY = sc_syncvar.SL_sliders[index].valueWanted * tktEtienne;
+                float posY = sc_syncvar.SL_sliders[index].valueWanted * offSetMultiplier;
                 
                 barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
             }
@@ -79,7 +79,7 @@ public class SC_UI_Update_Slider : MonoBehaviour
     void updateRenderSlider()
     {
 
-        float posY1 = sc_syncvar.SL_sliders[index].value * tktEtienne;
+        float posY1 = sc_syncvar.SL_sliders[index].value * offSetMultiplier;
         this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, posY1, this.gameObject.transform.localPosition.z);
 
     }

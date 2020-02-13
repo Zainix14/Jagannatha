@@ -247,6 +247,7 @@ public class SC_FlockManager : MonoBehaviour
             case PathType.AttackPlayer:
 
                 StartNewBehavior(1);
+                if(flockSettings.attackType == FlockSettings.AttackType.Laser)
                 bezierWalker.speed = 0;
                 GetComponent<SC_FlockWeaponManager>().StartFire();
                 break;
@@ -259,7 +260,7 @@ public class SC_FlockManager : MonoBehaviour
     public void StartNewBehavior(int behaviorIndex)
     {
         _curBoidSetting = _BoidSettings[behaviorIndex];
-        bezierWalker.speed = flockSettings.speedOnSpline;
+      
 
         if(flockSettings.speedOnSpline != 0 && !inAttack)
         {

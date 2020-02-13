@@ -7,7 +7,7 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
 
     private void Update()
-    {
+    {/*
         if (Input.GetKeyDown(KeyCode.B))
         {
             LaunchGlobalAlert();
@@ -15,7 +15,7 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             StopGlobalAlert();
-        }
+        }*/
     }
 
     public void LaunchGlobalAlert()

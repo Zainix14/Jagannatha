@@ -147,6 +147,19 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
     }
 
+    public void Repair()
+    {
+
+        desiredValue = gameObject.transform.localPosition.y;
+
+
+        SetIsEnPanne(false);
+
+        sc_syncvar.SliderChangeValueWanted(index, desiredValue);
+        sc_syncvar.SliderChangeIsPanne(index, false);
+
+    }
+
 
     public void IsValueOk()
     {
