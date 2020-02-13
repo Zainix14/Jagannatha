@@ -5,35 +5,45 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class passwordLock : MonoBehaviour
+public class SC_passwordLock : MonoBehaviour
 {
     [SerializeField]
     GameObject objectPassword; //Contient le texte du inputField
+
     string s_password = "gg"; //Mot de passe à taper
-    public GameObject canvasMng; //récupération du DisplayManager
-    public Text textFeedback; //Texte de feedback 
+
+    [SerializeField]
+    GameObject canvasMng; //récupération du DisplayManager
+
+    [SerializeField]
+    Text textFeedback; //Texte de feedback 
+
+
     float countTime = 0; //Compteur 
     bool unlock = false; //Sécurité
-    public electricPlug plugObject; //récupération de l'objet prise electrique
+
+    [SerializeField]
+    SC_electricPlug plugObject; //récupération de l'objet prise electrique
 
     [SerializeField]
     bool cheatCode = true;
+
     void Start()
     {
         if (cheatCode)
         {
             for (int i = 0; i < 4; i++)
             {
-                //canvasMng.GetComponent<canvasManager>().activateChild(i);
+                canvasMng.GetComponent<SC_CanvasManager>().activateChild(i);
             }
-            //canvasMng.GetComponent<canvasManager>().checkTaskBeforeGo();
+            canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
             gameObject.SetActive(false);
             unlock = false;
             countTime = 0;
         }
         else
         {
-            //canvasMng.GetComponent<canvasManager>().lockScreenDisplay();
+            canvasMng.GetComponent<SC_CanvasManager>().lockScreenDisplay();
         }
 
     }
@@ -48,11 +58,11 @@ public class passwordLock : MonoBehaviour
                 textFeedbackFunction("Valid password", new Color32(0, 255, 0, 255)); //Feedback textuel vert
                 unlock = true; //Sécurité
                 
-                plugObject.GetComponent<electricPlug>().plugConnected(); //Animation PLay
+                plugObject.GetComponent<SC_electricPlug>().plugConnected(); //Animation PLay
             }
             if (countTime > 4f) //Fin de compteur
             {
-                //canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
+                canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
                 gameObject.SetActive(false); //désactivation du canvas de mot de passe (ContainerPassword)
                 unlock = false; //Sécurité
                 countTime = 0; //RaZ compteur

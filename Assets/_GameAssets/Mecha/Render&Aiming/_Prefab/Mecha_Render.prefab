@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8146274502570545094}
   - component: {fileID: 8146274502570544954}
   - component: {fileID: 8146274502570544953}
+  - component: {fileID: 6828529470131184935}
   m_Layer: 0
   m_Name: Cam_Render
   m_TagString: MainCamera
@@ -123,6 +124,19 @@ MonoBehaviour:
   Indicator: {fileID: 7852629227361911903}
   b_IsVR: 0
   b_IsFPS: 0
+--- !u!114 &6828529470131184935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146274502570544957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb953647c4789d346b1a7ba9dd93f797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
 --- !u!1 &8146274502873430609
 GameObject:
   m_ObjectHideFlags: 0

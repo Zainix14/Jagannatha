@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Animation artisanale de la prise 
 /// </summary>
-public class electricPlug : MonoBehaviour
+public class SC_electricPlug : MonoBehaviour
 {
     Transform plugMale; //partie gauche
     Transform plugFemale; //Partie droite
@@ -42,7 +42,7 @@ public class electricPlug : MonoBehaviour
         b_allowRotate = false; //Sécurité
         gameObject.GetComponent<Animator>().SetBool("b_On", true); //Activation de l'animation (prise branchée)
 
-        plugMale.GetComponent<MeshRenderer>().material.color = new Color32(0, 255, 0, 255); //ajout d'une couleur ici verte
-        plugFemale.GetComponent<MeshRenderer>().material.color = new Color32(0, 255, 0, 255); //meme couleur | pas le meme objet
+        plugMale.GetComponent<MeshRenderer>().material.color = new Color32(255, 159, 0, 255); //ajout d'une couleur ici verte
+        plugFemale.GetComponent<MeshRenderer>().material.color = new Color32(255, 159, 0, 255); //meme couleur | pas le meme objet
     }
 }
