@@ -11,22 +11,22 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [SerializeField]
     float f_RotationSpeedH = 1.0f;
     [SerializeField]
-    float f_RotationSpeedV = 1.0f;
+    float f_RotationSpeedX = 1.0f;
     [SerializeField]
     float f_MaxRotSpeed;
 
     float f_MaxRotH = 0.4f;
-    public float f_LerpRotH = 1f;
-    public float f_LerpRotV = 1f;
+    public float f_LerpRotX = 1f;
+    public float f_LerpRotZ = 1f;
 
     public Transform TargetTRS;
 
-    Quaternion OriginalRotH;
+    Quaternion OriginalRotX;
 
     // Start is called before the first frame update
     void Start()
     {
-        OriginalRotH = TargetTRS.transform.rotation;
+        OriginalRotX = TargetTRS.transform.rotation;
     }
 
     // Update is called once per frame
@@ -40,27 +40,27 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
 
         //donne une impulsion en proportion à l'axe du joystick
-        float f_ImpulseZ = (Input.GetAxis("Vertical") * f_MaxRotH) * f_RotationSpeedV;
-        float f_ImpulseX = Input.GetAxis("Horizontal") * f_RotationSpeedH;
+        float f_ImpulseX = (Input.GetAxis("Vertical") * f_MaxRotH) * f_RotationSpeedX;
+        float f_ImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedH;
 
-        //Rotation V
-        if (f_ImpulseZ != 0)
-        {
-            float rotationY = f_RotationSpeedV * f_ImpulseZ;
-            Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
-            Quaternion targetRot = OriginalRotH * yQuaternion;
-            //TargetTRS.localRotation = yQuaternion;
-            if (targetRot.x < OriginalRotH.x)
-                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, yQuaternion, f_LerpRotH);
-            else if (targetRot.x > OriginalRotH.x)
-                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, OriginalRotH, f_LerpRotH);
-        }
-
-        //Rotation H
+        //Rotation X
         if (f_ImpulseX != 0)
         {
-            Quaternion yQuaternion = Quaternion.AngleAxis(f_ImpulseX, Vector3.up);
-            transform.rotation *= Quaternion.Lerp(transform.rotation, yQuaternion, f_LerpRotV);
+            float rotationX = f_RotationSpeedX * f_ImpulseX;
+            Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.left);
+            Quaternion targetRot = OriginalRotX * xQuaternion;
+            //TargetTRS.localRotation = yQuaternion;
+            if (targetRot.x < OriginalRotX.x)
+                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, xQuaternion, f_LerpRotX);
+            else if (targetRot.x > OriginalRotX.x)
+                TargetTRS.localRotation = Quaternion.Lerp(TargetTRS.localRotation, OriginalRotX, f_LerpRotX);
+        }
+
+        //Rotation Z
+        if (f_ImpulseZ != 0)
+        {
+            Quaternion zQuaternion = Quaternion.AngleAxis(f_ImpulseZ, Vector3.up);
+            transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
         }
 
     }
