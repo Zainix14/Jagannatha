@@ -144,6 +144,20 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     }
 
+    public void Repair()
+    {
+
+        desiredValue = curState;
+
+        SetIsEnPanne(false);
+
+
+        sc_syncvar.SwitchChangeValueWanted(index, desiredValue);
+        sc_syncvar.SwitchChangeIsPanne(index, false);
+
+
+    }
+
     public void IsValueOk()
     {
         if (desiredValue == curState)

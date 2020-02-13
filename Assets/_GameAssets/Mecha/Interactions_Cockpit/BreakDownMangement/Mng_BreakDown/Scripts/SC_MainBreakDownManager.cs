@@ -10,6 +10,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public SC_BreakdownTestManager Mng_BreakDownTest;
     private SC_BreakdownOnBreakdownAlert SC_BreakDownAlert;
 
+    // ecrans d'erreur
+
+    public GameObject screenController;
+    private SC_breakdown_displays_screens sc_screens_controller;
+
     public bool b_BreakEngine = false;
 
     GameObject MoveSystem;
@@ -66,6 +71,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if (Mng_Checklist != null && FlameSystem == null)
             FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
+
+
+        //get du script qui gere l'affichage des ecrans de panne
+        sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
     }
 
     public void CheckBreakdown()
@@ -79,16 +88,19 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
             if (b_BreakEngine)
-                SC_BreakDownAlert.LaunchGlobalAlert();
+                // SC_BreakDownAlert.LaunchGlobalAlert();
+                sc_screens_controller.PanneAll();
+
             else if (!b_BreakEngine)
-                SC_BreakDownAlert.StopGlobalAlert();
+                // SC_BreakDownAlert.StopGlobalAlert();
+                sc_screens_controller.RepairAll();
 
             if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
-            {
-                MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-                RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-                WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-            }
+                {
+                    MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+                    RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+                    WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
+                }
             
         }
 

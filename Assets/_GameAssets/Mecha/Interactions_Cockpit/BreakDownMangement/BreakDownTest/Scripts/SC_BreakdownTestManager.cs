@@ -15,6 +15,9 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
     private IF_BreakdownManager Mng_BreakdownMain;
 
+    public GameObject screenController;
+    private SC_breakdown_displays_screens sc_screens_controller;
+
     [SerializeField]
     public GameObject[] interactible;
 
@@ -32,14 +35,24 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
         Mng_BreakdownMain = this.transform.parent.gameObject.GetComponent<IF_BreakdownManager>();
         interactible = GameObject.FindGameObjectsWithTag("Interactible");
+
+
+        //get du script qui gere l'affichage des ecrans de panne
+        sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             StartNewBreakdown(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RepairBreakdownDebug();
         }
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -79,6 +92,10 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
                 else
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
+
+                    //on met en panne un écran
+                    sc_screens_controller.PutOneEnPanne();
+
                     curBreakdown++;
                     if (curBreakdown == nbBreakdown)
                     {
@@ -119,6 +136,20 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
 
     }
+    /// <summary>
+    /// Focntion permettant de réparer tous les boutons automatiquement
+    /// </summary>
+    public void RepairBreakdownDebug()
+    {
+        for (int j = 0; j < interactible.Length; j++)
+        {
+
+            interactible[j].GetComponent<IInteractible>().Repair();
+
+        }
+
+    }
+
 
     
 
