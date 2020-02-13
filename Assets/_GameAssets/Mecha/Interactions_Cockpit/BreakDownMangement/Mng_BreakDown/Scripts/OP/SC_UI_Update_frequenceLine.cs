@@ -19,7 +19,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
     [Range(0.1f, 200)]
     //[SerializeField]
-    float taille = 102;
+    float taille = 100;
 
     [Range(40, 180)]
     [SerializeField]
