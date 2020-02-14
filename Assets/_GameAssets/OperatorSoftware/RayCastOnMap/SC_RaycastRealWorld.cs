@@ -15,6 +15,8 @@ public class SC_RaycastRealWorld : MonoBehaviour
     private Vector3 v3_curDir = new Vector3(0, 0, 0);
 
     private RaycastHit hit;
+
+    public GameObject indicator;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,18 +37,19 @@ public class SC_RaycastRealWorld : MonoBehaviour
     {
         //récupération du ray du cockpit
         RaycastHit hitCockpit = Cam_FullView.GetComponent<SC_RaycastVirtual>().getRay();
-
+        Debug.Log("HITO COCKPIT " + hitCockpit.point);
+        //Debug.Log(hitCockpit.textureCoord.x);
         //On prend le rayon du point touché du viewport
-        Ray ray = GetComponent<Camera>().ViewportPointToRay(new Vector3(hitCockpit.textureCoord.x, hitCockpit.textureCoord.y, 0));
-
+        Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(hitCockpit.point.x * 16000, hitCockpit.point.z , hitCockpit.point.y));
+        
         //on le lance
         if (Physics.Raycast(ray, out hit))
         {
             //debug
             Debug.DrawRay(transform.position, ray.direction * hit.distance, Color.yellow);
-
+            Debug.Log("HITO " + hit.point);
             //placement de l'indicateur
-            //Indicator.transform.position = hit.point;
+            indicator.transform.position = hit.point;
 
         }
     }
