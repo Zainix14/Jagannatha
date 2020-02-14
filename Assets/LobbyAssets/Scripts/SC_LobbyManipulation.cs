@@ -52,7 +52,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 for(int i =0; i <tab_colliders.Length;i++)
                 {
                     //On compare si l'objet collidé se trouve dedans
-                    if (hit_Raycast.collider== tab_colliders[i])
+                    if (hit_Raycast.collider == tab_colliders[0])
                     {
                         //Au final on HOST QUELQUE SOIT L'OBJET COLLIDé   <================================= A modifier avec un tag et un appel de méthode de l'objet collidé pour != effets.
                         GameObject curCollider = hit_Raycast.collider.gameObject;
