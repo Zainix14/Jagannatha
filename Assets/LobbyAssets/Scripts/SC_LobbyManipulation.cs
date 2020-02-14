@@ -46,15 +46,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 ShowLaser(hit_Raycast);
             //Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
 
-            if (SteamVR_Controller.Input(2).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-            {
-                Debug.Log("Trigger");
-            }
-
-            /*
-
-            //Si clic gachette
-            if (InputAction.GetLastState(curHandInput))
+            if (SteamVR_Controller.Input(3).GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || SteamVR_Controller.Input(4).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
             {
                 //On parcourt le tableau
                 for(int i =0; i <tab_colliders.Length;i++)
@@ -70,7 +62,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 }
 
             }
-            */
+            
         }
      
     }
