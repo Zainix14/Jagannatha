@@ -20,8 +20,12 @@ public class SC_RaycastVirtual : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             Debug.Log("AHHHHAHAHAH CLIC");
-            Physics.Raycast(transform.position, Vector3.up, out hit, 500f);
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hit, 500f))
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up)* Mathf.Infinity, Color.yellow);
+            }
+            
+            Debug.Log("Rayhit = " + hit.point);
         }
 
     }
