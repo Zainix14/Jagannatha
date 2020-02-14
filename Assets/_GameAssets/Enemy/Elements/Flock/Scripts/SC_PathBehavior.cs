@@ -97,9 +97,9 @@ public class SC_PathBehavior : MonoBehaviour
     {
         
         // Récupère les tableaux de spline depuis le WebInfo
-        _circleSplineTab = SC_WebInfo.Instance.GetCircleTab();
-        _lineSplineTab = SC_WebInfo.Instance.GetLineTab();
-        _attackSplineTab = SC_WebInfo.Instance.GetAttackPathTab();
+        _circleSplineTab = GameObject.FindGameObjectWithTag("Web").GetComponent<SC_WebInfo>().GetCircleTab();
+        _lineSplineTab = GameObject.FindGameObjectWithTag("Web").GetComponent<SC_WebInfo>().GetLineTab();
+        _attackSplineTab = GameObject.FindGameObjectWithTag("Web").GetComponent<SC_WebInfo>().GetAttackPathTab();
 
 
         //Instancie le tableau d'interesection et lui attribu les valeurs

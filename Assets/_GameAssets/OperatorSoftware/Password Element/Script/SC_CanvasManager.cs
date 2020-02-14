@@ -60,7 +60,7 @@ public class SC_CanvasManager : MonoBehaviour
     {
         for (int i = 0; i < numRealDisplay; i++)
         {
-            canvas[i].GetComponent<Image>().color = new Color32(21, 13, 25, 255);
+            canvas[i].GetComponent<Image>().color = backgroundColor;
             canvas[i].GetComponent<Image>().material = null; //Désactiver le material (renderTexture)
             activateChild(i); //Activation des enfants
         }
@@ -74,7 +74,7 @@ public class SC_CanvasManager : MonoBehaviour
             desactivateChild(i); //Canvas en World = visible par monoscreenCam
         }
         canvas[1].GetComponent<Image>().material = null;
-        canvas[1].GetComponent<Image>().color = new Color32(21, 13, 25, 255);
+        canvas[1].GetComponent<Image>().color = new Color32(0, 0, 0, 255);
 
     }
 }
