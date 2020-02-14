@@ -57,13 +57,15 @@ public class SC_passwordLock : MonoBehaviour
             {
                 textFeedbackFunction("Valid password", new Color32(0, 255, 0, 255)); //Feedback textuel vert
                 unlock = true; //Sécurité
-                
+                CustomSoundManager.Instance.PlaySound(gameObject, "SFX_o_opening", false, 0.4f);
+
                 plugObject.GetComponent<SC_electricPlug>().plugConnected(); //Animation PLay
             }
             if (countTime > 4f) //Fin de compteur
             {
                 canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
                 gameObject.SetActive(false); //désactivation du canvas de mot de passe (ContainerPassword)
+                
                 unlock = false; //Sécurité
                 countTime = 0; //RaZ compteur
             }
