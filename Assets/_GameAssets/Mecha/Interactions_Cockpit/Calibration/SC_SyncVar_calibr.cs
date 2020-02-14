@@ -9,10 +9,10 @@ public class SC_SyncVar_calibr : NetworkBehaviour
     /// //////////////////////////////////List struct des Sliders
     /// </summary>
     /// 
-    public int nbOfFloatButtons;
+    public int nbOfIntButtons;
 
     //nombre de sliders pour l'init
-    public SyncListFloat CalibrFloats = new SyncListFloat();
+    public SyncListInt CalibrInts = new SyncListInt();
 
 
 
@@ -20,15 +20,12 @@ public class SC_SyncVar_calibr : NetworkBehaviour
     {
         if (isServer)
         {
-            for (int i = 0; i < nbOfFloatButtons; i++)
+            for (int i = 0; i < nbOfIntButtons; i++)
             {
-                CalibrFloats.Insert(i, 0f);
+                CalibrInts.Insert(i, 0);
             }
         }
     }
-
-
-
 
 
 }
