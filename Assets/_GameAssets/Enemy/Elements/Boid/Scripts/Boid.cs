@@ -143,9 +143,14 @@ public class Boid : MonoBehaviour {
     /// <returns></returns>
     bool IsHeadingForCollision () {
         RaycastHit hit;
-        if (Physics.SphereCast (position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
+        /*if (Physics.SphereCast (position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
             return true;
-        } else { }
+        }*/
+        if (Physics.Raycast (position, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
+            return true;
+        }
+
+        else { }
         return false;
     }
 
@@ -163,7 +168,10 @@ public class Boid : MonoBehaviour {
             Vector3 dir = cachedTransform.TransformDirection (rayDirections[i]); 
             //
             Ray ray = new Ray (position, dir);
-            if (!Physics.SphereCast (ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask)) {
+            /*if (!Physics.SphereCast (ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask)) {
+                return dir;
+            }*/
+            if (!Physics.Raycast (ray, settings.collisionAvoidDst, settings.obstacleMask)) {
                 return dir;
             }
         }
