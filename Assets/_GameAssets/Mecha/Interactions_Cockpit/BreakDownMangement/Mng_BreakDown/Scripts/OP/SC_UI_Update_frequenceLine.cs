@@ -34,6 +34,11 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     //[SerializeField]
     int speed = 1;
 
+    [SerializeField]
+    GameObject warning;
+    [SerializeField]
+    GameObject sparkle;
+
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownTest sc_syncvar;
 
@@ -64,7 +69,8 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
             if (sc_syncvar.SL_sliders[indexDouble1].isEnPanne || sc_syncvar.SL_sliders[indexDouble2].isEnPanne)
             {
-
+                warning.SetActive(true);
+                sparkle.SetActive(false);
                 lineWanted.enabled = true;
                 frequenceWanted = sc_syncvar.SL_sliders[indexDouble1].valueWanted * 155 + 110;
                 amplitudeWanted = sc_syncvar.SL_sliders[indexDouble2].valueWanted * 1.5f + 0.8f;
@@ -74,6 +80,8 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             else
             {
                 lineWanted.enabled = false;
+                warning.SetActive(false);
+                sparkle.SetActive(true);
             }
 
         }

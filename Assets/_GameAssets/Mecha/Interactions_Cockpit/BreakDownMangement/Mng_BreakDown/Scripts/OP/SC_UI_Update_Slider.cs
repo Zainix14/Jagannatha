@@ -26,6 +26,11 @@ public class SC_UI_Update_Slider : MonoBehaviour
     [SerializeField]
     Image barrettePanne;
 
+    [SerializeField]
+    GameObject warning;
+    [SerializeField]
+    GameObject sparkle;
+
     //va te te faire
     float offSetMultiplier = 254;
 
@@ -66,11 +71,17 @@ public class SC_UI_Update_Slider : MonoBehaviour
             {
                 barrettePanne.enabled = true;
                 float posY = sc_syncvar.SL_sliders[index].valueWanted * offSetMultiplier;
-                
+                warning.SetActive(true);
+                sparkle.SetActive(false);
                 barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
             }
             else
+            {
                 barrettePanne.enabled = false;
+                warning.SetActive(false);
+                sparkle.SetActive(true);
+            }
+                
             
         }
 

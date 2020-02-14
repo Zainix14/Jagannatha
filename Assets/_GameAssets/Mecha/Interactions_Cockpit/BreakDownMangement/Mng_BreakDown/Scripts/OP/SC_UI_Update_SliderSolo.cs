@@ -14,6 +14,11 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     [SerializeField]
     Text textWanted;
 
+    [SerializeField]
+    GameObject warning;
+    [SerializeField]
+    GameObject sparkle;
+
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownTest sc_syncvar;
 
@@ -46,11 +51,16 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
             if (sc_syncvar.SL_sliders[index].isEnPanne)
             {
                 textWanted.enabled = true;
+                warning.SetActive(true);
+                sparkle.SetActive(false);
                 textWanted.text = sc_syncvar.SL_sliders[index].valueWanted.ToString();
+                
             }
             //NO PANNE
             else
             {
+                warning.SetActive(false);
+                sparkle.SetActive(true);
                 textWanted.enabled = false;
             }
             

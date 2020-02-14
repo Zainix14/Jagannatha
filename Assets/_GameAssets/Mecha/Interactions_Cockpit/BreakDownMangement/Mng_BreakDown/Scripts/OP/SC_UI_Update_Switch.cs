@@ -18,7 +18,11 @@ public class SC_UI_Update_Switch : MonoBehaviour
     Material curMat;
     [SerializeField]
     Material breakdownMat;
-     public int index;
+    [SerializeField]
+    GameObject warning;
+    [SerializeField]
+    GameObject sparkle;
+    public int index;
 
     void Start()
     {
@@ -39,11 +43,15 @@ public class SC_UI_Update_Switch : MonoBehaviour
             if (sc_syncvar.SL_switches[index].isEnPanne)
             {
                 stateInterrupteur.material = breakdownMat;
+                warning.SetActive(true);
+                sparkle.SetActive(false);
             }
             //NO PANNE
             else
             {
                 stateInterrupteur.material = curMat;
+                warning.SetActive(false);
+                sparkle.SetActive(true);
             }
         }
     }
