@@ -46,6 +46,11 @@ public class SC_LobbyManipulation : MonoBehaviour
                 ShowLaser(hit_Raycast);
             //Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
 
+            if (SteamVR_Controller.Input(2).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                Debug.Log("Trigger");
+            }
+
             /*
 
             //Si clic gachette
