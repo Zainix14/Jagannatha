@@ -5,15 +5,21 @@ using UnityEngine;
 public class SC_BulletFlock : MonoBehaviour
 {
     Rigidbody rb = null;
-
+    GameObject screens;
     void Start()
     {
         GetRigidBody();
+        screens = GameObject.FindGameObjectWithTag("Screens");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //JE TOUCHE LE PLAYER 
+        if(other.tag == "Player")
+        {
+            Debug.Log("Silence I Hit You");
+            screens.GetComponent<Sc_ScreenShake>().ShakeIt(0.005f,0.1f);
+        }
      
     }
 
@@ -30,6 +36,7 @@ public class SC_BulletFlock : MonoBehaviour
         }
 
     }
+
 
     void GetRigidBody()
     {
