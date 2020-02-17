@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 23689327960017582}
   - component: {fileID: 65049074815257346}
   - component: {fileID: 114224708194658300}
-  m_Layer: 30
+  - component: {fileID: 4805113304544958239}
+  m_Layer: 21
   m_Name: Laser_Flock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,8 +88,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107940701737066}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -125,3 +126,15 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &4805113304544958239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107940701737066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7680a3c7de5054241b9437ea0d6cd496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

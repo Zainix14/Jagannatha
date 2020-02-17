@@ -18,7 +18,7 @@ public class SC_BulletFlock : MonoBehaviour
         if(other.tag == "Player")
         {
             Debug.Log("Silence I Hit You");
-            screens.GetComponent<Sc_ScreenShake>().ShakeIt();
+            screens.GetComponent<Sc_ScreenShake>().ShakeIt(0.005f,0.1f);
         }
      
     }

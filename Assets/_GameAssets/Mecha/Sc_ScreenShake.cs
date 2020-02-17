@@ -30,9 +30,10 @@ public class Sc_ScreenShake : MonoBehaviour
         originalPos = screenTransform.localPosition;
     }
 
-    public void ShakeIt()
+    public void ShakeIt(float amplitude, float duration)
     {
-        shakeDuration = shakeDuration + 0.1f;
+        shakeAmount = amplitude;
+        shakeDuration = shakeDuration + duration;
     }
 
     void Update()
@@ -47,11 +48,6 @@ public class Sc_ScreenShake : MonoBehaviour
         {
             shakeDuration = 0f;
             screenTransform.localPosition = originalPos;
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            ShakeIt();
         }
 
     }
