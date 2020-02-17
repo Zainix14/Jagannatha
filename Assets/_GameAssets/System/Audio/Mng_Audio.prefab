@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5643140180751598041}
   - component: {fileID: 5643140180751598038}
-  - component: {fileID: 114781075543035248}
   m_Layer: 0
   m_Name: Mng_Audio
   m_TagString: Mng_Audio
@@ -68,6 +67,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 63e91bc2f2fb86048b284a48123cb867, type: 3}
   - {fileID: 8300000, guid: d232e3cb610cbdb458bd2645cde49374, type: 3}
   - {fileID: 8300000, guid: f0fc1202969dc7f4285e94527efb66ed, type: 3}
+  - {fileID: 8300000, guid: 2fcea52721d89d048983c4dd1f4cabc2, type: 3}
   tSoundsAmbient: []
   hAudioSourcePrefab: {fileID: 5001806401243472562, guid: 68ac4e988a21bd94789c1ed545c20803,
     type: 3}
@@ -77,15 +77,3 @@ MonoBehaviour:
   vRandomTimeBetweenAmbianceSound: {x: 2, y: 5}
   fVolumeAmbiance: 0.5
   vRandomAndFixedPitchAmbiance: {x: 0.5, y: 0.4}
---- !u!114 &114781075543035248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5643140180751598040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1c07a6449b0ca439ee6fac5f6f7d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
