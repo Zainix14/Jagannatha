@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Sc_ScreenShake : MonoBehaviour
 {
-    // Transform of the camera to shake. Grabs the gameObject's transform
-    // if null.
+    /// <summary>
+    /// script sur les ecrans a shake
+    /// </summary>
+ 
+    // Transform de la camera a shake
     public Transform screenTransform;
 
-    // How long the object should shake for.
+    //Combien de temps la cam va shake
     public float shakeDuration = 0f;
 
-    // Amplitude of the shake. A larger value shakes the camera harder.
+    //Amplitude a laquelle la camera va shake
     public float shakeAmount = 0.7f;
     public float decreaseFactor = 1.0f;
 
