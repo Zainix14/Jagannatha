@@ -18,6 +18,7 @@ public class SC_KoaManager : MonoBehaviour
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
 
+    
 
     GameObject _koa; //Koa du 
 
@@ -44,6 +45,8 @@ public class SC_KoaManager : MonoBehaviour
     Boid[] _boidsTab; //Tableau contenant les boids
 
     float respawnTimer;
+    int spawnCount;
+    public bool isActive;
 
     /// <summary>
     /// Avant le start, instanciation
@@ -54,7 +57,7 @@ public class SC_KoaManager : MonoBehaviour
         GetReferences();
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         curFlockSettings = flockSettings;
-
+        spawnCount = newSpawnCount;
 
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
@@ -67,8 +70,21 @@ public class SC_KoaManager : MonoBehaviour
         _guideList.Add(newGuide);
 
         respawnTimer = 0;
+        if (_koaPrefab != null)
+        {
+            _koa = NetPSpawnKoa.SpawnKoa();
+            _koa.transform.position = transform.position;
+            _koa.GetComponent<SC_KoaCollider>().Initialize(this);
+            _koa.GetComponent<SC_MoveKoaSync>().InitOPKoaSettings(sensitivity,flockSettings.spawnTimer);
+        }
+        //InitBoids();
+    }
+
+
+    void InitBoids()
+    {
         //Initialisation de tout les boids
-        for (int i = 0; i < newSpawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             Boid boid = _boidsTab[i];
 
@@ -76,47 +92,33 @@ public class SC_KoaManager : MonoBehaviour
             boid.transform.position = transform.position; //Déplacement à la position
             boid.transform.forward = Random.insideUnitSphere; //Rotation random
 
-            //Add le boid a la Boid List
-           
-
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(curBoidSettings, _guideList[0],sensitivity);
+            boid.Initialize(curBoidSettings, _guideList[0], sensitivity);
         }
 
         //Instantie le Koa
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///
-        /////////////////////// ICI LENI POUR SPAWN KOA PREFAB
-        //_koa = Instantiate(_koaPrefab);
-        if(_koaPrefab != null)
-        {
-            _koa = NetPSpawnKoa.SpawnKoa();
-            _koa.GetComponent<SC_KoaCollider>().Initialize(this);
-            _koa.GetComponent<SC_MoveKoaSync>().InitOPKoaSettings(sensitivity);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
         _curKoaGuide = _boidsTab[1].transform;
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
 
     }
 
-
     void Update()
     {
-        if (_koa != null)
+        if(isActive)
         {
-            _koa.transform.position = _curKoaGuide.position;
+            if (_koa != null)
+            {
+                _koa.transform.position = _curKoaGuide.position;
+            }
+            respawnTimer += Time.deltaTime;
+            if (respawnTimer > (60f / curFlockSettings.regenerationRate))
+            {
+                respawnTimer = 0;
+                GenerateNewBoid();
+            }
         }
-        respawnTimer += Time.deltaTime;
-        if(respawnTimer > (60f/curFlockSettings.regenerationRate))
-        {
-            respawnTimer = 0;
-            GenerateNewBoid();
-
-
-        }
-        
 
     }
 
@@ -244,5 +246,10 @@ public class SC_KoaManager : MonoBehaviour
         return new Vector3Int(x, y, z);
     }
 
+    public void ActivateKoa()
+    {
+        InitBoids();
+        isActive = true;
+    }
 
 }

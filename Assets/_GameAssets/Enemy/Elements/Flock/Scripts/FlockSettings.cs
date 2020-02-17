@@ -16,8 +16,6 @@ public class FlockSettings : ScriptableObject
         none
     }
 
-
-
     [Tooltip("in Second")]
     public int timeBetweenAttacks;
 
@@ -36,15 +34,13 @@ public class FlockSettings : ScriptableObject
     [Tooltip("in Second, avant de retourner en roam")]
     public float activeDuration = 0;
 
-
-
-
     [Header("Boids")]
-
 
 
     [Tooltip("Index 0 : Roam | Index 1 : Attack")]
     public BoidSettings[] boidSettings;
+
+    public int spawnTimer = 5;
 
     [Range(10,200)]
     public int boidSpawn;

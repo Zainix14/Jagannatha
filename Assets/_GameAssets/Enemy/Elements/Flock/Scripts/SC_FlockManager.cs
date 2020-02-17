@@ -42,7 +42,7 @@ public class SC_FlockManager : MonoBehaviour
     SC_FlockWeaponManager flockWeaponManager;
 
     bool inAttack;
-
+    bool isActive;
 
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
@@ -116,11 +116,8 @@ public class SC_FlockManager : MonoBehaviour
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
         }
 
-        StartNewBehavior(0);
-
-        //bezierWalker.NormalizedT = NormalizedT;
-
-
+        Invoke("ActivateFlock", flockSettings.spawnTimer);
+        
     }
     #endregion
     //---------------------------------------------------------------------//
@@ -133,17 +130,19 @@ public class SC_FlockManager : MonoBehaviour
     void Update()
     {
 
-        AttackUpdate();
+        if(isActive)
+        {
+            AttackUpdate();
 
-        //Si le flock est split, déplace les guides
-        if (_splited)
-            MultiGuideMovement();
+            //Si le flock est split, déplace les guides
+            if (_splited)
+                MultiGuideMovement();
 
 
-        //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
-           bezierWalker.Execute(Time.deltaTime);
+            //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
+            bezierWalker.Execute(Time.deltaTime);
 
-    
+        }    
     }
 
     /// <summary>
@@ -255,6 +254,11 @@ public class SC_FlockManager : MonoBehaviour
 
     }
 
+    void ActivateFlock()
+    {
+        isActive = true;
+        _SCKoaManager.ActivateKoa();
+    }
 
 
     public void StartNewBehavior(int behaviorIndex)
@@ -373,12 +377,6 @@ public class SC_FlockManager : MonoBehaviour
         StartNewPath(PathType.Roam);
     }
 
-
-
-    void GetRandomSpline()
-    {
-
-    }
     #endregion
     //---------------------------------------------------------------------//
 
