@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_KoaSettingsOP : MonoBehaviour
+public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
 {
     Vector3 sensibility;
     float timeBeforeSpawn = 10;
     bool spawn = false;
+
+
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;

@@ -80,7 +80,7 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
                 sparkle.SetActive(true);
             }
 
-            Debug.Log(goodDisplay);
+            //Debug.Log(goodDisplay);
         }
     }
 
