@@ -46,16 +46,13 @@ public class SC_LobbyManipulation : MonoBehaviour
                 ShowLaser(hit_Raycast);
             //Debug.DrawRay(transform.position, transform.forward * hit_Raycast.distance, Color.yellow);
 
-            /*
-
-            //Si clic gachette
-            if (InputAction.GetLastState(curHandInput))
+            if (SteamVR_Controller.Input(3).GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || SteamVR_Controller.Input(4).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
             {
                 //On parcourt le tableau
                 for(int i =0; i <tab_colliders.Length;i++)
                 {
                     //On compare si l'objet collidé se trouve dedans
-                    if (hit_Raycast.collider== tab_colliders[i])
+                    if (hit_Raycast.collider == tab_colliders[0])
                     {
                         //Au final on HOST QUELQUE SOIT L'OBJET COLLIDé   <================================= A modifier avec un tag et un appel de méthode de l'objet collidé pour != effets.
                         GameObject curCollider = hit_Raycast.collider.gameObject;
@@ -65,7 +62,7 @@ public class SC_LobbyManipulation : MonoBehaviour
                 }
 
             }
-            */
+            
         }
      
     }

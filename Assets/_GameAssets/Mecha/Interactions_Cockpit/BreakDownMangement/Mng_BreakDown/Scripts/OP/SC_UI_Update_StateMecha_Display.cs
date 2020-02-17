@@ -11,6 +11,14 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     [SerializeField]
     Image exampleDisplay;
 
+    [SerializeField]
+    GameObject warning;
+    [SerializeField]
+    GameObject sparkle;
+
+    int goodDisplay = 0;
+    int badDisplay = 0;
+
     Image[] displays ;
 
     Material curMaterial;
@@ -53,14 +61,22 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
             {
                 if (sc_syncvar.displayAll[i] == true)
                 {
+                    warning.SetActive(true);
+                    sparkle.SetActive(false);
+                    goodDisplay = 0;
                     displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayBreakdown();
                 }
                 else
                 {
+                    goodDisplay++;
                     displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayNeutral();
                 }
             }
-            
+            if (goodDisplay == sc_syncvar.nbDisplay)
+            {
+                warning.SetActive(false);
+                sparkle.SetActive(true);
+            }
         }
     }
 

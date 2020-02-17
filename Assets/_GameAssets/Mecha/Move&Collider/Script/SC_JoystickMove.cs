@@ -11,11 +11,14 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     bool b_InBreakdown = false;
     bool b_BreakEngine = false;
 
+    public bool b_OnTorque = false;
+    float f_ImpulseZ;
     [SerializeField]
     float f_RotationSpeedZ = 1.0f;
     public float f_LerpRotZ = 1f;
 
     public bool b_InvertAxe = false;
+    float f_ImpulseX;
     [SerializeField]
     float f_RotationSpeedX = 1.0f;
     public float f_LerpRotX = 1f;
@@ -34,8 +37,13 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
 
         //donne une impulsion en proportion à l'axe du joystick
-        float f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
-        float f_ImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
+        f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
+
+        if(b_OnTorque)
+            f_ImpulseZ = Input.GetAxis("Rotation") * f_RotationSpeedZ;
+        else
+            f_ImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
+
 
         //Rotation X
         if (f_ImpulseX != 0)
