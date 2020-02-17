@@ -7,7 +7,7 @@ public class SC_RaycastVirtual : MonoBehaviour
     private RaycastHit hit;
     private Camera curCam;
 
-    public GameObject guide;
+    //public GameObject guide;
     void Start()
     {
         curCam = this.gameObject.GetComponent<Camera>();
@@ -23,20 +23,9 @@ public class SC_RaycastVirtual : MonoBehaviour
             Ray ray = curCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                Debug.DrawRay(transform.position, hit.point * hit.distance, Color.yellow);
-                guide.transform.position = hit.point;
+                //Debug.DrawRay(transform.position, hit.point * hit.distance, Color.yellow);
 
             }
-            
-
-            //Debug.Log("AHHHHAHAHAH CLIC");
-            //Vector3 mousePosV3 = new Vector3(Input.mousePosition.x,0,0);
-            //if (Physics.Raycast(transform.position, Scree, out hit, Mathf.Infinity))
-            //{
-            //    Debug.DrawRay(transform.position, transform.TransformDirection(mousePosV3) * hit.distance, Color.yellow);
-            //}
-            
-            //Debug.Log("Rayhit = " + hit.point);
         }
 
     }
@@ -47,7 +36,6 @@ public class SC_RaycastVirtual : MonoBehaviour
     /// <returns></returns>
     public RaycastHit getRay()
     {
-        Debug.Log("renvoi info hit");
         return hit;
     }
 
