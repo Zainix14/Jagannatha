@@ -30,6 +30,12 @@ public class Sc_ScreenShake : MonoBehaviour
         originalPos = screenTransform.localPosition;
     }
 
+    public void ShakeIt(float amplitude, float duration)
+    {
+        shakeAmount = amplitude;
+        shakeDuration = shakeDuration + duration;
+    }
+
     void Update()
     {
         if (shakeDuration > 0)
@@ -43,5 +49,6 @@ public class Sc_ScreenShake : MonoBehaviour
             shakeDuration = 0f;
             screenTransform.localPosition = originalPos;
         }
+
     }
 }
