@@ -95,7 +95,12 @@ public class SC_FlockManager : MonoBehaviour
 
         inAttack = false;
         _Player = GameObject.FindGameObjectWithTag("Player");
-        transform.position = new Vector3(0,50,100);
+        if(!flockSettings.spawnRandom)
+        transform.position = flockSettings.SpawnPosition;
+        else
+        {
+            transform.position = GetRandomSpawnPosition();
+        }
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
@@ -377,6 +382,16 @@ public class SC_FlockManager : MonoBehaviour
         StartNewPath(PathType.Roam);
     }
 
+
+    Vector3 GetRandomSpawnPosition()
+    {
+        var radius = 100;
+        float angle = Random.Range(0f,1f) * Mathf.PI * 2;
+        var x = Mathf.Cos(angle) * radius;
+        var y = Mathf.Sin(angle) * radius;
+
+        return new Vector3(x, 50, y);
+    }
     #endregion
     //---------------------------------------------------------------------//
 
