@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class SC_SyncVar_StateMecha_Display : NetworkBehaviour
 {
     
-    public int nbDisplay = 12;
+    public int nbDisplay = 13;
 
     //bool[] display;
 

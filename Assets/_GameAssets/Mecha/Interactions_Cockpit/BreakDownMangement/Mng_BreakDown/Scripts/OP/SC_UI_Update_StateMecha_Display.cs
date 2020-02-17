@@ -57,6 +57,8 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
 
         if (sc_syncvar != null)
         {
+            goodDisplay = 0;
+
             for (int i = 0; i < sc_syncvar.nbDisplay; i++)
             {
                 if (sc_syncvar.displayAll[i] == true)
@@ -72,11 +74,13 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
                     displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayNeutral();
                 }
             }
-            if (goodDisplay == sc_syncvar.nbDisplay)
+            if (goodDisplay >= sc_syncvar.nbDisplay)
             {
                 warning.SetActive(false);
                 sparkle.SetActive(true);
             }
+
+            Debug.Log(goodDisplay);
         }
     }
 
