@@ -16,10 +16,19 @@ public class SC_MoveKoaSync : NetworkBehaviour
         {
             mr_OP.GetComponent<SphereCollider>().enabled = false;
             mr_OP.enabled = false;
+            mr_P.enabled = false;
         }
         else
             mr_P.enabled = false;
         
+    }
+
+    public void SetPilotMeshActive()
+    {
+        if(isServer)
+        {
+            mr_P.enabled = true;
+        }
     }
 
     // Update is called once per frame
@@ -40,16 +49,19 @@ public class SC_MoveKoaSync : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcSendVt3Sensibility(GameObject Target, Vector3 vt3_Sensibility)
+    public void RpcSendVt3Sensibility(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn)
     {
         if (!isServer)
+        {
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
+        }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn)
     {
         if (isServer)
-            RpcSendVt3Sensibility(gameObject, sensibility);
+            RpcSendVt3Sensibility(gameObject, sensibility,timeBeforeSpawn);
     }
 
 }
