@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_RaycastRealWorld : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class SC_RaycastRealWorld : MonoBehaviour
     public GameObject indicator;
     GameObject objectOnclic = null;
     Vector3 sensi;
+    public Text debugText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 Debug.Log("Clic on " + hit.collider.name);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
                 Debug.Log("Sensi à " + sensi);
+                debugText.text = sensi.ToString();
 
             }
             else
