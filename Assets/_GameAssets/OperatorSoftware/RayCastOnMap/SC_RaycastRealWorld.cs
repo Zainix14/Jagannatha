@@ -1,20 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_RaycastRealWorld : MonoBehaviour
 {
 
     //camera cockpit
-    public GameObject Cam_FullView;
-    //objet sur lequel est projetté la rendermap
-    public GameObject Screens;
-    //indicateur 3D placé au point de contact sur le terrain
-    //public GameObject Indicator;
+    public GameObject Cam_Map;
+    private Ray ray;
+    GameObject objectOnclic = null;
+    Vector3 sensi;
 
-    private Vector3 v3_curDir = new Vector3(0, 0, 0);
-
-    private RaycastHit hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +22,15 @@ public class SC_RaycastRealWorld : MonoBehaviour
     void Update()
     {
         //en Update dans ce script pour l'instant, mais à appeler par un autre script ultérieurement?
-        castRayInWorld();
+        if(Input.GetMouseButton(0))
+        {
+            castRayInWorld();
+        }
+        if(objectOnclic != null)
+        {
+            //Debug.Log("élément selectionné : " + objectOnclic.name);
+        }
+        
     }
 
     /// <summary>
@@ -33,21 +38,25 @@ public class SC_RaycastRealWorld : MonoBehaviour
     /// </summary>
     void castRayInWorld()
     {
-        //récupération du ray du cockpit
-        RaycastHit hitCockpit = Cam_FullView.GetComponent<SC_RaycastVirtual>().getRay();
+        RaycastHit hit = Cam_Map.GetComponent<SC_RaycastVirtual>().getRay();
+        ray = this.GetComponent<Camera>().ViewportPointToRay(hit.textureCoord);
 
-        //On prend le rayon du point touché du viewport
-        Ray ray = GetComponent<Camera>().ViewportPointToRay(new Vector3(hitCockpit.textureCoord.x, hitCockpit.textureCoord.y, 0));
-
-        //on le lance
+        //Debug.Log(hit.textureCoord);
         if (Physics.Raycast(ray, out hit))
         {
-            //debug
-            Debug.DrawRay(transform.position, ray.direction * hit.distance, Color.yellow);
+            //Debug.Log("Collider est " + hit.collider.name);
+            if(hit.collider.GetComponent<IF_ClicableForOperator>() != null)
+            {
+                objectOnclic = hit.collider.gameObject;
+                Debug.Log("Clic on " + hit.collider.name);
+                sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
+                Debug.Log("Sensi à " + sensi);
 
-            //placement de l'indicateur
-            //Indicator.transform.position = hit.point;
-
+            }
+            else
+            {
+                //Debug.Log("Clic on nothing on Map");
+            }
         }
     }
 }
