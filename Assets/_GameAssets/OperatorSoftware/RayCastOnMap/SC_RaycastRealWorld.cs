@@ -9,11 +9,8 @@ public class SC_RaycastRealWorld : MonoBehaviour
     //camera cockpit
     public GameObject Cam_Map;
     private Ray ray;
-    public GameObject indicator;
     GameObject objectOnclic = null;
     Vector3 sensi;
-    public Text debugText;
-
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +44,6 @@ public class SC_RaycastRealWorld : MonoBehaviour
         //Debug.Log(hit.textureCoord);
         if (Physics.Raycast(ray, out hit))
         {
-            //Debug.Log(hit.point);
-            indicator.transform.position = hit.point;
             //Debug.Log("Collider est " + hit.collider.name);
             if(hit.collider.GetComponent<IF_ClicableForOperator>() != null)
             {
@@ -56,7 +51,6 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 Debug.Log("Clic on " + hit.collider.name);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
                 Debug.Log("Sensi à " + sensi);
-                debugText.text = sensi.ToString();
 
             }
             else
