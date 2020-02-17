@@ -54,14 +54,15 @@ public class SC_KoaManager : MonoBehaviour
         GetReferences();
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         curFlockSettings = flockSettings;
-        sensitivity = curFlockSettings.sensitivity;
+
+
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
         _guideList = new List<Transform>();
 
         //Récupération du comportement initial
         curBoidSettings = newSettings;
-
+        sensitivity = GetNewSensitivity();
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
 
@@ -233,6 +234,15 @@ public class SC_KoaManager : MonoBehaviour
 
     }
 
+
+    Vector3Int GetNewSensitivity()
+    {
+        int x = Random.Range(0, 6);
+        int y = Random.Range(0, 6);
+        int z = Random.Range(0, 6);
+
+        return new Vector3Int(x, y, z);
+    }
 
 
 }

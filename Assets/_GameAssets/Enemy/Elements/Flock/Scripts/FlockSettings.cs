@@ -63,10 +63,5 @@ public class FlockSettings : ScriptableObject
     [Tooltip("boids per min")]
     public int regenerationRate;
 
-    [Header("Sensitivity")]
-
-    [SerializeField]
-    [Tooltip("Value : 0 - 5")]
-    public Vector3Int sensitivity;
 
 }
