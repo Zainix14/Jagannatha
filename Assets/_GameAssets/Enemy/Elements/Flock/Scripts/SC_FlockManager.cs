@@ -21,7 +21,8 @@ public class SC_FlockManager : MonoBehaviour
     [SerializeField]
     GameObject _GuidePrefab;
 
-
+    BezierSolution.BezierSpline[] _splineTab;
+    BezierSolution.BezierSpline _curSpline;
 
     GameObject _Player;
 
@@ -37,14 +38,11 @@ public class SC_FlockManager : MonoBehaviour
    
 
     BezierSolution.BezierWalkerWithSpeed bezierWalker;
-    SC_PathBehavior pathBehavior;
+    //SC_PathBehavior pathBehavior;
     SC_FlockWeaponManager flockWeaponManager;
 
     bool inAttack;
 
-    //Attack
-    float attackDelay = 9f;
-    float attackTimer = 0;
 
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
@@ -82,7 +80,7 @@ public class SC_FlockManager : MonoBehaviour
     void Awake()
     {
         bezierWalker = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
-        pathBehavior = GetComponent<SC_PathBehavior>();
+        //pathBehavior = GetComponent<SC_PathBehavior>();
         flockWeaponManager = GetComponent<SC_FlockWeaponManager>();
     }
 
@@ -97,7 +95,7 @@ public class SC_FlockManager : MonoBehaviour
 
         inAttack = false;
         _Player = GameObject.FindGameObjectWithTag("Player");
-        transform.position = flockSettings.spawnPosition;
+        transform.position = new Vector3(0,50,100);
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
@@ -111,7 +109,12 @@ public class SC_FlockManager : MonoBehaviour
         _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0],newFlockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
-        pathBehavior.InitializePathBehavior();
+        _splineTab = new BezierSolution.BezierSpline[_BoidSettings.Length];
+        for (int i = 0; i < _BoidSettings.Length; i++)
+        {
+            if (_BoidSettings[i].spline != null)
+                _splineTab[i] = Instantiate(_BoidSettings[i].spline);
+        }
 
         StartNewBehavior(0);
 
@@ -137,8 +140,7 @@ public class SC_FlockManager : MonoBehaviour
             MultiGuideMovement();
 
 
-        //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel
-        if (!_merged)         
+        //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
            bezierWalker.Execute(Time.deltaTime);
 
     
@@ -208,19 +210,20 @@ public class SC_FlockManager : MonoBehaviour
     void AttackUpdate()
     {
 
-        if(inAttack == false) startAttackTimer += Time.deltaTime;
-
-        if(startAttackTimer >= flockSettings.timeBetweenAttacks)
+        if (flockSettings.attackType != FlockSettings.AttackType.none)
         {
-            inAttack = true;
-            StartNewPath(PathType.AttackPlayer);
+            if (inAttack == false) startAttackTimer += Time.deltaTime;
 
-            startAttackTimer = 0;
-        }
-
-        if(inAttack)
-        {
-            transform.LookAt(_Player.transform);
+            if (startAttackTimer >= flockSettings.timeBetweenAttacks)
+            {
+                inAttack = true;
+                StartNewPath(PathType.AttackPlayer);
+                startAttackTimer = 0;
+            }
+            if (inAttack)
+            {
+                transform.LookAt(_Player.transform);
+            }
         }
     }
     #endregion
@@ -240,16 +243,13 @@ public class SC_FlockManager : MonoBehaviour
         {
             case PathType.Roam:
                 StartNewBehavior(0);
-                bezierWalker.speed = flockSettings.speedOnSpline;
                 break;
 
 
             case PathType.AttackPlayer:
 
                 StartNewBehavior(1);
-                if(flockSettings.attackType == FlockSettings.AttackType.Laser)
-                bezierWalker.speed = 0;
-                GetComponent<SC_FlockWeaponManager>().StartFire();
+                flockWeaponManager.StartFire();
                 break;
         }
 
@@ -260,11 +260,17 @@ public class SC_FlockManager : MonoBehaviour
     public void StartNewBehavior(int behaviorIndex)
     {
         _curBoidSetting = _BoidSettings[behaviorIndex];
-      
+        _curSpline = _splineTab[behaviorIndex];
+        bezierWalker.speed = _curBoidSetting.speedOnSpline;
 
-        if(flockSettings.speedOnSpline != 0 && !inAttack)
+        if (_curSpline != null)
         {
-            pathBehavior.GetOnRandomSpline();
+            _curSpline.transform.position = transform.position;
+            bezierWalker.SetNewSpline(_curSpline);
+        }
+        else
+        {
+            bezierWalker.speed = 0;
         }
         Reassemble();
         if (_curBoidSetting.split)
@@ -272,7 +278,7 @@ public class SC_FlockManager : MonoBehaviour
             SplitDivision(_curBoidSetting.splitNumber);
         }
         _SCKoaManager.SetBehavior(_curBoidSetting);
-
+        //https://www.youtube.com/watch?v=bOZT-UpRA2Y
 
     }
 
@@ -365,6 +371,13 @@ public class SC_FlockManager : MonoBehaviour
     {
         inAttack = false;
         StartNewPath(PathType.Roam);
+    }
+
+
+
+    void GetRandomSpline()
+    {
+
     }
     #endregion
     //---------------------------------------------------------------------//
