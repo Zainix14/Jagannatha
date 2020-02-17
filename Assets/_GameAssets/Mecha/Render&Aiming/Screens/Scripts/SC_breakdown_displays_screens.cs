@@ -144,7 +144,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         if (Mng_SyncVar == null)
             GetReferences();
 
-        Debug.Log(curNbPanne);
+        //Debug.Log(curNbPanne);
 
         //cote operateur
         sc_syncvar_display.displayAll[index] = state;

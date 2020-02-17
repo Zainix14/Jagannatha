@@ -110,7 +110,6 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     {
 
 
-
         int n_BreakdownValue = 0;
 
         for (int j = 0; j < interactible.Length; j++)
@@ -129,11 +128,19 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         }          
         else if (n_BreakdownValue ==0 && b_BreakdownTest)
         {
+
+
             b_BreakdownTest = false;
             sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
         }
 
+        //Permet de régler les demi-pannes d'écrans
+        if (n_BreakdownValue == 0)
+        {
+            sc_screens_controller.RepairAll();
+
+        }
 
 
     }
