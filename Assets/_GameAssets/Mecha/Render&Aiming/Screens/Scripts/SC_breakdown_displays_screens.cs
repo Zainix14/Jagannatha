@@ -113,7 +113,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
     public void PanneAll()
     {
-        for (int i = 0; i < tab_screens_renderers.Length-1; i++)
+        for (int i = 0; i < tab_screens_renderers.Length; i++)
         {
             SetScreenState(i,true);
             
@@ -123,7 +123,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
     public void RepairAll()
     {
-        for (int i = 0; i < tab_screens_renderers.Length-1; i++)
+        for (int i = 0; i < tab_screens_renderers.Length; i++)
         {
             SetScreenState(i, false);
         }
@@ -132,15 +132,19 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     //fonction qui change state l'ecran demandé des deux cotes true == panne false == repare
     private void SetScreenState(int index, bool state)
     {
+        if (state == true && tab_screens_renderers[index].enabled != state)
+            curNbPanne++;
+        else if (tab_screens_renderers[index].enabled != state)
+            curNbPanne--;
+
         tab_screens_renderers[index].enabled = state;
 
-        if (state == true)
-            curNbPanne++;
-        else
-            curNbPanne--;
+        
 
         if (Mng_SyncVar == null)
             GetReferences();
+
+        Debug.Log(curNbPanne);
 
         //cote operateur
         sc_syncvar_display.displayAll[index] = state;
