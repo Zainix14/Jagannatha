@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Sc_ScreenShake : MonoBehaviour
 {
-    /// <summary>
-    /// script sur les ecrans a shake
-    /// </summary>
- 
-    // Transform de la camera a shake
+
+    #region Singleton
+
+    private static Sc_ScreenShake _instance;
+    public static Sc_ScreenShake Instance { get { return _instance; } }
+
+    #endregion
+    // Transform of the camera to shake. Grabs the gameObject's transform
+    // if null.
     public Transform screenTransform;
 
     //Combien de temps la cam va shake
@@ -22,6 +26,14 @@ public class Sc_ScreenShake : MonoBehaviour
 
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         if (screenTransform == null)
         {
             screenTransform = GetComponent(typeof(Transform)) as Transform;

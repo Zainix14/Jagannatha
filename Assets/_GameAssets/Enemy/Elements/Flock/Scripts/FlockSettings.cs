@@ -5,14 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FlockSettings : ScriptableObject
 {
-    [Header("Spawn Position")]
-    public Vector3 spawnPosition = new Vector3(0,0,0);
-
-
-    [Header("Spline Settings")]
-    public float speedOnSpline;
-
-
     [Header("General Attack Settings")]
     public AttackType attackType;
 
@@ -63,10 +55,5 @@ public class FlockSettings : ScriptableObject
     [Tooltip("boids per min")]
     public int regenerationRate;
 
-    [Header("Sensitivity")]
-
-    [SerializeField]
-    [Tooltip("Value : 0 - 5")]
-    public Vector3Int sensitivity;
 
 }
