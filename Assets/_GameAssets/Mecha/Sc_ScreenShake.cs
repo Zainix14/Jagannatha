@@ -30,6 +30,11 @@ public class Sc_ScreenShake : MonoBehaviour
         originalPos = screenTransform.localPosition;
     }
 
+    public void ShakeIt()
+    {
+        shakeDuration = shakeDuration + 0.1f;
+    }
+
     void Update()
     {
         if (shakeDuration > 0)
@@ -43,5 +48,11 @@ public class Sc_ScreenShake : MonoBehaviour
             shakeDuration = 0f;
             screenTransform.localPosition = originalPos;
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ShakeIt();
+        }
+
     }
 }
