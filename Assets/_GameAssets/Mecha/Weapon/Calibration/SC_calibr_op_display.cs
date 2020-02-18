@@ -13,11 +13,13 @@ public class SC_calibr_op_display : MonoBehaviour
 
 
     public int index;
+    int numChild;
 
     // Start is called before the first frame update
     void Start()
     {
         text_component_cur = gameObject.GetComponent<Text>();
+        numChild = this.transform.childCount;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
     }
@@ -35,7 +37,23 @@ public class SC_calibr_op_display : MonoBehaviour
     void Update()
     {
 
-        text_component_cur.text = sc_syncvar.CalibrInts[index].ToString();
+        //text_component_cur.text = sc_syncvar.CalibrInts[index].ToString();
+        
+        for(int i = 0;i<numChild;i++)
+        {
+            if(sc_syncvar.CalibrInts[index] == i)
+            {
+                animMaison(this.transform.GetChild(i));
+            }
+            else
+            {
+                this.transform.GetChild(i).transform.localScale = Vector3.one;
+            }
+        }
+    }
 
+    void animMaison(Transform imageToModify)
+    {
+        imageToModify.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 }
