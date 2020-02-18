@@ -17,7 +17,7 @@ public class SC_CanvasManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        backgroundColor = new Color32(21, 13, 25, 255); //Violet actuel
+        backgroundColor = new Color32(22, 13, 28, 255); //Violet actuel
     }
 
     // Update is called once per frame
@@ -60,7 +60,7 @@ public class SC_CanvasManager : MonoBehaviour
     {
         for (int i = 0; i < numRealDisplay; i++)
         {
-            canvas[i].GetComponent<Image>().color = new Color32(21, 13, 25, 255);
+            canvas[i].GetComponent<Image>().color = new Color32(22, 13, 28, 255);
             canvas[i].GetComponent<Image>().material = null; //Désactiver le material (renderTexture)
             activateChild(i); //Activation des enfants
         }
@@ -74,7 +74,7 @@ public class SC_CanvasManager : MonoBehaviour
             desactivateChild(i); //Canvas en World = visible par monoscreenCam
         }
         canvas[1].GetComponent<Image>().material = null;
-        canvas[1].GetComponent<Image>().color = new Color32(21, 13, 25, 255);
+        canvas[1].GetComponent<Image>().color = new Color32(22, 13, 28, 255);
 
     }
 }
