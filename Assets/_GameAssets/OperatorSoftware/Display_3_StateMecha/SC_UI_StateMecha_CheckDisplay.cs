@@ -10,9 +10,9 @@ public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
 
     Image curImage;
 
-    Material curMat;
-    [SerializeField]
-    Material breakdownMat;
+    Color32 curColor;
+    //[SerializeField]
+    Color32 breakdownColor = new Color32 (255,0,0,255);
 
     public int index;
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         curImage = this.GetComponent<Image>();
-        curMat = this.GetComponent<Image>().material;
+        curColor = this.GetComponent<Image>().color;
     }
 
     // Update is called once per frame
@@ -46,12 +46,12 @@ public class SC_UI_StateMecha_CheckDisplay : MonoBehaviour
 
     public void changeColorOnDisplayBreakdown()
     {
-            curImage.material = breakdownMat;
+            curImage.color = breakdownColor;
         
     }
     public void changeColorOnDisplayNeutral()
     {
-            curImage.material = curMat;
+            curImage.color = curColor;
 
     }
 }

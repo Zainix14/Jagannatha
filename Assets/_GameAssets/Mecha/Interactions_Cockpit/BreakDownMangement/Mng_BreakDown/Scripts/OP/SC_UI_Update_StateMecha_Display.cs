@@ -8,7 +8,7 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     SC_SyncVar_StateMecha_Display sc_syncvar;
     GameObject Mng_SyncVar = null;
 
-    [SerializeField]
+    //[SerializeField]
     Image exampleDisplay;
 
     [SerializeField]
@@ -19,34 +19,21 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     int goodDisplay = 0;
     int badDisplay = 0;
 
-    Image[] displays ;
+    Transform[] displays ;
 
-    Material curMaterial;
-    Material breakdownMaterial;
-
-    GridLayoutGroup groupOfDisplays;
-    RectTransform transformCaca;
     // Start is called before the first frame update
     void Start()
     {
-        transformCaca = this.GetComponent<RectTransform>();
-        groupOfDisplays= this.GetComponent<GridLayoutGroup>();
         
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
-        groupOfDisplays.constraintCount = (sc_syncvar.nbDisplay / 4) +1;
-        displays = new Image[sc_syncvar.nbDisplay];
+        displays = new Transform[sc_syncvar.nbDisplay];
 
         for (int i =0; i< sc_syncvar.nbDisplay ; i++)
         {
-            displays[i] = Instantiate(exampleDisplay, this.transform);
-            displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().index = i;
+            displays[i] = this.transform.GetChild(i);
+            //Debug.Log("Ecran index " + i + " est " + displays[i].name);
         }
-
-        float sizeX = (transformCaca.sizeDelta.x / groupOfDisplays.constraintCount) - groupOfDisplays.spacing.x*2;
-        float sizeY = (transformCaca.sizeDelta.y / (sc_syncvar.nbDisplay/ groupOfDisplays.constraintCount +1) - groupOfDisplays.spacing.y * 2) ;
-
-        groupOfDisplays.cellSize = new Vector2(sizeX,sizeY);
     }
 
     // Update is called once per frame
@@ -79,8 +66,6 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
                 warning.SetActive(false);
                 sparkle.SetActive(true);
             }
-
-            Debug.Log(goodDisplay);
         }
     }
 

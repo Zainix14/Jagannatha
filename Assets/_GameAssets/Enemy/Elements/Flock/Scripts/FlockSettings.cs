@@ -5,14 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FlockSettings : ScriptableObject
 {
-    [Header("Spawn Position")]
-    public Vector3 spawnPosition = new Vector3(0,0,0);
-
-
-    [Header("Spline Settings")]
-    public float speedOnSpline;
-
-
     [Header("General Attack Settings")]
     public AttackType attackType;
 
@@ -23,8 +15,6 @@ public class FlockSettings : ScriptableObject
 
         none
     }
-
-
 
     [Tooltip("in Second")]
     public int timeBetweenAttacks;
@@ -44,15 +34,13 @@ public class FlockSettings : ScriptableObject
     [Tooltip("in Second, avant de retourner en roam")]
     public float activeDuration = 0;
 
-
-
-
     [Header("Boids")]
-
 
 
     [Tooltip("Index 0 : Roam | Index 1 : Attack")]
     public BoidSettings[] boidSettings;
+
+    public int spawnTimer = 5;
 
     [Range(10,200)]
     public int boidSpawn;
@@ -63,10 +51,5 @@ public class FlockSettings : ScriptableObject
     [Tooltip("boids per min")]
     public int regenerationRate;
 
-    [Header("Sensitivity")]
-
-    [SerializeField]
-    [Tooltip("Value : 0 - 5")]
-    public Vector3Int sensitivity;
 
 }
