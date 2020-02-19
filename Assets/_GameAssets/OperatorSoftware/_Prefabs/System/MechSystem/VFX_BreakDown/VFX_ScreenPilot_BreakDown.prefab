@@ -30,15 +30,15 @@ RectTransform:
   m_GameObject: {fileID: 2556156670477363389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.91, y: 3.15, z: 1}
+  m_LocalScale: {x: 1.5527179, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3031665608762136149}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22, y: -8}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 968, y: 357}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &8013006661539019188
 ParticleSystem:
@@ -114,7 +114,7 @@ ParticleSystem:
       m_PostInfinity: 2
       m_RotationOrder: 4
   moveWithTransform: 0
-  moveWithCustomTransform: {fileID: 0}
+  moveWithCustomTransform: {fileID: 3031665608762136149}
   scalingMode: 0
   randomSeed: 0
   InitialModule:
@@ -292,7 +292,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 390.04
+      scalar: 743.99
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4701,7 +4701,7 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -4856,7 +4856,7 @@ RectTransform:
   m_GameObject: {fileID: 2979838154100266706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9744391, y: 0.87445, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3183259183620877659}
   - {fileID: 70568581757271721}
@@ -4865,8 +4865,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 266, y: 233}
-  m_SizeDelta: {x: 950, y: 500}
+  m_AnchoredPosition: {x: 247, y: 278}
+  m_SizeDelta: {x: 967.9, y: 357.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &5798992352946424252
 ParticleSystem:
@@ -4943,7 +4943,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -9564,15 +9564,15 @@ RectTransform:
   m_GameObject: {fileID: 9103111071860328672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.68, z: 1}
   m_Children: []
   m_Father: {fileID: 3031665608762136149}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 968, y: 358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &3587206080660977224
 ParticleSystem:
@@ -9588,7 +9588,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
