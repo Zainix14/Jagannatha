@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 669054497554508628}
   - component: {fileID: 114295623265835460}
   - component: {fileID: 147850931238125559}
+  - component: {fileID: 2210348525288903360}
   m_Layer: 0
   m_Name: WeaponLaserGun
   m_TagString: Untagged
@@ -170,6 +171,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce0debd8eff54b4d88fca709e954100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2210348525288903360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5878784568462811358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f8346ae3aac5f488a1d43030401388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab_bullet: {fileID: 8201456161138738478, guid: 2b61f9a92562a4342922a1364ed1bfc6,
+    type: 3}
+  helper_startPos: {fileID: 7460222069811358692}
+  Target: {fileID: 0}
+  frequency: 30
+  _bulletContainer: {fileID: 1889412421170276024, guid: 44fe3d63bb414144891d610ab41e1279,
+    type: 3}
+  n_BulletMagazine: 1
 --- !u!1 &7460222069811358692
 GameObject:
   m_ObjectHideFlags: 0
