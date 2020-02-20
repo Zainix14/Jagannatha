@@ -16,7 +16,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     bool isFiring;
 
     ///////////////////////-- LASER --//////////////////////
-    [SerializeField]
+    [SerializeField]                                      
     GameObject laserPrefab;
     [SerializeField]
     GameObject laserFxPrefab;

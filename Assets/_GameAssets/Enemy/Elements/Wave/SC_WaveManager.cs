@@ -65,7 +65,7 @@ public class SC_WaveManager : MonoBehaviour
         //Debug
         if(Input.GetKeyDown(KeyCode.G))
         {
-            _FlockList[0].GetComponent<SC_FlockManager>()._SCKoaManager.GetHit();
+            _FlockList[0].GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(0,0,0));
         }
     }
     #endregion

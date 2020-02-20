@@ -185,17 +185,21 @@ public class Boid : MonoBehaviour {
     
     public void HitBoid(Vector3Int GunSensitivity)
     {
-        life--;
-        if (GunSensitivity == sensitivity)
-            life--;
 
-        if(life <= 0)
+        if (GunSensitivity == sensitivity)
+            DestroyBoid();
+        
+        else
         {
-            DestrotBoid();
+            float rnd = Random.Range(0, 2);
+            if(rnd == 2)
+            {
+                DestroyBoid();
+            }
         }
     }
 
-    public void DestrotBoid()
+    public void DestroyBoid()
     {
         transform.position = new Vector3(0, -2000, 0);
         isActive = false;

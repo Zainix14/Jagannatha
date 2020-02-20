@@ -118,7 +118,11 @@ public class SC_FlockManager : MonoBehaviour
         for (int i = 0; i < _BoidSettings.Length; i++)
         {
             if (_BoidSettings[i].spline != null)
+            {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
+                _splineTab[i].transform.position = transform.position;
+                _splineTab[i].transform.rotation = Random.rotation;
+            }
         }
 
         Invoke("ActivateFlock", flockSettings.spawnTimer);
@@ -254,6 +258,11 @@ public class SC_FlockManager : MonoBehaviour
 
                 StartNewBehavior(1);
                 flockWeaponManager.StartFire();
+                if(flockSettings.attackType == FlockSettings.AttackType.Laser)
+                {
+                    bezierWalker.speed = 0;
+                }
+
                 break;
         }
 
@@ -274,7 +283,6 @@ public class SC_FlockManager : MonoBehaviour
 
         if (_curSpline != null)
         {
-            _curSpline.transform.position = transform.position;
             bezierWalker.SetNewSpline(_curSpline);
         }
         else
@@ -385,12 +393,18 @@ public class SC_FlockManager : MonoBehaviour
 
     Vector3 GetRandomSpawnPosition()
     {
-        var radius = 100;
-        float angle = Random.Range(0f,1f) * Mathf.PI * 2;
-        var x = Mathf.Cos(angle) * radius;
-        var y = Mathf.Sin(angle) * radius;
+        var radius = 180;
+        float x = Random.Range(0f, 1f);
+        float y = 1 - x;
 
-        return new Vector3(x, 50, y);
+        int rndNeg1 = Random.Range(0, 2);
+        int rndNeg2 = Random.Range(0, 2);
+        
+        if (rndNeg1 == 1) x = -x;
+        if (rndNeg2 == 1) y = -y;
+
+
+        return new Vector3(x * radius, 50, y*radius);
     }
     #endregion
     //---------------------------------------------------------------------//
