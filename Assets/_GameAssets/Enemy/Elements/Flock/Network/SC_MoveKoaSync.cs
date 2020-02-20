@@ -10,7 +10,9 @@ public class SC_MoveKoaSync : NetworkBehaviour
     public MeshRenderer mr_OP;
 
     [SyncVar]
-    public int boidNumber = 0;
+    public int curboidNumber = 0;
+    [SyncVar]
+    public int MaxboidNumber = 0;
 
     // Start is called before the first frame update
     void Start()

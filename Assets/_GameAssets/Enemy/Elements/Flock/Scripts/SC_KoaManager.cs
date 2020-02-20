@@ -80,7 +80,8 @@ public class SC_KoaManager : MonoBehaviour
             _koa.GetComponent<SC_KoaCollider>().Initialize(this);
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
             syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer);
-            syncVarKoa.boidNumber = spawnCount;
+            syncVarKoa.curboidNumber = spawnCount;
+            syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }
         
         //InitBoids();
@@ -125,7 +126,7 @@ public class SC_KoaManager : MonoBehaviour
                         nbActiveBoid++;
                     }
                 }
-                syncVarKoa.boidNumber = nbActiveBoid;
+                syncVarKoa.curboidNumber = nbActiveBoid;
             }
             respawnTimer += Time.deltaTime;
             if (respawnTimer > (60f / curFlockSettings.regenerationRate))
