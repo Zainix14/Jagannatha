@@ -10,7 +10,8 @@ public class SC_CheckList_Weapons : MonoBehaviour
     public GameObject Mng_Weapons = null;
     public GameObject MiniGun = null;
     public GameObject FlameThrower = null;
-    public GameObject Shrapnel = null;   
+    public GameObject Shrapnel = null;
+    public GameObject LaserGun = null;
 
     public GameObject GetMngWeapons()
     {
@@ -35,6 +36,11 @@ public class SC_CheckList_Weapons : MonoBehaviour
     public GameObject GetFlameThrower()
     {
         return FlameThrower;
+    }
+
+    public GameObject GetLaserGun()
+    {
+        return LaserGun;
     }
 
 }
