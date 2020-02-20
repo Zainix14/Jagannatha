@@ -95,7 +95,12 @@ public class SC_FlockManager : MonoBehaviour
 
         inAttack = false;
         _Player = GameObject.FindGameObjectWithTag("Player");
-        transform.position = new Vector3(0,50,100);
+        if(!flockSettings.spawnRandom)
+        transform.position = flockSettings.SpawnPosition;
+        else
+        {
+            transform.position = GetRandomSpawnPosition();
+        }
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
@@ -113,7 +118,11 @@ public class SC_FlockManager : MonoBehaviour
         for (int i = 0; i < _BoidSettings.Length; i++)
         {
             if (_BoidSettings[i].spline != null)
+            {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
+                _splineTab[i].transform.position = transform.position;
+                _splineTab[i].transform.rotation = Random.rotation;
+            }
         }
 
         Invoke("ActivateFlock", flockSettings.spawnTimer);
@@ -249,6 +258,11 @@ public class SC_FlockManager : MonoBehaviour
 
                 StartNewBehavior(1);
                 flockWeaponManager.StartFire();
+                if(flockSettings.attackType == FlockSettings.AttackType.Laser)
+                {
+                    bezierWalker.speed = 0;
+                }
+
                 break;
         }
 
@@ -269,7 +283,6 @@ public class SC_FlockManager : MonoBehaviour
 
         if (_curSpline != null)
         {
-            _curSpline.transform.position = transform.position;
             bezierWalker.SetNewSpline(_curSpline);
         }
         else
@@ -377,6 +390,22 @@ public class SC_FlockManager : MonoBehaviour
         StartNewPath(PathType.Roam);
     }
 
+
+    Vector3 GetRandomSpawnPosition()
+    {
+        var radius = 180;
+        float x = Random.Range(0f, 1f);
+        float y = 1 - x;
+
+        int rndNeg1 = Random.Range(0, 2);
+        int rndNeg2 = Random.Range(0, 2);
+        
+        if (rndNeg1 == 1) x = -x;
+        if (rndNeg2 == 1) y = -y;
+
+
+        return new Vector3(x * radius, 50, y*radius);
+    }
     #endregion
     //---------------------------------------------------------------------//
 

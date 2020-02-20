@@ -42,6 +42,12 @@ public class FlockSettings : ScriptableObject
 
     public int spawnTimer = 5;
 
+    public bool spawnRandom = false;
+
+    [Tooltip("si spawn non random")]
+    public Vector3 SpawnPosition;
+
+
     [Range(10,200)]
     public int boidSpawn;
 
