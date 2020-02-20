@@ -176,6 +176,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5363f18d94c8cd041ad208a76db6aff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _freezeAlongX: 1
+  _freezeAlongY: 0
+  _freezeAlongZ: 1
+  index: 0
+  desiredValue: 0
+  isEnPanne: 0
+  precision: 0.05
+  LocalBreakdownMng: {fileID: 0}
 --- !u!114 &376930883222669003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,8 +248,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.3595428, y: 1, z: 0.9999999}
+  m_Center: {x: 0.6797717, y: -0.000000044806352, z: 0}
 --- !u!54 &1795339269765263224
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -310,8 +318,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.579937, y: 1, z: 0.9999999}
+  m_Center: {x: -0.78996855, y: 0.00000005206985, z: 0}
 --- !u!54 &1795339270231398394
 Rigidbody:
   m_ObjectHideFlags: 0
