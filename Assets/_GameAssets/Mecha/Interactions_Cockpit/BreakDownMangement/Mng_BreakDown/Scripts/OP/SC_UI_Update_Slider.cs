@@ -8,36 +8,42 @@ public class SC_UI_Update_Slider : MonoBehaviour
 
     SC_SyncVar_BreakdownTest sc_syncvar;
     GameObject Mng_SyncVar = null;
-    /*
-    [SerializeField]
-    button bouton;
-
-    enum button
-    {
-        slider1,
-        slider2,
-        slider3
-    }
-    */
 
     //index du slider
     public int index;
 
+    //Image of breakdown
     [SerializeField]
     Image barrettePanne;
 
+    //FX (Soso)
     [SerializeField]
     GameObject warning;
     [SerializeField]
     GameObject sparkle;
 
-    //va te te faire
+    //Mesh and Material
+    [SerializeField]
+    GameObject visuelSlider;
+    MeshRenderer curMesh;
+    [SerializeField]
+    Material neutralMaterial;
+    [SerializeField]
+    Material breakdownMaterial;
+    [SerializeField]
+    Material resolvedMaterial;
+    float delay = 1f;
+
+    //To put Green Mat
+    bool isResolved = false;
+
+    //Multiplier pour conversion slider (pilote) into slider (operator)
     float offSetMultiplier = 254;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        curMesh = visuelSlider.GetComponent<MeshRenderer>();
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
     }
@@ -74,12 +80,23 @@ public class SC_UI_Update_Slider : MonoBehaviour
                 warning.SetActive(true);
                 sparkle.SetActive(false);
                 barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
+                curMesh.material = breakdownMaterial;
+                isResolved = false;
             }
             else
             {
-                barrettePanne.enabled = false;
-                warning.SetActive(false);
-                sparkle.SetActive(true);
+                //curMesh.material = neutralMaterial;
+                if(!isResolved)
+                {
+                    barrettePanne.enabled = false;
+                    warning.SetActive(false);
+                    sparkle.SetActive(true);
+                    StartCoroutine(PutInStateResolved());
+                }
+                else
+                {
+                    curMesh.material = neutralMaterial;
+                } 
             }
                 
             
@@ -93,6 +110,14 @@ public class SC_UI_Update_Slider : MonoBehaviour
         float posY1 = sc_syncvar.SL_sliders[index].value * offSetMultiplier;
         this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, posY1, this.gameObject.transform.localPosition.z);
 
+    }
+
+    IEnumerator PutInStateResolved()
+    {
+        Debug.Log("IN THE COROUTINE BOY");
+        curMesh.material = resolvedMaterial;
+        yield return new WaitForSeconds(delay);
+        isResolved = true;
     }
 
 }
