@@ -49,9 +49,9 @@ public class SC_RaycastRealWorld : MonoBehaviour
             if(hit.collider.GetComponent<IF_ClicableForOperator>() != null)
             {
                 objectOnclic = hit.collider.gameObject;
-                Debug.Log("Clic on " + hit.collider.tag);
+                //Debug.Log("Clic on " + hit.collider.tag);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
-                Debug.Log("Sensi à " + sensi);
+                //Debug.Log("Sensi à " + sensi);
                 //debugText.text = sensi.ToString();
             }
             else
