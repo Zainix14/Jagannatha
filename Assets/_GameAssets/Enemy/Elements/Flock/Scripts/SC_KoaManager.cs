@@ -247,9 +247,6 @@ public class SC_KoaManager : MonoBehaviour
 
         float powerPerCent = (power / 18 )* 100;
 
-        Debug.Log("Koa - powerPercent " + powerPerCent);
-        Debug.Log("Koa - Life lost " +(int)((powerPerCent * maxLife) / 100) / 2);
-
         KoaLife -= (int)((powerPerCent * maxLife)/100)/3;
         if (KoaLife <= 0) DestroyFlock();
     }

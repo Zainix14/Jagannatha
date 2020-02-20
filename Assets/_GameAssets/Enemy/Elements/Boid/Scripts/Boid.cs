@@ -190,18 +190,13 @@ public class Boid : MonoBehaviour {
         float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
-        Debug.Log("Boid - gun sensitivy " + gunSensitivity);
-        Debug.Log("Boid - boid sensitivy " + sensitivity);
-
         float power = 18 - (x + y + z);
 
         float powerPerCent = (power / 18) * 100;
 
-        Debug.Log("boid  - powerPercent " + powerPerCent);
         int rnd = Random.Range(0, 101);
         if(rnd <= powerPerCent)
         {
-            Debug.Log("boid  - die ");
             DestroyBoid();
         }
 
