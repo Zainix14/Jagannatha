@@ -9,6 +9,9 @@ public class SC_MoveKoaSync : NetworkBehaviour
     public MeshRenderer mr_P;
     public MeshRenderer mr_OP;
 
+    [SyncVar]
+    public int boidNumber = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,8 +51,9 @@ public class SC_MoveKoaSync : NetworkBehaviour
             Target.transform.position = vt3_Position;
     }
 
+
     [ClientRpc]
-    public void RpcSendVt3Sensibility(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn)
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn)
     {
         if (!isServer)
         {
@@ -61,7 +65,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
     public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn)
     {
         if (isServer)
-            RpcSendVt3Sensibility(gameObject, sensibility,timeBeforeSpawn);
+            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn);
     }
 
 }

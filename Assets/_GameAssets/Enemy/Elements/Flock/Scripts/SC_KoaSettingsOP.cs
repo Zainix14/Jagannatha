@@ -32,7 +32,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
         if(!spawn)
         {
-            
             timeBeforeSpawn -= Time.deltaTime;
             if (timeBeforeSpawn <= 0)
                 spawn = true;
