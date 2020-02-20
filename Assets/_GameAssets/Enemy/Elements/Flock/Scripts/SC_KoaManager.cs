@@ -18,7 +18,7 @@ public class SC_KoaManager : MonoBehaviour
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
 
-    
+    int KoaLife = 10;
 
     GameObject _koa; //Koa du 
 
@@ -221,19 +221,30 @@ public class SC_KoaManager : MonoBehaviour
         }
     }
 
-    public void GetHit()
+    public void GetHit(Vector3 gunSensitivity)
     {
 
+        if (gunSensitivity == sensitivity)
+        {
+            KoaLife -= 5;
+        }
+        else KoaLife -= 2;
+
+
+        if (KoaLife <= 0) DestroyFlock();
+    }
+
+    void DestroyFlock()
+    {
         //SetBehavior(DeathSettings);
         foreach (Boid b in _boidsTab)
         {
-            b.DestrotBoid();
+            b.DestroyBoid();
 
         }
         Destroy(_koa.gameObject);
         flockManager.DestroyFlock();
         Destroy(this.gameObject);
-
     }
 
 

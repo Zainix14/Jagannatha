@@ -10,7 +10,6 @@ public class SC_LaserFlock : MonoBehaviour
         //JE TOUCHE LE PLAYER 
         if (other.tag == "Player")
         {
-            Debug.Log("Silence I Beam You");
             //https://www.youtube.com/watch?v=GBvfiCdk-jc&list=PLbsiLVHJCH9iHz_HDGirFtRUtKbdc9czK
             Sc_ScreenShake.Instance.ShakeIt(0.01f, 0.2f);
             //https://www.youtube.com/watch?v=nfWlot6h_JM
