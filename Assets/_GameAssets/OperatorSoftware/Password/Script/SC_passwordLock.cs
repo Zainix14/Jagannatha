@@ -10,7 +10,7 @@ public class SC_passwordLock : MonoBehaviour
     [SerializeField]
     GameObject objectPassword; //Contient le texte du inputField
 
-    string s_password = "gg"; //Mot de passe à taper
+    string s_password = "LV246"; //Mot de passe à taper
 
     [SerializeField]
     GameObject canvasMng; //récupération du DisplayManager
@@ -53,7 +53,7 @@ public class SC_passwordLock : MonoBehaviour
     {
         if(objectPassword.GetComponent<Text>().text == s_password) //Check du mot de passe
         {
-            if(Input.GetKeyDown(KeyCode.Return)) //Validation
+            if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) //Validation
             {
                 textFeedbackFunction("Valid password", new Color32(0, 255, 0, 255)); //Feedback textuel vert
                 unlock = true; //Sécurité
