@@ -51,6 +51,7 @@ public class Boid : MonoBehaviour {
     {
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
+        this.sensitivity = sensitivity;
 
         position = cachedTransform.position; //Déplacement à la position tampon
         forward = cachedTransform.forward; //Direction selon axe X
@@ -183,20 +184,22 @@ public class Boid : MonoBehaviour {
     }
 
     
-    public void HitBoid(Vector3Int GunSensitivity)
+    public void HitBoid(Vector3Int gunSensitivity)
     {
+        float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
+        float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
+        float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
-        if (GunSensitivity == sensitivity)
-            DestroyBoid();
-        
-        else
+        float power = 18 - (x + y + z);
+
+        float powerPerCent = (power / 18) * 100;
+
+        int rnd = Random.Range(0, 101);
+        if(rnd <= powerPerCent)
         {
-            float rnd = Random.Range(0, 2);
-            if(rnd == 2)
-            {
-                DestroyBoid();
-            }
+            DestroyBoid();
         }
+
     }
 
     public void DestroyBoid()
