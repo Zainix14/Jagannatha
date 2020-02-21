@@ -127,5 +127,21 @@ public class SC_slider_calibr : MonoBehaviour {
 
     }
 
-    
+    /**
+     * Return the input value according a given range translated to an other range.
+     * @param float inputValue
+     * @param float inputMax
+     * @param float outputMax
+     * @param float inputMin
+     * @param float outputMin
+     * @return float
+     */
+    float ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
+    }
+
+
 }
