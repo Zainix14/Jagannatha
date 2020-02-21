@@ -393,7 +393,7 @@ public class SC_FlockManager : MonoBehaviour
 
     Vector3 GetRandomSpawnPosition()
     {
-        var radius = 180;
+        var radius = 210;
         float x = Random.Range(0f, 1f);
         float y = 1 - x;
 
@@ -404,7 +404,7 @@ public class SC_FlockManager : MonoBehaviour
         if (rndNeg2 == 1) y = -y;
 
 
-        return new Vector3(x * radius, 50, y*radius);
+        return new Vector3(x * radius, 80, y*radius);
     }
     #endregion
     //---------------------------------------------------------------------//

@@ -11,7 +11,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     [SerializeField]
     Text[] sensi = new Text[3];
 
-
+    [SerializeField]
+    Text type;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,11 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sensi[0].text = scriptRaycast.sensi.x.ToString();
-        sensi[1].text = scriptRaycast.sensi.y.ToString();
-        sensi[2].text = scriptRaycast.sensi.z.ToString();
+        sensi[0].text = (scriptRaycast.sensi.x + 1).ToString();
+        sensi[1].text = (scriptRaycast.sensi.y + 1).ToString();
+        sensi[2].text = (scriptRaycast.sensi.z + 1).ToString();
+
+        type.text = "Type " + scriptRaycast.type.ToString();
+        Debug.Log(scriptRaycast.type);
     }
 }
