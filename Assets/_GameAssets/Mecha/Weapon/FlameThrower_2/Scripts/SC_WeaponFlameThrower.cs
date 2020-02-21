@@ -72,6 +72,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
         timer += Time.deltaTime;
     }
 
+    public void ReleaseTrigger() { }
     void Fire()
     {
 
