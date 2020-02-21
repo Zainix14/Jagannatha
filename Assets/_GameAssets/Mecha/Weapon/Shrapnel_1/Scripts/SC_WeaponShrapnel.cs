@@ -73,6 +73,8 @@ public class SC_WeaponShrapnel : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         timer += Time.deltaTime;
     }
 
+    public void ReleaseTrigger() { }
+
     void Fire()
     {
 

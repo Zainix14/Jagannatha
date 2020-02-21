@@ -8,7 +8,7 @@ public class SC_FollowHand : MonoBehaviour
     bool b_AlreadyCheck = false;
     public bool b_OnFollow = false;
 
-    public enum RotationType { LookAt, SyncRot }
+    public enum RotationType { LookAt, SyncRot, Lerp }
 
     [Header("Configuration des écrans")]
     public RotationType RotationMode;
@@ -37,6 +37,9 @@ public class SC_FollowHand : MonoBehaviour
 
         if (b_OnFollow && TargetHand != null && RotationMode == RotationType.LookAt)
             SetPosII();
+
+        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.Lerp)
+            SetPosIII();
 
         if (!b_OnFollow && this.transform.position.y >= 0)
             ResetPos();
@@ -83,13 +86,27 @@ public class SC_FollowHand : MonoBehaviour
 
     void SetPosII()
     {
-
+        
         this.gameObject.transform.position = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
         this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
-       
+
         var rotation = TargetHand.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
         this.gameObject.transform.rotation = rotation;
+       
+
+    }
+
+    void SetPosIII()
+    {
+
+        var TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+        TargetPos += transform.TransformDirection(0, 0, f_PosOffsetZ);
+        this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, TargetPos, 0.1f);
+
+        var rotation = TargetHand.transform.rotation;
+        rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
+        this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, rotation, 0.1f); ;
 
     }
 

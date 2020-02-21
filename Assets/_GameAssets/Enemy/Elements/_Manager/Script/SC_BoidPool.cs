@@ -24,6 +24,8 @@ public class SC_BoidPool : MonoBehaviour
     Boid[] boidPool;
 
 
+    int[] flockID;
+
     int curPoolindex;
 
     void Awake()
@@ -40,6 +42,11 @@ public class SC_BoidPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        flockID = new int[500];
+        for(int i = 0; i <flockID.Length;i++)
+        {
+            flockID[i] = i + 1;
+        }
         GameObject boidContainer = Instantiate(_boidContainer);
         curPoolindex = 0;
         boidPool = new Boid[poolNumber];
@@ -68,6 +75,17 @@ public class SC_BoidPool : MonoBehaviour
                 curPoolindex = 0;
         }
         return boidTab;
+    }
+    public int GetFlockID()
+    {
+        int rnd = Random.Range(0, 500);
+        while(flockID[rnd] == 0)
+        {
+            rnd = Random.Range(0, 500);
+        }
+        int curflockID = flockID[rnd];
+        flockID[rnd] = 0;
+        return curflockID;
     }
 
 }

@@ -16,6 +16,10 @@ public class SC_BulletFlock : MonoBehaviour
         if(other.tag == "Player")
         {
             Sc_ScreenShake.Instance.ShakeIt(0.005f,0.1f);
+
+            //on fait subir des dmg au joueur
+
+            other.GetComponent<SC_Hitbox_mech>().sc_main_breakdown_manager.causeDamageOnSystem(1);
         }
      
     }

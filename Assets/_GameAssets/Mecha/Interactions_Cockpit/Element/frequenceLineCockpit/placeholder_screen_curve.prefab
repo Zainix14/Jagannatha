@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6317701081199104309}
   - component: {fileID: 1607685803564418041}
-  - component: {fileID: 4794902256046004255}
   - component: {fileID: 7127167961230491530}
   m_Layer: 0
   m_Name: Line_Sinus
@@ -236,25 +235,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &4794902256046004255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186654792625077083}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92eb7aab280f4ae4387c591e4540e6b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineWanted: {fileID: 0}
-  amplitude: 1
-  frequence: 40
-  indexDouble1: 4
-  indexDouble2: 3
-  warning: {fileID: 0}
-  sparkle: {fileID: 0}
 --- !u!114 &7127167961230491530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,7 +526,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5179937257756364859
 Transform:
@@ -588,7 +568,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c15641c1e790b9a4babe91b66aa50ade, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

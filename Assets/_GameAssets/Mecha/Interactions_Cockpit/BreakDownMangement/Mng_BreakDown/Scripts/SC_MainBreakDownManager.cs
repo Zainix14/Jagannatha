@@ -33,7 +33,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     GameObject FlameSystem;
     public bool b_BreakFlameThrower = false;
 
-
+    public int life = 10;
     // Start is called before the first frame update
     void Start()
     {       
@@ -120,6 +120,22 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
         //FlameThrower
+
+
+    }
+
+
+    public void causeDamageOnSystem(int DmgValue)
+    {
+        life -= DmgValue;
+
+        if (life <= 0)
+        {
+            life = 10;
+            Mng_BreakDownTest.StartNewBreakdown(1);
+
+        }
+
 
 
     }

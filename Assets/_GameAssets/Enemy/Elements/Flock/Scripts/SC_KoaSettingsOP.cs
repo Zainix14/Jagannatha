@@ -5,9 +5,14 @@ using UnityEngine;
 public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
 {
     Vector3 sensibility;
-    float timeBeforeSpawn = 10;
-    bool spawn = false;
-
+    float timer;
+    float timeBeforeSpawn;
+    bool spawn = true;
+    Vector3 initialScale;
+    float initialRadius;
+    [SerializeField]
+    int factor;
+    string koaID;
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -16,7 +21,18 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     public void SetTimeBeforeSpawn(int spawnTimer)
     {
         this.timeBeforeSpawn = spawnTimer;
+        initialScale = transform.localScale;
+        initialRadius = GetComponent<SphereCollider>().radius;
+        GetComponent<MeshRenderer>().material.color = Color.yellow;
+        spawn = false;
+        timer = 0;
     }
+
+    public void SetKoaID(string koaID)
+    {
+        this.koaID = koaID;
+    }
+  
 
     public Vector3 GetSensibility()
     {
@@ -32,10 +48,19 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
         if(!spawn)
         {
-            
-            timeBeforeSpawn -= Time.deltaTime;
-            if (timeBeforeSpawn <= 0)
+            float scale = ((initialScale.x* factor / timeBeforeSpawn) * Time.deltaTime);
+            float radius = ((initialRadius / factor / timeBeforeSpawn) * Time.deltaTime);
+            transform.localScale += new Vector3(scale, scale, scale);
+            transform.GetComponent<SphereCollider>().radius -= radius;
+            timer += Time.deltaTime;
+            if (timer >= timeBeforeSpawn)
+            {
+                GetComponent<MeshRenderer>().material.color = Color.red;
                 spawn = true;
+
+            }
+
+           
         }
     }
 
