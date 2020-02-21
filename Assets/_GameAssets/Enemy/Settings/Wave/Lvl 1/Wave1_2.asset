@@ -15,9 +15,11 @@ MonoBehaviour:
   initialSpawnFlockType:
   - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
   initialSpawnFlockQuantity: 02000000
+  timeBetweenSpawnInitial: 5
   backup: 1
+  timeBetweenSpawnBackup: 0
   backupSpawnFlockType:
   - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
   backupSpawnFlockQuantity: 01000000
-  timeBeforeBackup: 15
-  flockLeftBeforeBackup: -1
+  timeBeforeBackup: 25
+  flockLeftBeforeBackup: 0

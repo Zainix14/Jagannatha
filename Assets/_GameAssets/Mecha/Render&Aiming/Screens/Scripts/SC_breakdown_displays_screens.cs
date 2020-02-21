@@ -12,21 +12,29 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     private int curNbPanne = 0;
 
     public Renderer[] tab_screens_renderers;
+    public Material[] mat;
 
     GameObject Mng_SyncVar = null;
     SC_SyncVar_StateMecha_Display sc_syncvar_display;
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         tab_screens_renderers = new Renderer[gameObject.transform.childCount];
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             tab_screens_renderers[i] = gameObject.transform.GetChild(i).GetComponent<Renderer>();
-            tab_screens_renderers[i].enabled = false;
+            tab_screens_renderers[i].material = mat[0];
+            tab_screens_renderers[i].enabled = true;
+       
         }
 
+    }
+
+    public void FirstPanneFinish()
+    {
+   
     }
 
     void GetReferences()
@@ -42,7 +50,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
 
         // Update is called once per frame
-        void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
         {

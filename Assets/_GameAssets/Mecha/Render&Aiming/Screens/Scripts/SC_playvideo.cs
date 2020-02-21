@@ -12,6 +12,8 @@ public class SC_playvideo : MonoBehaviour
 
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
