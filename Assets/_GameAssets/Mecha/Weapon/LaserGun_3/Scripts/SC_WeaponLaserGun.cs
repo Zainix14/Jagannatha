@@ -10,6 +10,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
     public GameObject Target;
+    SC_AimHit AimHit;
 
     public float frequency;
 
@@ -49,6 +50,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
         if (Target == null && Mng_CheckList != null)
             Target = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
+        if (Target != null && AimHit == null)
+            AimHit = Target.GetComponent<SC_AimHit>();
     }
 
     void CreateBulletPull()
@@ -105,6 +108,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
                                                 t_Bullet[n_CurBullet].transform.localScale.y,
                                                 Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
+        if(AimHit.b_OnFire == false)
+            AimHit.b_OnFire = true;
+
         //INSERT LASER SHIT
         CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
 
@@ -113,6 +119,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public void ReleaseTrigger()
     {
         t_Bullet[n_CurBullet].GetComponent<SC_BulletLaserGun>().ResetPos();
+        AimHit.b_OnFire = false;
     }
 
     public void SetBreakdownState(bool State)
