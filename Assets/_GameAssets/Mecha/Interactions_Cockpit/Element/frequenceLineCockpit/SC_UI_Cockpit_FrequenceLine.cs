@@ -25,8 +25,8 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
     //[SerializeField]
     int speed = 1;
 
-
-
+    Color32 curColor;
+    Renderer lineRenderer;
 
 
     GameObject Mng_SyncVar = null;
@@ -40,6 +40,9 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
         line = this.gameObject.GetComponent<LineRenderer>(); //Stockage de lui-meme
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
+
+        curColor = new Color32();
+        lineRenderer = line.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -70,8 +73,11 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
         */
         ////////////////////////
         curAmplitude = ratio(sc_syncvar.CalibrInts[0], 6, 1.5f, 0, 0.1f);
-        curFrequence = ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0);
+        curFrequence = ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0.05f);
         curPhase = ratio(sc_syncvar.CalibrInts[2], 6, 20, 0, 0);
+
+        curColor.b = (byte)ratio(sc_syncvar.CalibrInts[2], 6, 255, 0, 0);
+        curColor.r = (byte)(255 - curColor.b);
 
         line.positionCount = 300; //Configuration du nombre 
         for (int i = 0; i < line.positionCount; i++)
@@ -80,6 +86,7 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
             float y = Mathf.Sin((Time.time * speed) + (i + curPhase) * curFrequence) * curAmplitude; //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
             line.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
 
+            lineRenderer.material.color = curColor;
         }
     }
     void GetReferences()

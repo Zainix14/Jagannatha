@@ -34,6 +34,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     Vector2 colorRcolorV;
 
     Color32 curColor;
+    Renderer lineRenderer;
 
     float frequenceWanted = 110;
     float amplitudeWanted = 0.8f;
@@ -59,11 +60,13 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     void Start()
     {
         line = this.gameObject.GetComponent<LineRenderer>(); //Stockage de lui-meme
-        //lineColor =  this.get
+        curColor = new Color32();
         lineWanted.enabled = false;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         lineWanted.enabled = true;
+
+        lineRenderer = line.GetComponent<Renderer>();
     }
 
     void Update()
@@ -80,9 +83,9 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         {
             //frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
             //amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
-            Debug.Log("index 0 : " + sc_syncvar.CalibrInts[0]);
-            Debug.Log("index 1 : " + sc_syncvar.CalibrInts[1]);
-            Debug.Log("index 2 : " + sc_syncvar.CalibrInts[2]);
+            //Debug.Log("index 0 : " + sc_syncvar.CalibrInts[0]);
+            //Debug.Log("index 1 : " + sc_syncvar.CalibrInts[1]);
+            //Debug.Log("index 2 : " + sc_syncvar.CalibrInts[2]);
 
             
             //frequence = sc_syncvar.CalibrInts[0] * 28 + 40;
@@ -128,8 +131,13 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
 
 
         curAmplitude =  ratio(sc_syncvar.CalibrInts[0], 6, 1.5f, 0, 0.1f);
-        curFrequence =  ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0);
+        curFrequence =  ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0.05f);
         curPhase = ratio(sc_syncvar.CalibrInts[2], 6, 20, 0, 0);
+        
+        curColor.b = (byte)ratio(sc_syncvar.CalibrInts[2], 6,255,0,0);        
+        curColor.r = (byte)(255 - curColor.b);
+
+        
 
         line.positionCount = 300; //Configuration du nombre 
         for (int i = 0; i < line.positionCount; i++)
@@ -137,6 +145,8 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             float x = (i*100f/line.positionCount); //Valeur de X
             float y = Mathf.Sin((Time.time * speed) + (i+curPhase) * curFrequence) * curAmplitude; //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
             line.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
+
+            lineRenderer.material.color = curColor;
 
         }
 
@@ -151,7 +161,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
              lineWanted.SetPosition(i, new Vector3(yWanted, 0f, xWanted));
              */
             float x = (i * 100f / lineWanted.positionCount); //Valeur de X
-            float y = Mathf.Sin((Time.time * speed) + (i + ratio(scriptRaycast.sensi.z,6,20,0,0)) * ratio(scriptRaycast.sensi.y, 6, 0.33f,0,0)) * ratio(scriptRaycast.sensi.x, 6, 1.5f, 0, 0.1f); //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
+            float y = Mathf.Sin((Time.time * speed) + (i + ratio(scriptRaycast.sensi.z,6,20,0,0)) * ratio(scriptRaycast.sensi.y, 6, 0.33f,0, 0.05f)) * ratio(scriptRaycast.sensi.x, 6, 1.5f, 0, 0.1f); //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
             lineWanted.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
         }
     }
