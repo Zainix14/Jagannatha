@@ -53,6 +53,9 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     SC_SyncVar_calibr sc_syncvar;
 
 
+    public SC_RaycastRealWorld scriptRaycast;
+
+
     void Start()
     {
         line = this.gameObject.GetComponent<LineRenderer>(); //Stockage de lui-meme
@@ -60,6 +63,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         lineWanted.enabled = false;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
+        lineWanted.enabled = true;
     }
 
     void Update()
@@ -127,7 +131,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         curFrequence =  ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0);
         curPhase = ratio(sc_syncvar.CalibrInts[2], 6, 20, 0, 0);
 
-        line.positionCount = 400; //Configuration du nombre 
+        line.positionCount = 300; //Configuration du nombre 
         for (int i = 0; i < line.positionCount; i++)
         {
             float x = (i*100f/line.positionCount); //Valeur de X
@@ -137,13 +141,18 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         }
 
         //LIGNE PANNE
-        lineWanted.positionCount = Mathf.CeilToInt(frequenceWanted); //Configuration du nombre 
+
+        lineWanted.positionCount = 300; //Configuration du nombre 
         for (int i = 0; i < lineWanted.positionCount; i++)
         {
-           
-            float xWanted = 100f / frequenceWanted * i; //Valeur de X
-            float yWanted = Mathf.Sin(Time.time + i * speed) * amplitudeWanted; //Valeur de Y
-            lineWanted.SetPosition(i, new Vector3(yWanted, 0f, xWanted));
+            /*
+             float xWanted = 100f / frequenceWanted * i; //Valeur de X
+             float yWanted = Mathf.Sin(Time.time + i * speed) * amplitudeWanted; //Valeur de Y
+             lineWanted.SetPosition(i, new Vector3(yWanted, 0f, xWanted));
+             */
+            float x = (i * 100f / lineWanted.positionCount); //Valeur de X
+            float y = Mathf.Sin((Time.time * speed) + (i + ratio(scriptRaycast.sensi.z,6,20,0,0)) * ratio(scriptRaycast.sensi.y, 6, 0.33f,0,0)) * ratio(scriptRaycast.sensi.x, 6, 1.5f, 0, 0.1f); //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
+            lineWanted.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
         }
     }
 
