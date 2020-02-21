@@ -60,7 +60,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
             else
             {
                 //Debug.Log("Clic on nothing on Map");
-                objectOnclic = null;
+                //objectOnclic = null;
             }
         }
     }

@@ -61,6 +61,13 @@ public class SC_UI_RaycastOnMap : MonoBehaviour
                 Debug.Log("Koa Touch by your little mouse");
                 //hit.collider.GetComponent<Bar>().getHit();
             }
+            if (hit.collider.gameObject.tag == "button")
+            {
+                Debug.Log("Butttttton");
+                
+                //hit.collider.GetComponent<Bar>().getHit();
+            }
+
         }
     }
 

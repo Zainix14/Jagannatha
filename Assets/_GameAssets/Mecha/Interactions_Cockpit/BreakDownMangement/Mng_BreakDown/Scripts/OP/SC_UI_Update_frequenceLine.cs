@@ -81,6 +81,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         }
         if (sc_syncvar != null)
         {
+            
             //frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
             //amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
             //Debug.Log("index 0 : " + sc_syncvar.CalibrInts[0]);
@@ -174,13 +175,16 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
             sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_calibr>();
     }
 
-    void securityCheck()
+    public void scanOnKoa()
     {
-        if (amplitude < 0.2f) amplitude = 0.2f;
-        if (amplitude > 2) amplitude = 2;
-        if (frequence < 10) frequence = 10;
-        if (frequence > 200) frequence = 200;
-            
+        if(scriptRaycast.objectOnclic != null)
+        {
+            lineWanted.enabled = true;
+        }
+    }
+    public void clearKoa()
+    {
+        lineWanted.enabled = false;
     }
 
 

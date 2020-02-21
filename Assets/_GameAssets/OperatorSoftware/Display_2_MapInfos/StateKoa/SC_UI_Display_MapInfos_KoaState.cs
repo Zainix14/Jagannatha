@@ -7,12 +7,15 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 {
 
     public SC_RaycastRealWorld scriptRaycast; //Sur camera Full view
+    public SC_UI_Update_frequenceLine scriptFrequence; //Sur camera Full view
 
     [SerializeField]
     Text[] sensi = new Text[3];
 
     [SerializeField]
     Text type;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,17 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         sensi[2].text = (scriptRaycast.sensi.z + 1).ToString();
 
         type.text = "Type " + scriptRaycast.type.ToString();
-        Debug.Log(scriptRaycast.type);
+
+    }
+
+    public void scanOn()
+    {
+        scriptFrequence.scanOnKoa();
+        Debug.Log("Scan IT");
+    }
+
+    public void clear()
+    {
+        scriptFrequence.scanOnKoa();
     }
 }
