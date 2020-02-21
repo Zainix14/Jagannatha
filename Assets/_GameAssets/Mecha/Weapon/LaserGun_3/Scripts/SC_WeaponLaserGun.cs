@@ -66,6 +66,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         Bullet.transform.SetParent(bulletContainer.transform);
         mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
 
+        Bullet.GetComponent<SC_BulletLaserGun>().frequency = frequency;
+
         /*
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
