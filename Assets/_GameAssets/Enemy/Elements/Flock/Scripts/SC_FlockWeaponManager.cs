@@ -173,8 +173,8 @@ public class SC_FlockWeaponManager : MonoBehaviour
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
         laser.transform.localScale = new Vector3(laser.transform.localScale.x +scale,
-                                                laser.transform.localScale.y + scale,
-                                                Vector3.Distance(transform.position, target.transform.position));
+                                laser.transform.localScale.y + scale,
+                                Vector3.Distance(transform.position, target.transform.position));
         if (laserTimer >= flockSettings.activeDuration)
         {
 
