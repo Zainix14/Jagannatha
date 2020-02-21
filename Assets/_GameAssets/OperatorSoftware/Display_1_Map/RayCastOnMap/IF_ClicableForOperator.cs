@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IF_ClicableForOperator
 {
     Vector3 GetSensibility();
+    string GetKoaID();
 }

@@ -11,6 +11,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
     private Ray ray;
     public GameObject objectOnclic = null;
     public Vector3 sensi;
+    public string type;
     public Text debugText;
 
     // Start is called before the first frame update
@@ -51,6 +52,8 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 objectOnclic = hit.collider.gameObject;
                 //Debug.Log("Clic on " + hit.collider.tag);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
+                type = hit.collider.GetComponent<IF_ClicableForOperator>().GetKoaID();
+                
                 //Debug.Log("Sensi à " + sensi);
                 //debugText.text = sensi.ToString();
             }
