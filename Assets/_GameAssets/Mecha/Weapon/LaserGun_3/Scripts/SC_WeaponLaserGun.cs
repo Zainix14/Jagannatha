@@ -94,7 +94,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         laserFire = true;
         laserTimer += Time.deltaTime;
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        t_Bullet[n_CurBullet].transform.position = Vector3.Lerp(transform.position, Target.transform.position, .5f);
+        t_Bullet[n_CurBullet].transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
         t_Bullet[n_CurBullet].transform.LookAt(Target.transform.position);
 
         if(t_MrBullet[n_CurBullet].enabled == false)
@@ -103,7 +103,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
         t_Bullet[n_CurBullet].transform.localScale = new Vector3(t_Bullet[n_CurBullet].transform.localScale.x,
                                                 t_Bullet[n_CurBullet].transform.localScale.y,
-                                                Vector3.Distance(transform.position, Target.transform.position));
+                                                Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
         //INSERT LASER SHIT
         CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
