@@ -23,6 +23,10 @@ public class SC_KoaManager : MonoBehaviour
     int maxLife = 10;
     int KoaLife = 10;
 
+    char koaCharID;
+    int koaNumID;
+    string koaID;
+
     GameObject _koa; //Koa du 
 
     /// <summary>
@@ -62,8 +66,32 @@ public class SC_KoaManager : MonoBehaviour
         curFlockSettings = flockSettings;
         spawnCount = newSpawnCount;
 
+        switch (flockSettings.attackType)
+        {
+            case FlockSettings.AttackType.none:
+
+                koaCharID = 'A';
+
+                break;
+
+            case FlockSettings.AttackType.Bullet:
+
+                koaCharID = 'B';
+
+                break;
+
+            case FlockSettings.AttackType.Laser:
+
+                koaCharID = 'A';
+
+                break;
+        }
+        koaNumID = SC_BoidPool.Instance.GetFlockID();
+        koaID = koaCharID + "#"+koaNumID;
+
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
+        
         _guideList = new List<Transform>();
 
         //Récupération du comportement initial
@@ -79,7 +107,7 @@ public class SC_KoaManager : MonoBehaviour
             _koa.transform.position = transform.position;
             _koa.GetComponent<SC_KoaCollider>().Initialize(this);
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
-            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer);
+            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID);
             syncVarKoa.curboidNumber = spawnCount;
             syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }

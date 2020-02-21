@@ -55,19 +55,20 @@ public class SC_MoveKoaSync : NetworkBehaviour
 
 
     [ClientRpc]
-    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn)
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID)
     {
         if (!isServer)
         {
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
         }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID)
     {
         if (isServer)
-            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn);
+            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID);
     }
 
 }

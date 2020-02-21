@@ -12,6 +12,8 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     float initialRadius;
     [SerializeField]
     int factor;
+    string koaID;
+
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -25,6 +27,12 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         spawn = false;
         timer = 0;
     }
+
+    public void SetKoaID(string koaID)
+    {
+        this.koaID = koaID;
+    }
+  
 
     public Vector3 GetSensibility()
     {
