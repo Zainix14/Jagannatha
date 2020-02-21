@@ -6,6 +6,12 @@ public class SC_BulletLaserGun : MonoBehaviour
 {
 
     public Vector3Int sensitivity;
+    MeshRenderer mr;
+
+    void Start()
+    {
+        mr = this.GetComponent<MeshRenderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +22,12 @@ public class SC_BulletLaserGun : MonoBehaviour
         if (other.gameObject.layer == 25)
             other.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
 
+    }
+
+    public void ResetPos()
+    {
+        transform.position = new Vector3(1000, 1000, 1000);
+        mr.enabled = false;
     }
 
 }

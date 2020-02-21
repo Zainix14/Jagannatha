@@ -8,6 +8,8 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     bool b_InBreakdown = false;
     bool b_BreakEngine = false;
 
+    bool b_OnFire = false;
+
     bool b_AlreadyCheck = false;
 
     [Header("Drop the Weapon")]
@@ -42,8 +44,13 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     // Update is called once per frame
     void Update()
     {
+
         if ((Input.GetKey(KeyCode.Alpha0) || Input.GetAxis("Fire1") > 0) && !b_BreakEngine)
             Fire();
+
+        if ((Input.GetKeyUp(KeyCode.Alpha0) || Input.GetAxis("Fire1") == 0 ) && b_OnFire && !b_BreakEngine)
+            StopFire();
+
     }
 
     void CreateWeapon()
@@ -64,7 +71,16 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
     void Fire()
     {
+        if (!b_OnFire)
+            b_OnFire = true;
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
+    }
+
+    void StopFire()
+    {
+        if (b_OnFire)
+            b_OnFire = false;
+        tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().ReleaseTrigger();
     }
 
     /// <summary>

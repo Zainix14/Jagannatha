@@ -6,6 +6,7 @@ public class SC_CheckList_Weapons : MonoBehaviour
 {
 
     public GameObject TargetHand = null;
+    public GameObject AimIndicator = null;
 
     public GameObject Mng_Weapons = null;
     public GameObject MiniGun = null;
@@ -21,6 +22,11 @@ public class SC_CheckList_Weapons : MonoBehaviour
     public GameObject GetTargetHand()
     {
         return TargetHand;
+    }
+
+    public GameObject GetAimIndicator()
+    {
+        return AimIndicator;
     }
 
     public GameObject GetMiniGun()

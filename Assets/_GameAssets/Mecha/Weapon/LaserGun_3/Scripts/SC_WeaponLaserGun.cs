@@ -21,7 +21,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     float timer = 0;
 
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
-    Rigidbody[] t_RbBullet;
     MeshRenderer[] t_MrBullet;
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
@@ -31,10 +30,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     GameObject Mng_CheckList;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GetReferences();
+        CreateBulletPull();
     }
 
     // Update is called once per frame
@@ -49,7 +48,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         if(Mng_CheckList == null)
             Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
         if (Target == null && Mng_CheckList != null)
-            Target = Mng_CheckList.GetComponent<SC_CheckList_ViewAiming>().GetTarget();
+            Target = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
     }
 
     void CreateBulletPull()
@@ -59,7 +58,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
-        t_RbBullet = new Rigidbody[n_BulletMagazine];
         t_MrBullet = new MeshRenderer[n_BulletMagazine];
 
         for (int i = 0; i < n_BulletMagazine; i++)
@@ -68,7 +66,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             GameObject curBullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
             curBullet.transform.SetParent(bulletContainer.transform);
             t_Bullet[i] = curBullet;
-            t_RbBullet[i] = curBullet.GetComponent<Rigidbody>();
             t_MrBullet[i] = curBullet.GetComponentInChildren<MeshRenderer>();
         }
 
@@ -97,17 +94,25 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         laserFire = true;
         laserTimer += Time.deltaTime;
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        t_RbBullet[n_CurBullet].transform.position = Vector3.Lerp(transform.position, Target.position, .5f);
-        t_RbBullet[n_CurBullet].transform.LookAt(Target.position);
+        t_Bullet[n_CurBullet].transform.position = Vector3.Lerp(transform.position, Target.transform.position, .5f);
+        t_Bullet[n_CurBullet].transform.LookAt(Target.transform.position);
+
+        if(t_MrBullet[n_CurBullet].enabled == false)
+            t_MrBullet[n_CurBullet].enabled = true;
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
-        t_RbBullet[n_CurBullet].transform.localScale = new Vector3(t_RbBullet[n_CurBullet].transform.localScale.x,
-                                                t_RbBullet[n_CurBullet].transform.localScale.y,
+        t_Bullet[n_CurBullet].transform.localScale = new Vector3(t_Bullet[n_CurBullet].transform.localScale.x,
+                                                t_Bullet[n_CurBullet].transform.localScale.y,
                                                 Vector3.Distance(transform.position, Target.transform.position));
 
         //INSERT LASER SHIT
         CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
 
+    }
+
+    public void ReleaseTrigger()
+    {
+        t_Bullet[n_CurBullet].GetComponent<SC_BulletLaserGun>().ResetPos();
     }
 
     public void SetBreakdownState(bool State)

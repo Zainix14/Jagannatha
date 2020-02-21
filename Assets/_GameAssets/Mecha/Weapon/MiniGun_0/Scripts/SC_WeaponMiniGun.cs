@@ -81,6 +81,8 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     }
 
+    public void ReleaseTrigger() { }
+
     void Fire()
     {
 

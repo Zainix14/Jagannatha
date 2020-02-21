@@ -6,5 +6,8 @@ public interface IF_Weapon
 {
     Vector3Int GetWeaponSensitivity();
     void Trigger();
+
+    void ReleaseTrigger();
+
 }
 
