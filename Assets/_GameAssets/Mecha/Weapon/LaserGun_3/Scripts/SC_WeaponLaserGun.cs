@@ -26,6 +26,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
 
+    GameObject Bullet;
+    MeshRenderer mrBullet;
+
     bool laserFire;
     float laserTimer;
 
@@ -59,6 +62,11 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         GameObject bulletContainer = Instantiate(_bulletContainer);
 
+        Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
+        Bullet.transform.SetParent(bulletContainer.transform);
+        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
+
+        /*
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
         t_MrBullet = new MeshRenderer[n_BulletMagazine];
@@ -74,6 +82,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         //Je sais plus pourquoi mais c'est utile tkt
         n_CurBullet = 0;
+        */
 
     }
 
@@ -97,15 +106,15 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         laserFire = true;
         laserTimer += Time.deltaTime;
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        t_Bullet[n_CurBullet].transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
-        t_Bullet[n_CurBullet].transform.LookAt(Target.transform.position);
+        Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
+        Bullet.transform.LookAt(Target.transform.position);
 
-        if(t_MrBullet[n_CurBullet].enabled == false)
-            t_MrBullet[n_CurBullet].enabled = true;
+        if(mrBullet.enabled == false)
+            mrBullet.enabled = true;
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
-        t_Bullet[n_CurBullet].transform.localScale = new Vector3(t_Bullet[n_CurBullet].transform.localScale.x,
-                                                t_Bullet[n_CurBullet].transform.localScale.y,
+        Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,
+                                                Bullet.transform.localScale.y,
                                                 Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
         if(AimHit.b_OnFire == false)
@@ -118,7 +127,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public void ReleaseTrigger()
     {
-        t_Bullet[n_CurBullet].GetComponent<SC_BulletLaserGun>().ResetPos();
+        Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
         AimHit.b_OnFire = false;
     }
 
