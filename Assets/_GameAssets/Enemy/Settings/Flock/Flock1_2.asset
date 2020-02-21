@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Flock1_2
   m_EditorClassIdentifier: 
   attackType: 1
-  timeBetweenAttacks: 5
+  timeBetweenAttacks: 40
   fireRate: 3
   nbBulletToShoot: 0
-  chargingAttackTime: 5
-  activeDuration: 1
+  chargingAttackTime: 10
+  activeDuration: 2
   boidSettings:
   - {fileID: 11400000, guid: 790db41fbac060d41964033b3867d415, type: 2}
   - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
@@ -26,4 +26,4 @@ MonoBehaviour:
   SpawnPosition: {x: 0, y: 0, z: 0}
   boidSpawn: 100
   maxBoid: 200
-  regenerationRate: 4
+  regenerationRate: 400
