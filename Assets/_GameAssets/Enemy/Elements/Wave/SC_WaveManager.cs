@@ -79,13 +79,15 @@ public class SC_WaveManager : MonoBehaviour
 
         resetVariables();
         _curWaveSettings = newWaveSettings;
+
         if (!_curWaveSettings.backup)
             backupSend = true;
-        SpawnInitialFlock();
+        StartCoroutine(SpawnInitialFlock());
         waveStarted = true;
+
         
     }
-    void SpawnInitialFlock()
+    IEnumerator SpawnInitialFlock()
     {
         _FlockList.Clear();
         int curIndex = 0;
@@ -96,9 +98,11 @@ public class SC_WaveManager : MonoBehaviour
             {
                 SpawnNewFlock(_curWaveSettings.initialSpawnFlockType[i], curIndex);
                 curIndex++;
+                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);
+                
             }
         }
-
+        StopCoroutine(SpawnInitialFlock());
         curBackupTimer = 0;
 
 
@@ -111,7 +115,7 @@ public class SC_WaveManager : MonoBehaviour
     //---------------------------------------------------------------------//
     #region Backup Management
 
-    void SpawnBackupFlock()
+    IEnumerator SpawnBackupFlock()
     {
         int curIndex = 0;
         for (int i = 0; i < _curWaveSettings.backupSpawnFlockType.Length; i++)
@@ -120,8 +124,12 @@ public class SC_WaveManager : MonoBehaviour
             {
                 SpawnNewFlock(_curWaveSettings.backupSpawnFlockType[i], curIndex, true);
                 curIndex++;
+                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
+
             }
         }
+        StopCoroutine(SpawnBackupFlock());
+
     }
 
 
@@ -138,12 +146,12 @@ public class SC_WaveManager : MonoBehaviour
 
                 if (_FlockList.Count <= _curWaveSettings.flockLeftBeforeBackup)
                 {
-                    SpawnBackupFlock();
+                    StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
                 }
                 else if (curBackupTimer >= _curWaveSettings.timeBeforeBackup)
                 {
-                    SpawnBackupFlock();
+                    StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
 
                 }
