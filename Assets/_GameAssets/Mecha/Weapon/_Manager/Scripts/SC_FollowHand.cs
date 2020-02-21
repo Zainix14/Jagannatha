@@ -102,11 +102,11 @@ public class SC_FollowHand : MonoBehaviour
 
         var TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
         TargetPos += transform.TransformDirection(0, 0, f_PosOffsetZ);
-        this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, TargetPos, 0.5f);
+        this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, TargetPos, 0.1f);
 
         var rotation = TargetHand.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
-        this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, rotation, 0.5f); ;
+        this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, rotation, 0.1f); ;
 
     }
 
