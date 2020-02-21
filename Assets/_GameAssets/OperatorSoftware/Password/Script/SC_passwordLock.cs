@@ -10,7 +10,7 @@ public class SC_passwordLock : MonoBehaviour
     [SerializeField]
     GameObject objectPassword; //Contient le texte du inputField
 
-    string s_password = "gg"; //Mot de passe à taper
+    string s_password = "LV246"; //Mot de passe à taper
 
     [SerializeField]
     GameObject canvasMng; //récupération du DisplayManager
