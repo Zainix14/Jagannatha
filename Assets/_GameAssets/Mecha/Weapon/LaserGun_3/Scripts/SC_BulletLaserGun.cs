@@ -27,6 +27,7 @@ public class SC_BulletLaserGun : MonoBehaviour
     public void ResetPos()
     {
         transform.position = new Vector3(1000, 1000, 1000);
+        transform.localScale = new Vector3(1, 1, 1);
         mr.enabled = false;
     }
 
