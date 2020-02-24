@@ -12,21 +12,39 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     private int curNbPanne = 0;
 
     public Renderer[] tab_screens_renderers;
+    public Material[] mat;
 
     GameObject Mng_SyncVar = null;
     SC_SyncVar_StateMecha_Display sc_syncvar_display;
 
+    bool demarage = true;
+
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         tab_screens_renderers = new Renderer[gameObject.transform.childCount];
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             tab_screens_renderers[i] = gameObject.transform.GetChild(i).GetComponent<Renderer>();
+            tab_screens_renderers[i].material = mat[0];
             tab_screens_renderers[i].enabled = false;
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().StopVideo();
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().PlayVideo();
         }
 
+    }
+
+    public void FirstPanneFinish()
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            tab_screens_renderers[i].material = mat[1];
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().StopVideo();
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().PlayVideo();
+        }
+        demarage = false;
+        SC_EnemyManager.Instance.Initialize();
     }
 
     void GetReferences()
@@ -42,7 +60,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
 
         // Update is called once per frame
-        void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -50,13 +68,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
                 PutOneEnPanne();
 
         }
-        
-        if (Input.GetKeyDown(KeyCode.K))
-        {
 
-            RepairAll();
-
-        }
     }
     /* unused for now
     void PutXenPanne(int x)
@@ -123,6 +135,11 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
     public void RepairAll()
     {
+        if(demarage)
+        {
+            FirstPanneFinish();
+
+        }
         for (int i = 0; i < tab_screens_renderers.Length; i++)
         {
             SetScreenState(i, false);
@@ -138,7 +155,6 @@ public class SC_breakdown_displays_screens : MonoBehaviour
             curNbPanne--;
 
         tab_screens_renderers[index].enabled = state;
-
         
 
         if (Mng_SyncVar == null)

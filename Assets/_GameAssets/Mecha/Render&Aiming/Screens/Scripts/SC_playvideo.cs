@@ -12,6 +12,15 @@ public class SC_playvideo : MonoBehaviour
 
     }
 
+    public void PlayVideo()
+    {
+        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+    }
+    public void StopVideo()
+    {
+        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
+    }
+
     // Update is called once per frame
     void Update()
     {
