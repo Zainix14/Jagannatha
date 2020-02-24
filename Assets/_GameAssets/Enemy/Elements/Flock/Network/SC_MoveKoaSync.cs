@@ -23,9 +23,11 @@ public class SC_MoveKoaSync : NetworkBehaviour
             mr_OP.enabled = false;
             mr_P.enabled = false;
         }
-        else
+        else if (!isServer)
+        {
             mr_P.enabled = false;
-        
+            mr_OP.enabled = true;
+        }         
     }
 
     public void SetPilotMeshActive()
