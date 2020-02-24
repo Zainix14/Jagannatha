@@ -12,6 +12,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public GameObject Target;
     SC_AimHit AimHit;
 
+    Vector3 LaserDir;
+
     public float frequency;
 
     [SerializeField]
@@ -20,6 +22,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     Vector3Int sensitivity;
 
     float timer = 0;
+    float f_LaserTimer = 0;
 
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
     MeshRenderer[] t_MrBullet;
@@ -34,10 +37,13 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     GameObject Mng_CheckList;
 
+    private RaycastHit hit;
+    int layerMask = 1 << 5 | 1 << 15 | 1 << 16 | 1 << 25 | 1 << 26;
+
     void Awake()
     {
         GetReferences();
-        CreateBulletPull();
+        //CreateBulletPull();
     }
 
     // Update is called once per frame
@@ -102,6 +108,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     }
 
+    /*
     void Fire()
     {
 
@@ -124,6 +131,52 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         //INSERT LASER SHIT
         CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
+
+    }
+    */
+
+    void Fire()
+    {
+
+        LaserDir = Target.transform.position - helper_startPos.transform.position;
+
+        if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out hit, 5000f, layerMask))
+        {
+
+            //Debug.DrawRay(helper_startPos.transform.position, LaserDir.normalized * hit.distance, Color.yellow);
+            //Debug.Log(hit.collider);
+
+            if(hit.collider != null)
+            {
+                Hit();
+            }
+
+        }
+
+    }
+
+    void Hit()
+    {
+
+        if (hit.collider.gameObject.layer == 26)
+        {
+            if (f_LaserTimer > (1 / frequency))
+            {
+                f_LaserTimer = 0;
+                hit.collider.GetComponent<Boid>().HitBoid(sensitivity);
+            }
+            f_LaserTimer += Time.deltaTime;
+        }
+
+        if (hit.collider.gameObject.layer == 25)
+        {
+            if (f_LaserTimer > (1 / frequency))
+            {
+                f_LaserTimer = 0;
+                hit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
+            }
+            f_LaserTimer += Time.deltaTime;
+        }
 
     }
 
