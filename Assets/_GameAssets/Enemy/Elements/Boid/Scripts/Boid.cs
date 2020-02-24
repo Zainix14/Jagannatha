@@ -244,10 +244,10 @@ public class Boid : MonoBehaviour {
         int rnd = Random.Range(0, 101);
         if(rnd <= powerPerCent)
         {
-            
+
+            DestroyBoid(DestructionType.Solo);
         }
 
-        DestroyBoid(DestructionType.Solo);
 
     }
 
