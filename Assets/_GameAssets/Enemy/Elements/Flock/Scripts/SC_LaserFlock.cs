@@ -12,7 +12,7 @@ public class SC_LaserFlock : MonoBehaviour
         {
             //https://www.youtube.com/watch?v=GBvfiCdk-jc&list=PLbsiLVHJCH9iHz_HDGirFtRUtKbdc9czK
             Sc_ScreenShake.Instance.ShakeIt(0.01f, 0.2f);
-            SC_CockpitShake.Instance.ShakeIt(0.04f, 0.3f);
+            SC_CockpitShake.Instance.ShakeIt(0.01f, 0.2f);
             //https://www.youtube.com/watch?v=nfWlot6h_JM
         }
     }
