@@ -11,7 +11,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public GameObject helper_startPos;
     public GameObject Target;
     SC_AimHit AimHit;
-    public LineRenderer lr;
+
     public float frequency;
 
     [SerializeField]
@@ -22,12 +22,12 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     float timer = 0;
 
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
-    LineRenderer[] t_MrBullet;
+    MeshRenderer[] t_MrBullet;
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
 
     GameObject Bullet;
-    LineRenderer mrBullet;
+    MeshRenderer mrBullet;
 
     bool laserFire;
     float laserTimer;
@@ -64,7 +64,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
         Bullet.transform.SetParent(bulletContainer.transform);
-        mrBullet = Bullet.GetComponentInChildren<LineRenderer>();
+        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
 
         Bullet.GetComponent<SC_BulletLaserGun>().frequency = frequency;
 
@@ -108,37 +108,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         laserFire = true;
         laserTimer += Time.deltaTime;
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        //lr.SetPosition(0, helper_startPos.transform.position);
-        //var TargetVector = Target.transform.position - helper_startPos.transform.position;
-        //var TargetMag = TargetVector.magnitude;
-        //var TargetDire = TargetVector / TargetMag;
-        //RaycastHit hit;
-        //if (Physics.Raycast(helper_startPos.transform.position,TargetDire , out hit, 1000))
-        //{
-        //    if (hit.collider)
-        //        lr.SetPosition(1, hit.point);
-        //    if (hit.collider.tag == "Ennemi")
-        //    {
-        //        Debug.Log("isIN");
-        //        lr.SetPosition(1, hit.point);
-        //        //tag boid To damaged
-        //    }
-        //    if (hit.collider.tag == "Koa")
-        //    {
-        //        Debug.Log("isDAKOA");
-        //         lr.SetPosition(1, hit.point);
-        //        //tag boid To damaged
-        //    }
-        //    else
-        //    {
-        //        lr.SetPosition(1, Target.transform.position);
-        //    }
-        //}
-
         Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
         Bullet.transform.LookAt(Target.transform.position);
 
-        if (mrBullet.enabled == false)
+        if(mrBullet.enabled == false)
             mrBullet.enabled = true;
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
@@ -146,7 +119,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
                                                 Bullet.transform.localScale.y,
                                                 Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
-        if (AimHit.b_OnFire == false)
+        if(AimHit.b_OnFire == false)
             AimHit.b_OnFire = true;
 
         //INSERT LASER SHIT
