@@ -147,9 +147,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             //Debug.Log(hit.collider);
 
             if(hit.collider != null)
-            {
                 Hit();
-            }
 
         }
 
