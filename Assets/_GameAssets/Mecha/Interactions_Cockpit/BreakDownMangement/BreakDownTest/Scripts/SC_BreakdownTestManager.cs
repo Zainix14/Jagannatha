@@ -64,7 +64,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
     void Demarage()
     {
-        //StartNewBreakdown(interactible.Length);
+        StartNewBreakdown(interactible.Length);
     }
 
 
