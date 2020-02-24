@@ -7,8 +7,8 @@ public class SC_fadeFromBlack : MonoBehaviour
     private void Awake()
     {
 
-
-        SteamVR_Fade.Start(Color.black, 2f);
+        SteamVR_Fade.Start(Color.black, 0f);
+        SteamVR_Fade.Start(Color.clear, 2f);
         
     }
 
