@@ -16,21 +16,24 @@ public class SC_FollowHand : MonoBehaviour
     GameObject Mng_CheckList = null;
     public GameObject TargetHand;
     public float f_PosOffsetZ = 0;
+    public GameObject AimIndicator;
 
-    // Update is called once per frame
+    void GetReferences()
+    {
+        if (Mng_CheckList == null)
+            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+        if (AimIndicator == null && Mng_CheckList != null)
+            AimIndicator = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
+    }
+
     void Update()
     {
 
-        if (Mng_CheckList == null)
-            GetCheckListManager();
+        if (Mng_CheckList == null || AimIndicator == null)
+            GetReferences();
 
         if (Mng_CheckList != null && TargetHand == null)
             GetTargetHand();
-
-    }
-
-    void LateUpdate()
-    {
 
         if (b_OnFollow && TargetHand != null && RotationMode == RotationType.SyncRot)
             SetPos();
@@ -43,18 +46,6 @@ public class SC_FollowHand : MonoBehaviour
 
         if (!b_OnFollow && this.transform.position.y >= 0)
             ResetPos();
-
-    }
-
-    void GetCheckListManager()
-    {
-
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_CheckList == null && !b_AlreadyCheck)
-            Debug.LogWarning("SC_FollowHand - Can't Find Mng_CheckList");
-        if (!b_AlreadyCheck)
-            b_AlreadyCheck = true;
 
     }
 
@@ -86,14 +77,18 @@ public class SC_FollowHand : MonoBehaviour
 
     void SetPosII()
     {
-        
-        this.gameObject.transform.position = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+     
+        Vector3 TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+        this.gameObject.transform.position = Vector3.Lerp(transform.position, TargetPos, 1f);
         this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
 
+        /*
         var rotation = TargetHand.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
         this.gameObject.transform.rotation = rotation;
-       
+        */
+
+        transform.LookAt(AimIndicator.transform);
 
     }
 
