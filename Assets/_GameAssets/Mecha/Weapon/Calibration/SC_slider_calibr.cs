@@ -30,8 +30,6 @@ public class SC_slider_calibr : MonoBehaviour {
 
     private SC_SyncVar_calibr sc_syncvar_calibr;
 
-    private GameObject minigun;
-    private SC_WeaponMiniGun sc_minigun;
 
     void Start ()
     {
@@ -113,14 +111,13 @@ public class SC_slider_calibr : MonoBehaviour {
 
     void sendToSynchVar (float value)
     {
-
-        if (sc_syncvar_calibr == null || minigun == null)
+     
+        if (sc_syncvar_calibr == null)
         {
             GetReferences();
         }
         else
         {
-
 
             value = (value + 0.4f) * 6.25f;
 
@@ -128,13 +125,11 @@ public class SC_slider_calibr : MonoBehaviour {
 
             sc_syncvar_calibr.CalibrInts[index] = intvalue;
 
-            Debug.Log("tg cyrille");
-
 
             int curWeaponIndex = SC_WeaponManager.Instance.n_CurWeapon;
-            Debug.Log(curWeaponIndex);
+  
             GameObject curWeapon = SC_WeaponManager.Instance.tab_Weapons[curWeaponIndex];
-            Debug.Log(curWeapon);
+
 
             curWeapon.GetComponent<IF_Weapon>().SetSensitivity(index, intvalue);
        
