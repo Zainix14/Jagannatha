@@ -52,7 +52,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
         if(!spawn)
         {
-            float scale = ((initialScale.x* factor / timeBeforeSpawn) * Time.deltaTime);
+            float scale = ((initialScale.x*factor / timeBeforeSpawn) * Time.deltaTime);
             float radius = ((initialRadius / factor / timeBeforeSpawn) * Time.deltaTime);
             transform.localScale += new Vector3(scale, scale, scale);
             transform.GetComponent<SphereCollider>().radius -= radius;
