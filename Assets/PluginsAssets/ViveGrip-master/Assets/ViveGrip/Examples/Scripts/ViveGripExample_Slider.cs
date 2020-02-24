@@ -86,7 +86,19 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         if (_freezeAlongZ) _localZ = 0;
         gameObject.transform.localPosition = new Vector3(_localX, _localY, _localZ);
 
-        
+        //sécurité juste en y
+
+        if (transform.localPosition.y<-0.45f)
+        {
+
+            transform.localPosition = new Vector3(transform.localPosition.x, -0.45f, transform.localPosition.z);
+
+        }
+        else if (transform.localPosition.y > 0.45f)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, 0.45f, transform.localPosition.z);
+
+        }
      
 
         float newX = gameObject.transform.localPosition.y;
