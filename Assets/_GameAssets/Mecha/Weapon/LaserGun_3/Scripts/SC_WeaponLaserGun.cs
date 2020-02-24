@@ -43,7 +43,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     void Awake()
     {
         GetReferences();
-        //CreateBulletPull();
+        CreateBulletPull();
     }
 
     // Update is called once per frame
