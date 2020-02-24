@@ -8,6 +8,7 @@ public class SC_AimHit : MonoBehaviour
     public Vector3Int sensitivity;
     public bool b_OnFire = false;
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
 
@@ -24,5 +25,6 @@ public class SC_AimHit : MonoBehaviour
             
 
     }
+    */
 
 }
