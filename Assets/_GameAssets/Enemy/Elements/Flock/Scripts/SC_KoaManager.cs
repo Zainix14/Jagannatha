@@ -27,6 +27,8 @@ public class SC_KoaManager : MonoBehaviour
     int koaNumID;
     string koaID;
 
+    bool destroyed = false;
+
     GameObject _koa; //Koa du 
 
     /// <summary>
@@ -82,7 +84,7 @@ public class SC_KoaManager : MonoBehaviour
 
             case FlockSettings.AttackType.Laser:
 
-                koaCharID = 'A';
+                koaCharID = 'c';
 
                 break;
         }
@@ -112,7 +114,6 @@ public class SC_KoaManager : MonoBehaviour
             syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }
         
-        //InitBoids();
     }
 
 
@@ -156,11 +157,15 @@ public class SC_KoaManager : MonoBehaviour
                 }
                 syncVarKoa.curboidNumber = nbActiveBoid;
             }
-            respawnTimer += Time.deltaTime;
-            if (respawnTimer > (60f / curFlockSettings.regenerationRate))
+            if(curFlockSettings.regenerationRate != 0)
             {
-                respawnTimer = 0;
-                GenerateNewBoid();
+
+                respawnTimer += Time.deltaTime;
+                if (respawnTimer > (60f / curFlockSettings.regenerationRate))
+                {
+                    respawnTimer = 0;
+                    GenerateNewBoid();
+                }
             }
         }
 
@@ -276,22 +281,31 @@ public class SC_KoaManager : MonoBehaviour
         float powerPerCent = (power / 18 )* 100;
 
         KoaLife -= (int)((powerPerCent * maxLife)/100)/3;
-        if (KoaLife <= 0) DestroyFlock();
+        if (KoaLife <= 0) AnimDestroy();
 
 
         ///DEBUG
         if (gunSensitivity.x == 100)
-            DestroyFlock();
+            AnimDestroy();
+    }
+
+    void AnimDestroy()
+    {
+
+        SetBehavior(curFlockSettings.boidSettings[2]);
+
+        //SetBehavior(DeathSettings);
+        foreach (Boid b in _boidsTab) b.DestroyBoid(Boid.DestructionType.Massive);
+        isActive = false;
+        Destroy(_koa.gameObject);
+        Invoke("DestroyFlock",1);
     }
 
     void DestroyFlock()
     {
-        //SetBehavior(DeathSettings);
-        foreach (Boid b in _boidsTab)
-        {
-            b.DestroyBoid();
 
-        }
+
+        
         Destroy(_koa.gameObject);
         flockManager.DestroyFlock();
         Destroy(this.gameObject);
