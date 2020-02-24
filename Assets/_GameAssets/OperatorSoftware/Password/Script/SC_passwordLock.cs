@@ -51,7 +51,7 @@ public class SC_passwordLock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(objectPassword.GetComponent<Text>().text == s_password) //Check du mot de passe
+        if (string.Equals(objectPassword.GetComponent<Text>().text, s_password, System.StringComparison.CurrentCultureIgnoreCase) /*objectPassword.GetComponent<Text>().text == s_password*/) //Check du mot de passe
         {
             if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) //Validation
             {
