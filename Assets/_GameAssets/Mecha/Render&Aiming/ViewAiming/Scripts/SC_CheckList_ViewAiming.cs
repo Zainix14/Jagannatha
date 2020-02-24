@@ -7,6 +7,7 @@ public class SC_CheckList_ViewAiming : MonoBehaviour
 
     public GameObject Screens = null;
     public GameObject Target = null;
+    public GameObject CrossHair = null;
 
     public GameObject GetTarget()
     {
@@ -16,6 +17,11 @@ public class SC_CheckList_ViewAiming : MonoBehaviour
     public GameObject GetScreens()
     {
         return Screens;
+    }
+
+    public GameObject GetCrossHair()
+    {
+        return CrossHair;
     }
 
 }
