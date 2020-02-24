@@ -32,11 +32,7 @@ public class SC_EnemyManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        Invoke("Initialize", 1);
-    }
-
+ 
     public void Initialize()
     {
         InitNewPhase(0);

@@ -53,7 +53,8 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
                 textWanted.enabled = true;
                 warning.SetActive(true);
                 sparkle.SetActive(false);
-                textWanted.text = sc_syncvar.SL_sliders[index].valueWanted.ToString();
+                Debug.Log(sc_syncvar.SL_sliders[index].valueWanted);
+                textWanted.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].valueWanted,0.4f,10,-0.4f,0)).ToString();
                 
             }
             //NO PANNE
@@ -69,11 +70,27 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
 
     void updateSliderSolo()
     {
-        
-        textValue.text = sc_syncvar.SL_sliders[index].value.ToString();
+
+        textValue.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].value, 0.4f, 10, -0.4f, 0)).ToString();
         float rotZ = sc_syncvar.SL_sliders[index].value * 100;
 
         disquePotar.gameObject.transform.eulerAngles = new Vector3(270, rotZ, 0);
         
+    }
+
+    /**
+     * Return the input value according a given range translated to an other range.
+     * @param float inputValue
+     * @param float inputMax
+     * @param float outputMax
+     * @param float inputMin
+     * @param float outputMin
+     * @return float
+     */
+    float ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
     }
 }

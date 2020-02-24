@@ -277,6 +277,11 @@ public class SC_KoaManager : MonoBehaviour
 
         KoaLife -= (int)((powerPerCent * maxLife)/100)/3;
         if (KoaLife <= 0) DestroyFlock();
+
+
+        ///DEBUG
+        if (gunSensitivity.x == 100)
+            DestroyFlock();
     }
 
     void DestroyFlock()

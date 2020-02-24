@@ -40,6 +40,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         //get du script qui gere l'affichage des ecrans de panne
         sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
 
+        Invoke("Demarage", 0.5f);
     }
 
     // Update is called once per frame
@@ -61,9 +62,14 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    public void StartNewBreakdown(int nbBreakdown)
+    void Demarage()
     {
-      
+        StartNewBreakdown(interactible.Length);
+    }
+
+
+    public void StartNewBreakdown(int nbBreakdown)
+    { 
         int curBreakdown = nbBreakdown;
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
@@ -108,8 +114,6 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
     public void CheckBreakdown()
     {
-
-
         int n_BreakdownValue = 0;
 
         for (int j = 0; j < interactible.Length; j++)
@@ -121,7 +125,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         }
 
 
-        if (n_BreakdownValue > 2 && !b_BreakdownTest)
+        if (n_BreakdownValue > 5 && !b_BreakdownTest)
         {
             b_BreakdownTest = true;
             Mng_BreakdownMain.CheckBreakdown();

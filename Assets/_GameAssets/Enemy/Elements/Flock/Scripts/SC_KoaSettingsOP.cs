@@ -32,7 +32,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
         this.koaID = koaID;
     }
-  
+
+    public string GetKoaID()
+    {
+        return koaID;
+    }
 
     public Vector3 GetSensibility()
     {
