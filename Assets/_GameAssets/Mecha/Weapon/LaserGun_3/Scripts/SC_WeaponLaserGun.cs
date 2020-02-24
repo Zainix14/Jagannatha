@@ -37,8 +37,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     GameObject Mng_CheckList;
 
-    private RaycastHit hit;
+    public RaycastHit LaserHit;
     int layerMask = 1 << 5 | 1 << 15 | 1 << 16 | 1 << 25 | 1 << 26;
+
+    public Sc_LaserFeedBack LaserFB;
 
     void Awake()
     {
@@ -140,15 +142,15 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         LaserDir = Target.transform.position - helper_startPos.transform.position;
 
-        if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out hit, 5000f, layerMask))
+        if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out LaserHit, 5000f, layerMask))
         {
 
-            //Debug.DrawRay(helper_startPos.transform.position, LaserDir.normalized * hit.distance, Color.yellow);
-            //Debug.Log(hit.collider);
-
-            if(hit.collider != null)
+            if(LaserHit.collider != null)
+            {
                 Hit();
-
+                LaserFB.EnableLaser(LaserHit);
+            }
+                
         }
 
     }
@@ -156,22 +158,22 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     void Hit()
     {
 
-        if (hit.collider.gameObject.layer == 26)
+        if (LaserHit.collider.gameObject.layer == 26)
         {
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
-                hit.collider.GetComponent<Boid>().HitBoid(sensitivity);
+                LaserHit.collider.GetComponent<Boid>().HitBoid(sensitivity);
             }
             f_LaserTimer += Time.deltaTime;
         }
 
-        if (hit.collider.gameObject.layer == 25)
+        if (LaserHit.collider.gameObject.layer == 25)
         {
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
-                hit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
+                LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
             }
             f_LaserTimer += Time.deltaTime;
         }
@@ -182,6 +184,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     {
         Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
         AimHit.b_OnFire = false;
+        LaserFB.DiseableLaser();
     }
 
     public void SetBreakdownState(bool State)
