@@ -237,6 +237,10 @@ public class Boid : MonoBehaviour {
         float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
+
+        Debug.Log("gun Sensitivy" + gunSensitivity);
+        Debug.Log("boid sensitivity" + sensitivity);
+
         float power = 18 - (x + y + z);
 
         float powerPerCent = (power / 18) * 100;
@@ -244,8 +248,18 @@ public class Boid : MonoBehaviour {
         int rnd = Random.Range(0, 101);
         if(rnd <= powerPerCent)
         {
-
             DestroyBoid(DestructionType.Solo);
+        }
+
+
+        if(powerPerCent > 90)
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
+            
+        }
+        else
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
         }
 
 

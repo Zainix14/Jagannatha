@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
+    #region Singleton
+
+    private static SC_WeaponLaserGun _instance;
+    public static SC_WeaponLaserGun Instance { get { return _instance; } }
+
+    #endregion
 
     bool b_InBreakdown = false;
 
@@ -44,6 +50,14 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         GetReferences();
         CreateBulletPull();
     }
@@ -158,6 +172,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     void Hit()
     {
 
+
         if (LaserHit.collider.gameObject.layer == 26)
         {
             if (f_LaserTimer > (1 / frequency))
@@ -167,8 +182,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             }
             f_LaserTimer += Time.deltaTime;
         }
-
-        if (LaserHit.collider.gameObject.layer == 25)
+        else if (LaserHit.collider.gameObject.layer == 25)
         {
             if (f_LaserTimer > (1 / frequency))
             {
@@ -176,6 +190,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
                 LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
             }
             f_LaserTimer += Time.deltaTime;
+        }
+        else
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
         }
 
     }
@@ -196,8 +214,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public Vector3Int GetWeaponSensitivity() { return sensitivity; }
 
+
     public void SetSensitivity(int index, int value)
     {
+        
         switch (index)
         {
             case 0:
