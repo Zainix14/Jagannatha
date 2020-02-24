@@ -142,7 +142,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         LaserDir = Target.transform.position - helper_startPos.transform.position;
 
-        if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out LaserHit, 5000f, layerMask))
+        if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out LaserHit, 2000f, layerMask))
         {
 
             if(LaserHit.collider != null)

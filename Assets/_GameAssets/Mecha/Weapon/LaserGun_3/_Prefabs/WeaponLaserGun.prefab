@@ -209,7 +209,6 @@ MonoBehaviour:
   MainLaserScript: {fileID: 2210348525288903360}
   FirePoint: {fileID: 7460222069811358692}
   lr: {fileID: 1016960617567129095}
-  maximumLenght: 1000
   Sparkle: {fileID: 1016960617132070035}
 --- !u!1 &7460222069811358692
 GameObject:
@@ -248,6 +247,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 669054497554508628}
     m_Modifications:
+    - target: {fileID: 2015526558238297653, guid: 3db32a8b69e512d429b961974305e22f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2015526558809609376, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
       propertyPath: m_Name
@@ -266,12 +270,22 @@ PrefabInstance:
     - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: 9.23
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
       propertyPath: m_Positions.Array.data[1].z
       value: 19.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
+        type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2015526558809609379, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
