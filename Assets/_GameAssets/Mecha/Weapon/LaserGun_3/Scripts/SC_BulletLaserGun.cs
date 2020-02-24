@@ -43,9 +43,6 @@ public class SC_BulletLaserGun : MonoBehaviour
             
         }
                 
-
-        
-
     }
 
     public void ResetPos()
