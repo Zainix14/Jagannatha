@@ -31,7 +31,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     float f_currentLerpTime;
 
 
-    public enum RotationMode { TSR, Torque, Normalize, Higher}
+    public enum RotationMode { TSR, Torque, Normalize, Higher, Clamp}
     public RotationMode TypeRotationZ;
 
     // Update is called once per frame
@@ -89,6 +89,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         {
 
             Quaternion zQuaternion = new Quaternion();
+            float MixImpulseZ;
 
             /*
             //increment timer once per frame
@@ -123,7 +124,16 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                     break;
 
                 case RotationMode.Normalize:
-                    float MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
+                    MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
+                    zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
+
+                case RotationMode.Clamp:
+                    MixImpulseZ = Input.GetAxis("Rotation") + Input.GetAxis("Horizontal");
+                    if (MixImpulseZ > 1)
+                        MixImpulseZ = 1;
+                    MixImpulseZ *= f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
                     transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
