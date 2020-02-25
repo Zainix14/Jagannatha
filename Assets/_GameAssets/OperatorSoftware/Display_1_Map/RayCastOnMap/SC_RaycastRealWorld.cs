@@ -54,8 +54,9 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
                 type = hit.collider.GetComponent<IF_ClicableForOperator>().GetKoaID();
 
-                Debug.Log(SC_GameStates.Instance.CurState);
-                if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+                //CHANGEMENT ETAT TUTO
+                //Debug.Log(SC_GameStates.Instance.CurState);
+                if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
                 {
                     SC_instruct_op_manager.Instance.Deactivate(0);
                     Debug.Log("babar");

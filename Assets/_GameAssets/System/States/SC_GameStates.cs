@@ -13,7 +13,7 @@ public class SC_GameStates : NetworkBehaviour
 
     #endregion
 
-    public enum GameState {Lobby, Tutorial, Game, GameEnd }
+    public enum GameState {Lobby, Tutorial,Tutorial2, Game, GameEnd }
     public GameState CurState;
 
     void Awake()
@@ -49,6 +49,11 @@ public class SC_GameStates : NetworkBehaviour
 
             case GameState.Tutorial:
                 
+                break;
+
+            case GameState.Tutorial2:
+                SC_instruct_op_manager.Instance.Activate(0);
+
                 break;
 
             case GameState.Game:
