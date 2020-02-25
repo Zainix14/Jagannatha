@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: FlockTuto
   m_EditorClassIdentifier: 
   attackType: 2
-  timeBetweenAttacks: 10
+  timeBetweenAttacks: 2
   fireRate: 5
   nbBulletToShoot: 50
-  chargingAttackTime: 5
+  chargingAttackTime: 1
   activeDuration: 1
   boidSettings:
   - {fileID: 11400000, guid: 867f544dcc2ed6c4486e2817fa7c1516, type: 2}
@@ -26,5 +26,5 @@ MonoBehaviour:
   spawnRandom: 0
   SpawnPosition: {x: 0, y: 50, z: 100}
   boidSpawn: 50
-  maxBoid: 200
+  maxBoid: 150
   regenerationRate: 800

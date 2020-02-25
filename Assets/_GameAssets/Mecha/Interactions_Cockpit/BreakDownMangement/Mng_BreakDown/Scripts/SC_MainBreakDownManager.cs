@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 {
+    #region Singleton
 
+    private static SC_MainBreakDownManager _instance;
+    public static SC_MainBreakDownManager Instance { get { return _instance; } }
+
+    #endregion
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
     public SC_BreakdownTestManager Mng_BreakDownTest;
@@ -35,6 +40,19 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     public int life = 10;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     void Start()
     {       
         GetReferences();
@@ -96,11 +114,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 sc_screens_controller.RepairAll();
 
             if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
-                {
+            {
                     MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
                     RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
                     WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-                }
+            }
             
         }
 
@@ -131,6 +149,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if (life <= 0)
         {
+
+            Debug.Log(Mng_BreakDownTest);
             life = 10;
             Mng_BreakDownTest.StartNewBreakdown(1);
 
