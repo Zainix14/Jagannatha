@@ -14,6 +14,7 @@ public class SC_playvideo : MonoBehaviour
 
     public void PlayVideo()
     {
+        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).loop = true;
         ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
     }
     public void StopVideo()
