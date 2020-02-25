@@ -87,6 +87,9 @@ public class SC_HitMarker : MonoBehaviour
 
         if(bAnimation)
         {
+
+            /// INSERTFLICK
+            /*
             curTime += Time.deltaTime;
             float scale = animationTime / (initialScale.x * scaleFactor);
 
@@ -103,7 +106,7 @@ public class SC_HitMarker : MonoBehaviour
             else
             {
                 transform.localScale += new Vector3(scale, scale, scale);
-            }
+            }*/
             if(turn)
             transform.Rotate(new Vector3(0, 0, 300 * Time.deltaTime));
         }
