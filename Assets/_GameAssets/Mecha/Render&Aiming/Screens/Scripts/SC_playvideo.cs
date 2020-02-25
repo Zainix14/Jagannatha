@@ -8,14 +8,16 @@ public class SC_playvideo : MonoBehaviour
     void Start()
     {
         ((MovieTexture)GetComponent<Renderer>().material.mainTexture).loop = true;
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+        if (!((MovieTexture)GetComponent<Renderer>().material.mainTexture).isPlaying)
+            ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
 
     }
 
     public void PlayVideo()
     {
         ((MovieTexture)GetComponent<Renderer>().material.mainTexture).loop = true;
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+        if(!((MovieTexture)GetComponent<Renderer>().material.mainTexture).isPlaying)
+            ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
     }
     public void StopVideo()
     {
