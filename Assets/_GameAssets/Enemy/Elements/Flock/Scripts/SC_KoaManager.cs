@@ -142,6 +142,7 @@ public class SC_KoaManager : MonoBehaviour
         _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
         _curKoaGuide = _boidsTab[1].transform;
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
+        _boidsTab[1].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
 
     }
 
