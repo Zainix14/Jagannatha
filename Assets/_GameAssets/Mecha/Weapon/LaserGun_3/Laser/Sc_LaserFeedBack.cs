@@ -6,15 +6,22 @@ public class Sc_LaserFeedBack : MonoBehaviour
 {
     public SC_WeaponLaserGun MainLaserScript;
     public GameObject FirePoint;
+    GameObject SFX_LaserBeam;
     public LineRenderer lr;
     public LineRenderer lr2;
+    int SoundSourceNumb;
     [SerializeField]
     ParticleSystem Sparkle;
 
     public void EnableLaser(RaycastHit hit)
     {
-
-        if(!lr.enabled)
+        if(SoundSourceNumb == 0)
+        {
+            SFX_LaserBeam = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_LaserBeam", true, 0.1f);
+            SoundSourceNumb += 1;
+        }
+        
+        if (!lr.enabled)
             lr.enabled = true;
         if (!lr2.enabled)
             lr2.enabled = true;
@@ -35,7 +42,11 @@ public class Sc_LaserFeedBack : MonoBehaviour
 
     public void DiseableLaser()
     {
-
+        if(SFX_LaserBeam != null && SFX_LaserBeam.GetComponent<AudioSource>().isPlaying)
+        {
+            SFX_LaserBeam.GetComponent<AudioSource>().Stop();
+            SoundSourceNumb = 0;
+        }
         if (Sparkle.isPlaying)
             Sparkle.Stop();
 
