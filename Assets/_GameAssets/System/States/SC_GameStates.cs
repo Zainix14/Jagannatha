@@ -16,6 +16,18 @@ public class SC_GameStates : NetworkBehaviour
     public enum GameState {Lobby, Tutorial, Game, GameEnd }
     public GameState CurState;
 
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,11 +48,11 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.Tutorial:
-
+                
                 break;
 
             case GameState.Game:
-
+                SC_instruct_op_manager.Instance.Deactivate(0);
                 break;
 
             case GameState.GameEnd:
