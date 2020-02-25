@@ -31,7 +31,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     public RotationMode TypeRotationX;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!b_InBreakdown && !b_BreakEngine)
             Move();
