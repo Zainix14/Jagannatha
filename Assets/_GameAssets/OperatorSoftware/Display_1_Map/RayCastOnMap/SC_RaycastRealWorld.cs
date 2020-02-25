@@ -53,7 +53,13 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 //Debug.Log("Clic on " + hit.collider.tag);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
                 type = hit.collider.GetComponent<IF_ClicableForOperator>().GetKoaID();
-                
+
+                Debug.Log(SC_GameStates.Instance.CurState);
+                if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+                {
+                    SC_instruct_op_manager.Instance.Deactivate(0);
+                    Debug.Log("babar");
+                }
                 //Debug.Log("Sensi à " + sensi);
                 //debugText.text = sensi.ToString();
             }
