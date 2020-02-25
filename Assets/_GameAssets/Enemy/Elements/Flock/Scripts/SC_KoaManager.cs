@@ -85,7 +85,7 @@ public class SC_KoaManager : MonoBehaviour
 
                 koaCharID = 'B';
 
-                break;
+                break;  
 
             case FlockSettings.AttackType.Laser:
 
