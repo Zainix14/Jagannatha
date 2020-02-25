@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class SC_LaserFlock : MonoBehaviour
 {
-
-    private void OnTriggerEnter(Collider other)
+    public void FireLaser(float laserTime)
     {
-        //JE TOUCHE LE PLAYER 
-        if (other.tag == "Player")
-        {
-            //https://www.youtube.com/watch?v=GBvfiCdk-jc&list=PLbsiLVHJCH9iHz_HDGirFtRUtKbdc9czK
-            Sc_ScreenShake.Instance.ShakeIt(0.01f, 0.2f);
-            SC_CockpitShake.Instance.ShakeIt(0.01f, 0.2f);
-            //https://www.youtube.com/watch?v=nfWlot6h_JM
-        }
     }
 
     // Update is called once per frame
