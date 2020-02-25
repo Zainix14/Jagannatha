@@ -19,8 +19,8 @@ public class SC_BulletFlock : MonoBehaviour
             SC_CockpitShake.Instance.ShakeIt(0.005f, 0.1f);
 
             //on fait subir des dmg au joueur
+            SC_MainBreakDownManager.Instance.causeDamageOnSystem(1);
 
-            other.GetComponent<SC_Hitbox_mech>().sc_main_breakdown_manager.causeDamageOnSystem(1);
             ResetPos();
         }
         if(other.gameObject.layer == 16)
