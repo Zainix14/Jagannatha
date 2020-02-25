@@ -29,7 +29,7 @@ public class SC_HitMarker : MonoBehaviour
     public bool hit;
     bool turn;
 
-    public enum HitType { Normal, Critical, none };
+    public enum HitType { Normal, Critical,Koa, none };
 
     public void Awake()
     {
@@ -52,25 +52,31 @@ public class SC_HitMarker : MonoBehaviour
     public void HitMark(HitType Type)
     {
         meshRenderer.enabled = true;
+        mat.color = Color.white;
         bAnimation = true;
         curTime = 0;
         switch (Type)
         {
 
             case HitType.Normal :
-                mat.color = Color.white;
                 turn = false;
                 transform.rotation = initialRotation;
-                transform.localScale = initialScale;
-
-
                 break;
 
             case HitType.Critical:
-                mat.color = Color.red;
+ 
                 turn = true;
                 break;
+
+            case HitType.Koa:
+                mat.color = Color.green;
+
+
+                break;
+
+
             case HitType.none:
+
                 bAnimation = false;
                 meshRenderer.enabled = false;
                 transform.localScale = initialScale;
@@ -87,6 +93,9 @@ public class SC_HitMarker : MonoBehaviour
 
         if(bAnimation)
         {
+
+            /// INSERTFLICK
+            /*
             curTime += Time.deltaTime;
             float scale = animationTime / (initialScale.x * scaleFactor);
 
@@ -103,7 +112,7 @@ public class SC_HitMarker : MonoBehaviour
             else
             {
                 transform.localScale += new Vector3(scale, scale, scale);
-            }
+            }*/
             if(turn)
             transform.Rotate(new Vector3(0, 0, 300 * Time.deltaTime));
         }
