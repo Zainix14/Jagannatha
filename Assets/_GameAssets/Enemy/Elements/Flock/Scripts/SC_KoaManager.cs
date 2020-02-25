@@ -59,12 +59,14 @@ public class SC_KoaManager : MonoBehaviour
     int spawnCount;
     public bool isActive;
 
+    ParticleSystem vfx_Hit;
+
+
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
     public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings)
     {
-
         GetReferences();
         regeneration = true;
         curRecoveryTimer = 0;
@@ -113,6 +115,8 @@ public class SC_KoaManager : MonoBehaviour
             _koa = NetPSpawnKoa.SpawnKoa();
             _koa.transform.position = transform.position;
             _koa.GetComponent<SC_KoaCollider>().Initialize(this);
+            vfx_Hit = _koa.GetComponent<ParticleSystem>();
+
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
             syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID);
             syncVarKoa.curboidNumber = spawnCount;
@@ -298,8 +302,8 @@ public class SC_KoaManager : MonoBehaviour
         if (KoaLife <= 0) AnimDestroy();
 
         SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
-        
 
+        vfx_Hit.Play();
         ///DEBUG
         if (gunSensitivity.x == 100)
             AnimDestroy();
