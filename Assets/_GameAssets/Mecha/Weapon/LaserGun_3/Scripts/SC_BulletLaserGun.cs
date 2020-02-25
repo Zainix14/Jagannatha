@@ -9,6 +9,8 @@ public class SC_BulletLaserGun : MonoBehaviour
     MeshRenderer mr;
     float timer = 0;
     public float frequency;
+    [SerializeField]
+    float f_Scale = 0.5f;
 
     void Start()
     {
@@ -50,7 +52,7 @@ public class SC_BulletLaserGun : MonoBehaviour
     public void ResetPos()
     {
         transform.position = new Vector3(1000, 1000, 1000);
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = new Vector3(f_Scale, f_Scale, f_Scale);
         mr.enabled = false;
     }
 

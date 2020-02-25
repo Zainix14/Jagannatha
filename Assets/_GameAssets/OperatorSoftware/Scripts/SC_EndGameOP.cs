@@ -22,6 +22,18 @@ public class SC_EndGameOP : MonoBehaviour
     [SerializeField]
     GameObject[] tab_EndGame; //Tableau des canvas
 
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
