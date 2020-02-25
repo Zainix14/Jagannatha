@@ -141,6 +141,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         if(demarage)
         {
             FirstPanneFinish();
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_ScreenActivated", false, 0.1f);
 
         }
         if(BreakDownAudioSource != null && BreakDownAudioSource.GetComponent<AudioSource>().isPlaying)
