@@ -60,6 +60,7 @@ public class SC_KoaManager : MonoBehaviour
     public bool isActive;
 
     ParticleSystem vfx_Hit;
+    GameObject SFX_Explosion;
 
 
     /// <summary>
@@ -311,7 +312,7 @@ public class SC_KoaManager : MonoBehaviour
 
     void AnimDestroy()
     {
-
+        CustomSoundManager.Instance.PlaySound(_koa.gameObject, "SFX_Explosion_Flock", false, 0.1f,false);
         SetBehavior(curFlockSettings.boidSettings[2]);
 
         //SetBehavior(DeathSettings);
