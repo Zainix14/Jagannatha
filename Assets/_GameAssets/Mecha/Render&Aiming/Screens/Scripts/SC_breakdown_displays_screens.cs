@@ -9,6 +9,15 @@ using UnityEngine;
 public class SC_breakdown_displays_screens : MonoBehaviour
 {
 
+
+    #region Singleton
+
+    private static SC_breakdown_displays_screens _instance;
+    public static SC_breakdown_displays_screens Instance { get { return _instance; } }
+
+    #endregion
+    bool gameEnded = false;
+
     private int curNbPanne = 0;
 
     public Renderer[] tab_screens_renderers;
@@ -19,7 +28,17 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     SC_SyncVar_StateMecha_Display sc_syncvar_display;
 
     bool demarage = true;
-
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     { 
@@ -27,6 +46,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
+            
             tab_screens_renderers[i] = gameObject.transform.GetChild(i).GetComponent<Renderer>();
             tab_screens_renderers[i].material = mat[0];
             tab_screens_renderers[i].enabled = false;
@@ -46,6 +66,18 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         }
         demarage = false;
         SC_EnemyManager.Instance.Initialize();
+    }
+
+    public void EndScreenDisplay()
+    {
+        gameEnded = true;
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            tab_screens_renderers[i].material = mat[2];
+            tab_screens_renderers[i].enabled = true;
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().StopVideo();
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().PlayVideo();
+        }
     }
 
     void GetReferences()
@@ -101,27 +133,28 @@ public class SC_breakdown_displays_screens : MonoBehaviour
 
     public void PutOneEnPanne()
     {
-        for (int i = 0; i < 1; i++)
+        if(!gameEnded)
         {
-            if (curNbPanne < tab_screens_renderers.Length)
+            for (int i = 0; i < 1; i++)
             {
-                int rand = Random.Range(0, tab_screens_renderers.Length-1);
-                if (tab_screens_renderers[rand].enabled)
+                if (curNbPanne < tab_screens_renderers.Length)
                 {
+                    int rand = Random.Range(0, tab_screens_renderers.Length - 1);
+                    if (tab_screens_renderers[rand].enabled)
+                    {
 
-                    i--;
+                        i--;
 
+                    }
+                    else
+                    {
+                        SetScreenState(rand, true);
+
+                    }
                 }
-                else
-                {
-                    SetScreenState(rand,true);
 
-                }
             }
-
         }
-
-
     }
 
     public void PanneAll()
@@ -157,23 +190,27 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     //fonction qui change state l'ecran demandé des deux cotes true == panne false == repare
     private void SetScreenState(int index, bool state)
     {
+    
         if (state == true && tab_screens_renderers[index].enabled != state)
             curNbPanne++;
         else if (tab_screens_renderers[index].enabled != state)
             curNbPanne--;
 
 
-   
+
         tab_screens_renderers[index].enabled = state;
         if (state == true) tab_screens_renderers[index].GetComponent<SC_playvideo>().PlayVideo();
         if (state == false) tab_screens_renderers[index].GetComponent<SC_playvideo>().StopVideo();
 
-            if (Mng_SyncVar == null)
+
+        if (Mng_SyncVar == null)
             GetReferences();
 
         //Debug.Log(curNbPanne);
 
         //cote operateur
         sc_syncvar_display.displayAll[index] = state;
+        
+      
     }
 }

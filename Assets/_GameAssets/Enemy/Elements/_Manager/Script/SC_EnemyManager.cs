@@ -47,12 +47,20 @@ public class SC_EnemyManager : MonoBehaviour
     public void EndPhase()
     {
         curPhaseIndex++;
+        if(curPhaseIndex >= phases.Length)
+        {
+            SC_breakdown_displays_screens.Instance.EndScreenDisplay();
+        }
         InitNewPhase(curPhaseIndex);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            SC_breakdown_displays_screens.Instance.EndScreenDisplay();
+        }
     }
 }
