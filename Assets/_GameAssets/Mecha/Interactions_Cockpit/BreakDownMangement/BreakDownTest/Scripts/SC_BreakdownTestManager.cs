@@ -69,7 +69,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
 
     public void StartNewBreakdown(int nbBreakdown)
-    { 
+    {
         int curBreakdown = nbBreakdown;
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 {
+    #region Singleton
+
+    private static SC_WeaponManager _instance;
+    public static SC_WeaponManager Instance { get { return _instance; } }
+
+    #endregion
 
     bool b_InBreakdown = false;
     bool b_BreakEngine = false;
@@ -15,11 +21,24 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     [Header("Drop the Weapon")]
     [Tooltip("Tableau avec toute les Armes")]
     [SerializeField]
-    GameObject[] tab_Weapons; //Tableau des cameras
+    public GameObject[] tab_Weapons; //Tableau des cameras
 
     public int n_CurWeapon = 0;
 
     GameObject Mng_CheckList = null;
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +100,8 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
         if (b_OnFire)
             b_OnFire = false;
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().ReleaseTrigger();
+        SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
+
     }
 
     /// <summary>

@@ -5,38 +5,44 @@ using UnityEngine;
 public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
 
+    #region Singleton
+
+    private static SC_WeaponLaserGun _instance;
+    public static SC_WeaponLaserGun Instance { get { return _instance; } }
+
+    #endregion
+
     bool b_InBreakdown = false;
+
+    GameObject Mng_CheckList;
 
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
     public GameObject Target;
+
     SC_AimHit AimHit;
 
     Vector3 LaserDir;
-
     public float frequency;
+    float f_LaserTimer = 0;
 
+    //Bullet Var
+    [SerializeField]
+    bool b_DebugLaser = false;
     [SerializeField]
     GameObject _bulletContainer;
+    GameObject Bullet;
+    MeshRenderer mrBullet;
 
     Vector3Int sensitivity;
 
-    float timer = 0;
-    float f_LaserTimer = 0;
-
+    //Bullets Tab
     GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
     MeshRenderer[] t_MrBullet;
     public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
     int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
 
-    GameObject Bullet;
-    MeshRenderer mrBullet;
-
-    bool laserFire;
-    float laserTimer;
-
-    GameObject Mng_CheckList;
-
+    //Raycast
     public RaycastHit LaserHit;
     int layerMask = 1 << 5 | 1 << 15 | 1 << 16 | 1 << 25 | 1 << 26;
 
@@ -44,8 +50,16 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         GetReferences();
-        CreateBulletPull();
+        CreateBullet();
     }
 
     // Update is called once per frame
@@ -53,6 +67,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     {
         if (Mng_CheckList == null || Target == null)
             GetReferences();
+        if (Input.GetKeyDown(KeyCode.L))
+            b_DebugLaser = !b_DebugLaser;
     }
 
     void GetReferences()
@@ -70,13 +86,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         GameObject bulletContainer = Instantiate(_bulletContainer);
 
-        Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
-        Bullet.transform.SetParent(bulletContainer.transform);
-        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
-
-        Bullet.GetComponent<SC_BulletLaserGun>().frequency = frequency;
-
-        /*
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
         t_MrBullet = new MeshRenderer[n_BulletMagazine];
@@ -92,55 +101,34 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         //Je sais plus pourquoi mais c'est utile tkt
         n_CurBullet = 0;
-        */
+        
 
+    }
+
+    void CreateBullet()
+    {
+        GameObject bulletContainer = Instantiate(_bulletContainer);
+
+        Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
+        Bullet.transform.SetParent(bulletContainer.transform);
+        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
+
+        Bullet.GetComponent<SC_BulletLaserGun>().frequency = frequency;
     }
 
     public void Trigger()
     {
-
-        if (timer > (1 / frequency))
-        {
-            timer = 0;
-            if (!b_InBreakdown)
-                Fire();
-        }
-
-        timer += Time.deltaTime;
-
+        if (!b_InBreakdown)
+            Fire();
     }
-
-    /*
-    void Fire()
-    {
-
-        laserFire = true;
-        laserTimer += Time.deltaTime;
-        //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
-        Bullet.transform.LookAt(Target.transform.position);
-
-        if(mrBullet.enabled == false)
-            mrBullet.enabled = true;
-
-        //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
-        Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,
-                                                Bullet.transform.localScale.y,
-                                                Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
-
-        if(AimHit.b_OnFire == false)
-            AimHit.b_OnFire = true;
-
-        //INSERT LASER SHIT
-        CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
-
-    }
-    */
 
     void Fire()
     {
 
-        LaserDir = Target.transform.position - helper_startPos.transform.position;
+        if(b_DebugLaser)
+            DebugLaser();
+
+        LaserDir = Target.transform.position - helper_startPos.transform.position;       
 
         if (Physics.Raycast(helper_startPos.transform.position, LaserDir.normalized, out LaserHit, 2000f, layerMask))
         {
@@ -152,6 +140,23 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             }
                 
         }
+
+    }
+
+    void DebugLaser()
+    {
+
+        //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
+        Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
+        Bullet.transform.LookAt(Target.transform.position);
+
+        if (mrBullet.enabled == false)
+            mrBullet.enabled = true;
+
+        //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
+        Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,
+                                                Bullet.transform.localScale.y,
+                                                Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
     }
 
@@ -167,15 +172,19 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             }
             f_LaserTimer += Time.deltaTime;
         }
-
-        if (LaserHit.collider.gameObject.layer == 25)
+        else if (LaserHit.collider.gameObject.layer == 25)
         {
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
+
                 LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
             }
             f_LaserTimer += Time.deltaTime;
+        }
+        else
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
         }
 
     }
@@ -196,8 +205,10 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public Vector3Int GetWeaponSensitivity() { return sensitivity; }
 
+
     public void SetSensitivity(int index, int value)
     {
+        
         switch (index)
         {
             case 0:

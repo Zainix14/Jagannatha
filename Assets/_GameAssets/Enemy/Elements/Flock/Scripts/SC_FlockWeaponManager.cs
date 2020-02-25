@@ -25,6 +25,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     GameObject laser;
     bool laserFire;
     float laserTimer;
+    bool startLaser;
 
     ///////////////////////-- BULLET --//////////////////////
     [SerializeField]
@@ -65,6 +66,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     public void StartFire()
     {
         isFiring = true;
+        startLaser = true;
     }
 
     // Update is called once per frame
@@ -164,12 +166,21 @@ public class SC_FlockWeaponManager : MonoBehaviour
     void FireLaser()
     {
         laserFire = true;
+        if(startLaser)
+        {
+            Sc_ScreenShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
+            SC_CockpitShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
+            SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
+            startLaser = false;
+        }
+
+
         laserTimer += Time.deltaTime;
         float scale = (Time.deltaTime / flockSettings.activeDuration);
         laserFx.transform.localScale -= new Vector3(scale*5, scale*5, scale*5);
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
         laser.transform.position = Vector3.Lerp(transform.position, target.position, .5f);
-        laser.transform.LookAt(target.position);
+        laser.transform.LookAt(new Vector3(target.position.x,target.position.y-5,target.position.z));
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
         laser.transform.localScale = new Vector3(laser.transform.localScale.x +scale,
@@ -177,7 +188,6 @@ public class SC_FlockWeaponManager : MonoBehaviour
                                 Vector3.Distance(transform.position, target.transform.position));
         if (laserTimer >= flockSettings.activeDuration)
         {
-
             DestroyFx();
             EndOfAttack();
         }

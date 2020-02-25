@@ -5,6 +5,7 @@ using UnityEngine;
 public class SC_LaserFlock : MonoBehaviour
 {
 
+
     private void OnTriggerEnter(Collider other)
     {
         //JE TOUCHE LE PLAYER 
@@ -15,6 +16,10 @@ public class SC_LaserFlock : MonoBehaviour
             //https://www.youtube.com/watch?v=nfWlot6h_JM
             CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_Impact", false, 0.1f);
         }
+
+    public void FireLaser(float laserTime)
+    {
+
     }
 
     // Update is called once per frame

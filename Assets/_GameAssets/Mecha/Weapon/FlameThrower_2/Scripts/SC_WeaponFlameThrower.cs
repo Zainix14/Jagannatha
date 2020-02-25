@@ -103,5 +103,23 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSyste
 
 
     public Vector3Int GetWeaponSensitivity(){return sensitivity;}
-    public void SetSensitivity(Vector3Int value){sensitivity = value;}
+    public void SetSensitivity(int index, int value)
+    {
+        switch (index)
+        {
+            case 0:
+                sensitivity.x = value;
+                break;
+            case 1:
+                sensitivity.y = value;
+                break;
+            case 2:
+                sensitivity.z = value;
+                break;
+
+            default:
+
+                break;
+        }
+    }
 }

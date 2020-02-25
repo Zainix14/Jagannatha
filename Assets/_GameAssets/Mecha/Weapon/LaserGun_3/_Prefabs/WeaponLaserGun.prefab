@@ -161,6 +161,7 @@ MonoBehaviour:
   RotationMode: 0
   TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
+  AimIndicator: {fileID: 0}
 --- !u!114 &147850931238125559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +190,8 @@ MonoBehaviour:
     type: 3}
   helper_startPos: {fileID: 7460222069811358692}
   Target: {fileID: 0}
-  frequency: 30
+  frequency: 8
+  b_DebugLaser: 1
   _bulletContainer: {fileID: 1889412421170276024, guid: 44fe3d63bb414144891d610ab41e1279,
     type: 3}
   n_BulletMagazine: 1

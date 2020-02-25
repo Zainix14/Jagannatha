@@ -30,8 +30,6 @@ public class SC_slider_calibr : MonoBehaviour {
 
     private SC_SyncVar_calibr sc_syncvar_calibr;
 
-    private GameObject minigun;
-    private SC_WeaponMiniGun sc_minigun;
 
     void Start ()
     {
@@ -48,11 +46,6 @@ public class SC_slider_calibr : MonoBehaviour {
         if (Mng_SyncVar != null && sc_syncvar_calibr == null)
             sc_syncvar_calibr = Mng_SyncVar.GetComponent<SC_SyncVar_calibr>();
 
-        if (minigun == null)
-            minigun = GameObject.FindGameObjectWithTag("Weapon_minigun");
-        if (minigun != null && sc_minigun==null)
-            sc_minigun = minigun.GetComponent<SC_WeaponMiniGun>();
-        
     }
 
     void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
@@ -118,22 +111,28 @@ public class SC_slider_calibr : MonoBehaviour {
 
     void sendToSynchVar (float value)
     {
-
-        if (sc_syncvar_calibr == null || minigun == null)
+     
+        if (sc_syncvar_calibr == null)
         {
             GetReferences();
         }
         else
         {
 
-
             value = (value + 0.4f) * 6.25f;
 
             int intvalue = (int)value;
 
             sc_syncvar_calibr.CalibrInts[index] = intvalue;
-            sc_minigun.SetSensitivity(index, intvalue);
-            //Debug.Log(intvalue);
+
+
+            int curWeaponIndex = SC_WeaponManager.Instance.n_CurWeapon;
+  
+            GameObject curWeapon = SC_WeaponManager.Instance.tab_Weapons[curWeaponIndex];
+
+
+            curWeapon.GetComponent<IF_Weapon>().SetSensitivity(index, intvalue);
+       
 
         }          
 

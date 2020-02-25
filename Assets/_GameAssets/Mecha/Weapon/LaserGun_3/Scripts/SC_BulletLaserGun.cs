@@ -15,6 +15,7 @@ public class SC_BulletLaserGun : MonoBehaviour
         mr = this.GetComponent<MeshRenderer>();
     }
 
+    /*
     private void OnTriggerStay(Collider other)
     {
 
@@ -44,6 +45,7 @@ public class SC_BulletLaserGun : MonoBehaviour
         }
                 
     }
+    */
 
     public void ResetPos()
     {

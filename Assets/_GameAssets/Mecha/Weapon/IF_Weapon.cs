@@ -9,5 +9,7 @@ public interface IF_Weapon
 
     void ReleaseTrigger();
 
+    void SetSensitivity(int index,int value);
+
 }
 
