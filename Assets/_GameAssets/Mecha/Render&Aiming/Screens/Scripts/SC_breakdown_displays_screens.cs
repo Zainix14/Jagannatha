@@ -9,6 +9,15 @@ using UnityEngine;
 public class SC_breakdown_displays_screens : MonoBehaviour
 {
 
+
+    #region Singleton
+
+    private static SC_breakdown_displays_screens _instance;
+    public static SC_breakdown_displays_screens Instance { get { return _instance; } }
+
+    #endregion
+
+
     private int curNbPanne = 0;
 
     public Renderer[] tab_screens_renderers;
@@ -18,7 +27,17 @@ public class SC_breakdown_displays_screens : MonoBehaviour
     SC_SyncVar_StateMecha_Display sc_syncvar_display;
 
     bool demarage = true;
-
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     { 
@@ -45,6 +64,17 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         }
         demarage = false;
         SC_EnemyManager.Instance.Initialize();
+    }
+
+    public void EndScreenDisplay()
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            tab_screens_renderers[i].material = mat[2];
+            tab_screens_renderers[i].enabled = true;
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().StopVideo();
+            tab_screens_renderers[i].GetComponent<SC_playvideo>().PlayVideo();
+        }
     }
 
     void GetReferences()
