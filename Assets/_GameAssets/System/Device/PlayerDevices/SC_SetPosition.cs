@@ -35,6 +35,7 @@ public class SC_SetPosition : MonoBehaviour
             b_PosSet = true;
             this.gameObject.transform.position = new Vector3(0, f_CockpitPos, 0);
             cam_VR.farClipPlane = 15;
+            cam_FPS.farClipPlane = 15;
         }
     }
 

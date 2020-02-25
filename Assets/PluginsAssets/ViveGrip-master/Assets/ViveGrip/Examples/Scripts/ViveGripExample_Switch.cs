@@ -11,8 +11,14 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     private bool desiredValue = false;
 
 
-    private SC_SyncVar_Interactibles sc_syncvar;
 
+
+    private GameObject Mng_SyncVar;
+    private SC_SyncVar_BreakdownTest sc_syncvar;
+    public GameObject LocalBreakdownMng;
+
+    public int index;
+    /*
     [SerializeField]
     button bouton;
 
@@ -23,24 +29,88 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         inter3
 
     }
+    */
 
-    void Start() {}
+    void Start() {
 
-  public void Flip() {
-    Vector3 rotation = transform.localEulerAngles;
-    rotation.x *= -1;
-    transform.localEulerAngles = rotation;
+        
+        GetReferences();
 
+        
+
+    }
+
+    void GetReferences()
+    {
+        if (LocalBreakdownMng == null)
+            LocalBreakdownMng = this.transform.parent.parent.gameObject;
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+
+       
+    }
+
+    public void Update()
+    {
+        
+       
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Flip();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            /*
+            SC_SyncVar_BreakdownTest.Pow babar = sc_syncvar.m_pows[index] ;
+            babar.setPower(3);
+            Debug.Log("Valeur de babar  : " + babar.power);
+            Debug.Log("wesh : " + sc_syncvar.m_pows[index].power);
+            sc_syncvar.m_pows.RemoveAt(index);
+            sc_syncvar.m_pows.Insert(index, babar);
+            Debug.Log("Valeur de sync  : " + sc_syncvar.m_pows[index].power);
+            */
+        }
+
+        IsValueOk();
+    }
+
+    public void Flip()
+    {
+
+        Vector3 rotation = transform.localEulerAngles;
+        rotation.x *= -1;
+        transform.localEulerAngles = rotation;
 
         curState = !curState;
         sendToSynchVar(curState);
 
 
+
+
+
+
+        //SON
+        if (curState == false)
+        {
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, 0.05f, 0.5f);
+        }
+        else
+        {
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, 0.05f, 0.4f);
+        }
+        
+
+
   }
+
+
 
     public bool isBreakdown()
     {
-
         return isEnPanne;
     }
 
@@ -48,118 +118,88 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     void sendToSynchVar(bool value)
     {
 
-        if (sc_syncvar == null)
+        if (sc_syncvar != null)
         {
 
-            sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
+            sc_syncvar.SwitchChangeValue(index,value);
+            
+
         }
         else
-        {
-
-            switch (bouton)
-            {
-                case button.inter1:
-                    sc_syncvar.inter1value = value;
-                    break;
-                default:
-                    break;
-
-            }
-
-        }
-
+            GetReferences();
 
     }
-
-
-
 
     public void ChangeDesired()
     {
+
         desiredValue = !curState;
-        
-        isEnPanne = true;
 
-        switch (bouton)
-        {
-            case button.inter1:
-                sc_syncvar.inter1valueWanted = desiredValue;
-                sc_syncvar.inter1isEnPanne = true;
-                break;
-            default:
-                break;
+        SetIsEnPanne(true);
 
-        }
+
+        sc_syncvar.SwitchChangeValueWanted(index, desiredValue);
+        sc_syncvar.SwitchChangeIsPanne(index, true);
 
 
     }
 
+    public void Repair()
+    {
+
+        desiredValue = curState;
+
+        SetIsEnPanne(false);
+
+
+        sc_syncvar.SwitchChangeValueWanted(index, desiredValue);
+        sc_syncvar.SwitchChangeIsPanne(index, false);
+
+
+    }
 
     public void IsValueOk()
     {
-
         if (desiredValue == curState)
         {
+            if (isEnPanne)
+            {         
 
-            isEnPanne = false;
-
-
-
-            if (sc_syncvar == null)
-            {
-
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
-            }
-            else
-            {
-
-                switch (bouton)
+                if (sc_syncvar != null)
                 {
-                    case button.inter1:
-                        sc_syncvar.inter1isEnPanne = false;
-                        break;
-                    default:
-                        break;
-
+                    SetIsEnPanne(false);
+                    sc_syncvar.SwitchChangeIsPanne(index, false);
                 }
+                else
+                    GetReferences();
+            }          
 
-
-            }
         }
-        else
+        else 
         {
-            isEnPanne = true;
 
-            if (sc_syncvar == null)
-            {
+            if (!isEnPanne)
+            {              
 
-                sc_syncvar = GameObject.FindGameObjectWithTag("Mng_SyncVar").GetComponent<SC_SyncVar_Interactibles>();
-            }
-            else
-            {
-                switch (bouton)
+                if (sc_syncvar != null)
                 {
-                    case button.inter1:
-                        sc_syncvar.inter1isEnPanne = true;
-                        break;
-                    default:
-                        break;
-
+                    SetIsEnPanne(true);
+                    sc_syncvar.SwitchChangeIsPanne(index, true);
                 }
+                else
+                    GetReferences();
+            }          
 
-
-            }
         }
-
     }
 
-
-
-
-
-    public void Update()
+ 
+    void SetIsEnPanne(bool value)
     {
 
-        IsValueOk();
+        isEnPanne = value;
+        LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
+
     }
+
 }

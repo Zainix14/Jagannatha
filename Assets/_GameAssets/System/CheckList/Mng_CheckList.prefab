@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1944851491146295762}
   - component: {fileID: 5197634323170387480}
   - component: {fileID: 6295334612548046387}
+  - component: {fileID: 114053986154362604}
   m_Layer: 0
   m_Name: Mng_CheckList
   m_TagString: Mng_CheckList
@@ -58,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946a287360b97e14fab929e0272f26ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mng_Network: {fileID: 0}
   NetworkPlayerPilot: {fileID: 0}
   NetworkPlayerOperator: {fileID: 0}
   Mng_Device: {fileID: 0}
@@ -92,3 +94,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe24b6157d620b41a45edd5969e0166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mng_Weapons: {fileID: 0}
+  TargetHand: {fileID: 0}
+--- !u!114 &114053986154362604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219794934730318583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b4c08fc554efe4f8c60c5c8915dfb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MechCollider: {fileID: 0}

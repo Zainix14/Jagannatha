@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 114099304646520164}
   - component: {fileID: 4368857588347926662}
   - component: {fileID: 1368075933537142398}
+  - component: {fileID: 8548583962632855439}
+  - component: {fileID: 7755470197080493254}
   m_Layer: 0
   m_Name: Mng_SyncVar
   m_TagString: Mng_SyncVar
@@ -91,7 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21043578dd6b3aa47999c5b80f006565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider1value: 0
+  slidersNb: 6
+  switchesNb: 5
 --- !u!114 &1368075933537142398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,3 +107,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01414485336e494f82dfdfa71c43559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8548583962632855439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7825ef6f8f9eb314284f08a8fc0b50b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nbDisplay: 13
+--- !u!114 &7755470197080493254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9073032893b4b764f90aa1b017fa1645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nbOfIntButtons: 3

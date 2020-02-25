@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
+public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
+
+    bool b_InBreakdown = false;
+
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
+
+    [SerializeField]
+    GameObject _bulletContainer;
 
     public float frequency;
     public int n_fireForce;
     public float scattering;
+
+    Vector3Int sensitivity;
 
     float timer = 0;
 
@@ -22,11 +30,13 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
     // Start is called before the first frame update
     void Awake()
     {
-                CreateBulletPull();
+        CreateBulletPull();
     }
 
     void CreateBulletPull()
     {
+
+        GameObject bulletContainer = Instantiate(_bulletContainer);
 
         //Initialise le tableau de la longueur du chargeur voulu
         t_Bullet = new GameObject[n_BulletMagazine];
@@ -38,6 +48,7 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
 
             //Initialisation du Prefab BallePilote par le Serveur pour la scene pilote et la scene opérateur
             GameObject curBullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
+            curBullet.transform.SetParent(bulletContainer.transform);
             t_Bullet[i] = curBullet;
             t_RbBullet[i] = curBullet.GetComponent<Rigidbody>();
             t_MrBullet[i] = curBullet.GetComponentInChildren<MeshRenderer>();
@@ -54,12 +65,14 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
         if (timer > (1 / frequency))
         {
             timer = 0;
-            Fire();
+            if(!b_InBreakdown)
+                Fire();
         }
 
         timer += Time.deltaTime;
     }
 
+    public void ReleaseTrigger() { }
     void Fire()
     {
 
@@ -79,5 +92,34 @@ public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon
         if (n_CurBullet >= n_BulletMagazine)
             n_CurBullet = 0;
 
+    }
+
+    public void SetBreakdownState(bool State)
+    {
+        b_InBreakdown = State;
+    }
+
+    public void SetEngineBreakdownState(bool State){}
+
+
+    public Vector3Int GetWeaponSensitivity(){return sensitivity;}
+    public void SetSensitivity(int index, int value)
+    {
+        switch (index)
+        {
+            case 0:
+                sensitivity.x = value;
+                break;
+            case 1:
+                sensitivity.y = value;
+                break;
+            case 2:
+                sensitivity.z = value;
+                break;
+
+            default:
+
+                break;
+        }
     }
 }

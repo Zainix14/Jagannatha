@@ -7,15 +7,35 @@ public class SC_MoveKoaSync : NetworkBehaviour
 {
 
     public MeshRenderer mr_P;
-    public MeshRenderer mr_OP;
+    public GameObject mr_OP;
+
+    [SyncVar]
+    public int curboidNumber = 0;
+    [SyncVar]
+    public int MaxboidNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         if (isServer)
-            mr_OP.enabled = false;
-        else
+        {
+            mr_OP.GetComponent<SphereCollider>().enabled = false;
+            mr_OP.SetActive(false);
             mr_P.enabled = false;
+        }
+        else if (!isServer)
+        {
+            mr_P.enabled = false;
+            mr_OP.SetActive(true);
+        }         
+    }
+
+    public void SetPilotMeshActive()
+    {
+        if(isServer)
+        {
+            mr_P.enabled = true;
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +53,24 @@ public class SC_MoveKoaSync : NetworkBehaviour
     {
         if (!isServer)
             Target.transform.position = vt3_Position;
+    }
+
+
+    [ClientRpc]
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID)
+    {
+        if (!isServer)
+        {
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
+        }
+    }
+
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID)
+    {
+        if (isServer)
+            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID);
     }
 
 }

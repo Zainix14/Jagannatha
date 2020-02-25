@@ -5,38 +5,57 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FlockSettings : ScriptableObject
 {
-    [Header ("Attack")]
-    public bool attackCity;
-    public bool attackPlayer;
+    [Header("General Attack Settings")]
+    public AttackType attackType;
 
-    
-    
-    public enum PathPreference
+    public enum AttackType
     {
-        Line,
-        Circle
+        Bullet,
+        Laser,
+
+        none
     }
 
-    public PathPreference pathPreference;
+    [Tooltip("in Second")]
+    public int timeBetweenAttacks;
 
-    [Tooltip("inSecond")]
-    public int timeBeforeAttack;
 
-    [Tooltip("inSecond")]
-    public float attackDuration;
+    [Header("Bullet")]
+    
+    [Tooltip("bullet per sec")]
+    [Range(0f,5f)]
+    public float fireRate = 0;
+    [Tooltip("nb total de bullet a tirer avant de retourner en roam")]
+    public float nbBulletToShoot = 0;
+
+    [Header("Laser")]
+    [Tooltip("in Second")]
+    public float chargingAttackTime = 0;
+    [Tooltip("in Second, avant de retourner en roam")]
+    public float activeDuration = 0;
 
     [Header("Boids")]
 
-    [Range(10,100)]
+
+    [Tooltip("Index 0 : Roam | Index 1 : Attack")]
+    public BoidSettings[] boidSettings;
+
+    public int spawnTimer = 5;
+
+    public bool spawnRandom = false;
+
+    [Tooltip("si spawn non random")]
+    public Vector3 SpawnPosition;
+
+
+    [Range(10,200)]
     public int boidSpawn;
 
     [Range(10,200)]
     public int maxBoid;
 
-    [Tooltip("boids per 10sec")]
+    [Tooltip("boids per min")]
     public int regenerationRate;
-
-
 
 
 }

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5511048538182451901}
   - component: {fileID: 7225453772084499614}
   - component: {fileID: 7430929568299829670}
+  - component: {fileID: 6477627954815851500}
   m_Layer: 0
   m_Name: WeaponMiniGun
-  m_TagString: Untagged
+  m_TagString: Weapon_minigun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f86ab7f8d5474d8daee2ad0ecbaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_OnFollow: 0
   RotationMode: 0
   TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
@@ -67,7 +69,21 @@ MonoBehaviour:
   frequency: 30
   n_fireForce: 32000
   scattering: 0.005
+  _bulletContainer: {fileID: 920854382642673552, guid: a8eabc3929c5ee7458055af2eab1eae7,
+    type: 3}
   n_BulletMagazine: 200
+--- !u!114 &6477627954815851500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798282399272736396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b83300ababec4d478202f7d51463c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6507412287951247159
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6507412288147288599}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.572}
+  m_LocalPosition: {x: 0, y: 0, z: 9.23}
   m_LocalScale: {x: 0.4, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 5511048538182451901}

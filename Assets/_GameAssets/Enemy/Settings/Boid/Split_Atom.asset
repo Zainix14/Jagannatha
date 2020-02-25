@@ -23,10 +23,10 @@ MonoBehaviour:
   targetWeight: 81.37
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1536
-  boundsRadius: 1
-  avoidCollisionWeight: 2.39
-  collisionAvoidDst: 1.9
+    m_Bits: 67108864
+  boundsRadius: 0.1
+  avoidCollisionWeight: 5
+  collisionAvoidDst: 5
   split: 1
   splitNumber: 8
   curveX:
@@ -150,3 +150,5 @@ MonoBehaviour:
   frequence: {x: 1, y: 1, z: 1}
   invert: 1
   invertAxis: {x: 0, y: 0, z: 1}
+  speedOnSpline: 10
+  spline: {fileID: 8158630672628145991, guid: 2cbfe71a8ee1b8441859e94a965a85e1, type: 3}

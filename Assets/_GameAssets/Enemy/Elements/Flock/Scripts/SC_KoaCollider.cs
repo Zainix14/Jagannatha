@@ -9,11 +9,12 @@ public class SC_KoaCollider : MonoBehaviour
     public void Initialize(SC_KoaManager manager)
     {
         this.manager = manager;
+
     }
 
     // Update is called once per frame
-    public void GetHit()
+    public void GetHit(Vector3 sensitivity)
     {
-        manager.GetHit();
+        manager.GetHit(sensitivity);
     }
 }

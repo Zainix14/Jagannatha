@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 2649183753914075376}
   - component: {fileID: 2649183753914075377}
   - component: {fileID: 2649183753914075378}
+  - component: {fileID: 2077433343378608127}
   m_Layer: 0
   m_Name: WeaponFlameThrower
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f86ab7f8d5474d8daee2ad0ecbaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_OnFollow: 0
   RotationMode: 0
   TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
@@ -171,7 +173,21 @@ MonoBehaviour:
   prefab_bullet: {fileID: 7268804933685644020, guid: 0e4fbf5d21a6ae1438b533545469c237,
     type: 3}
   helper_startPos: {fileID: 792549616712123240}
+  _bulletContainer: {fileID: 3002845667335955379, guid: d417703eec3782343a5efe63be888c0b,
+    type: 3}
   frequency: 150
   n_fireForce: 1500
   scattering: 0.25
   n_BulletMagazine: 200
+--- !u!114 &2077433343378608127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2649183753914075379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9283c0075535348a7efd922d560303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

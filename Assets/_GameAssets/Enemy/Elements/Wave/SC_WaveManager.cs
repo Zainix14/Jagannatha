@@ -10,6 +10,13 @@ using UnityEngine;
 /// </summary>
 public class SC_WaveManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_WaveManager _instance;
+    public static SC_WaveManager Instance { get { return _instance; } }
+
+    #endregion
     //---------------------------------------------------------------------//
     //---------------------------- VARIABLES ------------------------------//
     //---------------------------------------------------------------------//
@@ -29,14 +36,22 @@ public class SC_WaveManager : MonoBehaviour
     float curBackupTimer = 0;
     bool backupSend;
 
-    //DEBUG 
-    uint curFlockBehavior =0;
     #endregion
     //---------------------------------------------------------------------//
 
     #region Start/Update
-    void Start()
+    void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+
         _FlockList = new List<GameObject>(); //Instantiation de la list de flock
         
         resetVariables();
@@ -50,7 +65,7 @@ public class SC_WaveManager : MonoBehaviour
         //Debug
         if(Input.GetKeyDown(KeyCode.G))
         {
-            _FlockList[0].GetComponent<SC_FlockManager>()._SCKoaManager.GetHit();
+            _FlockList[0].GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,0,0));
         }
     }
     #endregion
@@ -61,17 +76,18 @@ public class SC_WaveManager : MonoBehaviour
     #region Initialize New Wave
     public void InitializeWave(WaveSettings newWaveSettings)
     {
-        
 
         resetVariables();
         _curWaveSettings = newWaveSettings;
-        SpawnInitialFlock();
 
-
+        if (!_curWaveSettings.backup)
+            backupSend = true;
+        StartCoroutine(SpawnInitialFlock());
         waveStarted = true;
+
         
     }
-    void SpawnInitialFlock()
+    IEnumerator SpawnInitialFlock()
     {
         _FlockList.Clear();
         int curIndex = 0;
@@ -82,9 +98,11 @@ public class SC_WaveManager : MonoBehaviour
             {
                 SpawnNewFlock(_curWaveSettings.initialSpawnFlockType[i], curIndex);
                 curIndex++;
+                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);
+                
             }
         }
-
+        StopCoroutine(SpawnInitialFlock());
         curBackupTimer = 0;
 
 
@@ -97,7 +115,7 @@ public class SC_WaveManager : MonoBehaviour
     //---------------------------------------------------------------------//
     #region Backup Management
 
-    void SpawnBackupFlock()
+    IEnumerator SpawnBackupFlock()
     {
         int curIndex = 0;
         for (int i = 0; i < _curWaveSettings.backupSpawnFlockType.Length; i++)
@@ -106,8 +124,11 @@ public class SC_WaveManager : MonoBehaviour
             {
                 SpawnNewFlock(_curWaveSettings.backupSpawnFlockType[i], curIndex, true);
                 curIndex++;
+                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
+
             }
         }
+        StopCoroutine(SpawnBackupFlock());
     }
 
 
@@ -124,12 +145,12 @@ public class SC_WaveManager : MonoBehaviour
 
                 if (_FlockList.Count <= _curWaveSettings.flockLeftBeforeBackup)
                 {
-                    SpawnBackupFlock();
+                    StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
                 }
                 else if (curBackupTimer >= _curWaveSettings.timeBeforeBackup)
                 {
-                    SpawnBackupFlock();
+                    StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
 
                 }
@@ -160,7 +181,9 @@ public class SC_WaveManager : MonoBehaviour
         if (_FlockList.Count == 0 && backupSend )
         {
             waveEnded = true;
-            GetComponent<SC_PhaseManager>().EndWave();
+            SC_PhaseManager.Instance.EndWave();
+           
+
         }
     }
 
@@ -190,19 +213,11 @@ public class SC_WaveManager : MonoBehaviour
 
         
         //Initialize flock
-        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT,this.GetComponent<SC_WaveManager>());
+        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT);
     }
 
 
-    /// <summary>
-    /// Change le comportement d'un flock | Parametres : (int)Index de l'unité dans la flock list : (FlockBehavior)Nouveau comportement voulu
-    /// </summary>
-    /// <param name="unitToSplit"></param>
-    /// <param name="Behavior"></param>
-    void DEBUGStartNewBehavior(int unitToSplit,int behaviorIndex)
-    {
-        _FlockList[unitToSplit].GetComponent<SC_FlockManager>().StartNewBehavior(behaviorIndex); //Ordonne le changement de comportement dans le flockManager
-    }
+ 
 
     /// <summary>
     /// Fusion de plusieur flock | Parametre : List de flock a fusionnés
@@ -223,6 +238,8 @@ public class SC_WaveManager : MonoBehaviour
         waveEnded = false;
         waveStarted = false;
     }
+
+
 
 
     #endregion

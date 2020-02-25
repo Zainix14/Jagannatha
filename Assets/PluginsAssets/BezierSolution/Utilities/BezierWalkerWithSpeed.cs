@@ -14,6 +14,7 @@ namespace BezierSolution
 
         BezierSpline curSpline; //Spline acutel surlequel le flock va se déplacer
 		public TravelMode travelMode; //Type de déplacement sur cette spline | Ping-Pong, Loop et Once
+        GameObject target;
         public LookAtMode lookAt = LookAtMode.Forward; //Type de lookAt de l'objet suivant la spline | Forward, None et Extra-Data(tkt moi non plus j'ai pas compris)
         public float speed = 5f; //Vitesse de déplacement sur cette spline
         public float rotationLerpModifier = 10f;//Fidélité de la rotation sur la spline
@@ -56,7 +57,7 @@ namespace BezierSolution
             {
                 //Récupère le point de la spline le plus proche du flock
                 Vector3 v3 = curSpline.FindNearestPointTo(transform.position, out float normalizedT, 1000f);
-
+  
                 //Se place sur la spline a la position de ce point
                 NormalizedT = normalizedT;
             }
@@ -90,7 +91,8 @@ namespace BezierSolution
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationLerpModifier * deltaTime);
                 }
                 else if (lookAt == LookAtMode.SplineExtraData)
-                    transform.rotation = Quaternion.Lerp(transform.rotation, curSpline.GetExtraData(m_normalizedT, InterpolateExtraDataAsQuaternion), rotationLerpModifier * deltaTime);
+                    target  = GameObject.FindGameObjectWithTag("Player");
+                target.transform.rotation = Quaternion.Lerp(target.transform.rotation, target.transform.rotation, rotationLerpModifier * deltaTime);
 
                 if (movingForward)
                 {
@@ -148,8 +150,9 @@ namespace BezierSolution
                         onPathCompletedCalledAt0 = false;
                     }
                 }
+
             }
-		
-		}
+
+        }
 	}
 }

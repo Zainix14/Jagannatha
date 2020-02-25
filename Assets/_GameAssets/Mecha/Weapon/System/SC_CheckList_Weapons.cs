@@ -5,8 +5,14 @@ using UnityEngine;
 public class SC_CheckList_Weapons : MonoBehaviour
 {
 
-    public GameObject Mng_Weapons = null;
     public GameObject TargetHand = null;
+    public GameObject AimIndicator = null;
+
+    public GameObject Mng_Weapons = null;
+    public GameObject MiniGun = null;
+    public GameObject FlameThrower = null;
+    public GameObject Shrapnel = null;
+    public GameObject LaserGun = null;
 
     public GameObject GetMngWeapons()
     {
@@ -16,6 +22,31 @@ public class SC_CheckList_Weapons : MonoBehaviour
     public GameObject GetTargetHand()
     {
         return TargetHand;
+    }
+
+    public GameObject GetAimIndicator()
+    {
+        return AimIndicator;
+    }
+
+    public GameObject GetMiniGun()
+    {
+        return MiniGun;
+    }
+
+    public GameObject GetShrapnel()
+    {
+        return Shrapnel;
+    }
+
+    public GameObject GetFlameThrower()
+    {
+        return FlameThrower;
+    }
+
+    public GameObject GetLaserGun()
+    {
+        return LaserGun;
     }
 
 }

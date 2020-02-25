@@ -10,7 +10,7 @@ public class SC_BulletMiniGun : MonoBehaviour
 {
 
     Rigidbody rb = null;
-
+    public Vector3Int sensitivity;
     void Start()
     {
         GetRigidBody();
@@ -19,11 +19,10 @@ public class SC_BulletMiniGun : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 26)
-            other.GetComponent<Boid>().DestroyBoid();
-
+            other.GetComponent<Boid>().HitBoid(sensitivity);
 
         if (other.gameObject.layer == 25)
-            other.GetComponentInParent<SC_KoaCollider>().GetHit();
+            other.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
 
         if (other.gameObject.layer != 21)
             ResetPos();
