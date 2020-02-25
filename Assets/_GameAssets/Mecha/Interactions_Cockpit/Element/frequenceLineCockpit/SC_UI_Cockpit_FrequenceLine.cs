@@ -25,7 +25,7 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
     //[SerializeField]
     int speed = 1;
 
-    Color32 curColor;
+    public Color32 curColor;
     Renderer lineRenderer;
 
 
@@ -72,6 +72,7 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
         }
         */
         ////////////////////////
+        
         curAmplitude = ratio(sc_syncvar.CalibrInts[0], 6, 1.5f, 0, 0.1f);
         curFrequence = ratio(sc_syncvar.CalibrInts[1], 6, 0.33f, 0, 0.05f);
         curPhase = ratio(sc_syncvar.CalibrInts[2], 6, 20, 0, 0);
@@ -87,6 +88,9 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
             line.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
 
             lineRenderer.material.color = curColor;
+
+            Sc_LaserFeedBack.Instance.SetColor(curColor);
+
         }
     }
     void GetReferences()
