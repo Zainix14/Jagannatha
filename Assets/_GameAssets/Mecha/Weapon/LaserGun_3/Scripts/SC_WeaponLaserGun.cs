@@ -177,6 +177,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
+
                 LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
             }
             f_LaserTimer += Time.deltaTime;

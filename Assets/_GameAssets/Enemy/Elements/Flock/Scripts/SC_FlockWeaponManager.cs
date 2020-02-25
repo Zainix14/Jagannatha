@@ -170,7 +170,6 @@ public class SC_FlockWeaponManager : MonoBehaviour
         {
             Sc_ScreenShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
             SC_CockpitShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
-            Debug.Log("s");
             SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
             startLaser = false;
         }

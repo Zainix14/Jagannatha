@@ -14,6 +14,9 @@ public class Boid : MonoBehaviour {
     int TotalFlick =1;
     int curFlick;
 
+
+    SC_KoaManager koaManager;
+
     Vector3 initScale;
 
     [SerializeField]
@@ -70,8 +73,9 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="target"></param>
-    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity)
+    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager)
     {
+        this.koaManager = koaManager;
         destructionType = DestructionType.none;
         curFlick = 0;
         transform.localScale = initScale;
@@ -238,8 +242,6 @@ public class Boid : MonoBehaviour {
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
 
-        Debug.Log("gun Sensitivy" + gunSensitivity);
-        Debug.Log("boid sensitivity" + sensitivity);
 
         float power = 18 - (x + y + z);
 
@@ -255,6 +257,7 @@ public class Boid : MonoBehaviour {
         if(powerPerCent > 90)
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
+            koaManager.StopRegeneration();
             
         }
         else
