@@ -5,6 +5,13 @@ using UnityEngine;
 public class SC_EndGameOP : MonoBehaviour
 {
 
+    #region Singleton
+
+    private static SC_EndGameOP _instance;
+    public static SC_EndGameOP Instance { get { return _instance; } }
+
+    #endregion
+
     [Header("Drop the InGame Childs")]
     [Tooltip("Tableau avec tous les child in")]
     [SerializeField]
