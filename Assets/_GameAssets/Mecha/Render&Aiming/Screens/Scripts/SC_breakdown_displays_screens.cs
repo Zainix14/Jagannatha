@@ -154,10 +154,13 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         else if (tab_screens_renderers[index].enabled != state)
             curNbPanne--;
 
-        tab_screens_renderers[index].enabled = state;
-        
 
-        if (Mng_SyncVar == null)
+   
+        tab_screens_renderers[index].enabled = state;
+        if (state == true) tab_screens_renderers[index].GetComponent<SC_playvideo>().PlayVideo();
+        if (state == false) tab_screens_renderers[index].GetComponent<SC_playvideo>().StopVideo();
+
+            if (Mng_SyncVar == null)
             GetReferences();
 
         //Debug.Log(curNbPanne);
