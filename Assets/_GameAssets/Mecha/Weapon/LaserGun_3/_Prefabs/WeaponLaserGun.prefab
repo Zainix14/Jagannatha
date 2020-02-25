@@ -161,6 +161,7 @@ MonoBehaviour:
   RotationMode: 0
   TargetHand: {fileID: 0}
   f_PosOffsetZ: 3
+  AimIndicator: {fileID: 0}
 --- !u!114 &147850931238125559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
     type: 3}
   helper_startPos: {fileID: 7460222069811358692}
   Target: {fileID: 0}
-  frequency: 30
+  frequency: 5
   _bulletContainer: {fileID: 1889412421170276024, guid: 44fe3d63bb414144891d610ab41e1279,
     type: 3}
   n_BulletMagazine: 1
@@ -209,7 +210,6 @@ MonoBehaviour:
   MainLaserScript: {fileID: 2210348525288903360}
   FirePoint: {fileID: 7460222069811358692}
   lr: {fileID: 1016960617567129095}
-  maximumLenght: 1000
   Sparkle: {fileID: 1016960617132070035}
 --- !u!1 &7460222069811358692
 GameObject:
