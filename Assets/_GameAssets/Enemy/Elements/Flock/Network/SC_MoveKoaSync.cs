@@ -7,7 +7,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
 {
 
     public MeshRenderer mr_P;
-    public MeshRenderer mr_OP;
+    public GameObject mr_OP;
 
     [SyncVar]
     public int curboidNumber = 0;
@@ -20,13 +20,13 @@ public class SC_MoveKoaSync : NetworkBehaviour
         if (isServer)
         {
             mr_OP.GetComponent<SphereCollider>().enabled = false;
-            mr_OP.enabled = false;
+            mr_OP.SetActive(false);
             mr_P.enabled = false;
         }
         else if (!isServer)
         {
             mr_P.enabled = false;
-            mr_OP.enabled = true;
+            mr_OP.SetActive(true);
         }         
     }
 
