@@ -297,14 +297,8 @@ public class SC_KoaManager : MonoBehaviour
         KoaLife -= (int)((powerPerCent * maxLife)/100)/3;
         if (KoaLife <= 0) AnimDestroy();
 
-        if (powerPerCent > 90)
-        {
-            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
-        }
-        else
-        {
-            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
-        }
+        SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
+        
 
         ///DEBUG
         if (gunSensitivity.x == 100)
