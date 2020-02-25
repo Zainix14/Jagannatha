@@ -137,6 +137,13 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
             b_BreakdownTest = false;
             sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
+
+            //changement de state du tuto
+            if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+            {
+                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
+            }
+            
         }
 
         //Permet de régler les demi-pannes d'écrans

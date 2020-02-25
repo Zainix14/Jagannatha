@@ -21,6 +21,8 @@ public class SC_HitMarker : MonoBehaviour
     float animationTime;
     float curTime;
 
+    GameObject SFX_HitMarker;
+
     Vector3 initialScale;
     Quaternion initialRotation;
     [SerializeField]
@@ -55,6 +57,11 @@ public class SC_HitMarker : MonoBehaviour
         mat.color = Color.white;
         bAnimation = true;
         curTime = 0;
+        if(Type != HitType.none)
+        {
+            SFX_HitMarker = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_HitMarker", false, 0.02f);
+        }
+
         switch (Type)
         {
 
