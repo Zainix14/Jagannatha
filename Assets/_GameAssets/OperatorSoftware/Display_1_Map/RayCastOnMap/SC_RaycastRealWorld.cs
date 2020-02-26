@@ -10,11 +10,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
     public GameObject Cam_Map;
     private Ray ray;
     public GameObject objectOnclic = null;
-    public Vector3 sensi;
-    public string type;
     public Text debugText;
-    public SC_KoaSettingsOP koaSettingsOP;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -50,12 +46,14 @@ public class SC_RaycastRealWorld : MonoBehaviour
             //Debug.Log("Collider est " + hit.collider.name);
             if(hit.collider.GetComponent<IF_ClicableForOperator>() != null)
             {
-                objectOnclic = hit.collider.gameObject;
-                //Debug.Log("Clic on " + hit.collider.tag);
-                sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
-                type = hit.collider.GetComponent<IF_ClicableForOperator>().GetKoaID();
-                if(hit.collider.GetComponent<SC_KoaSettingsOP>() != null)
-                koaSettingsOP = hit.collider.GetComponent<SC_KoaSettingsOP>();
+                if (hit.collider.GetComponent<SC_KoaSettingsOP>() != null)
+                {
+
+                    SC_UI_Display_MapInfos_KoaState.Instance.SetNewKoaSettings(hit.collider.GetComponent<SC_KoaSettingsOP>());
+                    objectOnclic = hit.collider.gameObject;
+        
+                }
+         
 
                 //CHANGEMENT ETAT TUTO
                 //Debug.Log(SC_GameStates.Instance.CurState);
@@ -77,6 +75,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
             {
                 //Debug.Log("Clic on nothing on Map");
                 objectOnclic = null;
+                SC_UI_Display_MapInfos_KoaState.Instance.activated = false;
             }
         }
     }

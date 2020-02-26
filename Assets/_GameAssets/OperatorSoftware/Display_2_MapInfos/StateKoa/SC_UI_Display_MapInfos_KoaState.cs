@@ -5,9 +5,21 @@ using UnityEngine.UI;
 
 public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 {
+    #region Singleton
 
-    public SC_RaycastRealWorld scriptRaycast; //Sur camera Full view
-    public SC_KoaSettingsOP scriptKoaSettings;
+    private static SC_UI_Display_MapInfos_KoaState _instance;
+    public static SC_UI_Display_MapInfos_KoaState Instance { get { return _instance; } }
+
+    #endregion
+
+    SC_KoaSettingsOP curKoaScriptKoaSettings;
+
+
+    GameObject Mng_SyncVar = null;
+    SC_SyncVar_calibr sc_syncvar;
+
+
+    public bool activated;
 
     [SerializeField]
     Text[] sensi = new Text[3];
@@ -16,24 +28,100 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     Text type;
 
     [SerializeField]
-    Text pourcentage;
+    Text koaLife;
+
+    [SerializeField]
+    Text optiWeapon;
+
+
+    public float optiPercent;
+    public float fKoaLife;
+    public Vector3 koaSensibility;
+    public Vector3 gunSensibility;
+    
+
+
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        GetReferences();
+        activated = false;
     }
+
+    public void SetNewKoaSettings(SC_KoaSettingsOP newSettings)
+    {
+        curKoaScriptKoaSettings = newSettings;
+        koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
+  
+        activated = true;
+    }
+    void GetReferences()
+    {
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_calibr>();
+        if (sc_syncvar != null)
+            gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        sensi[0].text = (scriptRaycast.sensi.x + 1).ToString();
-        sensi[1].text = (scriptRaycast.sensi.y + 1).ToString();
-        sensi[2].text = (scriptRaycast.sensi.z + 1).ToString();
-        scriptKoaSettings = scriptRaycast.koaSettingsOP;
-        //pourcentage.text = (scriptKoaSettings.GetCurKoaLife() / scriptKoaSettings.GetMaxKoaLife()).ToString();
-        type.text = "Type " + scriptRaycast.type.ToString();
 
-        //Debug.Log(scriptRaycast.type);
+        if (sc_syncvar == null || Mng_SyncVar == null)
+        {
+            GetReferences();
+
+        }
+        if (sc_syncvar != null)
+        {
+            if (activated)
+            {
+                sensi[0].text = (koaSensibility.x + 1).ToString();
+                sensi[1].text = (koaSensibility.y + 1).ToString();
+                sensi[2].text = (koaSensibility.z + 1).ToString();
+                fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
+                koaLife.text = fKoaLife.ToString();
+
+                gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
+            
+                optiWeapon.text = GetOptiPerCent().ToString();
+
+                type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
+            }
+
+        }
+        
+    }
+    
+
+    int GetOptiPerCent()
+    {
+
+        float x = Mathf.Abs((int)gunSensibility.x - (int)koaSensibility.x);
+        float y = Mathf.Abs((int)gunSensibility.y - (int)koaSensibility.y);
+        float z = Mathf.Abs((int)gunSensibility.z - (int)koaSensibility.z);
+
+        float power = 18 - (x + y + z);
+
+        float powerPerCent = (power / 18) * 100;
+        
+        return (int)powerPerCent;
     }
 }

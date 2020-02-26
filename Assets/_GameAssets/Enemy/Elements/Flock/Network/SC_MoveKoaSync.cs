@@ -64,21 +64,22 @@ public class SC_MoveKoaSync : NetworkBehaviour
 
 
     [ClientRpc]
-    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID, int maxLife)
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife)
     {
         if (!isServer)
         {
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoamaxLife(maxLife);
         }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID, int maxLife)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID,int curLife, int maxLife)
     {
         if (isServer)
-            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID, maxLife);
+            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID,curLife, maxLife);
     }
 
     public void SetCurLife(int curLife)
