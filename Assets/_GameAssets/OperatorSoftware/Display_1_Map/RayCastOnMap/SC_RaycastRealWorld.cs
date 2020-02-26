@@ -59,6 +59,10 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
                 {
                     SC_instruct_op_manager.Instance.Deactivate(0);
+                    SC_instruct_op_manager.Instance.Activate(2);
+                    SC_instruct_op_manager.Instance.Activate(3);
+
+
                     //Debug.Log("babar");
                 }
                 //Debug.Log("Sensi à " + sensi);
