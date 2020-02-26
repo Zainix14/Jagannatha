@@ -81,6 +81,14 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         }
         if (sc_syncvar != null)
         {
+            if(scriptRaycast.objectOnclic != null)
+            {
+                lineWanted.enabled = true;
+            }
+            else
+            {
+                lineWanted.enabled = false;
+            }
             //frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
             //amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
             //Debug.Log("index 0 : " + sc_syncvar.CalibrInts[0]);
