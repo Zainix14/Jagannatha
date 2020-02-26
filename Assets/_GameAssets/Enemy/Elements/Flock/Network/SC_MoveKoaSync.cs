@@ -71,6 +71,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoamaxLife(maxLife);
         }
     }
 
