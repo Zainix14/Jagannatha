@@ -65,6 +65,8 @@ public class SC_passwordLock : MonoBehaviour
                 CustomSoundManager.Instance.PlaySound(gameObject, "SFX_o_opening", false, 0.4f);
 
                 plugObject.GetComponent<SC_electricPlug>().plugConnected(); //Animation PLay
+
+                SC_instruct_op_manager.Instance.Activate(1);
             }
             if (countTime > 4f) //Fin de compteur
             {
