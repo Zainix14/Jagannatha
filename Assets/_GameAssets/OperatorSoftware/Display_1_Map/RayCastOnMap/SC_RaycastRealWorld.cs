@@ -64,6 +64,8 @@ public class SC_RaycastRealWorld : MonoBehaviour
                     SC_instruct_op_manager.Instance.Deactivate(0);
                     SC_instruct_op_manager.Instance.Activate(2);
                     SC_instruct_op_manager.Instance.Activate(3);
+                    SC_instruct_op_manager.Instance.Deactivate(4);
+                    SC_instruct_op_manager.Instance.Deactivate(5);
 
 
                     //Debug.Log("babar");
