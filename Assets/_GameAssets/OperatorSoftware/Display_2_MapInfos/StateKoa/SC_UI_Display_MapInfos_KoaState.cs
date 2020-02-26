@@ -31,7 +31,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         sensi[1].text = (scriptRaycast.sensi.y + 1).ToString();
         sensi[2].text = (scriptRaycast.sensi.z + 1).ToString();
         scriptKoaSettings = scriptRaycast.koaSettingsOP;
-        pourcentage.text = (scriptKoaSettings.GetCurKoaLife() / scriptKoaSettings.GetMaxKoaLife()).ToString();
+        //pourcentage.text = (scriptKoaSettings.GetCurKoaLife() / scriptKoaSettings.GetMaxKoaLife()).ToString();
         type.text = "Type " + scriptRaycast.type.ToString();
 
         //Debug.Log(scriptRaycast.type);
