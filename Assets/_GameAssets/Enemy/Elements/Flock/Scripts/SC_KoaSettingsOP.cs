@@ -14,7 +14,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     int factor;
     string koaID;
 
-    int maxKoaLife;
+    int maxKoaLife = -1;
     int curKoaLife;
 
     public void SetSensibility(Vector3 sensibility)
