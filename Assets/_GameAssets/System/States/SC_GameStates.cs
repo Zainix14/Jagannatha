@@ -40,7 +40,7 @@ public class SC_GameStates : NetworkBehaviour
     {
 
         CurState = TargetState;  
-
+        
         switch (TargetState)
         {
             case GameState.Lobby:
@@ -52,12 +52,14 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.Tutorial2:
-                SC_instruct_op_manager.Instance.Activate(0);
+                if (!isServer)
+                    SC_instruct_op_manager.Instance.Activate(0);
 
                 break;
 
             case GameState.Game:
-                SC_instruct_op_manager.Instance.Deactivate(0);
+                if (!isServer)
+                    SC_instruct_op_manager.Instance.Deactivate(0);
                 break;
 
             case GameState.GameEnd:

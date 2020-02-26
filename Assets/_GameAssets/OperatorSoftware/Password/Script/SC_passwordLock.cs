@@ -26,6 +26,9 @@ public class SC_passwordLock : MonoBehaviour
     SC_electricPlug plugObject; //récupération de l'objet prise electrique
 
     [SerializeField]
+    GameObject objectElectricPlug;
+
+    [SerializeField]
     bool cheatCode = true;
 
     void Start()
@@ -34,10 +37,12 @@ public class SC_passwordLock : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                canvasMng.GetComponent<SC_CanvasManager>().activateChild(i);
+                canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
             }
             canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
             gameObject.SetActive(false);
+            objectElectricPlug.SetActive(false);
+
             unlock = false;
             countTime = 0;
         }
@@ -65,7 +70,7 @@ public class SC_passwordLock : MonoBehaviour
             {
                 canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo(); //Activation des écrans (cf distributionDisplay)
                 gameObject.SetActive(false); //désactivation du canvas de mot de passe (ContainerPassword)
-                
+                objectElectricPlug.SetActive(false);
                 unlock = false; //Sécurité
                 countTime = 0; //RaZ compteur
             }

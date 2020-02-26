@@ -59,7 +59,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
                 {
                     SC_instruct_op_manager.Instance.Deactivate(0);
-                    Debug.Log("babar");
+                    //Debug.Log("babar");
                 }
                 //Debug.Log("Sensi à " + sensi);
                 //debugText.text = sensi.ToString();

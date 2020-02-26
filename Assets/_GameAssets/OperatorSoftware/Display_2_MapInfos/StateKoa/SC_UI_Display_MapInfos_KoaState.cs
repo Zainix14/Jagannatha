@@ -27,6 +27,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         sensi[2].text = (scriptRaycast.sensi.z + 1).ToString();
 
         type.text = "Type " + scriptRaycast.type.ToString();
-        Debug.Log(scriptRaycast.type);
+        //Debug.Log(scriptRaycast.type);
     }
 }

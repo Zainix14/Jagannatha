@@ -32,7 +32,7 @@ public class SC_CanvasManager : MonoBehaviour
         {
             canvas[i].GetComponent<Image>().color = backgroundColor; //Active l'alpha sans couleur, sinon sprite n'apparait pas 
             canvas[i].GetComponent<Image>().material = null; //Désactiver le material (renderTexture)
-            activateChild(i); //Activation des enfants
+            activateChildInGame(i); //Activation des enfants
         }
     }
 
@@ -56,13 +56,23 @@ public class SC_CanvasManager : MonoBehaviour
         }
     }
 
+    public void activateChildInGame(int indexCanvas)
+    {
+        int numChild = canvas[indexCanvas].gameObject.transform.childCount;
+        for (int i = 0; i < numChild; i++)
+        {
+            Transform objectChild = canvas[indexCanvas].gameObject.transform.GetChild(0); ///ATTENTION SEUL DIFFERENCE AVEC ACTIVATE CHILD
+            objectChild.gameObject.SetActive(true);
+        }
+    }
+
     public void checkTaskBeforeGo()
     {
         for (int i = 0; i < numRealDisplay; i++)
         {
             canvas[i].GetComponent<Image>().color = new Color32(21, 13, 25, 255);
             canvas[i].GetComponent<Image>().material = null; //Désactiver le material (renderTexture)
-            activateChild(i); //Activation des enfants
+            activateChildInGame(i); //Activation des enfants
         }
         //canvas[5].enabled = false;
     }
