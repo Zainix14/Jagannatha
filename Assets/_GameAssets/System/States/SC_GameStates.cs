@@ -35,6 +35,16 @@ public class SC_GameStates : NetworkBehaviour
             RpcSetState(GameState.Lobby);
     }
 
+    public void RpcIfServer (GameState TargetState)
+    {
+        if (isServer)
+        {
+            RpcSetState(TargetState);
+
+        }
+
+    }
+
     [ClientRpc]
     public void RpcSetState(GameState TargetState)
     {
@@ -48,18 +58,29 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.Tutorial:
-                
+                if (!isServer)
+                    SC_instruct_op_manager.Instance.Activate(1);
                 break;
 
             case GameState.Tutorial2:
                 if (!isServer)
-                    SC_instruct_op_manager.Instance.Activate(0);
+                {
 
+                    SC_instruct_op_manager.Instance.Deactivate(1);
+                    SC_instruct_op_manager.Instance.Activate(0);
+                }
                 break;
+
+
+               
 
             case GameState.Game:
                 if (!isServer)
-                    SC_instruct_op_manager.Instance.Deactivate(0);
+                {
+                    SC_instruct_op_manager.Instance.Deactivate(2);
+                    SC_instruct_op_manager.Instance.Deactivate(3);
+                }
+                    
                 break;
 
             case GameState.GameEnd:
