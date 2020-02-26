@@ -166,7 +166,6 @@ public class SC_KoaManager : MonoBehaviour
                         nbActiveBoid++;
                     }
                 }
-                syncVarKoa.curboidNumber = nbActiveBoid;
             }
             if(curFlockSettings.regenerationRate != 0 && regeneration)
             {
@@ -302,7 +301,7 @@ public class SC_KoaManager : MonoBehaviour
         if(powerPerCent>50)
         {
             KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
-            //syncVarKoa.RpcSendIntCurLife(KoaLife);
+            syncVarKoa.SetCurLife(KoaLife);
             if (KoaLife <= 0) AnimDestroy();
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
             vfx_Hit.Play();

@@ -58,8 +58,8 @@ public class SC_MoveKoaSync : NetworkBehaviour
     [ClientRpc]
     public void RpcSendIntCurLife(GameObject Target, int curLife)
     {
-        if (!isServer) { }
-            //Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(curLife);
+        if (!isServer) 
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
     }
 
 
