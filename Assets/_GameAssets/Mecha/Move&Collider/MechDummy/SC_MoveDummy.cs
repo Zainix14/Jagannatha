@@ -45,7 +45,7 @@ public class SC_MoveDummy : NetworkBehaviour
         {
             transform.position = Target.transform.position;
             //transform.rotation = Target.transform.rotation;
-            transform.eulerAngles = new Vector3(transform.position.x, Target.transform.position.y, transform.position.z);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, Target.transform.eulerAngles.y, transform.eulerAngles.z);
         }
         else
             GetReferences();
