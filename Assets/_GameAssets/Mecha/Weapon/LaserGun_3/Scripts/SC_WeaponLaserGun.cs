@@ -15,6 +15,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     bool b_InBreakdown = false;
 
     GameObject Mng_CheckList;
+    GameObject NetPlayerP;
 
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
@@ -32,6 +33,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     [SerializeField]
     GameObject _bulletContainer;
     GameObject Bullet;
+    SC_BulletLaserGun BulletSC;
     MeshRenderer mrBullet;
 
     Vector3Int sensitivity;
@@ -79,6 +81,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             Target = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
         if (Target != null && AimHit == null)
             AimHit = Target.GetComponent<SC_AimHit>();
+        if (Mng_CheckList != null && NetPlayerP == null)
+            NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
     }
 
     void CreateBulletPull()
@@ -107,17 +111,23 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void CreateBullet()
     {
+
         GameObject bulletContainer = Instantiate(_bulletContainer);
 
-        Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
-        Bullet.transform.SetParent(bulletContainer.transform);
-        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
+        //Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
+        Bullet = NetPlayerP.GetComponent<SC_NetPlayerWeaponsMng>().SpawnLaser(prefab_bullet);
 
-        Bullet.GetComponent<SC_BulletLaserGun>().frequency = frequency;
+        Bullet.transform.SetParent(bulletContainer.transform);
+
+        mrBullet = Bullet.GetComponentInChildren<MeshRenderer>();
+        BulletSC = Bullet.GetComponent<SC_BulletLaserGun>();
+
+        BulletSC.frequency = frequency;
     }
 
     public void Trigger()
     {
+        Debug.Log("Trigger");
         if (!b_InBreakdown)
             Fire();
     }
@@ -125,8 +135,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     void Fire()
     {
 
-        if(b_DebugLaser)
-            DebugLaser();
+        Debug.Log(BulletSC);
+        BulletSC.DisplayLaser(helper_startPos, Target, b_DebugLaser);
 
         LaserDir = Target.transform.position - helper_startPos.transform.position;       
 
