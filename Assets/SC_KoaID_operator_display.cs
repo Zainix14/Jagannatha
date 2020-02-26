@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//SUR LA MAP
 public class SC_KoaID_operator_display : MonoBehaviour
 {
 

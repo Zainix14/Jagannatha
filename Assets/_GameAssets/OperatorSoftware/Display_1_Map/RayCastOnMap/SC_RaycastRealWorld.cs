@@ -13,6 +13,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
     public Vector3 sensi;
     public string type;
     public Text debugText;
+    public SC_KoaSettingsOP koaSettingsOP;
 
     // Start is called before the first frame update
     void Start()
@@ -53,12 +54,20 @@ public class SC_RaycastRealWorld : MonoBehaviour
                 //Debug.Log("Clic on " + hit.collider.tag);
                 sensi = hit.collider.GetComponent<IF_ClicableForOperator>().GetSensibility();
                 type = hit.collider.GetComponent<IF_ClicableForOperator>().GetKoaID();
+                if(hit.collider.GetComponent<SC_KoaSettingsOP>() != null)
+                koaSettingsOP = hit.collider.GetComponent<SC_KoaSettingsOP>();
 
                 //CHANGEMENT ETAT TUTO
                 //Debug.Log(SC_GameStates.Instance.CurState);
-                if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
+                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
                 {
                     SC_instruct_op_manager.Instance.Deactivate(0);
+                    SC_instruct_op_manager.Instance.Activate(2);
+                    SC_instruct_op_manager.Instance.Activate(3);
+                    SC_instruct_op_manager.Instance.Deactivate(4);
+                    SC_instruct_op_manager.Instance.Deactivate(5);
+
+
                     //Debug.Log("babar");
                 }
                 //Debug.Log("Sensi à " + sensi);
