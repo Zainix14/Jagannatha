@@ -41,6 +41,11 @@ public class SC_EnemyManager : MonoBehaviour
     public void InitNewPhase(int phaseIndex)
     {
         SC_PhaseManager.Instance.Initialize(phases[phaseIndex]);
+
+        if (phaseIndex == 1)
+        {
+            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Game);
+        }
     }
 
 
