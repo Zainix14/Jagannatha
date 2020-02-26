@@ -55,22 +55,35 @@ public class SC_MoveKoaSync : NetworkBehaviour
             Target.transform.position = vt3_Position;
     }
 
+    [ClientRpc]
+    public void RpcSendIntCurLife(GameObject Target, int curLife)
+    {
+        if (!isServer) 
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
+    }
+
 
     [ClientRpc]
-    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID)
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID, int maxLife)
     {
         if (!isServer)
         {
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoamaxLife(maxLife);
         }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID, int maxLife)
     {
         if (isServer)
-            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID);
+            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID, maxLife);
+    }
+
+    public void SetCurLife(int curLife)
+    {
+        RpcSendIntCurLife(gameObject, curLife);
     }
 
 }

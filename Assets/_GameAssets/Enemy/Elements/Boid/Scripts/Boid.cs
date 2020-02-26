@@ -255,7 +255,6 @@ public class Boid : MonoBehaviour {
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
 
-
         float power = 18 - (x + y + z);
 
         float powerPerCent = (power / 18) * 100;
