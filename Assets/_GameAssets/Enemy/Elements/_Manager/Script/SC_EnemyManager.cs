@@ -19,7 +19,7 @@ public class SC_EnemyManager : MonoBehaviour
 
     public PhaseSettings[] phases;
   
-    int curPhaseIndex;
+    public  int curPhaseIndex;
     void Awake()
     {
         if (_instance != null && _instance != this)
