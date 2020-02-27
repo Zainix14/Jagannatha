@@ -158,8 +158,10 @@ public class Boid : MonoBehaviour {
 
             if (this != null)
             {
+
                 cachedTransform.position += velocity * Time.deltaTime; //Position tampon MaJ
                 cachedTransform.forward = dir; //Orientation du Tampon selon direction
+                
                 position = cachedTransform.position; //Position du boid MaJ selon tampon
                 forward = dir; //Orientation du boid MaJ selon direction Tampon
             }

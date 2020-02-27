@@ -9,9 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7654427869972465053}
-  - component: {fileID: 2865312559487441127}
-  - component: {fileID: 114714860802865328}
-  - component: {fileID: 114248703974702296}
   - component: {fileID: 114994286558072070}
   m_Layer: 0
   m_Name: FlockDisplay
@@ -34,59 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &2865312559487441127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285113734633859291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc708395ed29664598a7da96f65e7a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceChangeSpline: 1
---- !u!114 &114714860802865328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285113734633859291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148310ac13c958d4c93f53cdfe985375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  travelMode: 1
-  lookAt: 2
-  speed: 10
-  rotationLerpModifier: 99
-  m_normalizedT: 0
-  onPathCompleted:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &114248703974702296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285113734633859291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe81c20e4894e646806229729b420cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 1107940701737066, guid: 0a0191a953741d940be3195a87c4d91f,
-    type: 3}
-  laserFxPrefab: {fileID: 8640183350906000953, guid: 8d8b3451f168ce74faa33ef569493eea,
-    type: 3}
-  bulletPrefab: {fileID: 6422795900896979926, guid: 59d83a65fa1321f45b9290a3038260c8,
-    type: 3}
-  bulletContainer: {fileID: 4527829448466270418, guid: 45dbf9ebe4483f84c819073a513e34cf,
-    type: 3}
 --- !u!114 &114994286558072070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,10 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8392ddaa9638a94db75f72581d1a535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _KoaPrefab: {fileID: 9002168090366462995, guid: 5dc12fc120c227e4ca57194f362510e3,
+  _KoaPrefab: {fileID: 9002168090366462995, guid: d8ce59fb5420d5a44aebbc7875711da9,
     type: 3}
   _GuidePrefab: {fileID: 8901173849441854128, guid: 4f1849f585a71774a8f82c51e19c4e61,
     type: 3}
+  flockDisplay: {fileID: 11400000, guid: c711052c6eed550498982e0d4b976a92, type: 2}
   _SCKoaManager: {fileID: 0}
   _splited: 0
   _merged: 0

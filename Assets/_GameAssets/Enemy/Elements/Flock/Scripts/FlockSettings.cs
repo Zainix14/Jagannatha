@@ -48,7 +48,7 @@ public class FlockSettings : ScriptableObject
     public Vector3 SpawnPosition;
 
 
-    [Range(10,200)]
+    [Range(0,200)]
     public int boidSpawn;
 
     [Range(10,200)]
