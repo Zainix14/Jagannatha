@@ -22,6 +22,8 @@ public class Sc_LaserFeedBack : MonoBehaviour
     ParticleSystem Sparkle;
     [SerializeField]
     Color CurColor;
+    [SerializeField]
+    SC_WeaponLaserGun WeapMainSC;
 
     void Awake()
     {
@@ -84,6 +86,9 @@ public class Sc_LaserFeedBack : MonoBehaviour
 
         if(CurColor != NewColor)
         {
+
+            WeapMainSC.AlignColor(CurColor);
+
             CurColor = NewColor;
 
             Gradient gradiend = new Gradient();

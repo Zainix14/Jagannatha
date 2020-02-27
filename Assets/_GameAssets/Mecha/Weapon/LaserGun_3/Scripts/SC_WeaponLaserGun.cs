@@ -35,6 +35,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     GameObject Bullet;
     MeshRenderer mrBullet;
     SC_BulletLaserGun BulletSC;
+    [SerializeField]
+    Color CurColor;
 
     Vector3Int sensitivity;
 
@@ -135,7 +137,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     void Fire()
     {
 
-        BulletSC.DisplayLaser(helper_startPos, Target, b_DebugLaser);
+        BulletSC.DisplayLaser(helper_startPos, Target, b_DebugLaser, CurColor);
 
         LaserDir = Target.transform.position - helper_startPos.transform.position;       
 
@@ -234,6 +236,11 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
                 break;
         }
+    }
+
+    public void AlignColor(Color32 targetColor)
+    {
+        CurColor = targetColor;
     }
 
 }

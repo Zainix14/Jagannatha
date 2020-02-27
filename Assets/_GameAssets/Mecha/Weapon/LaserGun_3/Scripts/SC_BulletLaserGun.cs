@@ -8,6 +8,8 @@ public class SC_BulletLaserGun : NetworkBehaviour
 
     public Vector3Int sensitivity;
     MeshRenderer mr;
+    [SerializeField]
+    Material Mat;
     float timer = 0;
     public float frequency;
     [SerializeField]
@@ -52,8 +54,11 @@ public class SC_BulletLaserGun : NetworkBehaviour
     }
     */
 
-    public void DisplayLaser(GameObject helper_startPos, GameObject Target, bool Visible)
+    public void DisplayLaser(GameObject helper_startPos, GameObject Target, bool Visible, Color32 targetColor)
     {
+
+        if(Mat.color != targetColor)
+            Mat.color = targetColor;
 
         //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
         transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
@@ -70,7 +75,7 @@ public class SC_BulletLaserGun : NetworkBehaviour
         Vector3 ScaleOP = new Vector3(f_Scale_OP, f_Scale_OP, Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
         if (isServer)
-            RpcDisplayLaserOP(gameObject, transform.position, transform.rotation, ScaleOP);
+            RpcDisplayLaserOP(gameObject, transform.position, transform.rotation, ScaleOP, targetColor);
         
     }
 
@@ -79,17 +84,22 @@ public class SC_BulletLaserGun : NetworkBehaviour
         transform.position = new Vector3(1000, 1000, 1000);
         transform.localScale = new Vector3(f_Scale_P, f_Scale_P, f_Scale_P);
         mr.enabled = false;
-        RpcDisplayLaserOP(gameObject, transform.position, transform.rotation, transform.localScale);
+        RpcDisplayLaserOP(gameObject, transform.position, transform.rotation, transform.localScale, Mat.color);
     }
 
     [ClientRpc]
-    public void RpcDisplayLaserOP(GameObject target, Vector3 position, Quaternion rotation, Vector3 scale)
+    public void RpcDisplayLaserOP(GameObject target, Vector3 position, Quaternion rotation, Vector3 scale, Color32 targetColor)
     {
         if (!isServer)
         {
+
+            if(Mat.color != targetColor)
+                Mat.color = targetColor;
+
             target.transform.position = position;
             target.transform.rotation = rotation;
             target.transform.localScale = scale;
+
         }
     }
 
