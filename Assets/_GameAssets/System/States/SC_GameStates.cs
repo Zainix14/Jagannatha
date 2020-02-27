@@ -87,6 +87,9 @@ public class SC_GameStates : NetworkBehaviour
             case GameState.GameEnd:
                 if (!isServer)
                     SC_EndGameOP.Instance.EndGameDisplay();
+
+                if(isServer)
+                    SC_breakdown_displays_screens.Instance.EndScreenDisplay();
                 break;
 
         }

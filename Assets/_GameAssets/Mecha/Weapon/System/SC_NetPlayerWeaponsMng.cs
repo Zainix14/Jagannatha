@@ -61,7 +61,7 @@ public class SC_NetPlayerWeaponsMng : NetworkBehaviour
 
     public GameObject SpawnLaser(GameObject Laser)
     {
-        Debug.Log("SpawnLaser");
+
         GameObject GO_Laser_Temp = (GameObject)Instantiate(Laser, Laser.transform.position, Laser.transform.rotation);
         NetworkServer.Spawn(GO_Laser_Temp);
         return GO_Laser_Temp;

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class SC_MoveKoaSync : NetworkBehaviour
 {
 
-    public MeshRenderer mr_P;
+    public GameObject mr_P;
     public GameObject mr_OP;
 
     [SyncVar]
@@ -21,11 +21,12 @@ public class SC_MoveKoaSync : NetworkBehaviour
         {
             mr_OP.GetComponent<SphereCollider>().enabled = false;
             mr_OP.SetActive(false);
-            mr_P.enabled = false;
+            mr_P.GetComponent<MeshRenderer>().enabled = false;
+            mr_P.GetComponent<SphereCollider>().enabled = false;
         }
         else if (!isServer)
         {
-            mr_P.enabled = false;
+            mr_P.GetComponent<MeshRenderer>().enabled = false;
             mr_OP.SetActive(true);
         }         
     }
@@ -34,7 +35,8 @@ public class SC_MoveKoaSync : NetworkBehaviour
     {
         if(isServer)
         {
-            mr_P.enabled = true;
+            mr_P.GetComponent<SphereCollider>().enabled = true;
+            mr_P.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 

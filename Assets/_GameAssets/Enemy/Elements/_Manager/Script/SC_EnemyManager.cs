@@ -54,8 +54,10 @@ public class SC_EnemyManager : MonoBehaviour
         curPhaseIndex++;
         if(curPhaseIndex >= phases.Length)
         {
-            SC_breakdown_displays_screens.Instance.EndScreenDisplay();
+            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
+
         }
+
         InitNewPhase(curPhaseIndex);
 
     }

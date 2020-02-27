@@ -147,10 +147,10 @@ public class CustomSoundManager : MonoBehaviour
         }
         for (int i = 0; i < hAudioSources.Length; i++)
         {
-            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying)
+            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying && hAudioSources[i] != null)
             {
-                if(parent == true)
-                hAudioSources[i].transform.SetParent(hSource.transform);
+                if(parent == true) hAudioSources[i].transform.SetParent(hSource.transform);
+
                 hAudioSources[i].transform.position = hSource.transform.position;
                 hAudioSources[i].GetComponent<AudioSource>().clip = tSounds[IndexSound];
                 hAudioSources[i].GetComponent<AudioSource>().loop = bLoop;

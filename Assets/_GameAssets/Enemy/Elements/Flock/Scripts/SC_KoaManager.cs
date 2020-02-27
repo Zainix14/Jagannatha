@@ -144,7 +144,7 @@ public class SC_KoaManager : MonoBehaviour
         }
 
         //Instantie le Koa
-
+        if(_koa != null)
         _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
         _curKoaGuide = _boidsTab[1].transform;
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
@@ -306,9 +306,6 @@ public class SC_KoaManager : MonoBehaviour
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
             vfx_Hit.Play();
         }
-
-
-       
 
         ///DEBUG
         if (gunSensitivity.x == 100)
