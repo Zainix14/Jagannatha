@@ -8,12 +8,18 @@ public class SC_MoveDummy : NetworkBehaviour
 
     private GameObject Target;
     private MeshRenderer mr;
+    [SerializeField]
+    GameObject Mesh_OP;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (isServer)
+
+        if (!isServer)
             GetReferences();
+
+        SetMesh();
+
     }
 
     // Update is called once per frame
@@ -23,6 +29,14 @@ public class SC_MoveDummy : NetworkBehaviour
         {
             SyncPos();
             SendRpc();
+        }
+    }
+
+    void SetMesh()
+    {
+        if (isServer)
+        {
+            Mesh_OP.SetActive(false);
         }
     }
 
