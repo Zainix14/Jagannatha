@@ -54,7 +54,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
     public void RpcSendVt3Position(GameObject Target, Vector3 vt3_Position)
     {
         if (!isServer)
-            Target.transform.position = vt3_Position;
+            Target.transform.position = new Vector3(vt3_Position.x, 50, vt3_Position.z);
     }
 
     [ClientRpc]
