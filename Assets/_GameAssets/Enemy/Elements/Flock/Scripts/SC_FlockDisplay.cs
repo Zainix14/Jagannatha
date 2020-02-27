@@ -27,6 +27,9 @@ public class SC_FlockDisplay : MonoBehaviour
     GameObject _Player;
 
 
+    [SerializeField]
+    FlockSettings flockDisplay;
+
     BoidSettings[] _BoidSettings; //Contient toute la liste des Settings de boid possible (Comportement)
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
@@ -85,16 +88,20 @@ public class SC_FlockDisplay : MonoBehaviour
     }
 
 
+    void Start()
+    {
+        InitializeFlock();
+    }
+
     /// <summary>
     /// Initialisation du Flock
     /// </summary>
-    public void InitializeFlock(FlockSettings newFlockSettings, float NormalizedT)
+    public void InitializeFlock()
     {
-        flockSettings = newFlockSettings;
+        flockSettings = flockDisplay;
 
 
         inAttack = false;
-        _Player = GameObject.FindGameObjectWithTag("Player");
         if (!flockSettings.spawnRandom)
             transform.position = flockSettings.SpawnPosition;
         else
@@ -111,7 +118,7 @@ public class SC_FlockDisplay : MonoBehaviour
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
-        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn, _BoidSettings[0], newFlockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn, _BoidSettings[0], flockDisplay);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
         _splineTab = new BezierSolution.BezierSpline[_BoidSettings.Length];
