@@ -38,8 +38,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     public float fKoaLife;
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
-    
 
+    public Slider sliderLifeKoa;
 
 
     void Awake()
@@ -97,8 +97,9 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
-                koaLife.text = fKoaLife.ToString();
-
+                koaLife.text = fKoaLife.ToString() + "%";
+                //Debug.Log(fKoaLife);
+                sliderLifeKoa.value = fKoaLife;
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
             
                 optiWeapon.text = GetOptiPerCent().ToString();
