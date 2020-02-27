@@ -21,6 +21,8 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     public GameObject[] interactible;
 
+
+    bool canBreak = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +76,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
         {
-            if (newBreakdown)
+            if (newBreakdown && !b_BreakdownTest)
             {
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
@@ -87,6 +89,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
                 if (noBreakdown == 0)
                 {
                     newBreakdown = false;
+  
                     break;
                 }             
 
