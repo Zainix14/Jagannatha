@@ -116,10 +116,17 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                     break;
 
                 case RotationMode.Higher:
-                    if (f_TorqueImpulseZ >= f_TransImpulseZ)
+
+                    float absTorque = Mathf.Abs(f_TorqueImpulseZ);
+                    float absTrans = Mathf.Abs(f_TransImpulseZ);
+
+                    if (absTorque >= absTrans)
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
                     else
-                        zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
+                        zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);  
+                    
+          
+
                     transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
