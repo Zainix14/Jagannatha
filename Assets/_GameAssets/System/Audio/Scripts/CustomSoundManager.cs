@@ -134,7 +134,7 @@ public class CustomSoundManager : MonoBehaviour
         }
     }*/
 
-    public GameObject PlaySound(GameObject hSource, string sSoundName, bool bLoop, float fVolume, float fPitchRandom = 0, float fPitchConstantModifier = 0)
+    public GameObject PlaySound(GameObject hSource, string sSoundName, bool bLoop, float fVolume, bool parent = true, float fPitchRandom = 0, float fPitchConstantModifier = 0)
     {
         int IndexSound = -1;
         for (int i = 0; i < tSounds.Length; i++)
@@ -147,9 +147,10 @@ public class CustomSoundManager : MonoBehaviour
         }
         for (int i = 0; i < hAudioSources.Length; i++)
         {
-            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying)
+            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying && hAudioSources[i] != null)
             {
-                hAudioSources[i].transform.SetParent(hSource.transform);
+                if(parent == true) hAudioSources[i].transform.SetParent(hSource.transform);
+
                 hAudioSources[i].transform.position = hSource.transform.position;
                 hAudioSources[i].GetComponent<AudioSource>().clip = tSounds[IndexSound];
                 hAudioSources[i].GetComponent<AudioSource>().loop = bLoop;

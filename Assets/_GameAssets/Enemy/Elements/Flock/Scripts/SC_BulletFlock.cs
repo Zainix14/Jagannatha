@@ -15,8 +15,8 @@ public class SC_BulletFlock : MonoBehaviour
         //JE TOUCHE LE PLAYER 
         if(other.gameObject.layer == 20)
         {
-            Sc_ScreenShake.Instance.ShakeIt(0.005f,0.1f);
-            SC_CockpitShake.Instance.ShakeIt(0.005f, 0.1f);
+            Sc_ScreenShake.Instance.ShakeIt(0.015f,0.1f);
+            SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
 
             //on fait subir des dmg au joueur
             SC_MainBreakDownManager.Instance.causeDamageOnSystem(1);

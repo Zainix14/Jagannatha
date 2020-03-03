@@ -14,6 +14,9 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     int factor;
     string koaID;
 
+    float maxKoaLife;
+    float curKoaLife;
+
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -33,9 +36,29 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         this.koaID = koaID;
     }
 
+    public void SetKoaLife(int curLife)
+    {
+
+        this.curKoaLife = curLife;
+    }
+
+    public void SetKoamaxLife(int maxLife)
+    {
+        this.maxKoaLife = maxLife;
+    }
+
     public string GetKoaID()
     {
         return koaID;
+    }
+    public float GetCurKoaLife()
+    {
+        return curKoaLife;
+    }
+
+    public float GetMaxKoaLife()
+    {
+        return maxKoaLife;
     }
 
     public Vector3 GetSensibility()

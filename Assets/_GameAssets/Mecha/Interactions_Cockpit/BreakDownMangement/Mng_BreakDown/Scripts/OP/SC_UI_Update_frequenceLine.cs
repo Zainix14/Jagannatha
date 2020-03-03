@@ -81,6 +81,14 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
         }
         if (sc_syncvar != null)
         {
+            if(scriptRaycast.objectOnclic != null)
+            {
+                lineWanted.enabled = true;
+            }
+            else
+            {
+                lineWanted.enabled = false;
+            }
             //frequence = sc_syncvar.SL_sliders[indexDouble1].value*155 +110;
             //amplitude = sc_syncvar.SL_sliders[indexDouble2].value*1.5f + 0.8f;
             //Debug.Log("index 0 : " + sc_syncvar.CalibrInts[0]);
@@ -160,8 +168,10 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
              float yWanted = Mathf.Sin(Time.time + i * speed) * amplitudeWanted; //Valeur de Y
              lineWanted.SetPosition(i, new Vector3(yWanted, 0f, xWanted));
              */
+            SC_UI_Display_MapInfos_KoaState koaState = SC_UI_Display_MapInfos_KoaState.Instance;
+
             float x = (i * 100f / lineWanted.positionCount); //Valeur de X
-            float y = Mathf.Sin((Time.time * speed) + (i + ratio(scriptRaycast.sensi.z,6,20,0,0)) * ratio(scriptRaycast.sensi.y, 6, 0.33f,0, 0.05f)) * ratio(scriptRaycast.sensi.x, 6, 1.5f, 0, 0.1f); //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
+            float y = Mathf.Sin((Time.time * speed) + (i + ratio(koaState.koaSensibility.z,6,20,0,0)) * ratio(koaState.koaSensibility.y, 6, 0.33f,0, 0.05f)) * ratio(koaState.koaSensibility.x, 6, 1.5f, 0, 0.1f); //0;// Mathf.Sin(Time.time + i * speed) * amplitude; //Valeur de Y
             lineWanted.SetPosition(i, new Vector3(y, 0f, x)); //Distribution des valeurs dans le tableau (index, Vector3)
         }
     }

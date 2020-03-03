@@ -19,7 +19,7 @@ public class SC_EnemyManager : MonoBehaviour
 
     public PhaseSettings[] phases;
   
-    int curPhaseIndex;
+    public  int curPhaseIndex;
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -41,6 +41,11 @@ public class SC_EnemyManager : MonoBehaviour
     public void InitNewPhase(int phaseIndex)
     {
         SC_PhaseManager.Instance.Initialize(phases[phaseIndex]);
+
+        if (phaseIndex == 1)
+        {
+            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Game);
+        }
     }
 
 
@@ -49,8 +54,10 @@ public class SC_EnemyManager : MonoBehaviour
         curPhaseIndex++;
         if(curPhaseIndex >= phases.Length)
         {
-            SC_breakdown_displays_screens.Instance.EndScreenDisplay();
+            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
+
         }
+
         InitNewPhase(curPhaseIndex);
 
     }

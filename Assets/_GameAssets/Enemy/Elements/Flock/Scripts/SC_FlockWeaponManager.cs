@@ -168,8 +168,8 @@ public class SC_FlockWeaponManager : MonoBehaviour
         laserFire = true;
         if(startLaser)
         {
-            Sc_ScreenShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
-            SC_CockpitShake.Instance.ShakeIt(0.01f, flockSettings.activeDuration);
+            Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
+            SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
             SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
             startLaser = false;
         }

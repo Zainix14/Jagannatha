@@ -227,6 +227,7 @@ MonoBehaviour:
   b_DebugLaser: 0
   _bulletContainer: {fileID: 1889412421170276024, guid: 44fe3d63bb414144891d610ab41e1279,
     type: 3}
+  CurColor: {r: 1, g: 1, b: 1, a: 0}
   n_BulletMagazine: 1
   LaserFB: {fileID: 2676181716841152618}
 --- !u!114 &2676181716841152618
@@ -246,6 +247,8 @@ MonoBehaviour:
   lr: {fileID: 1016960617567129095}
   lr2: {fileID: 3925880120852758043}
   Sparkle: {fileID: 1016960617132070035}
+  CurColor: {r: 1, g: 1, b: 1, a: 0}
+  WeapMainSC: {fileID: 2210348525288903360}
 --- !u!1 &6120114150994625587
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +403,11 @@ PrefabInstance:
       propertyPath: m_Parameters.widthMultiplier
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2015526558809609379, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -531,6 +539,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Parameters.widthMultiplier
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015526558809609378, guid: 3db32a8b69e512d429b961974305e22f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2015526558809609379, guid: 3db32a8b69e512d429b961974305e22f,
         type: 3}
