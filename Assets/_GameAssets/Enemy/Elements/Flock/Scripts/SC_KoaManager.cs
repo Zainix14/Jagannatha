@@ -66,7 +66,7 @@ public class SC_KoaManager : MonoBehaviour
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
-    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings)
+    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings,Vector3Int newSensitivity)
     {
         GetReferences();
         regeneration = true;
@@ -106,7 +106,7 @@ public class SC_KoaManager : MonoBehaviour
 
         //Récupération du comportement initial
         curBoidSettings = newSettings;
-        if (SC_EnemyManager.Instance.curPhaseIndex != 0) sensitivity = GetNewSensitivity();
+        if (SC_EnemyManager.Instance.curPhaseIndex != 0) sensitivity = newSensitivity;
         else sensitivity = new Vector3Int(3, 5, 4);
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
@@ -331,15 +331,6 @@ public class SC_KoaManager : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-
-    Vector3Int GetNewSensitivity()
-    {
-        int x = Random.Range(0, 6);
-        int y = Random.Range(0, 6);
-        int z = Random.Range(0, 6);
-
-        return new Vector3Int(x, y, z);
-    }
 
     public void ActivateKoa()
     {

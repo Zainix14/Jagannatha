@@ -36,6 +36,11 @@ public class SC_WaveManager : MonoBehaviour
     float curBackupTimer = 0;
     bool backupSend;
 
+
+    Vector3Int sensitivityA;
+    Vector3Int sensitivityB;
+    Vector3Int sensitivityC;
+
     #endregion
     //---------------------------------------------------------------------//
 
@@ -83,6 +88,7 @@ public class SC_WaveManager : MonoBehaviour
         if (!_curWaveSettings.backup)
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
+
         waveStarted = true;
 
         
@@ -91,11 +97,14 @@ public class SC_WaveManager : MonoBehaviour
     {
         _FlockList.Clear();
         int curIndex = 0;
+
+
         for (int i = 0; i < _curWaveSettings.initialSpawnFlockType.Length; i++)
         {
             
             for (int j = 0; j < _curWaveSettings.initialSpawnFlockQuantity[i]; j++)
             {
+                
                 SpawnNewFlock(_curWaveSettings.initialSpawnFlockType[i], curIndex);
                 curIndex++;
                 yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);
@@ -199,7 +208,34 @@ public class SC_WaveManager : MonoBehaviour
     /// </summary>
     void SpawnNewFlock(FlockSettings flockSettings,float index, bool backup = false)
     {
+        Vector3Int newSensitivity = new Vector3Int(0, 0, 0);
+        Vector3Int baseSensitivity = new Vector3Int(0, 0, 0);
+        switch(flockSettings.attackType)
+        {
+            case FlockSettings.AttackType.none:
+                baseSensitivity = sensitivityA;
+                break;
 
+
+            case FlockSettings.AttackType.Bullet:
+                baseSensitivity = sensitivityB;
+                break;
+
+
+            case FlockSettings.AttackType.Laser:
+                baseSensitivity = sensitivityC;
+                break;
+        }
+
+    
+        int x = baseSensitivity.x + Random.Range(-1, 2);
+        if (x < 0) x = 0;if (x > 5) x = 5; 
+        int y = baseSensitivity.y + Random.Range(-1, 2);
+        if (y < 0) x = 0; if (y > 5) y = 5;
+        int z = baseSensitivity.z + Random.Range(-1, 2);
+        if (z < 0) z = 0; if (z > 5) z = 5;
+        newSensitivity = new Vector3Int(x, y, z);
+        
         //Instantiate new flock
         GameObject curFlock = Instantiate(_FlockPrefab);
 
@@ -211,9 +247,8 @@ public class SC_WaveManager : MonoBehaviour
         if(backup)
             normalizedT = (1f / _curWaveSettings.getBackupFlockNumber()) * index;
 
-        
         //Initialize flock
-        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT);
+        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT,newSensitivity);
     }
 
 
@@ -237,8 +272,55 @@ public class SC_WaveManager : MonoBehaviour
         backupSend = false;
         waveEnded = false;
         waveStarted = false;
+        GenerateNewSensitivity();
+
     }
 
+    void GenerateNewSensitivity()
+    {
+        int x;
+        int y;
+        int z;
+        x = Random.Range(0, 6);
+        y = Random.Range(0, 6);
+        z = Random.Range(0, 6);
+
+        sensitivityA = new Vector3Int(x, y, z);
+
+        x = Random.Range(0, 6);
+        y = Random.Range(0, 6);
+        z = Random.Range(0, 6);
+
+        sensitivityB = new Vector3Int(x, y, z);
+
+        sensitivityC = new Vector3Int(GetRangedValue(x), GetRangedValue(y), GetRangedValue(z));
+
+
+    }
+    int GetRangedValue(int baseValue)
+    {
+        int newValue;
+
+        if(baseValue >= 3)
+        {
+            newValue = baseValue - Random.Range(2, 5);
+            if (newValue < 0)
+            {
+                newValue = 0;
+            }
+        }
+        else
+        {
+            newValue = baseValue + Random.Range(2, 5);
+            if (newValue > 5)
+            {
+                newValue = 5;
+            }
+        }
+
+        return newValue;
+
+    }
 
 
 
