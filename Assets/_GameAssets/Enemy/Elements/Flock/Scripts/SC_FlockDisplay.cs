@@ -38,7 +38,9 @@ public class SC_FlockDisplay : MonoBehaviour
     public SC_KoaManagerDisplay _SCKoaManager; //Stock le script KoaManager du Koa
     Transform _mainGuide; //Guide général que suit toujours la nuée (correspond au flock (this) mais pour des pb de lisibilité le Transform est stocké dans une varible Main Guide
 
-
+    [SerializeField]
+    BezierSolution.BezierSpline splineLine;
+    BezierSolution.BezierWalkerWithSpeed bezierWalker;
 
     bool inAttack;
     bool isActive;
@@ -78,12 +80,14 @@ public class SC_FlockDisplay : MonoBehaviour
     #region Init
     void Awake()
     {
+        bezierWalker = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
     }
 
 
     void Start()
     {
-        InitializeFlock();
+        Invoke("InitializeFlock", 2f);
+       
     }
 
     /// <summary>
@@ -125,7 +129,8 @@ public class SC_FlockDisplay : MonoBehaviour
                 _splineTab[i].transform.rotation = Random.rotation;
             }
         }
-
+        _curSpline = splineLine;
+        bezierWalker.SetNewSpline(_curSpline);
         ActivateFlock();
 
     }
@@ -142,14 +147,45 @@ public class SC_FlockDisplay : MonoBehaviour
         if (_splited)
             MultiGuideMovement();
 
+        //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
+        bezierWalker.Execute(Time.deltaTime);
+
+        ChangeStateManuel();
     }
 
+
+    void ChangeStateManuel()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            curState++;
+            if (curState == flockSettings.boidSettings.Length)
+            {
+                curState = 0;
+            }
+
+            Debug.Log(flockSettings.boidSettings[curState]);
+            StartNewBehavior(curState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            curState--;
+            if (curState == -1)
+            {
+                curState = flockSettings.boidSettings.Length-1;
+            }
+            Debug.Log(flockSettings.boidSettings[curState]);
+
+            StartNewBehavior(curState);
+        }
+    }
 
     IEnumerator ChangeState()
     {
         while(true)
         {
-            float waitTime = 30;
+            float waitTime = 15f;
             if (curState == flockSettings.boidSettings.Length)
             {
                 curState = 0;
@@ -158,9 +194,6 @@ public class SC_FlockDisplay : MonoBehaviour
                 waitTime = 1f;
             StartNewBehavior(curState);
             curState++;
-
-       
-         
 
             yield return new WaitForSeconds(waitTime);
         }
@@ -275,7 +308,7 @@ public class SC_FlockDisplay : MonoBehaviour
         isActive = true;
         _SCKoaManager.ActivateKoa();
 
-        StartCoroutine(ChangeState());
+        //StartCoroutine(ChangeState());
 
     }
 
@@ -283,15 +316,8 @@ public class SC_FlockDisplay : MonoBehaviour
     public void StartNewBehavior(int behaviorIndex)
     {
         _curBoidSetting = _BoidSettings[behaviorIndex];
-        _curSpline = _splineTab[behaviorIndex];
-      
+        bezierWalker.speed = _curBoidSetting.speedOnSpline;
 
-        if (_curSpline != null)
-        {
-        }
-        else
-        {
-        }
         Reassemble();
         if (_curBoidSetting.split)
         {

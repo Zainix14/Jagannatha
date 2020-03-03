@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7654427869972465053}
   - component: {fileID: 114994286558072070}
+  - component: {fileID: 1859276958885358172}
   m_Layer: 0
   m_Name: FlockDisplay
   m_TagString: Untagged
@@ -49,5 +50,26 @@ MonoBehaviour:
     type: 3}
   flockDisplay: {fileID: 11400000, guid: c711052c6eed550498982e0d4b976a92, type: 2}
   _SCKoaManager: {fileID: 0}
+  splineLine: {fileID: 0}
   _splited: 0
   _merged: 0
+--- !u!114 &1859276958885358172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285113734633859291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148310ac13c958d4c93f53cdfe985375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelMode: 2
+  lookAt: 2
+  speed: 10
+  rotationLerpModifier: 99
+  m_normalizedT: 0
+  onPathCompleted:
+    m_PersistentCalls:
+      m_Calls: []
