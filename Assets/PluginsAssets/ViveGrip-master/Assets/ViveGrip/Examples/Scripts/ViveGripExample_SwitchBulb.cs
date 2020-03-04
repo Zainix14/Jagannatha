@@ -10,8 +10,8 @@ public class ViveGripExample_SwitchBulb : MonoBehaviour {
   }
 
   public void Toggle() {
-    //on = !on;
-    //Color newColor = on ? Color.red : Color.green;
-    //GetComponent<Renderer>().material.color = newColor;
+    on = !on;
+    Color newColor = on ? Color.black: Color.yellow;
+    GetComponent<Renderer>().material.color = newColor;
   }
 }
