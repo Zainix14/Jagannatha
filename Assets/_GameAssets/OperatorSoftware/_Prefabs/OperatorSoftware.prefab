@@ -1259,6 +1259,9 @@ MonoBehaviour:
   Cam_Map: {fileID: 1280220214692740053}
   objectOnclic: {fileID: 0}
   debugText: {fileID: 0}
+  Select_MAT: {fileID: 2100000, guid: 1ee74b8ce26cf914687fe553a7478d0e, type: 2}
+  Overlay_MAT: {fileID: 2100000, guid: 2ea49d083d5dfac429e566719d5326c0, type: 2}
+  Koa_MAT: {fileID: 2100000, guid: ccbe4a5f7f0fb3d488bb660328277cca, type: 2}
 --- !u!81 &1280220215735223413
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2422,7 +2425,7 @@ MonoBehaviour:
   textFeedback: {fileID: 4491294703372810754}
   plugObject: {fileID: 1620917114691125540}
   objectElectricPlug: {fileID: 5371511484075150673}
-  cheatCode: 0
+  cheatCode: 1
 --- !u!1 &5371511484075150673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4907,6 +4910,16 @@ PrefabInstance:
     - target: {fileID: 4754238503011827510, guid: 5317c8a22e6e4f04cabb839b9748a9ec,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310532897130822290, guid: 5317c8a22e6e4f04cabb839b9748a9ec,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310532897130822290, guid: 5317c8a22e6e4f04cabb839b9748a9ec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362566299821343548, guid: 5317c8a22e6e4f04cabb839b9748a9ec,
