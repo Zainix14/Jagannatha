@@ -150,7 +150,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (life <= 0)
         {
 
-            Debug.Log(Mng_BreakDownTest);
+
             life = 10;
             Mng_BreakDownTest.StartNewBreakdown(1);
 
