@@ -66,7 +66,7 @@ public class SC_KoaManager : MonoBehaviour
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
-    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings)
+    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings,Vector3Int newSensitivity)
     {
         GetReferences();
         regeneration = true;
@@ -106,7 +106,7 @@ public class SC_KoaManager : MonoBehaviour
 
         //Récupération du comportement initial
         curBoidSettings = newSettings;
-        if (SC_EnemyManager.Instance.curPhaseIndex != 0) sensitivity = GetNewSensitivity();
+        if (SC_EnemyManager.Instance.curPhaseIndex != 0) sensitivity = newSensitivity;
         else sensitivity = new Vector3Int(3, 5, 4);
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
@@ -294,11 +294,15 @@ public class SC_KoaManager : MonoBehaviour
         float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
-        float power = 18 - (x + y + z);
+        float ecart = x + y + z;
+        
+    
+        float power = 6 - ecart;
 
-        float powerPerCent = (power / 18 )* 100;
+        if (power < 0) power = 0;
+        float powerPerCent = (power / 6 )* 100;
 
-        if(powerPerCent>50)
+        if(powerPerCent > 0)
         {
             KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
             syncVarKoa.SetCurLife(KoaLife);
@@ -331,15 +335,6 @@ public class SC_KoaManager : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-
-    Vector3Int GetNewSensitivity()
-    {
-        int x = Random.Range(0, 6);
-        int y = Random.Range(0, 6);
-        int z = Random.Range(0, 6);
-
-        return new Vector3Int(x, y, z);
-    }
 
     public void ActivateKoa()
     {
