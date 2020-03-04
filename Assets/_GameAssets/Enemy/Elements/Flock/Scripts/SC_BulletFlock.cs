@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SC_BulletFlock : MonoBehaviour
+public class SC_BulletFlock : NetworkBehaviour
 {
+
+    public bool b_IsFire = false;
     Rigidbody rb = null;
+
     void Start()
     {
         GetRigidBody();
+    }
+
+    void Update()
+    {
+        if(isServer && b_IsFire)
+            RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, this.transform.localScale);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,10 +50,12 @@ public class SC_BulletFlock : MonoBehaviour
         {
             GetComponent<Rigidbody>().isKinematic = true;
             transform.position = new Vector3(1000, 1000, 1000);
-        }
+            b_IsFire = false;
+            if (isServer)
+                RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, this.transform.localScale);
+        }    
 
     }
-
 
     void GetRigidBody()
     {
@@ -51,4 +63,16 @@ public class SC_BulletFlock : MonoBehaviour
         if (rb == null)
             Debug.LogWarning("SC_BulletMiniGun - ResetPos - Can't Find RigidBody");
     }
+
+    [ClientRpc]
+    public void RpcDisplayFBulletOP(GameObject target, Vector3 position, Quaternion rotation, Vector3 scale)
+    {
+        if (!isServer)
+        {
+            target.transform.position = position;
+            target.transform.rotation = rotation;
+            target.transform.localScale = scale;
+        }
+    }
+
 }
