@@ -195,9 +195,16 @@ public class Boid : MonoBehaviour {
     /// <returns></returns>
     bool IsHeadingForCollision () {
         RaycastHit hit;
+
+        /*
         if (Physics.SphereCast (position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
             return true;
-        } else { }
+        }*/
+        if (Physics.Raycast (position, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
+            return true;
+        }
+
+        else { }
         return false;
     }
 
@@ -215,7 +222,13 @@ public class Boid : MonoBehaviour {
             Vector3 dir = cachedTransform.TransformDirection (rayDirections[i]); 
             //
             Ray ray = new Ray (position, dir);
+
+            /*
             if (!Physics.SphereCast (ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask)) {
+                return dir;
+            }*/
+            
+            if (!Physics.Raycast (ray, settings.collisionAvoidDst, settings.obstacleMask)) {
                 return dir;
             }
         }
@@ -240,7 +253,6 @@ public class Boid : MonoBehaviour {
         float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
         float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
-
 
 
         float power = 18 - (x + y + z);

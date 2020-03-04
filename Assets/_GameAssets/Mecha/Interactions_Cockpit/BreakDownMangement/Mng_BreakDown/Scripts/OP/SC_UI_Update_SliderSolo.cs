@@ -53,7 +53,7 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
                 textWanted.enabled = true;
                 warning.SetActive(true);
                 sparkle.SetActive(false);
-                Debug.Log(sc_syncvar.SL_sliders[index].valueWanted);
+                //Debug.Log(sc_syncvar.SL_sliders[index].valueWanted);
                 textWanted.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].valueWanted,0.4f,10,-0.4f,0)).ToString();
                 
             }

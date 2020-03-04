@@ -63,7 +63,10 @@ public class SC_SceneManager : NetworkBehaviour
 
     void LoadTutoPilot()
     {
+
         SceneManager.LoadScene(1);
+       
+
     }
 
     void LoadTutoOperator()

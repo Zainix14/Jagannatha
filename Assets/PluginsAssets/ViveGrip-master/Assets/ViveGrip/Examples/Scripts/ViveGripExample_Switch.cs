@@ -96,11 +96,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         //SON
         if (curState == false)
         {
-            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, 0.05f, 0.5f);
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_1", false, 1, true,0.05f, 0.5f);
         }
         else
         {
-            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, 0.05f, 0.4f);
+            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_click_button_2", false, 1, true, 0.05f, 0.4f);
         }
         
 

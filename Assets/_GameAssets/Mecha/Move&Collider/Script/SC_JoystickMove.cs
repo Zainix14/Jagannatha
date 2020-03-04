@@ -26,12 +26,16 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     Quaternion xQuaternion;
-    
-    public enum RotationMode { TSR, Torque, Normalize, Higher}
-    public RotationMode TypeRotationX;
+
+    float f_lerpTime = 1f;
+    float f_currentLerpTime;
+
+
+    public enum RotationMode { TSR, Torque, Normalize, Higher, Clamp}
+    public RotationMode TypeRotationZ;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!b_InBreakdown && !b_BreakEngine)
             Move();
@@ -80,48 +84,75 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-        Quaternion zQuaternion = new Quaternion();
 
-        switch (TypeRotationX)
+        if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
-            case RotationMode.TSR:
-                zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
-                transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
-                break;
+            Quaternion zQuaternion = new Quaternion();
+            float MixImpulseZ;
 
-            case RotationMode.Torque:
-                zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
-                transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
-                break;
+            /*
+            //increment timer once per frame
+            f_currentLerpTime += Time.deltaTime;
+            if (f_currentLerpTime > f_lerpTime)
+                f_currentLerpTime = f_lerpTime;
 
-            case RotationMode.Higher:
-                if(f_TorqueImpulseZ >= f_TransImpulseZ)
-                    zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
-                else
+            //lerp!
+            float perc = f_currentLerpTime / f_lerpTime;
+            //Debug.Log(f_LerpRotZ + " | " + perc);
+            */
+
+            switch (TypeRotationZ)
+            {
+
+                case RotationMode.TSR:
                     zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
-                transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
-                break;
+                    transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
 
-            case RotationMode.Normalize:
-                float MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
-                zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
-                transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
-                break;
+                case RotationMode.Torque:
+                    zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
 
-            default:
-                break;
+                case RotationMode.Higher:
+
+                    float absTorque = Mathf.Abs(f_TorqueImpulseZ);
+                    float absTrans = Mathf.Abs(f_TransImpulseZ);
+
+                    if (absTorque >= absTrans)
+                        zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                    else
+                        zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);  
+                    
+          
+
+                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
+
+                case RotationMode.Normalize:
+                    MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
+                    zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
+
+                case RotationMode.Clamp:
+                    MixImpulseZ = Input.GetAxis("Rotation") + Input.GetAxis("Horizontal");
+                    if (MixImpulseZ > 1)
+                        MixImpulseZ = 1;
+                    MixImpulseZ *= f_RotationSpeedZ;
+                    zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    break;
+
+                default:
+                    break;
+
+            }
 
         }
-
-        /*
-        //Rotation Z
-        if (f_ImpulseZ != 0)
-        {
-            Quaternion zQuaternion = Quaternion.AngleAxis(f_ImpulseZ, Vector3.up);
-            transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
-        }
-        */
+        else if (f_currentLerpTime != 0)
+            f_currentLerpTime = 0;
 
     }
 

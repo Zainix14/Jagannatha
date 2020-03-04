@@ -59,12 +59,15 @@ public class SC_KoaManager : MonoBehaviour
     int spawnCount;
     public bool isActive;
 
+    ParticleSystem vfx_Hit;
+    GameObject SFX_Explosion;
+
+
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
     public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings)
     {
-
         GetReferences();
         regeneration = true;
         curRecoveryTimer = 0;
@@ -103,7 +106,8 @@ public class SC_KoaManager : MonoBehaviour
 
         //Récupération du comportement initial
         curBoidSettings = newSettings;
-        sensitivity = GetNewSensitivity();
+        if (SC_EnemyManager.Instance.curPhaseIndex != 0) sensitivity = GetNewSensitivity();
+        else sensitivity = new Vector3Int(3, 5, 4);
         //Ajout du premier guide a la liste
         _guideList.Add(newGuide);
 
@@ -113,8 +117,10 @@ public class SC_KoaManager : MonoBehaviour
             _koa = NetPSpawnKoa.SpawnKoa();
             _koa.transform.position = transform.position;
             _koa.GetComponent<SC_KoaCollider>().Initialize(this);
+            vfx_Hit = _koa.GetComponent<ParticleSystem>();
+
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
-            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID);
+            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID,KoaLife,maxLife);
             syncVarKoa.curboidNumber = spawnCount;
             syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }
@@ -138,7 +144,7 @@ public class SC_KoaManager : MonoBehaviour
         }
 
         //Instantie le Koa
-
+        if(_koa != null)
         _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
         _curKoaGuide = _boidsTab[1].transform;
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
@@ -160,11 +166,9 @@ public class SC_KoaManager : MonoBehaviour
                         nbActiveBoid++;
                     }
                 }
-                syncVarKoa.curboidNumber = nbActiveBoid;
             }
             if(curFlockSettings.regenerationRate != 0 && regeneration)
             {
-
                 respawnTimer += Time.deltaTime;
                 if (respawnTimer > (60f / curFlockSettings.regenerationRate))
                 {
@@ -294,16 +298,13 @@ public class SC_KoaManager : MonoBehaviour
 
         float powerPerCent = (power / 18 )* 100;
 
-        KoaLife -= (int)((powerPerCent * maxLife)/100)/3;
-        if (KoaLife <= 0) AnimDestroy();
-
-        if (powerPerCent > 90)
+        if(powerPerCent>50)
         {
-            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
-        }
-        else
-        {
-            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
+            KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
+            syncVarKoa.SetCurLife(KoaLife);
+            if (KoaLife <= 0) AnimDestroy();
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
+            vfx_Hit.Play();
         }
 
         ///DEBUG
@@ -313,7 +314,7 @@ public class SC_KoaManager : MonoBehaviour
 
     void AnimDestroy()
     {
-
+        CustomSoundManager.Instance.PlaySound(_koa.gameObject, "SFX_Explosion_Flock", false, 0.1f,false);
         SetBehavior(curFlockSettings.boidSettings[2]);
 
         //SetBehavior(DeathSettings);

@@ -21,6 +21,8 @@ public class SC_HitMarker : MonoBehaviour
     float animationTime;
     float curTime;
 
+    GameObject SFX_HitMarker;
+
     Vector3 initialScale;
     Quaternion initialRotation;
     [SerializeField]
@@ -29,7 +31,7 @@ public class SC_HitMarker : MonoBehaviour
     public bool hit;
     bool turn;
 
-    public enum HitType { Normal, Critical, none };
+    public enum HitType { Normal, Critical,Koa, none };
 
     public void Awake()
     {
@@ -52,25 +54,36 @@ public class SC_HitMarker : MonoBehaviour
     public void HitMark(HitType Type)
     {
         meshRenderer.enabled = true;
+        mat.color = Color.white;
         bAnimation = true;
         curTime = 0;
+        if(Type != HitType.none)
+        {
+            SFX_HitMarker = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_HitMarker", false, 0.02f);
+        }
+
         switch (Type)
         {
 
             case HitType.Normal :
-                mat.color = Color.white;
                 turn = false;
                 transform.rotation = initialRotation;
-                transform.localScale = initialScale;
-
-
                 break;
 
             case HitType.Critical:
-                mat.color = Color.red;
+ 
                 turn = true;
                 break;
+
+            case HitType.Koa:
+                mat.color = Color.green;
+
+
+                break;
+
+
             case HitType.none:
+
                 bAnimation = false;
                 meshRenderer.enabled = false;
                 transform.localScale = initialScale;

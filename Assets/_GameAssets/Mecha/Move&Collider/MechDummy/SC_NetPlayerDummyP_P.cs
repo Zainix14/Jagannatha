@@ -25,7 +25,7 @@ public class SC_NetPlayerDummyP_P : NetworkBehaviour
         if (isServer && !b_NotInLobby)
             CheckScene();
 
-        if (isServer && b_NotInLobby && !b_IsSpawn)
+        if (isServer && b_NotInLobby && !b_IsSpawn && isLocalPlayer)
             SpawnMechDummy();
 
     }
@@ -37,7 +37,7 @@ public class SC_NetPlayerDummyP_P : NetworkBehaviour
     }
 
     void SpawnMechDummy()
-    {
+    {       
         b_IsSpawn = true;
         GameObject GO_MechDummy_Temp = (GameObject)Instantiate(MechDummy, MechDummy.transform.position, MechDummy.transform.rotation);
         NetworkServer.Spawn(GO_MechDummy_Temp);

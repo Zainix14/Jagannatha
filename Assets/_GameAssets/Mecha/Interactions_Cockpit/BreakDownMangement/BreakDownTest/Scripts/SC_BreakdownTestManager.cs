@@ -21,6 +21,8 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     public GameObject[] interactible;
 
+
+    bool canBreak = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +76,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
         {
-            if (newBreakdown)
+            if (newBreakdown && !b_BreakdownTest)
             {
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
@@ -87,6 +89,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
                 if (noBreakdown == 0)
                 {
                     newBreakdown = false;
+  
                     break;
                 }             
 
@@ -137,6 +140,13 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
             b_BreakdownTest = false;
             sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
+
+            //changement de state du tuto
+            if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+            {
+                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
+            }
+            
         }
 
         //Permet de régler les demi-pannes d'écrans
