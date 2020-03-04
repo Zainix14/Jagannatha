@@ -13,9 +13,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     [SerializeField]
     int factor;
     string koaID;
-
+    int type;
     float maxKoaLife;
     float curKoaLife;
+
+
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -29,6 +31,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         GetComponent<MeshRenderer>().material.color = Color.yellow;
         spawn = false;
         timer = 0;
+    }
+
+    public void SetKoaType(int type)
+    {
+        this.type = type;
     }
 
     public void SetKoaID(string koaID)
@@ -82,7 +89,20 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
             timer += Time.deltaTime;
             if (timer >= timeBeforeSpawn)
             {
-                GetComponent<MeshRenderer>().material.color = Color.red;
+                Color newColor = Color.white;
+                switch(type)
+                {
+                    case 0:
+                        newColor = Color.magenta;
+                        break;
+                    case 1:
+                        newColor = Color.red;
+                        break;
+                    case 2:
+                        newColor = Color.cyan;
+                        break;
+                }
+                GetComponent<MeshRenderer>().material.color = newColor;
                 spawn = true;
 
             }

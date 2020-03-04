@@ -8,7 +8,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
 
     public GameObject mr_P;
     public GameObject mr_OP;
-
+    Transform guide;
     [SyncVar]
     public int curboidNumber = 0;
     [SyncVar]
@@ -44,7 +44,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
     void Update()
     {
         if (isServer)
-            RpcSendVt3Position(gameObject, transform.position);
+            RpcSendVt3Position(gameObject, guide.position);
     }
 
     /// <summary>
@@ -66,22 +66,28 @@ public class SC_MoveKoaSync : NetworkBehaviour
 
 
     [ClientRpc]
-    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife)
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife,int type)
     {
         if (!isServer)
         {
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoamaxLife(maxLife);
+            SC_KoaSettingsOP sc_KoaSettings = Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>();
+            sc_KoaSettings.SetSensibility(vt3_Sensibility);
+            sc_KoaSettings.SetTimeBeforeSpawn(timeBeforeSpawn);
+            sc_KoaSettings.SetKoaID(KoaID);
+            sc_KoaSettings.SetKoaLife(curLife);
+            sc_KoaSettings.SetKoamaxLife(maxLife);
+            sc_KoaSettings.SetKoaType(type);
+
         }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID,int curLife, int maxLife)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID,int curLife, int maxLife, int type, Transform guide)
     {
         if (isServer)
-            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID,curLife, maxLife);
+        {
+            RpcSendStartInfo(gameObject, sensibility, timeBeforeSpawn, KoaID, curLife, maxLife, type);
+            this.guide = guide;
+        }
     }
 
     public void SetCurLife(int curLife)
