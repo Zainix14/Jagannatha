@@ -294,11 +294,15 @@ public class SC_KoaManager : MonoBehaviour
         float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
         float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
-        float power = 18 - (x + y + z);
+        float ecart = x + y + z;
+        
+    
+        float power = 6 - ecart;
 
-        float powerPerCent = (power / 18 )* 100;
+        if (power < 0) power = 0;
+        float powerPerCent = (power / 6 )* 100;
 
-        if(powerPerCent>50)
+        if(powerPerCent > 0)
         {
             KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
             syncVarKoa.SetCurLife(KoaLife);

@@ -227,14 +227,32 @@ public class SC_WaveManager : MonoBehaviour
                 break;
         }
 
-    
-        int x = baseSensitivity.x + Random.Range(-1, 2);
-        if (x < 0) x = 0;if (x > 5) x = 5; 
-        int y = baseSensitivity.y + Random.Range(-1, 2);
-        if (y < 0) x = 0; if (y > 5) y = 5;
-        int z = baseSensitivity.z + Random.Range(-1, 2);
-        if (z < 0) z = 0; if (z > 5) z = 5;
-        newSensitivity = new Vector3Int(x, y, z);
+
+        int[] tabValue = new int[3];
+        tabValue[0] = baseSensitivity.x;
+        tabValue[1] = baseSensitivity.y;
+        tabValue[2] = baseSensitivity.z;
+        int remainingOffset = 2;
+        for (int i = 0; i<3;i++)
+        {
+            if(remainingOffset>0)
+            {
+                int newValue = GetVariationSensitivity(tabValue[i]);
+                if (newValue != tabValue[i])
+                {
+                    tabValue[i] = newValue;
+                    remainingOffset -= 1;
+                }
+                if(i == 2 && remainingOffset >0)
+                {
+                    i = 0;
+                }
+
+            }
+        }
+       
+  
+        newSensitivity = new Vector3Int(tabValue[0], tabValue[1], tabValue[2]);
         
         //Instantiate new flock
         GameObject curFlock = Instantiate(_FlockPrefab);
@@ -276,6 +294,7 @@ public class SC_WaveManager : MonoBehaviour
 
     }
 
+    //---------------------------SENSITIVITY-------------------------------//
     void GenerateNewSensitivity()
     {
         int x;
@@ -322,6 +341,17 @@ public class SC_WaveManager : MonoBehaviour
 
     }
 
+    int GetVariationSensitivity(int baseValue)
+    {
+        int rnd = Random.Range(-1, 2);
+        int newValue = baseValue + rnd;
+        if (newValue < 0) newValue = 0; if (newValue > 5) newValue = 5;
+
+        return newValue;
+        
+    }
+
+    //---------------------------------------------------------------------//
 
 
     #endregion
