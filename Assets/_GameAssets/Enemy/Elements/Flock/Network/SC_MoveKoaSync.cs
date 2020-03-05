@@ -20,6 +20,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
         if (isServer)
         {
             mr_OP.GetComponent<SphereCollider>().enabled = false;
+            mr_OP.GetComponent<MeshRenderer>().enabled = false;
             mr_OP.SetActive(false);
             mr_P.GetComponent<MeshRenderer>().enabled = false;
             mr_P.GetComponent<SphereCollider>().enabled = false;
