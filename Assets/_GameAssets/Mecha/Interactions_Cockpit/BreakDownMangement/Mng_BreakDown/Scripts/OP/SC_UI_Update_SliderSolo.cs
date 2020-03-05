@@ -20,7 +20,7 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     GameObject sparkle;
 
     GameObject Mng_SyncVar = null;
-    SC_SyncVar_BreakdownTest sc_syncvar;
+    SC_SyncVar_BreakdownDisplay sc_syncvar;
 
     public int index;
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
                 Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
 
             if (Mng_SyncVar != null)
-                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
 
         }
         if (sc_syncvar != null)
