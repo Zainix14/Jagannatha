@@ -5,15 +5,18 @@ using UnityEngine;
 public class SC_CurTargetCheck : MonoBehaviour
 {
 
-    public bool b_OnKoa = false;
-    public Collider Curtarget = null;
+    [SerializeField]
+    SC_AimToTarget AimIndicatorSC;
+
+    bool b_OnKoa = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 10 && !b_OnKoa)
         {
             b_OnKoa = true;
-            Curtarget = other;
+            AimIndicatorSC.SetTarget(other);
+            AimIndicatorSC.b_TargetKoa = true;
         }        
     }
 
@@ -22,6 +25,7 @@ public class SC_CurTargetCheck : MonoBehaviour
         if (other.gameObject.layer == 10 && b_OnKoa)
         {
             b_OnKoa = false;
+            AimIndicatorSC.b_TargetKoa = false;
         }
     }
 
