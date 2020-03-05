@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 {
 
+    float timer = 0f;
+
+    public GameObject go_timer;
+
+    TextMeshPro textComponent;
+
+    Coroutine coroutineTimer;
+
+
+
 
     private void Update()
-    {/*
+    {
         if (Input.GetKeyDown(KeyCode.B))
         {
             LaunchGlobalAlert();
@@ -15,27 +26,37 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             StopGlobalAlert();
-        }*/
+        }
+    }
+
+    IEnumerator Timer()
+    {
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            textComponent.text = "babar"/*((Mathf.Round(timer*100))/100).ToString()*/;
+
+            yield return null;
+        }
+
+        Debug.Log("Damage/shake/FX");
+
     }
 
     public void LaunchGlobalAlert()
+
     {
-        SC_BreakdownAlert[] childs = transform.GetComponentsInChildren<SC_BreakdownAlert>();
-        foreach (SC_BreakdownAlert child in childs)
-        {
-            child.LaunchAlert();
-        }
+        timer = 10f;
+        coroutineTimer = StartCoroutine("Timer");
+
 
     }
 
 
     public void StopGlobalAlert()
     {
-        SC_BreakdownAlert[] childs = transform.GetComponentsInChildren<SC_BreakdownAlert>();
-        foreach (SC_BreakdownAlert child in childs)
-        {
-            child.StopAlert();
-        }
+        StopCoroutine(coroutineTimer);
 
     }
 
