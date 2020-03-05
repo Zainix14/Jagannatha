@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SC_SyncVar_BreakdownTest : NetworkBehaviour
+public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour
 {
     /// <summary>
     /// //////////////////////////////////List struct des Sliders

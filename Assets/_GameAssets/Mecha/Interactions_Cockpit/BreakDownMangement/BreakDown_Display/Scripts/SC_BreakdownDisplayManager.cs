@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
+public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 {
 
     #region Singleton
 
-    private static SC_BreakdownTestManager _instance;
-    public static SC_BreakdownTestManager Instance { get { return _instance; } }
+    private static SC_BreakdownDisplayManager _instance;
+    public static SC_BreakdownDisplayManager Instance { get { return _instance; } }
 
     #endregion
     public bool b_BreakdownTest = false;
@@ -48,7 +48,7 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             StartNewBreakdown(2);
         }
@@ -60,10 +60,10 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log(GameObject.Find("Slider").GetComponent<ViveGripExample_Slider>().desiredValue);
+            RepairSingleBreakdownDebug();
         }
-    }
 
+    }
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
@@ -89,7 +89,6 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
                 if (noBreakdown == 0)
                 {
                     newBreakdown = false;
-  
                     break;
                 }             
 
@@ -136,7 +135,6 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
         else if (n_BreakdownValue ==0 && b_BreakdownTest)
         {
 
-
             b_BreakdownTest = false;
             sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
@@ -170,6 +168,22 @@ public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
+    }
+
+    public void RepairSingleBreakdownDebug()
+    {
+        List<GameObject> list = new List<GameObject>();
+        for(int i =0; i< interactible.Length;i++)
+        {
+            if(interactible[i].GetComponent<IInteractible>().isBreakdown())
+            {
+                list.Add(interactible[i]);
+            }
+        }
+
+
+        int rnd = Random.Range(0, list.Count);
+        list[rnd].GetComponent<IInteractible>().Repair();
     }
 
 

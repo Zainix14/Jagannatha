@@ -40,7 +40,7 @@ public class FlockSettings : ScriptableObject
     [Tooltip("Index 0 : Roam | Index 1 : Attack")]
     public BoidSettings[] boidSettings;
 
-    public int spawnTimer = 5;
+    public int spawnTimer = 10;
 
     public bool spawnRandom = false;
 
