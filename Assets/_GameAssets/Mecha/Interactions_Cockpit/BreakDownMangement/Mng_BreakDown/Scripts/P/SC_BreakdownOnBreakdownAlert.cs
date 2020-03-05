@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// TIMER s'affichant pour les pannes totales
+/// </summary>
+
 public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 {
-
+    public float timerDuration = 10f;
     float timer = 0f;
 
     public GameObject go_timer;
 
-    TextMeshPro textComponent;
+    public TextMeshPro textComponent;
 
     Coroutine coroutineTimer;
+
+    public float clignFreq = 1f;
+
+    float timerStorage=0;
 
 
 
@@ -29,26 +37,108 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
         }
     }
 
-    IEnumerator Timer()
+    IEnumerator Timer(float duration)
     {
+        go_timer.SetActive(true);
+        textComponent.color = Color.white;
+
+        timer = duration;
+
         while (timer > 0)
         {
             timer -= Time.deltaTime;
 
-            textComponent.text = "babar"/*((Mathf.Round(timer*100))/100).ToString()*/;
+            if (timer < 0)
+                timer = 0;
+
+            if (go_timer.activeSelf == true && timer % clignFreq > Random.Range(0f, 1))
+            {
+                go_timer.SetActive(false);
+                timerStorage = timer;
+
+            }
+
+
+            if (go_timer.activeSelf == false && timerStorage-timer > 0.02f)
+                go_timer.SetActive(true);
+
+
+            textComponent.SetText(((Mathf.Round(timer*100))/100).ToString());
 
             yield return null;
         }
 
+
+
         Debug.Log("Damage/shake/FX");
 
+        for (int i = 0; i<4; i++)
+        {
+            yield return new WaitForSeconds(.4f);
+            go_timer.SetActive(false);
+            if (i < 3)
+                textComponent.SetText(textComponent.text + "0");
+            else
+            {
+                textComponent.SetText("XXXX");
+                textComponent.color = Color.red;
+            }
+                
+            
+           yield return new WaitForSeconds(.4f);
+            go_timer.SetActive(true);
+
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        textComponent.SetText("ERROR");
+
+        yield return new WaitForSeconds(1.5f);
+
+        textComponent.SetText("ALERT");
+
+        yield return new WaitForSeconds(0.8f);
+
+        textComponent.SetText("CANNOT");
+
+        yield return new WaitForSeconds(0.6f);
+
+        textComponent.SetText("REBOOT");
+
+        yield return new WaitForSeconds(0.8f);
+
+        textComponent.SetText("CRITICAL");
+
+        yield return new WaitForSeconds(0.6f);
+
+        textComponent.SetText("FAILURE");
+
+
+        for (int i = 0; i < 9; i++)
+        {
+            go_timer.SetActive(false);
+            yield return new WaitForSeconds(0.1f);
+            go_timer.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        go_timer.SetActive(false);
+
+
+
     }
+
+
 
     public void LaunchGlobalAlert()
 
     {
-        timer = 10f;
-        coroutineTimer = StartCoroutine("Timer");
+
+        coroutineTimer = StartCoroutine("Timer", timerDuration);
 
 
     }
@@ -58,6 +148,7 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
     {
         StopCoroutine(coroutineTimer);
 
+        go_timer.SetActive(false);
     }
 
 }
