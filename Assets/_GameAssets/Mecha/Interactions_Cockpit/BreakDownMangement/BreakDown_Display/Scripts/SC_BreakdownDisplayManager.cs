@@ -55,7 +55,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RepairBreakdownDebug();
+            RepairSingleBreakdownDebug();
         }
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -89,7 +89,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
                 if (noBreakdown == 0)
                 {
                     newBreakdown = false;
-  
                     break;
                 }             
 
@@ -169,6 +168,12 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
+    }
+
+    public void RepairSingleBreakdownDebug()
+    {
+        int rnd = Random.Range(0, interactible.Length - 1);
+        interactible[rnd].GetComponent<IInteractible>().Repair();
     }
 
 
