@@ -48,22 +48,22 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             StartNewBreakdown(2);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RepairSingleBreakdownDebug();
+            RepairBreakdownDebug();
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log(GameObject.Find("Slider").GetComponent<ViveGripExample_Slider>().desiredValue);
+            RepairSingleBreakdownDebug();
         }
-    }
 
+    }
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
@@ -172,8 +172,18 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     public void RepairSingleBreakdownDebug()
     {
-        int rnd = Random.Range(0, interactible.Length - 1);
-        interactible[rnd].GetComponent<IInteractible>().Repair();
+        List<GameObject> list = new List<GameObject>();
+        for(int i =0; i< interactible.Length;i++)
+        {
+            if(interactible[i].GetComponent<IInteractible>().isBreakdown())
+            {
+                list.Add(interactible[i]);
+            }
+        }
+
+
+        int rnd = Random.Range(0, list.Count);
+        list[rnd].GetComponent<IInteractible>().Repair();
     }
 
 
