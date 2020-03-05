@@ -12,7 +12,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     #endregion
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
-    public SC_BreakdownTestManager Mng_BreakDownTest;
+    public SC_BreakdownDisplayManager Mng_BreakDownTest;
     private SC_BreakdownOnBreakdownAlert SC_BreakDownAlert;
 
     // ecrans d'erreur

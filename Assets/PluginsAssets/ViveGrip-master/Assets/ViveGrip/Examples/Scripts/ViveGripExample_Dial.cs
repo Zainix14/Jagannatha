@@ -8,7 +8,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
     private HingeJoint joint;
 
     private GameObject Mng_SyncVar;
-    private SC_SyncVar_BreakdownTest sc_syncvar;
+    private SC_SyncVar_BreakdownDisplay sc_syncvar;
     public GameObject LocalBreakdownMng;
 
     [SerializeField]
@@ -61,7 +61,7 @@ public class ViveGripExample_Dial : MonoBehaviour, IInteractible
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
 
     }
 

@@ -14,7 +14,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
 
     private GameObject Mng_SyncVar;
-    private SC_SyncVar_BreakdownTest sc_syncvar;
+    private SC_SyncVar_BreakdownDisplay sc_syncvar;
     public GameObject LocalBreakdownMng;
 
     public int index;
@@ -47,7 +47,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
 
        
     }
@@ -65,7 +65,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (Input.GetKeyDown(KeyCode.P))
         {
             /*
-            SC_SyncVar_BreakdownTest.Pow babar = sc_syncvar.m_pows[index] ;
+            SC_SyncVar_BreakdownDisplay.Pow babar = sc_syncvar.m_pows[index] ;
             babar.setPower(3);
             Debug.Log("Valeur de babar  : " + babar.power);
             Debug.Log("wesh : " + sc_syncvar.m_pows[index].power);

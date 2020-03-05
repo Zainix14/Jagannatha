@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_BreakdownTestManager : MonoBehaviour, IF_BreakdownManager
+public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 {
 
     #region Singleton
 
-    private static SC_BreakdownTestManager _instance;
-    public static SC_BreakdownTestManager Instance { get { return _instance; } }
+    private static SC_BreakdownDisplayManager _instance;
+    public static SC_BreakdownDisplayManager Instance { get { return _instance; } }
 
     #endregion
     public bool b_BreakdownTest = false;
