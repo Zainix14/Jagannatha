@@ -9,6 +9,14 @@ using TMPro;
 
 public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_BreakdownOnBreakdownAlert _instance;
+    public static SC_BreakdownOnBreakdownAlert Instance { get { return _instance; } }
+
+    #endregion
+
     public float timerDuration = 10f;
     float timer = 0f;
 
@@ -22,10 +30,21 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
     float timerStorage=0;
 
+    private void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
 
-
-    private void Update()
+        private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {

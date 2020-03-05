@@ -106,11 +106,15 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
             if (b_BreakEngine)
-                // SC_BreakDownAlert.LaunchGlobalAlert();
+            {
+                //SC_BreakDownAlert.LaunchGlobalAlert();
                 sc_screens_controller.PanneAll();
 
+            }
+                
+
             else if (!b_BreakEngine)
-                // SC_BreakDownAlert.StopGlobalAlert();
+                SC_BreakDownAlert.StopGlobalAlert();
                 sc_screens_controller.RepairAll();
 
             if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
@@ -119,6 +123,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
                     WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
             }
+            
             
         }
 
