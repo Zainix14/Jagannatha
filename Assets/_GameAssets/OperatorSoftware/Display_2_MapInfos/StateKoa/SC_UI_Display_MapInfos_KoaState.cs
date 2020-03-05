@@ -36,6 +36,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     public float optiPercent;
     public float fKoaLife;
+    public float curfKoaLife;
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
@@ -93,6 +94,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         {
             if (activated)
             {
+                curfKoaLife = fKoaLife;
                 sensi[0].text = (koaSensibility.x + 1).ToString();
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
@@ -105,6 +107,12 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 optiWeapon.text = GetOptiPerCent().ToString() + "%";
 
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
+
+                if (curfKoaLife != fKoaLife)
+                {
+                    SC_UI_Display_MapInfos_KOAShake.Instance.ShakeIt(5f,0.5f);
+                    
+                }
             }
 
         }
@@ -119,10 +127,15 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         float y = Mathf.Abs((int)gunSensibility.y - (int)koaSensibility.y);
         float z = Mathf.Abs((int)gunSensibility.z - (int)koaSensibility.z);
 
-        float power = 18 - (x + y + z);
+        float ecart = x + y + z;
 
-        float powerPerCent = (power / 18) * 100;
-        
+
+        float power = 6 - ecart;
+
+        if (power < 0) power = 0;
+        float powerPerCent = (power / 6) * 100;
+
+
         return (int)powerPerCent;
     }
 }

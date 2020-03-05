@@ -139,7 +139,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
             {
                 if (curNbPanne < tab_screens_renderers.Length)
                 {
-                    int rand = Random.Range(0, tab_screens_renderers.Length - 1);
+                    int rand = Random.Range(0, tab_screens_renderers.Length);
                     if (tab_screens_renderers[rand].enabled)
                     {
 
