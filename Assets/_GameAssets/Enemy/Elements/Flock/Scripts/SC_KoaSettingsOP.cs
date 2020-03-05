@@ -28,6 +28,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     Color32[] Tab_colorSpawn;
 
     public bool bSelected;
+
+    [SerializeField]
+    GameObject VFX_koadeath;
+
+    
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -60,7 +65,12 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         this.curKoaLife = curLife;
         if(curLife <= 0)
         {
-                //PLAY TON GROS FEEDBACK FDP
+            Debug.Log("ca me gave a lfinsbroooooooooown, cest la culture de la bétrave son nom c'est alphonse Brooooown, LA PUISSANCE DU PORT DU HAVRE");
+            var vfx = Instantiate(VFX_koadeath);
+            vfx.transform.position = transform.position;
+            vfx.GetComponent<ParticleSystem>().startColor = Tab_color[type];
+            vfx.GetComponent<ParticleSystemRenderer>().trailMaterial.color = Tab_color[type];
+            vfx.GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -122,27 +132,12 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         {
             GetComponent<MeshRenderer>().material = Tab_mat[0];
         }
-        switch (type)
-        {
-            case 0:
-                if(spawn)
-                newColor = Tab_color[0];
-                else
-                newColor = Tab_colorSpawn[0];
-                break;
-            case 1:
-                if(spawn)
-                newColor = Tab_color[1];
-                else
-                newColor = Tab_colorSpawn[1];
-                break;
-            case 2:
-                if (spawn)
-                newColor = Tab_color[2];
-                else
-                newColor = Tab_colorSpawn[2];
-                break;
-        }
+
+        if (spawn)
+            newColor = Tab_color[type];
+        else
+            newColor = Tab_colorSpawn[type];
+
         GetComponent<MeshRenderer>().material.color = newColor;
     }
 }
