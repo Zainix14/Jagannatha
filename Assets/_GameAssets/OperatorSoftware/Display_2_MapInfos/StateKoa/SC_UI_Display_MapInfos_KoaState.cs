@@ -30,11 +30,15 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     [SerializeField]
     Text koaLife;
 
+    //[SerializeField]
+    //Text optiWeapon;
+
     [SerializeField]
-    Text optiWeapon;
+    Image[] barOpti = new Image[4];
 
 
     public float optiPercent;
+
     public float fKoaLife;
     public float curfKoaLife;
     public Vector3 koaSensibility;
@@ -58,6 +62,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         activated = false;
@@ -98,14 +103,15 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 sensi[0].text = (koaSensibility.x + 1).ToString();
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
+
+
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
                 koaLife.text = fKoaLife.ToString();
-                //Debug.Log(fKoaLife);
+
                 sliderLifeKoa.value = fKoaLife;
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
-            
-                optiWeapon.text = GetOptiPerCent().ToString() + "%";
 
+                displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
 
                 if (curfKoaLife != fKoaLife)
@@ -137,5 +143,42 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
 
         return (int)powerPerCent;
+    }
+
+    void displayOptiBar()
+    {
+        
+        if (GetOptiPerCent() > 0)
+        {
+            barOpti[0].enabled = true;
+        }
+        else
+        {
+            barOpti[0].enabled = false;
+        }
+        if (GetOptiPerCent() >= 25)
+        {
+            barOpti[1].enabled = true;
+        }
+        else
+        {
+            barOpti[1].enabled = false;
+        }
+        if (GetOptiPerCent() >= 50)
+        {
+            barOpti[2].enabled = true;
+        }
+        else
+        {
+            barOpti[2].enabled = false;
+        }
+        if (GetOptiPerCent() >= 75)
+        {
+            barOpti[3].enabled = true;
+        }
+        else
+        {
+            barOpti[3].enabled = false;
+        }
     }
 }
