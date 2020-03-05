@@ -58,6 +58,10 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
 
         this.curKoaLife = curLife;
+        if(curLife <= 0)
+        {
+                //PLAY TON GROS FEEDBACK FDP
+        }
     }
 
     public void SetKoamaxLife(int maxLife)
