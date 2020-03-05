@@ -136,7 +136,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         else if (n_BreakdownValue ==0 && b_BreakdownTest)
         {
 
-
             b_BreakdownTest = false;
             sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
