@@ -31,9 +31,7 @@ public class SC_AimToTarget : MonoBehaviour
             this.transform.position = ViewIndicator.transform.position;
         else if (b_TargetKoa)
         {
-            //this.transform.position = Vector3.Lerp(this.transform.position, TargetPos.position, LerpFactor);
-            Debug.Log(TargetPos);
-            this.transform.position = TargetPos.position;
+            this.transform.position = Vector3.Lerp(this.transform.position, TargetPos.position, LerpFactor);
         }
             
     }

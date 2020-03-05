@@ -7,6 +7,8 @@ public class SC_CurTargetCheck : MonoBehaviour
 
     [SerializeField]
     SC_AimToTarget AimIndicatorSC;
+    [SerializeField]
+    SC_CrossHairMove CrossHairSC;
 
     bool b_OnKoa = false;
 
@@ -17,6 +19,8 @@ public class SC_CurTargetCheck : MonoBehaviour
             b_OnKoa = true;
             AimIndicatorSC.SetTarget(other);
             AimIndicatorSC.b_TargetKoa = true;
+            CrossHairSC.b_TargetKoa = true;
+            CrossHairSC.GoTo(1);
         }        
     }
 
@@ -26,6 +30,8 @@ public class SC_CurTargetCheck : MonoBehaviour
         {
             b_OnKoa = false;
             AimIndicatorSC.b_TargetKoa = false;
+            CrossHairSC.b_TargetKoa = false;
+            CrossHairSC.GoTo(0);
         }
     }
 
