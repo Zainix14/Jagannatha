@@ -5237,6 +5237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   factor: 2
+  Tab_mat:
+  - {fileID: 2100000, guid: ccbe4a5f7f0fb3d488bb660328277cca, type: 2}
+  - {fileID: 2100000, guid: 1ee74b8ce26cf914687fe553a7478d0e, type: 2}
   Tab_color:
   - serializedVersion: 2
     rgba: 4294948355
@@ -5244,9 +5247,14 @@ MonoBehaviour:
     rgba: 4278426367
   - serializedVersion: 2
     rgba: 4278273277
-  color:
-    serializedVersion: 2
-    rgba: 0
+  Tab_colorSpawn:
+  - serializedVersion: 2
+    rgba: 4294967040
+  - serializedVersion: 2
+    rgba: 4278435839
+  - serializedVersion: 2
+    rgba: 4278283261
+  bSelected: 0
 --- !u!135 &9208746028493815770
 SphereCollider:
   m_ObjectHideFlags: 0

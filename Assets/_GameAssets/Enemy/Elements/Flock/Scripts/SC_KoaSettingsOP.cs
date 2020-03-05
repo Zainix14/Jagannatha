@@ -18,11 +18,16 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     float curKoaLife;
 
 
+
+
+    [SerializeField]
+    Material[] Tab_mat;
     [SerializeField]
     Color32[] Tab_color;
+    [SerializeField]
+    Color32[] Tab_colorSpawn;
 
-    public Color32 color;
-
+    public bool bSelected;
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -32,9 +37,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
         this.timeBeforeSpawn = spawnTimer;
         initialScale = transform.localScale;
         initialRadius = GetComponent<SphereCollider>().radius;
-        GetComponent<MeshRenderer>().material.color = Color.yellow;
         spawn = false;
         timer = 0;
+
+
+
     }
 
     public void SetKoaType(int type)
@@ -86,6 +93,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     {
         if(!spawn)
         {
+            SetColor();
             float scale = ((initialScale.x*factor / timeBeforeSpawn) * Time.deltaTime);
             float radius = ((initialRadius / factor / timeBeforeSpawn) * Time.deltaTime);
             transform.localScale += new Vector3(scale, scale, scale);
@@ -93,31 +101,44 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
             timer += Time.deltaTime;
             if (timer >= timeBeforeSpawn)
             {
-                Color32 newColor = Color.white;
-                switch(type)
-                {
-                    case 0:
-                        newColor = Tab_color[0];
-                        break;
-                    case 1:
-                        newColor = Tab_color[1];
-                        break;
-                    case 2:
-                        newColor = Tab_color[2];
-                        break;
-                }
-                GetComponent<MeshRenderer>().material.color = newColor;
-                color = newColor;
                 spawn = true;
-
-            }
-
-           
+                SetColor();
+            }           
         }
     }
-    public void ResetColor()
-    {
-        GetComponent<MeshRenderer>().material.color = color;
-    }
 
+    public void SetColor()
+    {
+        Color32 newColor = Color.white;
+        if(bSelected)
+        {
+            GetComponent<MeshRenderer>().material = Tab_mat[1];
+        }
+        else
+        {
+            GetComponent<MeshRenderer>().material = Tab_mat[0];
+        }
+        switch (type)
+        {
+            case 0:
+                if(spawn)
+                newColor = Tab_color[0];
+                else
+                newColor = Tab_colorSpawn[0];
+                break;
+            case 1:
+                if(spawn)
+                newColor = Tab_color[1];
+                else
+                newColor = Tab_colorSpawn[1];
+                break;
+            case 2:
+                if (spawn)
+                newColor = Tab_color[2];
+                else
+                newColor = Tab_colorSpawn[2];
+                break;
+        }
+        GetComponent<MeshRenderer>().material.color = newColor;
+    }
 }
