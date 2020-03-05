@@ -310,7 +310,6 @@ public class SC_KoaManager : MonoBehaviour
             if (KoaLife <= 0)
             {
                 AnimDestroy();
-                syncVarKoa.IsDead();
             }
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
             
