@@ -26,6 +26,7 @@ public class SC_KoaManager : MonoBehaviour
     char koaCharID;
     int koaNumID;
     string koaID;
+    int type;
 
     bool regeneration = false;
     float recoveryDuration;
@@ -81,19 +82,19 @@ public class SC_KoaManager : MonoBehaviour
             case FlockSettings.AttackType.none:
 
                 koaCharID = 'A';
-
+                type = 0;
                 break;
 
             case FlockSettings.AttackType.Bullet:
 
                 koaCharID = 'B';
-
+                type = 1;
                 break;  
 
             case FlockSettings.AttackType.Laser:
 
                 koaCharID = 'C';
-
+                type = 2;
                 break;
         }
         koaNumID = SC_BoidPool.Instance.GetFlockID();
@@ -120,7 +121,7 @@ public class SC_KoaManager : MonoBehaviour
             vfx_Hit = _koa.GetComponent<ParticleSystem>();
 
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
-            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID,KoaLife,maxLife,(int)curFlockSettings.attackType, newGuide);
+            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID,KoaLife,maxLife, type, newGuide);
             syncVarKoa.curboidNumber = spawnCount;
             syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }
@@ -140,7 +141,7 @@ public class SC_KoaManager : MonoBehaviour
             boid.transform.forward = Random.insideUnitSphere; //Rotation random
 
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, this);
+            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, this,type);
         }
 
         //Instantie le Koa
@@ -281,7 +282,7 @@ public class SC_KoaManager : MonoBehaviour
                 {
                     rnd = Random.Range(1, _guideList.Count);
                 }
-                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity,this);
+                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity,this,type);
                 return;
             }
         }
