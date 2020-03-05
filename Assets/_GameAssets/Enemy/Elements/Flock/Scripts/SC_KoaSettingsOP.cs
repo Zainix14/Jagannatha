@@ -18,6 +18,10 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
     float curKoaLife;
 
 
+    [SerializeField]
+    Color32[] Tab_color;
+
+    public Color32 color;
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -89,26 +93,31 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
             timer += Time.deltaTime;
             if (timer >= timeBeforeSpawn)
             {
-                Color newColor = Color.white;
+                Color32 newColor = Color.white;
                 switch(type)
                 {
                     case 0:
-                        newColor = Color.magenta;
+                        newColor = Tab_color[0];
                         break;
                     case 1:
-                        newColor = Color.red;
+                        newColor = Tab_color[1];
                         break;
                     case 2:
-                        newColor = Color.cyan;
+                        newColor = Tab_color[2];
                         break;
                 }
                 GetComponent<MeshRenderer>().material.color = newColor;
+                color = newColor;
                 spawn = true;
 
             }
 
            
         }
+    }
+    public void ResetColor()
+    {
+        GetComponent<MeshRenderer>().material.color = color;
     }
 
 }
