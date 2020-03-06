@@ -14,6 +14,8 @@ public class SC_CrossHairMove : MonoBehaviour
 
     [SerializeField]
     GameObject AimIndicator;
+    [SerializeField]
+    GameObject ViewIndicator;
 
     public bool b_IsVR = false;
     public bool b_IsFPS = false;
@@ -21,11 +23,14 @@ public class SC_CrossHairMove : MonoBehaviour
     public bool b_TargetKoa = false;
     public float f_CrossHairDist = 2f;
 
+    [SerializeField]
     bool b_OnKoa = false;
     [Range(0,2)]
     public float f_DurationLerp = 1f;
 
+    [SerializeField]
     bool b_GoToKoaRun = false;
+    [SerializeField]
     bool b_GoToViewRun = false;
 
     // Start is called before the first frame update
@@ -148,7 +153,7 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToKoa()
     {
 
-        //Debug.Log("GoToKoa");
+        Debug.Log("GoToKoa");
         b_GoToKoaRun = true;
 
         float i = 0.0f;
@@ -174,7 +179,7 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToView()
     {
 
-        //Debug.Log("GoToView");
+        Debug.Log("GoToView");
         b_GoToViewRun = true;
 
         float i = 0.0f;
@@ -185,7 +190,7 @@ public class SC_CrossHairMove : MonoBehaviour
 
             i += Time.deltaTime * rate;
 
-            Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
+            Vector3 hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
             transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, i);
 
             yield return 0;

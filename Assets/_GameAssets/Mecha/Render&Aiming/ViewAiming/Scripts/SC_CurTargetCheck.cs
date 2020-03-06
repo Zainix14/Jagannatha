@@ -31,7 +31,8 @@ public class SC_CurTargetCheck : MonoBehaviour
     }
 
     public void Reset()
-    {      
+    {
+        Debug.Log("reset");
         b_OnKoa = false;
         AimIndicatorSC.SetTarget(null);
         AimIndicatorSC.b_TargetKoa = false;
