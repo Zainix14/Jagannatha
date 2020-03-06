@@ -12,10 +12,18 @@ public class SC_CrossHairMove : MonoBehaviour
     public Camera Cam_Mech = null;
     public Camera Cam_Cockpit = null;
 
+    [SerializeField]
+    GameObject AimIndicator;
+
     public bool b_IsVR = false;
     public bool b_IsFPS = false;
 
+    public bool b_TargetKoa = false;
     public float f_CrossHairDist = 2f;
+
+    bool b_OnKoa = false;
+    [SerializeField]
+    float f_DurationLerp = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -86,22 +94,95 @@ public class SC_CrossHairMove : MonoBehaviour
     void UpdatePos()
     {
 
-        //Debug.Log("SC_CrossHairMove - UpdatePos - Enter");
-
+        //Manual
         Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
 
         if (hitCockpit != null)
         {
 
-            //Debug.Log("SC_CrossHairMove - UpdatePos - Hit");
-
-            hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
-
-            transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            if (b_TargetKoa && b_OnKoa)
+            {
+                //Snap
+                hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            }
+            else if (!b_TargetKoa && !b_OnKoa)
+            {
+                //Manual
+                hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            }
 
             transform.LookAt(Cam_Mech.transform);
 
         }
+
+    }
+
+    /// <summary>
+    /// 0 = ToView
+    /// 1 = ToKoa
+    /// </summary>
+    /// <param name="nCor"></param>
+    public void GoTo(int nCor)
+    {
+        switch (nCor)
+        {
+            case 0:
+                StartCoroutine(GoToView());
+                break;
+
+            case 1:
+                StartCoroutine(GoToKoa());
+                break;
+        }
+    }
+
+    IEnumerator GoToKoa()
+    {
+
+        float i = 0.0f;
+        float rate = 1.0f / f_DurationLerp;
+
+        while (i < 1.0)
+        {
+
+            i += Time.deltaTime * rate;
+
+            Vector3 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, i);
+
+            yield return 0;
+
+        }
+
+        b_OnKoa = true;
+
+        StopCoroutine("GoToKoa");
+        
+    }
+
+    IEnumerator GoToView()
+    {
+
+        float i = 0.0f;
+        float rate = 1.0f / f_DurationLerp;
+
+        while (i < 1.0)
+        {
+
+            i += Time.deltaTime * rate;
+
+            Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, i);
+
+            yield return 0;
+
+        }
+
+        b_OnKoa = false;
+
+        StopCoroutine("GoToView");
 
     }
 

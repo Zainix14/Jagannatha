@@ -307,14 +307,22 @@ public class SC_KoaManager : MonoBehaviour
         {
             KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
             syncVarKoa.SetCurLife(KoaLife);
-            if (KoaLife <= 0) AnimDestroy();
+            if (KoaLife <= 0)
+            {
+                AnimDestroy();
+            }
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
+            
             vfx_Hit.Play();
         }
 
         ///DEBUG
         if (gunSensitivity.x == 100)
+        {
+            syncVarKoa.SetCurLife(0);
             AnimDestroy();
+        }
+
     }
 
     void AnimDestroy()
