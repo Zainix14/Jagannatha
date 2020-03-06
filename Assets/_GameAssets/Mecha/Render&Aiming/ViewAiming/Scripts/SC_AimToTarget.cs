@@ -29,7 +29,7 @@ public class SC_AimToTarget : MonoBehaviour
     {
         if (!b_TargetKoa)
             this.transform.position = ViewIndicator.transform.position;
-        else if (b_TargetKoa)
+        else if (b_TargetKoa && TargetPos != null)
         {
             this.transform.position = Vector3.Lerp(this.transform.position, TargetPos.position, LerpFactor);
         }

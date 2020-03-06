@@ -22,8 +22,8 @@ public class SC_CrossHairMove : MonoBehaviour
     public float f_CrossHairDist = 2f;
 
     bool b_OnKoa = false;
-    [SerializeField]
-    float f_DurationLerp = 0.5f;
+    [Range(0,2)]
+    public float f_DurationLerp = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -141,6 +141,8 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToKoa()
     {
 
+        //Debug.Log("GoToKoa");
+
         float i = 0.0f;
         float rate = 1.0f / f_DurationLerp;
 
@@ -164,6 +166,8 @@ public class SC_CrossHairMove : MonoBehaviour
 
     IEnumerator GoToView()
     {
+
+        //Debug.Log("GoToView");
 
         float i = 0.0f;
         float rate = 1.0f / f_DurationLerp;
