@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +12,7 @@ public class FlockSettings : ScriptableObject
     {
         Bullet,
         Laser,
+        Kamikaze,
 
         none
     }
@@ -48,10 +49,10 @@ public class FlockSettings : ScriptableObject
     public Vector3 SpawnPosition;
 
 
-    [Range(10,200)]
+    [Range(10,100)]
     public int boidSpawn;
 
-    [Range(10,200)]
+    [Range(10,100)]
     public int maxBoid;
 
     [Tooltip("boids per min")]

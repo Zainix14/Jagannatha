@@ -89,7 +89,7 @@ public class SC_FlockManager : MonoBehaviour
     /// <summary>
     /// Initialisation du Flock
     /// </summary>
-    public void InitializeFlock(FlockSettings newFlockSettings,float NormalizedT,Vector3Int sensitivity)
+    public void InitializeFlock(FlockSettings newFlockSettings,BezierSolution.BezierSpline spawnSpline,Vector3Int sensitivity)
     {
         flockSettings = newFlockSettings;
         
@@ -127,7 +127,6 @@ public class SC_FlockManager : MonoBehaviour
         }
 
         Invoke("ActivateFlock", flockSettings.spawnTimer);
-        
     }
     #endregion
     //---------------------------------------------------------------------//
