@@ -27,17 +27,13 @@ public class SC_CurTargetCheck : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 10 && b_OnKoa)
-        {
-            b_OnKoa = false;
-            AimIndicatorSC.b_TargetKoa = false;
-            CrossHairSC.b_TargetKoa = false;
-            CrossHairSC.GoTo(0);
-        }
+            Reset();
     }
 
     public void Reset()
-    {
+    {      
         b_OnKoa = false;
+        AimIndicatorSC.SetTarget(null);
         AimIndicatorSC.b_TargetKoa = false;
         CrossHairSC.b_TargetKoa = false;
         CrossHairSC.GoTo(0);
