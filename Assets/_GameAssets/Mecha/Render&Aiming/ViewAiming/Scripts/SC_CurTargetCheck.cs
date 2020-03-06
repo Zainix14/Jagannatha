@@ -35,4 +35,12 @@ public class SC_CurTargetCheck : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        b_OnKoa = false;
+        AimIndicatorSC.b_TargetKoa = false;
+        CrossHairSC.b_TargetKoa = false;
+        CrossHairSC.GoTo(0);
+    }
+
 }

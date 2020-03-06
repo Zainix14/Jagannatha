@@ -25,6 +25,9 @@ public class SC_CrossHairMove : MonoBehaviour
     [Range(0,2)]
     public float f_DurationLerp = 1f;
 
+    bool b_GoToKoaRun = false;
+    bool b_GoToViewRun = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,8 @@ public class SC_CrossHairMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(b_GoToKoaRun);
 
         if (Mng_CheckList == null)
             GetCheckListManager();
@@ -129,11 +134,13 @@ public class SC_CrossHairMove : MonoBehaviour
         switch (nCor)
         {
             case 0:
-                StartCoroutine(GoToView());
+                if(!b_GoToViewRun)
+                    StartCoroutine(GoToView());
                 break;
 
             case 1:
-                StartCoroutine(GoToKoa());
+                if (!b_GoToKoaRun)
+                    StartCoroutine(GoToKoa());
                 break;
         }
     }
@@ -142,6 +149,7 @@ public class SC_CrossHairMove : MonoBehaviour
     {
 
         //Debug.Log("GoToKoa");
+        b_GoToKoaRun = true;
 
         float i = 0.0f;
         float rate = 1.0f / f_DurationLerp;
@@ -159,8 +167,7 @@ public class SC_CrossHairMove : MonoBehaviour
         }
 
         b_OnKoa = true;
-
-        StopCoroutine("GoToKoa");
+        b_GoToKoaRun = false;
         
     }
 
@@ -168,6 +175,7 @@ public class SC_CrossHairMove : MonoBehaviour
     {
 
         //Debug.Log("GoToView");
+        b_GoToViewRun = true;
 
         float i = 0.0f;
         float rate = 1.0f / f_DurationLerp;
@@ -185,8 +193,7 @@ public class SC_CrossHairMove : MonoBehaviour
         }
 
         b_OnKoa = false;
-
-        StopCoroutine("GoToView");
+        b_GoToViewRun = false;
 
     }
 

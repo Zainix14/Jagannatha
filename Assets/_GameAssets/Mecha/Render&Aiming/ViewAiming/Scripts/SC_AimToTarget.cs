@@ -7,6 +7,8 @@ public class SC_AimToTarget : MonoBehaviour
 
     [SerializeField]
     GameObject ViewIndicator;
+    [SerializeField]
+    SC_CurTargetCheck AimIndicSC;
 
     [Range(0,1)]
     public float LerpFactor;
@@ -27,13 +29,18 @@ public class SC_AimToTarget : MonoBehaviour
 
     void Move()
     {
+
         if (!b_TargetKoa)
             this.transform.position = ViewIndicator.transform.position;
+
         else if (b_TargetKoa && TargetPos != null)
         {
             this.transform.position = Vector3.Lerp(this.transform.position, TargetPos.position, LerpFactor);
         }
-            
+
+        else if (b_TargetKoa && TargetPos == null)
+            AimIndicSC.Reset();
+
     }
 
 }
