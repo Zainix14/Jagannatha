@@ -44,9 +44,12 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
-    public Slider sliderLifeKoa;
+    [SerializeField]
+    Slider sliderLifeKoa;
 
-
+    [SerializeField]
+    Slider sliderLifeKoaSecondary;
+    bool secondaryBarChecker = false;
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -109,6 +112,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 koaLife.text = fKoaLife.ToString();
 
                 sliderLifeKoa.value = fKoaLife;
+                lifeBarSecondary();
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
 
                 displayOptiBar();
@@ -180,5 +184,28 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         {
             barOpti[3].enabled = false;
         }
+    }
+
+    void lifeBarSecondary()
+    {
+        if(sliderLifeKoa.value != sliderLifeKoaSecondary.value)
+        {
+            StartCoroutine(secondBarDown());
+        }
+        else
+        {
+            secondaryBarChecker = false;
+        }
+        if(secondaryBarChecker)
+        {
+            sliderLifeKoaSecondary.value = Mathf.MoveTowards(sliderLifeKoaSecondary.value, sliderLifeKoa.value, 10* Time.deltaTime);
+        }
+
+    }
+
+    IEnumerator secondBarDown()
+    {
+        yield return new WaitForSeconds(1);
+        secondaryBarChecker = true;
     }
 }
