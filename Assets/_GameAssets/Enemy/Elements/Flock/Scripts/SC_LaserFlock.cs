@@ -6,24 +6,6 @@ using UnityEngine.Networking;
 public class SC_LaserFlock : NetworkBehaviour
 {
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //JE TOUCHE LE PLAYER 
-        if (other.tag == "Player")
-        {
-            //https://www.youtube.com/watch?v=GBvfiCdk-jc&list=PLbsiLVHJCH9iHz_HDGirFtRUtKbdc9czK
-            Sc_ScreenShake.Instance.ShakeIt(0.01f, 0.2f);
-            //https://www.youtube.com/watch?v=nfWlot6h_JM
-            CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_Impact", false, 0.1f);
-        }
-    }
-
-    public void FireLaser(float laserTime)
-    {
-
-
-
     [SerializeField]
     float f_Scale_OP = 2f;
 
