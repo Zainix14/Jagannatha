@@ -8,16 +8,20 @@ public class SC_BulletFlock : NetworkBehaviour
 
     public bool b_IsFire = false;
     Rigidbody rb = null;
+    [SerializeField]
+    float f_Scale_OP = 2f;
+    Vector3 ScaleOP;
 
     void Start()
     {
         GetRigidBody();
+        ScaleOP = new Vector3(f_Scale_OP, f_Scale_OP, f_Scale_OP);
     }
 
     void Update()
     {
         if(isServer && b_IsFire)
-            RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, this.transform.localScale);
+            RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, ScaleOP);
     }
 
     private void OnTriggerEnter(Collider other)
