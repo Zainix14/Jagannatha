@@ -45,6 +45,7 @@ public class SC_FlockManager : MonoBehaviour
 
     bool inAttack;
     bool isActive;
+    bool isSpawning;
 
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
@@ -84,7 +85,6 @@ public class SC_FlockManager : MonoBehaviour
     {
         bezierWalkerSpeed = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
         bezierWalkerTime = GetComponent<BezierSolution.BezierWalkerWithTime>();
-        //pathBehavior = GetComponent<SC_PathBehavior>();
         flockWeaponManager = GetComponent<SC_FlockWeaponManager>();
     }
 
@@ -98,16 +98,18 @@ public class SC_FlockManager : MonoBehaviour
         
 
         inAttack = false;
+        isSpawning = true;
         _Player = GameObject.FindGameObjectWithTag("Player");
-      
+
+        bezierWalkerTime.SetNewSpline(spawnSpline);
+        bezierWalkerTime.NormalizedT = 0;
+        bezierWalkerTime.travelTime = flockSettings.spawnTimer;
+
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list
         _curCurveDistanceList = new List<Vector3>(); // Instanciation de la list de distance sur les courbes pour chaque guide
 
-        bezierWalkerTime.SetNewSpline(spawnSpline);
-        bezierWalkerTime.NormalizedT = 0;
-        bezierWalkerTime.travelTime = flockSettings.spawnTimer;
 
         _BoidSettings = flockSettings.boidSettings;
 
@@ -143,8 +145,21 @@ public class SC_FlockManager : MonoBehaviour
     #region Update
     void Update()
     {
+        if(isSpawning && !isActive)
+        {
 
-        if(isActive)
+            bezierWalkerTime.Execute(Time.deltaTime);
+        }
+
+        if(isActive && isSpawning)
+        {
+            float speed = 0.5f;
+            Vector3 target = new Vector3(_Player.transform.position.x, 120, _Player.transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, target, speed);
+            if (transform.position.y >= 60)
+                isSpawning = false;
+        }
+        if(isActive && !isSpawning)
         {
             AttackUpdate();
 
@@ -158,8 +173,6 @@ public class SC_FlockManager : MonoBehaviour
 
 
         }    
-        else
-            bezierWalkerTime.Execute(Time.deltaTime);
     }
 
     /// <summary>
@@ -279,8 +292,8 @@ public class SC_FlockManager : MonoBehaviour
     void ActivateFlock()
     {
         isActive = true;
+        
         _SCKoaManager.ActivateKoa();
-        transform.position += new Vector3(0, 70, 0);
 
     }
 

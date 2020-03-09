@@ -30,7 +30,6 @@ public class SC_WaveManager : MonoBehaviour
     [SerializeField]
     GameObject _MultiFlockManagerPrefab; //Préfab du mutli flock manager, instantié lors d'un rassemblment de plusieurs flock
 
-    [SerializeField]
     BezierSolution.BezierSpline[] spawnSplines;
 
 
@@ -65,6 +64,11 @@ public class SC_WaveManager : MonoBehaviour
         
         resetVariables();
 
+    }
+
+    void Start()
+    {
+        spawnSplines = SC_SpawnInfo.Instance.GetBezierSplines();
     }
 
     void Update()
