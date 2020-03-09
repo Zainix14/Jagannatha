@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f853b98b2e469d4682403b69d26ee96, type: 3}
   m_Name: Wave1_1
   m_EditorClassIdentifier: 
-  initialSpawnFlockType:
+  initialSpawnFlock:
   - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
-  initialSpawnFlockQuantity: 01000000
-  timeBetweenSpawnInitial: 0
+  - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
+  - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
+  - {fileID: 11400000, guid: e2539410742a3654494ab6ce864428da, type: 2}
+  - {fileID: 11400000, guid: 7d8fcc4ac73bd2b47a2739cf3805a44f, type: 2}
+  - {fileID: 11400000, guid: 7d8fcc4ac73bd2b47a2739cf3805a44f, type: 2}
+  - {fileID: 11400000, guid: 7d8fcc4ac73bd2b47a2739cf3805a44f, type: 2}
+  - {fileID: 11400000, guid: 7d8fcc4ac73bd2b47a2739cf3805a44f, type: 2}
+  initialSpawnPosition: 0000000001000000020000000300000004000000050000000600000007000000
+  timeBetweenSpawnInitial: 1
   backup: 0
   timeBetweenSpawnBackup: 0
-  backupSpawnFlockType: []
-  backupSpawnFlockQuantity: 
+  backupSpawnFlock: []
+  backupSpawnPosition: 
   timeBeforeBackup: 0
   flockLeftBeforeBackup: 0
