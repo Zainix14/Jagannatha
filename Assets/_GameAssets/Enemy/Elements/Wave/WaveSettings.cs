@@ -8,14 +8,14 @@ public class WaveSettings : ScriptableObject
 
     [Header("Inital Spawn")]
     public FlockSettings[] initialSpawnFlock;
-    public BezierSolution.BezierSpline[] initialSpawnPosition;
+    public int[] initialSpawnPosition;
     public float timeBetweenSpawnInitial;
 
     [Header("Backup")]
     public bool backup;
     public float timeBetweenSpawnBackup;
     public FlockSettings[] backupSpawnFlock;
-    public BezierSolution.BezierSpline[] backupSpawnPosition;
+    public int[] backupSpawnPosition;
 
     [Tooltip("-1 if no timer condition wanted")]
     public float timeBeforeBackup;

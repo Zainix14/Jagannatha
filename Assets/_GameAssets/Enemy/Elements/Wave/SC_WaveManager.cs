@@ -30,6 +30,10 @@ public class SC_WaveManager : MonoBehaviour
     [SerializeField]
     GameObject _MultiFlockManagerPrefab; //Préfab du mutli flock manager, instantié lors d'un rassemblment de plusieurs flock
 
+    [SerializeField]
+    BezierSolution.BezierSpline[] spawnSplines;
+
+
     List<GameObject> _FlockList; //Contient la totalité des flocks présents dans le jeu
 
 
@@ -248,10 +252,11 @@ public class SC_WaveManager : MonoBehaviour
         _FlockList.Add(curFlock);
 
         BezierSolution.BezierSpline spawnSpline;
-        if (backup) spawnSpline = _curWaveSettings.backupSpawnPosition[index];
+        if (backup) spawnSpline = spawnSplines[_curWaveSettings.backupSpawnPosition[index]];
+        else spawnSpline = spawnSplines[_curWaveSettings.initialSpawnPosition[index]];
 
         //Initialize flock
-        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings,_curWaveSettings.initialSpawnPosition[index],newSensitivity);
+        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, spawnSpline, newSensitivity);
     }
 
 
