@@ -79,8 +79,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (Mng_Checklist == null)
             Mng_Checklist = GameObject.FindGameObjectWithTag("Mng_CheckList");
 
-        if(SC_BreakDownAlert == null)
-            SC_BreakDownAlert = Mng_BreakDownAlert.GetComponent<SC_BreakdownOnBreakdownAlert>();
 
         if (Mng_Checklist != null && MoveSystem == null)
             MoveSystem = Mng_Checklist.GetComponent<SC_CheckList_Mecha>().GetMechCollider();
@@ -110,7 +108,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
-        if(SC_BreakDownAlert == null || MoveSystem == null || RenderSystem == null || WeaponSystem == null)
+        if( MoveSystem == null || RenderSystem == null || WeaponSystem == null)
             GetReferences();
 
 
@@ -126,7 +124,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
-                    SC_BreakDownAlert.LaunchGlobalAlert();
+                    SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
 
                 //on fout tous les systemes en panne à balle
                 sc_screens_controller.PanneAll();
@@ -145,7 +143,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
-                SC_BreakDownAlert.StopGlobalAlert();
+                SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
 
             //on répare touuuus les systemes
             sc_screens_controller.RepairAll();

@@ -87,7 +87,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         #region Rotation Horizontale
 
-        f_TorqueImpulseZ = Input.GetAxis("Rotation") * f_RotationSpeedZ;
+        f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
 
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
