@@ -40,10 +40,11 @@ public class SC_main_breakdown_validation : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))
         {
+            Debug.Log("alaide");
             this.GetComponent<Animator>().SetBool("BOUGE", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             this.GetComponent<Animator>().SetBool("BOUGE", false);
         }
