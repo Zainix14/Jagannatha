@@ -5,6 +5,9 @@ using UnityEngine;
 public class SC_CrossHairMove : MonoBehaviour
 {
 
+    [SerializeField]
+    bool b_Snapping = true;
+
     bool b_AlreadyCheck = false;
 
     public GameObject Mng_CheckList = null;
@@ -110,13 +113,13 @@ public class SC_CrossHairMove : MonoBehaviour
         if (hitCockpit != null)
         {
 
-            if (b_TargetKoa && b_OnKoa)
+            if (b_TargetKoa && b_OnKoa && b_Snapping)
             {
                 //Snap
                 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
                 transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
             }
-            else if (!b_TargetKoa && !b_OnKoa)
+            else if ( (!b_TargetKoa && !b_OnKoa) || !b_Snapping)
             {
                 //Manual
                 hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
@@ -136,18 +139,19 @@ public class SC_CrossHairMove : MonoBehaviour
     /// <param name="nCor"></param>
     public void GoTo(int nCor)
     {
-        switch (nCor)
-        {
-            case 0:
-                if(!b_GoToViewRun)
-                    StartCoroutine(GoToView());
-                break;
+        if(b_Snapping)
+            switch (nCor)
+            {
+                case 0:
+                    if(!b_GoToViewRun)
+                        StartCoroutine(GoToView());
+                    break;
 
-            case 1:
-                if (!b_GoToKoaRun)
-                    StartCoroutine(GoToKoa());
-                break;
-        }
+                case 1:
+                    if (!b_GoToKoaRun)
+                        StartCoroutine(GoToKoa());
+                    break;
+            }
     }
 
     IEnumerator GoToKoa()
