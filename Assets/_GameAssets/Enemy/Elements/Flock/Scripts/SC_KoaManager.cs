@@ -319,7 +319,7 @@ public class SC_KoaManager : MonoBehaviour
         ///DEBUG
         if (gunSensitivity.x == 100)
         {
-            syncVarKoa.SetCurLife(0);
+            //syncVarKoa.SetCurLife(0);
             AnimDestroy();
         }
 
