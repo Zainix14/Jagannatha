@@ -28,11 +28,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [SerializeField]
     bool b_InvertAxe = false;  
     [SerializeField]
-    Transform TargetTRS;     
-    [SerializeField]
-    float f_RotationSpeedX = 1.0f;
-    [SerializeField]
-    float f_LerpRotX = 1f;
+    Transform TargetTRS;
+    [Range(0.0f, 1.0f)]
+    public float f_RotationSpeedX = 0.5f;
+    [Range(0.0f, 1.0f)]
+    public float f_LerpRotX = 1f;
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     float f_ImpulseX;
@@ -48,13 +48,10 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     void Move()
     {
 
-        //donne une impulsion en proportion à l'axe du joystick
+        #region Rotation Verticale
+
         f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
 
-        f_TorqueImpulseZ = Input.GetAxis("Rotation") * f_RotationSpeedZ;
-        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
-
-        //Rotation Verticale
         if (f_ImpulseX != 0)
         {
 
@@ -69,7 +66,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                 if (f_ImpulseX < 0 && TargetTRS.localRotation.x < 0)
                     TargetTRS.localRotation *= Quaternion.Lerp(TargetTRS.localRotation, xQuaternion, f_LerpRotX);
 
-            }               
+            }
 
             else if (b_InvertAxe)
             {
@@ -86,7 +83,13 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-        //Rotation Horizontale
+        #endregion
+
+        #region Rotation Horizontale
+
+        f_TorqueImpulseZ = Input.GetAxis("Rotation") * f_RotationSpeedZ;
+        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
+
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
@@ -107,13 +110,12 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                     break;
 
                 case RotationMode.Higher:
-
                     float absTorque = Mathf.Abs(f_TorqueImpulseZ);
                     float absTrans = Mathf.Abs(f_TransImpulseZ);
                     if (absTorque >= absTrans)
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
                     else
-                        zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);  
+                        zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
                     transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
@@ -138,6 +140,8 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
             }
 
         }
+
+        #endregion
 
     }
 
