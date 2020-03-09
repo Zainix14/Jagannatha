@@ -39,11 +39,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            SetNewBreakdown(5);
-            Debug.Log(offPercentage);
-        }
+      
         if(offPercentage > 0)
         {
             offTime = offPercentage / frequency;
@@ -67,7 +63,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    public void SetNewBreakdown(int percent)
+    public void SetNewBreakdown(int percent, float frequency = 10)
     {
         offPercentage += percent;
     }
