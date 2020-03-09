@@ -34,11 +34,6 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
     }
 
 
-    void Start()
-    {
-      
-    }
-
     // Update is called once per frame
     void Update()
     {
