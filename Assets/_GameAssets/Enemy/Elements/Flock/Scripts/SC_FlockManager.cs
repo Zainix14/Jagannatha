@@ -118,8 +118,6 @@ public class SC_FlockManager : MonoBehaviour
         _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0],newFlockSettings,sensitivity);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
-
-
         _splineTab = new BezierSolution.BezierSpline[_BoidSettings.Length];
 
         for (int i = 0; i < _BoidSettings.Length; i++)
@@ -127,11 +125,13 @@ public class SC_FlockManager : MonoBehaviour
             if (_BoidSettings[i].spline != null)
             {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
-                /*
+
                 _splineTab[i].transform.position = transform.position;
-                _splineTab[i].transform.rotation = Random.rotation;*/
+                _splineTab[i].transform.rotation = Random.rotation;
             }
         }
+
+
         Invoke("ActivateFlock", flockSettings.spawnTimer);
         
     }
@@ -157,7 +157,18 @@ public class SC_FlockManager : MonoBehaviour
             Vector3 target = new Vector3(_Player.transform.position.x, 120, _Player.transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
             if (transform.position.y >= 60)
+            {
+
+                for (int i = 0; i < _BoidSettings.Length; i++)
+                {
+                    if (_splineTab[i] != null)
+                    {
+                        _splineTab[i].transform.position = transform.position;
+                        _splineTab[i].transform.rotation = Random.rotation;
+                    }
+                }
                 isSpawning = false;
+            }
         }
         if(isActive && !isSpawning)
         {
