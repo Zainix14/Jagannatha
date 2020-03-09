@@ -21,6 +21,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     public GameObject[] interactible;
 
+    public int CurNbOfBreakdown = 0;
 
     bool canBreak = true;
     // Start is called before the first frame update
@@ -60,7 +61,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            RepairSingleBreakdownDebug();
+            Debug.Log(interactible.Length);
+            Debug.Log(CurNbOfBreakdown);
         }
 
         
@@ -78,7 +80,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
         {
-            if (newBreakdown && !b_BreakdownTest)
+            if (newBreakdown && !b_BreakdownTest && !SC_MainBreakDownManager.Instance.b_BreakEngine)
             {
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
@@ -102,7 +104,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
                 else
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
-
+                    //on itere le nombre de pannes total
+                    CurNbOfBreakdown++;
                     //on met en panne un écran
                     sc_screens_controller.PutOneEnPanne();
 
@@ -114,6 +117,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
                 }
             }
         }
+        
     }
 
     public void CheckBreakdown()
@@ -128,6 +132,9 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             }
         }
 
+        //on update le nombre de pannes
+        CurNbOfBreakdown = n_BreakdownValue;
+        Debug.Log("NB DE PANNES ECRANS : " + CurNbOfBreakdown);
 
         if (n_BreakdownValue > 5 && !b_BreakdownTest)
         {

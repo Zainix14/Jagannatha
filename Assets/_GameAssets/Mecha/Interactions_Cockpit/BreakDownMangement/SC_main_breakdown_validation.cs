@@ -84,8 +84,8 @@ public class SC_main_breakdown_validation : MonoBehaviour
 
     public void Validate()
     {
-
-
+        //On check pour savoir si tous les systemes sont déjà réparés en additionant leurs compteurs
+        if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
         isValidated = true;
         SC_MainBreakDownManager.Instance.CheckBreakdown();
 
