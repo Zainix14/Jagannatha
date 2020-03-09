@@ -43,7 +43,7 @@ public class SC_CrossHairMove : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(b_GoToKoaRun);
+        //Debug.Log(b_GoToKoaRun);
 
         if (Mng_CheckList == null)
             GetCheckListManager();
@@ -153,7 +153,7 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToKoa()
     {
 
-        Debug.Log("GoToKoa");
+        //Debug.Log("GoToKoa");
         b_GoToKoaRun = true;
 
         float i = 0.0f;
@@ -179,7 +179,7 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToView()
     {
 
-        Debug.Log("GoToView");
+        //Debug.Log("GoToView");
         b_GoToViewRun = true;
 
         float i = 0.0f;
