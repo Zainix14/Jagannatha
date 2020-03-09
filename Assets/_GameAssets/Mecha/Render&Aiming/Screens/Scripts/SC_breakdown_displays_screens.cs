@@ -185,6 +185,7 @@ public class SC_breakdown_displays_screens : MonoBehaviour
         {
             SetScreenState(i, false);
         }
+
     }
 
     //fonction qui change state l'ecran demandé des deux cotes true == panne false == repare

@@ -21,6 +21,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     public GameObject[] interactible;
 
+    public int CurNbOfBreakdown = 0;
 
     bool canBreak = true;
     // Start is called before the first frame update
@@ -60,8 +61,11 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            RepairSingleBreakdownDebug();
+            Debug.Log(interactible.Length);
+            Debug.Log(CurNbOfBreakdown);
         }
+
+        
 
     }
     void Demarage()
@@ -76,7 +80,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
         {
-            if (newBreakdown && !b_BreakdownTest)
+            if (newBreakdown && !b_BreakdownTest && !SC_MainBreakDownManager.Instance.b_BreakEngine)
             {
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
@@ -100,7 +104,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
                 else
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
-
+                    //on itere le nombre de pannes total
+                    CurNbOfBreakdown++;
                     //on met en panne un écran
                     sc_screens_controller.PutOneEnPanne();
 
@@ -112,6 +117,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
                 }
             }
         }
+        
     }
 
     public void CheckBreakdown()
@@ -126,6 +132,9 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             }
         }
 
+        //on update le nombre de pannes
+        CurNbOfBreakdown = n_BreakdownValue;
+
 
         if (n_BreakdownValue > 5 && !b_BreakdownTest)
         {
@@ -136,19 +145,12 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
 
             b_BreakdownTest = false;
-            sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
-
-            //changement de state du tuto
-            if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-            {
-                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
-            }
-            
+  
         }
 
         //Permet de régler les demi-pannes d'écrans
-        if (n_BreakdownValue == 0)
+        else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
         {
             sc_screens_controller.RepairAll();
 
