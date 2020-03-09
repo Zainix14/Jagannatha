@@ -290,38 +290,42 @@ public class SC_KoaManager : MonoBehaviour
 
     public void GetHit(Vector3 gunSensitivity)
     {
-   
-        float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
-        float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
-        float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
-
-        float ecart = x + y + z;
-        
-    
-        float power = 6 - ecart;
-
-        if (power < 0) power = 0;
-        float powerPerCent = (power / 6 )* 100;
-
-        if(powerPerCent > 0)
+        if(KoaLife > 0)
         {
-            KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
-            syncVarKoa.SetCurLife(KoaLife);
-            if (KoaLife <= 0)
+            float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
+            float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
+            float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
+
+            float ecart = x + y + z;
+
+
+            float power = 6 - ecart;
+
+            if (power < 0) power = 0;
+            float powerPerCent = (power / 6) * 100;
+
+            if (powerPerCent > 0)
             {
+                KoaLife -= (int)((powerPerCent * maxLife) / 100) / 3;
+                syncVarKoa.SetCurLife(KoaLife);
+                if (KoaLife <= 0)
+                {
+                    AnimDestroy();
+                }
+                SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
+
+                vfx_Hit.Play();
+            }
+
+            ///DEBUG
+            if (gunSensitivity.x == 100)
+            {
+                KoaLife = 0;
+                syncVarKoa.SetCurLife(0);
                 AnimDestroy();
             }
-            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Koa);
-            
-            vfx_Hit.Play();
         }
-
-        ///DEBUG
-        if (gunSensitivity.x == 100)
-        {
-            //syncVarKoa.SetCurLife(0);
-            AnimDestroy();
-        }
+        
 
     }
 

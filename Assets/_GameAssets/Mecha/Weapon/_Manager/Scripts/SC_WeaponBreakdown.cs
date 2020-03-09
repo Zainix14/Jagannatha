@@ -39,19 +39,21 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
+      
         if(offPercentage > 0)
         {
             offTime = offPercentage / frequency;
             onPercentage = 100 - offPercentage;
             onTime = onPercentage / frequency;
             curTimer += Time.deltaTime;
+
             if(curTimer >= onTime && bCanFire == true)
             {
                 curTimer = 0;
                 bCanFire = false;
             }
 
-            else if(curTimer >= offTime && bCanFire == false)
+            if(curTimer >= offTime && bCanFire == false)
             {
                 curTimer = 0;
                 bCanFire = true;
@@ -61,7 +63,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    public void SetNewBreakdown(int percent)
+    public void SetNewBreakdown(int percent, float frequency = 10)
     {
         offPercentage += percent;
     }

@@ -130,8 +130,14 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public void Trigger()
     {
-        if (SC_WeaponBreakdown.Instance.CanFire())
+        if(SC_WeaponBreakdown.Instance.CanFire())
+        {
             Fire();
+        }
+        else
+        {
+            LaserFB.DiseableLaser();
+        }
     }
 
     void Fire()
