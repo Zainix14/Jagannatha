@@ -30,6 +30,9 @@ public class SC_WaveManager : MonoBehaviour
     [SerializeField]
     GameObject _MultiFlockManagerPrefab; //Préfab du mutli flock manager, instantié lors d'un rassemblment de plusieurs flock
 
+    BezierSolution.BezierSpline[] spawnSplines;
+
+
     List<GameObject> _FlockList; //Contient la totalité des flocks présents dans le jeu
 
 
@@ -61,6 +64,11 @@ public class SC_WaveManager : MonoBehaviour
         
         resetVariables();
 
+    }
+
+    void Start()
+    {
+        spawnSplines = SC_SpawnInfo.Instance.GetBezierSplines();
     }
 
     void Update()
@@ -96,20 +104,12 @@ public class SC_WaveManager : MonoBehaviour
     IEnumerator SpawnInitialFlock()
     {
         _FlockList.Clear();
-        int curIndex = 0;
 
-
-        for (int i = 0; i < _curWaveSettings.initialSpawnFlockType.Length; i++)
+        for (int i = 0; i < _curWaveSettings.initialSpawnFlock.Length; i++)
         {
-            
-            for (int j = 0; j < _curWaveSettings.initialSpawnFlockQuantity[i]; j++)
-            {
-                
-                SpawnNewFlock(_curWaveSettings.initialSpawnFlockType[i], curIndex);
-                curIndex++;
-                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);
-                
-            }
+                SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
+       
+                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
         }
         StopCoroutine(SpawnInitialFlock());
         curBackupTimer = 0;
@@ -126,16 +126,11 @@ public class SC_WaveManager : MonoBehaviour
 
     IEnumerator SpawnBackupFlock()
     {
-        int curIndex = 0;
-        for (int i = 0; i < _curWaveSettings.backupSpawnFlockType.Length; i++)
+        for (int i = 0; i < _curWaveSettings.backupSpawnFlock.Length; i++)
         {
-            for (int j = 0; j < _curWaveSettings.backupSpawnFlockQuantity[i]; j++)
-            {
-                SpawnNewFlock(_curWaveSettings.backupSpawnFlockType[i], curIndex, true);
-                curIndex++;
+                SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
+       
                 yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
-
-            }
         }
         StopCoroutine(SpawnBackupFlock());
     }
@@ -206,7 +201,7 @@ public class SC_WaveManager : MonoBehaviour
     /// <summary>
     /// Invoque un nouveau Flock
     /// </summary>
-    void SpawnNewFlock(FlockSettings flockSettings,float index, bool backup = false)
+    void SpawnNewFlock(FlockSettings flockSettings,int index, bool backup = false)
     {
         Vector3Int newSensitivity = new Vector3Int(0, 0, 0);
         Vector3Int baseSensitivity = new Vector3Int(0, 0, 0);
@@ -260,13 +255,12 @@ public class SC_WaveManager : MonoBehaviour
         //Add new flock to the flock list
         _FlockList.Add(curFlock);
 
-
-        float normalizedT = (1f / _curWaveSettings.getInitialFlockNumber()) * index;
-        if(backup)
-            normalizedT = (1f / _curWaveSettings.getBackupFlockNumber()) * index;
+        BezierSolution.BezierSpline spawnSpline;
+        if (backup) spawnSpline = spawnSplines[_curWaveSettings.backupSpawnPosition[index]];
+        else spawnSpline = spawnSplines[_curWaveSettings.initialSpawnPosition[index]];
 
         //Initialize flock
-        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, normalizedT,newSensitivity);
+        curFlock.GetComponent<SC_FlockManager>().InitializeFlock(flockSettings, spawnSpline, newSensitivity);
     }
 
 
