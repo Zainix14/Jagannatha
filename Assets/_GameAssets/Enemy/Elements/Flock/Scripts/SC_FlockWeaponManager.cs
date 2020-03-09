@@ -138,9 +138,15 @@ public class SC_FlockWeaponManager : MonoBehaviour
                 case FlockSettings.AttackType.Kamikaze:
 
                     transform.position = Vector3.Lerp(transform.position, target.position, flockSettings.speedToTarget*Time.deltaTime);
-                    if(Vector3.Distance(transform.position,target.position) < 1)
+                    if(Vector3.Distance(transform.position,target.position) < 20)
                     {
+                        isFiring = false;
                         this.GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,100,100));
+                        Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
+                        SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
+                        SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
+                        //https://www.youtube.com/watch?v=kXYiU_JCYtU
+
                     }
                     break;
 

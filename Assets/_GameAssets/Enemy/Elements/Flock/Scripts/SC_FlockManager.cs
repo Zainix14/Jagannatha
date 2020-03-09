@@ -255,7 +255,7 @@ public class SC_FlockManager : MonoBehaviour
         {
             if (inAttack == false) startAttackTimer += Time.deltaTime;
 
-            if (startAttackTimer >= flockSettings.timeBetweenAttacks)
+            if (startAttackTimer >= flockSettings.timeBetweenAttacks && inAttack == false)
             {
                 inAttack = true;
                 StartNewPath(PathType.AttackPlayer);
@@ -383,6 +383,7 @@ public class SC_FlockManager : MonoBehaviour
 
     void Reassemble()
     {
+  
         foreach (Transform guide in _GuideList)
         {
             if (!GameObject.Equals(guide, transform))
