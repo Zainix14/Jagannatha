@@ -5,21 +5,14 @@ using UnityEngine;
 public class SC_main_breakdown_validation : MonoBehaviour
 {
 
-    public GameObject posUp;
-    public GameObject posDown;
 
-    Vector3 vectorUp;
-    Vector3 vectorDown;
 
     // Start is called before the first frame update
     void Start()
     {
-        vectorDown = posDown.transform.position;
-        vectorUp= posUp.transform.position;
-
 
     }
-
+    /*
     IEnumerator getTo(Vector3 destination)
     {
 
@@ -40,19 +33,20 @@ public class SC_main_breakdown_validation : MonoBehaviour
         }
         
     }
-
+    */
         // Update is called once per frame
         void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            StartCoroutine("getTo", vectorDown);
+            Debug.Log("alaide");
+            this.GetComponent<Animator>().SetBool("BOUGE", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            StartCoroutine("getTo", vectorUp);
+            this.GetComponent<Animator>().SetBool("BOUGE", false);
         }
 
     }
