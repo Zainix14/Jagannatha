@@ -61,13 +61,13 @@ public class SC_FlockWeaponManager : MonoBehaviour
     public void Initialize(FlockSettings curFlockSettings)
     {
         flockSettings = curFlockSettings;
-        switch ((int)flockSettings.attackType)
+        switch (flockSettings.attackType)
         {
-            case 0: //Bullet
+            case FlockSettings.AttackType.Bullet: //Bullet
                 InitBulletPool();
                 break;
 
-            case 1: //Laser
+            case FlockSettings.AttackType.Laser: //Laser
                 InitLaser();
                 break;
         }
@@ -104,9 +104,9 @@ public class SC_FlockWeaponManager : MonoBehaviour
         if(isFiring)
         {
             timer += Time.deltaTime;
-            switch ((int)flockSettings.attackType)
+            switch (flockSettings.attackType)
             {
-                case 0: //Bullet
+                case FlockSettings.AttackType.Bullet: //Bullet
                     if(timer >= 1/flockSettings.fireRate )
                     {
                         FireBullet();
@@ -118,7 +118,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
                     }
                     break;
 
-                case 1: //Laser
+                case FlockSettings.AttackType.Laser: //Laser
 
                     if(!laserFire)
                     {
@@ -135,6 +135,14 @@ public class SC_FlockWeaponManager : MonoBehaviour
                     //https://www.youtube.com/watch?v=y1_SCfLxLFA
                     break;
 
+                case FlockSettings.AttackType.Kamikaze:
+
+                    transform.position = Vector3.Lerp(transform.position, target.position, flockSettings.speedToTarget*Time.deltaTime);
+                    if(Vector3.Distance(transform.position,target.position) < 1)
+                    {
+                        this.GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,100,100));
+                    }
+                    break;
 
             }
         }

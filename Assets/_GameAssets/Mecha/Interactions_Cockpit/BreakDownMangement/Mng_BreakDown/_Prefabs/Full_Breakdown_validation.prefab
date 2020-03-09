@@ -77,8 +77,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0337b430c5587b4db37c620214c9563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posUp: {fileID: 2106433894458579062}
-  posDown: {fileID: 7996693207667012183}
+  isValidated: 0
+--- !u!114 &1382091308163991632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7240450527744369436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1298835dfdb33454989f0e490b2eb6dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viveGripEvent: 0
+  attachedFunction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 166436416699761318}
+        m_MethodName: Validate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7996693207667012183
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +233,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6065902767878470762}
     m_Modifications:
+    - target: {fileID: 1232815546253619099, guid: a8430bbcce126bc4298e3028b3d42914,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5374266209615129311, guid: a8430bbcce126bc4298e3028b3d42914,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -262,6 +293,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8516544321089874310, guid: a8430bbcce126bc4298e3028b3d42914,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8771905638318972763, guid: a8430bbcce126bc4298e3028b3d42914,
         type: 3}
       propertyPath: m_Name
@@ -272,6 +308,12 @@ PrefabInstance:
 --- !u!4 &6403786821820358725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5374266209615129311, guid: a8430bbcce126bc4298e3028b3d42914,
+    type: 3}
+  m_PrefabInstance: {fileID: 1318403000901864090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7240450527744369436 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8516544321089874310, guid: a8430bbcce126bc4298e3028b3d42914,
     type: 3}
   m_PrefabInstance: {fileID: 1318403000901864090}
   m_PrefabAsset: {fileID: 0}

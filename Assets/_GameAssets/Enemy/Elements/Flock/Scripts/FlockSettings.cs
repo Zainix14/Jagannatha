@@ -17,6 +17,17 @@ public class FlockSettings : ScriptableObject
         none
     }
 
+    public AttackFocus attackFocus ;
+
+    public enum AttackFocus
+    {
+        Display,
+        Movement,
+        Weapon,
+
+        none
+    }
+
     [Tooltip("in Second")]
     public int timeBetweenAttacks;
 
@@ -35,6 +46,10 @@ public class FlockSettings : ScriptableObject
     [Tooltip("in Second, avant de retourner en roam")]
     public float activeDuration = 0;
 
+    [Header("Kamikaze")]
+    public float speedToTarget;
+
+
     [Header("Boids")]
 
 
@@ -42,7 +57,6 @@ public class FlockSettings : ScriptableObject
     public BoidSettings[] boidSettings;
 
     public int spawnTimer = 10;
-
 
 
     [Range(10,100)]
