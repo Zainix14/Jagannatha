@@ -58,7 +58,7 @@ public class SC_main_breakdown_validation : MonoBehaviour
         void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             Validate();
 

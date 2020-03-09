@@ -112,9 +112,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if(SC_BreakDownAlert == null || MoveSystem == null || RenderSystem == null || WeaponSystem == null)
             GetReferences();
-        Debug.Log("CheckBreakdownMain");
-        Debug.Log(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown);
-        Debug.Log(SC_main_breakdown_validation.Instance.isValidated);
+
 
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche une panne complete
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown > nbOfBreakDownBeforeTotalBreak)
@@ -169,6 +167,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
             /*
+             * 
+             * Ancien code qui donne envie de se foutre une balle
 
 
             if (b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)

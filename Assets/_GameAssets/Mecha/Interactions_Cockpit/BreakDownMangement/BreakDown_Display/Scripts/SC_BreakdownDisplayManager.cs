@@ -134,7 +134,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
-        Debug.Log("NB DE PANNES ECRANS : " + CurNbOfBreakdown);
+
 
         if (n_BreakdownValue > 5 && !b_BreakdownTest)
         {
