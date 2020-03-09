@@ -63,9 +63,13 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    public void SetNewBreakdown(int percent, float frequency = 10)
+    public void SetNewBreakdown(int percent, float frequency = 25)
     {
         offPercentage += percent;
+        if (offPercentage > 100)
+            offPercentage = 100;
+
+        this.frequency = frequency;
     }
 
     public void EndBreakdown()
