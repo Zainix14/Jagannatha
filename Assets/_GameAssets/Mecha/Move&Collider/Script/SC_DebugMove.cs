@@ -41,6 +41,7 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
 
         Quaternion zQuaternion = new Quaternion();
 
+        /*
         if (Input.GetKey(KeyCode.R))
         {
             GetComponent<Rigidbody>().AddForce(transform.forward * f_Speed, ForceMode.Impulse);
@@ -49,6 +50,7 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
         {
             GetComponent<Rigidbody>().AddForce(transform.forward * (f_Speed * -1), ForceMode.Impulse);
         }
+        */
 
         if (Input.GetKey(KeyCode.Q))
         {

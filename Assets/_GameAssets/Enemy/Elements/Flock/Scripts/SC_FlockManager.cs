@@ -261,11 +261,8 @@ public class SC_FlockManager : MonoBehaviour
                 StartNewPath(PathType.AttackPlayer);
                 startAttackTimer = 0;
             }
-            if (inAttack)
-            {
-                transform.LookAt(_Player.transform);
-            }
         }
+        transform.LookAt(_Player.transform);
     }
     #endregion
     //---------------------------------------------------------------------//
@@ -291,10 +288,6 @@ public class SC_FlockManager : MonoBehaviour
 
                 StartNewBehavior(1);
                 flockWeaponManager.StartFire();
-                if(flockSettings.attackType == FlockSettings.AttackType.Laser)
-                {
-                    bezierWalkerSpeed.speed = 0;
-                }
 
                 break;
         }
