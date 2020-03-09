@@ -10,7 +10,9 @@ public class SC_RaycastRealWorld : MonoBehaviour
     public GameObject Cam_Map;
     private Ray ray;
     public GameObject objectOnclic = null;
+    GameObject OldObjectClic;
     public Text debugText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +26,6 @@ public class SC_RaycastRealWorld : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             castRayInWorld();
-        }
-        if(objectOnclic != null)
-        {
-            //Debug.Log("élément selectionné : " + objectOnclic.name);
         }
         
     }
@@ -48,10 +46,19 @@ public class SC_RaycastRealWorld : MonoBehaviour
             {
                 if (hit.collider.GetComponent<SC_KoaSettingsOP>() != null)
                 {
-
+                    if (objectOnclic != null)
+                    {
+                        OldObjectClic = objectOnclic;
+                        var OldSelect = OldObjectClic.GetComponent<SC_KoaSettingsOP>();
+                        OldSelect.bSelected = false;
+                        OldSelect.SetColor();
+                    }
+                        
                     SC_UI_Display_MapInfos_KoaState.Instance.SetNewKoaSettings(hit.collider.GetComponent<SC_KoaSettingsOP>());
                     objectOnclic = hit.collider.gameObject;
-        
+                    var script = objectOnclic.GetComponent<SC_KoaSettingsOP>();
+                    script.bSelected = true;
+                    script.SetColor();
                 }
          
 
@@ -74,8 +81,8 @@ public class SC_RaycastRealWorld : MonoBehaviour
             else
             {
                 //Debug.Log("Clic on nothing on Map");
-                objectOnclic = null;
-                SC_UI_Display_MapInfos_KoaState.Instance.activated = false;
+                //objectOnclic = null;
+                //SC_UI_Display_MapInfos_KoaState.Instance.activated = false;
             }
         }
     }

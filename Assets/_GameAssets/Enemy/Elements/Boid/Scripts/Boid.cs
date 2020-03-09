@@ -20,7 +20,9 @@ public class Boid : MonoBehaviour {
     Vector3 initScale;
 
     [SerializeField]
-    Material[] mats;
+    Material[] M_tabHit;
+    [SerializeField]
+    Material[] M_tabType;
     MeshRenderer meshRenderer;
 
     Vector3 deathPos;
@@ -73,13 +75,14 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="target"></param>
-    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager)
+    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager, int type)
     {
         this.koaManager = koaManager;
         destructionType = DestructionType.none;
         curFlick = 0;
         transform.localScale = initScale;
-        meshRenderer.material = mats[0];
+        meshRenderer.material = M_tabType[type];
+        M_tabHit[0] = M_tabType[type];
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
         this.sensitivity = sensitivity;
@@ -313,12 +316,12 @@ public class Boid : MonoBehaviour {
         {
             if (curFlick % 2 == 0)
             {
-                meshRenderer.material = mats[1];
+                meshRenderer.material = M_tabHit[1];
             }
             else
             {
 
-                meshRenderer.material = mats[0];
+                meshRenderer.material = M_tabHit[0];
             }
 
 

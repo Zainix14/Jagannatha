@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +12,18 @@ public class FlockSettings : ScriptableObject
     {
         Bullet,
         Laser,
+        Kamikaze,
+
+        none
+    }
+
+    public AttackFocus attackFocus ;
+
+    public enum AttackFocus
+    {
+        Display,
+        Movement,
+        Weapon,
 
         none
     }
@@ -34,24 +46,23 @@ public class FlockSettings : ScriptableObject
     [Tooltip("in Second, avant de retourner en roam")]
     public float activeDuration = 0;
 
+    [Header("Kamikaze")]
+    public float speedToTarget;
+
+
     [Header("Boids")]
 
 
     [Tooltip("Index 0 : Roam | Index 1 : Attack")]
     public BoidSettings[] boidSettings;
 
-    public int spawnTimer = 5;
-
-    public bool spawnRandom = false;
-
-    [Tooltip("si spawn non random")]
-    public Vector3 SpawnPosition;
+    public int spawnTimer = 10;
 
 
-    [Range(10,200)]
+    [Range(10,100)]
     public int boidSpawn;
 
-    [Range(10,200)]
+    [Range(10,100)]
     public int maxBoid;
 
     [Tooltip("boids per min")]
