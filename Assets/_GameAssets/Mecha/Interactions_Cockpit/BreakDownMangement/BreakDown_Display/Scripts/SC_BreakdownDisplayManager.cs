@@ -63,6 +63,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             RepairSingleBreakdownDebug();
         }
 
+        
+
     }
     void Demarage()
     {
@@ -136,19 +138,12 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
 
             b_BreakdownTest = false;
-            sc_screens_controller.RepairAll();
             Mng_BreakdownMain.CheckBreakdown();
-
-            //changement de state du tuto
-            if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-            {
-                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
-            }
-            
+  
         }
 
         //Permet de régler les demi-pannes d'écrans
-        if (n_BreakdownValue == 0)
+        else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
         {
             sc_screens_controller.RepairAll();
 

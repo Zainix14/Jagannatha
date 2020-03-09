@@ -31,12 +31,19 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     GameObject WeaponSystem;
     public bool b_BreakWeapons = false;
 
+
+    /// //////////////////////////////////////////////
+
+
     GameObject MiniGunSystem;
     public bool b_BreakMiniGun = false;
     GameObject ShrapnelSystem;
     public bool b_BreakShrapnel = false;
     GameObject FlameSystem;
     public bool b_BreakFlameThrower = false;
+
+
+    /// //////////////////////////////////////////////
 
     public int life = 10;
     // Start is called before the first frame update
@@ -95,32 +102,54 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
     }
 
+
+
     public void CheckBreakdown()
     {
 
         if(SC_BreakDownAlert == null || MoveSystem == null || RenderSystem == null || WeaponSystem == null)
             GetReferences();
 
-        //Engine
+
+
         if (b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
         {
-            b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
+            
+
+           b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
+
+            if (Mng_BreakDownTest.b_BreakdownTest || SC_main_breakdown_validation.Instance.isValidated == false)
+                b_BreakEngine = true;
+
             if (b_BreakEngine)
             {
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     SC_BreakDownAlert.LaunchGlobalAlert();
                 sc_screens_controller.PanneAll();
 
+                //descendre le bouton de validation
+                SC_main_breakdown_validation.Instance.isValidated = false;
+                SC_main_breakdown_validation.Instance.bringDown();
+
             }
+            
 
-
-            else if (!b_BreakEngine)
+            else if (!Mng_BreakDownTest.b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
             {
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     SC_BreakDownAlert.StopGlobalAlert();
                 sc_screens_controller.RepairAll();
-            }
+                //remonter le bouton de validation
+                SC_main_breakdown_validation.Instance.bringUp(); 
 
+
+                //changement de state du tuto
+                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+                {
+                    SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
+                }
+            }
+            
             if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
             {
                     MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
@@ -150,6 +179,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
     }
+
+
 
 
     public void causeDamageOnSystem(int DmgValue)
