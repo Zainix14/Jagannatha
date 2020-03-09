@@ -12,7 +12,7 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
 
     StateOfCanvas curState;
 
-    public SC_RaycastRealWorld scriptRaycast; //Sur camera Full view
+    public SC_RaycastOPMapPerspective scriptRaycast; //Sur camera Full view
 
     int numChild;
     void Start()
