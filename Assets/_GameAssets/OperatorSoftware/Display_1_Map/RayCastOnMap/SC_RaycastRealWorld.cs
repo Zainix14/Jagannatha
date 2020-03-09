@@ -12,9 +12,7 @@ public class SC_RaycastRealWorld : MonoBehaviour
     public GameObject objectOnclic = null;
     GameObject OldObjectClic;
     public Text debugText;
-    public Material Select_MAT;
-    public Material Overlay_MAT;
-    public Material Koa_MAT;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,13 +26,6 @@ public class SC_RaycastRealWorld : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             castRayInWorld();
-        }
-        if(objectOnclic != null)
-        {
-            //Debug.Log("élément selectionné : " + objectOnclic.name);
-            var CurSelect = objectOnclic.GetComponent<MeshRenderer>();
-                CurSelect.material = Select_MAT;
-            Debug.Log("Selected");
         }
         
     }
@@ -58,13 +49,16 @@ public class SC_RaycastRealWorld : MonoBehaviour
                     if (objectOnclic != null)
                     {
                         OldObjectClic = objectOnclic;
-                        var OldSelect = OldObjectClic.GetComponent<MeshRenderer>();
-                        OldSelect.material = Koa_MAT;
+                        var OldSelect = OldObjectClic.GetComponent<SC_KoaSettingsOP>();
+                        OldSelect.bSelected = false;
+                        OldSelect.SetColor();
                     }
                         
                     SC_UI_Display_MapInfos_KoaState.Instance.SetNewKoaSettings(hit.collider.GetComponent<SC_KoaSettingsOP>());
                     objectOnclic = hit.collider.gameObject;
-        
+                    var script = objectOnclic.GetComponent<SC_KoaSettingsOP>();
+                    script.bSelected = true;
+                    script.SetColor();
                 }
          
 
