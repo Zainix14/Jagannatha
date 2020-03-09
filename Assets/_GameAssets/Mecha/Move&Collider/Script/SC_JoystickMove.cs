@@ -5,34 +5,38 @@ using UnityEngine;
 public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 {
 
-    public Transform TargetTRS;
-
-    [HideInInspector]
+    //Breakdown Infos
+    [Header("Breakdown Infos")]
+    [SerializeField]
     bool b_InBreakdown = false;
+    [SerializeField]
     bool b_BreakEngine = false;
 
-    public bool b_OnTorque = false;
-    float f_TransImpulseZ;
-    float f_TorqueImpulseZ;
+    //Rotation Horizontale
+    [Header("Horizontal Rotation Settings")]
     [SerializeField]
     float f_RotationSpeedZ = 1.0f;
-    public float f_LerpRotZ = 1f;
+    [SerializeField]
+    float f_LerpRotZ = 1f;  
+    public enum RotationMode { TSR, Torque, Normalize, Higher, Clamp }
+    public RotationMode TypeRotationZ;
+    float f_TransImpulseZ;
+    float f_TorqueImpulseZ;
 
-    public bool b_InvertAxe = false;
-    float f_ImpulseX;
+    //Rotation Verticale
+    [Header("Vertical Rotation Settings")]
+    [SerializeField]
+    bool b_InvertAxe = false;  
+    [SerializeField]
+    Transform TargetTRS;     
     [SerializeField]
     float f_RotationSpeedX = 1.0f;
-    public float f_LerpRotX = 1f;
+    [SerializeField]
+    float f_LerpRotX = 1f;
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
+    float f_ImpulseX;
     Quaternion xQuaternion;
-
-    float f_lerpTime = 1f;
-    float f_currentLerpTime;
-
-
-    public enum RotationMode { TSR, Torque, Normalize, Higher, Clamp}
-    public RotationMode TypeRotationZ;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -50,8 +54,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         f_TorqueImpulseZ = Input.GetAxis("Rotation") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
 
-
-        //Rotation X
+        //Rotation Verticale
         if (f_ImpulseX != 0)
         {
 
@@ -66,10 +69,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                 if (f_ImpulseX < 0 && TargetTRS.localRotation.x < 0)
                     TargetTRS.localRotation *= Quaternion.Lerp(TargetTRS.localRotation, xQuaternion, f_LerpRotX);
 
-            }
-                
+            }               
 
-            if (b_InvertAxe)
+            else if (b_InvertAxe)
             {
 
                 xQuaternion = Quaternion.AngleAxis(-f_ImpulseX, Vector3.left);
@@ -84,23 +86,12 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-
+        //Rotation Horizontale
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
             Quaternion zQuaternion = new Quaternion();
             float MixImpulseZ;
-
-            /*
-            //increment timer once per frame
-            f_currentLerpTime += Time.deltaTime;
-            if (f_currentLerpTime > f_lerpTime)
-                f_currentLerpTime = f_lerpTime;
-
-            //lerp!
-            float perc = f_currentLerpTime / f_lerpTime;
-            //Debug.Log(f_LerpRotZ + " | " + perc);
-            */
 
             switch (TypeRotationZ)
             {
@@ -119,14 +110,10 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
                     float absTorque = Mathf.Abs(f_TorqueImpulseZ);
                     float absTrans = Mathf.Abs(f_TransImpulseZ);
-
                     if (absTorque >= absTrans)
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
                     else
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);  
-                    
-          
-
                     transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
@@ -151,8 +138,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
             }
 
         }
-        else if (f_currentLerpTime != 0)
-            f_currentLerpTime = 0;
 
     }
 
