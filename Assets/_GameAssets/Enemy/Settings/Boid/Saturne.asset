@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: _TestSettings
+  m_Name: Saturne
   m_EditorClassIdentifier: 
-  minSpeed: 5
+  minSpeed: 50
   maxSpeed: 50
-  perceptionRadius: 219.58
-  avoidanceRadius: 132.99
-  maxSteerForce: 1
+  perceptionRadius: 1
+  avoidanceRadius: 1
+  maxSteerForce: 20
   alignWeight: 0
   cohesionWeight: 0
   seperateWeight: 0
-  targetWeight: 100
+  targetWeight: 30
   obstacleMask:
     serializedVersion: 2
     m_Bits: 67108864
   boundsRadius: 0.1
-  avoidCollisionWeight: 66.1
-  collisionAvoidDst: 43.16
-  koaBehavior: 1
+  avoidCollisionWeight: 5
+  collisionAvoidDst: 5
+  koaBehavior: 3
   coverDistance: 0
   axisRotationSpeed: {x: 0, y: 0, z: 0}
   split: 1
@@ -140,9 +140,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 10, y: 10, z: 10}
-  frequence: {x: 1, y: 1, z: 1}
-  invert: 1
-  invertAxis: {x: 1, y: 1, z: 1}
-  speedOnSpline: 25
+  amplitude: {x: 500, y: 500, z: 500}
+  frequence: {x: 0.05, y: 0.05, z: 0.05}
+  invert: 0
+  invertAxis: {x: 0, y: 0, z: 0}
+  speedOnSpline: 0
   spline: {fileID: 0}

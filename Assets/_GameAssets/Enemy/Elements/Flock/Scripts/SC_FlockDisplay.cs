@@ -45,6 +45,8 @@ public class SC_FlockDisplay : MonoBehaviour
     bool inAttack;
     bool isActive;
 
+
+    Quaternion flockInitialRot;
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
     [HideInInspector]
@@ -80,7 +82,8 @@ public class SC_FlockDisplay : MonoBehaviour
     #region Init
     void Awake()
     {
-        bezierWalker = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
+        isActive = false;
+           bezierWalker = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
     }
 
 
@@ -97,7 +100,7 @@ public class SC_FlockDisplay : MonoBehaviour
     {
         flockSettings = flockDisplay;
 
-
+        flockInitialRot = transform.rotation;
         inAttack = false;
     
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
@@ -127,7 +130,7 @@ public class SC_FlockDisplay : MonoBehaviour
         _curSpline = splineLine;
         bezierWalker.SetNewSpline(_curSpline);
         ActivateFlock();
-
+        isActive = true;
     }
     #endregion
     //---------------------------------------------------------------------//
@@ -144,6 +147,9 @@ public class SC_FlockDisplay : MonoBehaviour
 
         //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
         bezierWalker.Execute(Time.deltaTime);
+
+        if(isActive && _curBoidSetting != null)
+        transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
 
         ChangeStateManuel();
     }
@@ -310,6 +316,7 @@ public class SC_FlockDisplay : MonoBehaviour
 
     public void StartNewBehavior(int behaviorIndex)
     {
+        transform.rotation = flockInitialRot;
         _curBoidSetting = _BoidSettings[behaviorIndex];
         bezierWalker.speed = _curBoidSetting.speedOnSpline;
 
