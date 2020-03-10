@@ -28,7 +28,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         
         if (toPlace)
         {
-            particleRect.localPosition = Vector3.Lerp(ongletActifPos, particleRect.localPosition, 0.5f);
+            particleRect.localPosition = Vector3.Lerp(ongletActifPos, particleRect.localPosition, Time.deltaTime*50f);
             if (particleRect.transform.localPosition == ongletActifPos && ongletActifPos != Vector3.zero)
             {
                 toPlace = false;
