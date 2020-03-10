@@ -16,7 +16,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public int CurNbOfBreakdown = 0;
 
     public float frequency;
-    int offPercentage;
+    public int offPercentage;
     int onPercentage;
 
     float curTimer;
@@ -54,18 +54,20 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
+       
     }
 
 
 
     public void StartNewBreakdown(int nbBreakdown)
     {
-        int curBreakdown = nbBreakdown;
+        int curBreakdown = 0;
         bool newBreakdown = true;
         for (int i = 0; i < nbBreakdown; i++)
         {
-            if (newBreakdown && !b_BreakdownTest && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+            if (newBreakdown && !b_BreakdownTest)
             {
+
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
                 {
@@ -77,7 +79,9 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                 if (noBreakdown == 0)
                 {
                     newBreakdown = false;
+            
                     break;
+                    
                 }
 
                 int rnd = Random.Range(0, interactible.Length);
@@ -92,17 +96,20 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                     CurNbOfBreakdown++;
 
                     SetNewBreakdown(50);
-                    Debug.Log("50%");
-
 
                     curBreakdown++;
+
+
+
                     if (curBreakdown == nbBreakdown)
                     {
+                 
                         newBreakdown = false;
                     }
                 }
             }
         }
+
 
     }
 
@@ -149,14 +156,13 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             
             
         }
-        Debug.Log("offpercent " + offPercentage);
-        Debug.Log("canfire " + bCanFire);
+
     }
 
     public void SetNewBreakdown(int percent, float frequency = 25)
     {
         offPercentage += percent;
-        Debug.Log("Offpercent before " + (offPercentage - percent) + "   Offpercent after " + offPercentage);
+
         if (offPercentage > 100)
             offPercentage = 100;
 
@@ -189,11 +195,10 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
 
-        Debug.Log(n_BreakdownValue);
-
-        if (n_BreakdownValue > 0 && !b_BreakdownTest)
+        if (n_BreakdownValue > 0)
         {
-            SetNewBreakdown(50 * CurNbOfBreakdown);
+            offPercentage = 50 * CurNbOfBreakdown;
+
             b_BreakdownTest = true;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
         }
