@@ -132,6 +132,19 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
 
         }
+
+        ///////DEBUG
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartNewBreakdown(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RepairBreakdownDebug();
+        }
+
     }
 
     public void SetNewBreakdown(int percent, float frequency = 25)
