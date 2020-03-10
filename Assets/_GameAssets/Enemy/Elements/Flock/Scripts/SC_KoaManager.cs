@@ -67,7 +67,7 @@ public class SC_KoaManager : MonoBehaviour
     /// <summary>
     /// Avant le start, instanciation
     /// </summary>
-    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings,Vector3Int newSensitivity)
+    public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings, Vector3Int newSensitivity)
     {
         GetReferences();
         regeneration = true;
@@ -77,22 +77,7 @@ public class SC_KoaManager : MonoBehaviour
         curFlockSettings = flockSettings;
         spawnCount = newSpawnCount;
 
-        switch (curBoidSettings.koaBehavior)
-        {
-            case (BoidSettings.KoaBehavior.Boid):
-
-                _curKoaGuide = _boidsTab[1].transform;
-
-                break;
-
-
-            case (BoidSettings.KoaBehavior.Center):
-
-                _curKoaGuide = flockManager.transform;
-
-                break;
-
-        }
+     
         switch (flockSettings.attackType)
         {
             case FlockSettings.AttackType.none:
@@ -105,14 +90,14 @@ public class SC_KoaManager : MonoBehaviour
 
                 koaCharID = 'B';
                 type = 1;
-                break;  
+                break;
 
             case FlockSettings.AttackType.Laser:
 
                 koaCharID = 'C';
                 type = 2;
                 break;
-                    
+
             case FlockSettings.AttackType.Kamikaze:
 
                 koaCharID = 'D';
@@ -120,11 +105,11 @@ public class SC_KoaManager : MonoBehaviour
                 break;
         }
         koaNumID = SC_BoidPool.Instance.GetFlockID();
-        koaID = koaCharID + "#"+koaNumID;
+        koaID = koaCharID + "#" + koaNumID;
 
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
-        
+
         _guideList = new List<Transform>();
 
         //Récupération du comportement initial
@@ -143,11 +128,11 @@ public class SC_KoaManager : MonoBehaviour
             vfx_Hit = _koa.GetComponent<ParticleSystem>();
 
             syncVarKoa = _koa.GetComponent<SC_MoveKoaSync>();
-            syncVarKoa.InitOPKoaSettings(sensitivity,flockSettings.spawnTimer,koaID,KoaLife,maxLife, type, newGuide);
+            syncVarKoa.InitOPKoaSettings(sensitivity, flockSettings.spawnTimer, koaID, KoaLife, maxLife, type, newGuide);
             syncVarKoa.curboidNumber = spawnCount;
             syncVarKoa.curboidNumber = flockSettings.maxBoid;
         }
-        
+
     }
 
 
@@ -163,38 +148,24 @@ public class SC_KoaManager : MonoBehaviour
             boid.transform.forward = Random.insideUnitSphere; //Rotation random
 
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, this,type);
+            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, this, type);
         }
 
         //Instantie le Koa
-        if(_koa != null)
-        _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
+        if (_koa != null)
+            _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
 
     }
 
     void Update()
     {
-        if(isActive)
+        if (isActive)
         {
             if (_koa != null)
             {
-                switch(curBoidSettings.koaBehavior)
-                {
-                    case (BoidSettings.KoaBehavior.Boid):
-
-                        _koa.transform.position = _curKoaGuide.position;
-
-                        break;
-
-
-                    case (BoidSettings.KoaBehavior.Center):
-
-                        _koa.transform.position = Vector3.Lerp(_koa.transform.position, _curKoaGuide.position, curBoidSettings.maxSpeed * Time.deltaTime);
-
-                        break;
-                        
-                }
+                KoaBehavior();
+     
 
                 int nbActiveBoid = 0;
                 for (int i = 0; i < _boidsTab.Length; i++)
@@ -205,7 +176,7 @@ public class SC_KoaManager : MonoBehaviour
                     }
                 }
             }
-            if(curFlockSettings.regenerationRate != 0 && regeneration)
+            if (curFlockSettings.regenerationRate != 0 && regeneration)
             {
                 respawnTimer += Time.deltaTime;
                 if (respawnTimer > (60f / curFlockSettings.regenerationRate))
@@ -214,10 +185,10 @@ public class SC_KoaManager : MonoBehaviour
                     GenerateNewBoid();
                 }
             }
-            if(!regeneration)
+            if (!regeneration)
             {
                 curRecoveryTimer += Time.deltaTime;
-                if(curRecoveryTimer >= recoveryDuration)
+                if (curRecoveryTimer >= recoveryDuration)
                 {
                     regeneration = true;
                 }
@@ -226,6 +197,59 @@ public class SC_KoaManager : MonoBehaviour
 
     }
 
+    void KoaBehavior()
+    {
+        switch (curBoidSettings.koaBehavior)
+        {
+            case (BoidSettings.KoaBehavior.Boid):
+
+                _koa.transform.position = _boidsTab[1].transform.position;
+
+                break;
+
+
+            case (BoidSettings.KoaBehavior.Center):
+
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
+
+                break;
+
+            case (BoidSettings.KoaBehavior.Average):
+                float x = 0;
+                float y = 0;
+                float z = 0;
+
+                int nbActive = 0;
+                for (int i = 0; i < _boidsTab.Length; i++)
+                {
+                    if (_boidsTab[i].isActive)
+                    {
+                        nbActive++;
+                        x += _boidsTab[i].transform.position.x;
+                        y += _boidsTab[i].transform.position.x;
+                        z += _boidsTab[i].transform.position.x;
+                    }
+                }
+
+                x /= nbActive;
+                y /= nbActive;
+                z /= nbActive;
+
+                x += flockManager.transform.position.x;
+                y += flockManager.transform.position.y;
+                z += flockManager.transform.position.z;
+
+                _koa.transform.position = new Vector3(x, y, z);
+
+                break;
+
+            case (BoidSettings.KoaBehavior.Cover):
+
+
+                break;
+
+        }
+    }
     void GetReferences()
     {
 
@@ -265,9 +289,9 @@ public class SC_KoaManager : MonoBehaviour
 
         //---------------------- Répartition des boids sur les guides de facon proportionnel
         int nbActiveBoid = 0;
-        for(int i = 0; i<_boidsTab.Length; i++)
+        for (int i = 0; i < _boidsTab.Length; i++)
         {
-            if(_boidsTab[i].isActive)
+            if (_boidsTab[i].isActive)
             {
                 nbActiveBoid++;
             }
@@ -296,48 +320,32 @@ public class SC_KoaManager : MonoBehaviour
     /// </summary>
     /// <param name="newSettings"></param>
     /// <param name="KoaTargetWeight"></param>
-    public void SetBehavior(BoidSettings newSettings, bool KoaTargetWeight = false)
+    public void SetBehavior(BoidSettings newSettings)
     {
         curBoidSettings = newSettings; ;
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(curBoidSettings);
-            
-        }
-
-        switch (curBoidSettings.koaBehavior)
-        {
-            case (BoidSettings.KoaBehavior.Boid):
-
-                _curKoaGuide = _boidsTab[1].transform; 
-
-                break;
-
-
-            case (BoidSettings.KoaBehavior.Center):
-
-                _curKoaGuide = flockManager.transform;
-
-                break;
 
         }
+
     }
 
     public void GenerateNewBoid()
     {
-        
-        for(int i=0;i<curFlockSettings.maxBoid; i++)
+
+        for (int i = 0; i < curFlockSettings.maxBoid; i++)
         {
-            if(!_boidsTab[i].isActive)
-            { 
+            if (!_boidsTab[i].isActive)
+            {
                 _boidsTab[i].transform.position = _koa.transform.position; //Déplacement à la position
                 _boidsTab[i].transform.forward = Random.insideUnitSphere; //Rotation random
                 int rnd = 0;
-                if(_guideList.Count>1)
+                if (_guideList.Count > 1)
                 {
                     rnd = Random.Range(1, _guideList.Count);
                 }
-                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity,this,type);
+                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd], sensitivity, this, type);
                 return;
             }
         }
@@ -345,7 +353,7 @@ public class SC_KoaManager : MonoBehaviour
 
     public void GetHit(Vector3 gunSensitivity)
     {
-        if(KoaLife > 0)
+        if (KoaLife > 0)
         {
             float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
             float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
@@ -380,24 +388,24 @@ public class SC_KoaManager : MonoBehaviour
                 AnimDestroy();
             }
         }
-        
+
 
     }
 
     void AnimDestroy()
     {
-        CustomSoundManager.Instance.PlaySound(_koa.gameObject, "SFX_Explosion_Flock", false, 0.1f,false);
+        CustomSoundManager.Instance.PlaySound(_koa.gameObject, "SFX_Explosion_Flock", false, 0.1f, false);
         SetBehavior(curFlockSettings.boidSettings[2]);
 
         //SetBehavior(DeathSettings);
         foreach (Boid b in _boidsTab) b.DestroyBoid(Boid.DestructionType.Massive);
         isActive = false;
         Destroy(_koa.gameObject);
-        Invoke("DestroyFlock",1);
+        Invoke("DestroyFlock", 1);
     }
 
     void DestroyFlock()
-    {        
+    {
         Destroy(_koa.gameObject);
         flockManager.DestroyFlock();
         Destroy(this.gameObject);
@@ -414,8 +422,8 @@ public class SC_KoaManager : MonoBehaviour
     {
         regeneration = false;
         curRecoveryTimer = 0;
-        
+
     }
-   
+
 
 }

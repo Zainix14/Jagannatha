@@ -31,9 +31,12 @@ public class BoidSettings : ScriptableObject {
     public enum KoaBehavior
     {
         Center,
-        Boid,
+        Average,
+        Cover,
+        Boid
 
     }
+    public Vector3 axisRotationSpeed = new Vector3(0,0,0);
 
     [Header("Split Settings")]
 
