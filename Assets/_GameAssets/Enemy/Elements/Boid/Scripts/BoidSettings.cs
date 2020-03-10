@@ -24,6 +24,16 @@ public class BoidSettings : ScriptableObject {
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
 
+    [Header("Koa Settings")]
+
+    public KoaBehavior koaBehavior;
+
+    public enum KoaBehavior
+    {
+        Center,
+        Boid,
+
+    }
 
     [Header("Split Settings")]
 

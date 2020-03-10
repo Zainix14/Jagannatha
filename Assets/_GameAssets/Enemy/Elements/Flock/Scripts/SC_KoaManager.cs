@@ -77,6 +77,22 @@ public class SC_KoaManager : MonoBehaviour
         curFlockSettings = flockSettings;
         spawnCount = newSpawnCount;
 
+        switch (curBoidSettings.koaBehavior)
+        {
+            case (BoidSettings.KoaBehavior.Boid):
+
+                _curKoaGuide = _boidsTab[1].transform;
+
+                break;
+
+
+            case (BoidSettings.KoaBehavior.Center):
+
+                _curKoaGuide = flockManager.transform;
+
+                break;
+
+        }
         switch (flockSettings.attackType)
         {
             case FlockSettings.AttackType.none:
@@ -95,6 +111,12 @@ public class SC_KoaManager : MonoBehaviour
 
                 koaCharID = 'C';
                 type = 2;
+                break;
+                    
+            case FlockSettings.AttackType.Kamikaze:
+
+                koaCharID = 'D';
+                type = 3;
                 break;
         }
         koaNumID = SC_BoidPool.Instance.GetFlockID();
@@ -147,7 +169,6 @@ public class SC_KoaManager : MonoBehaviour
         //Instantie le Koa
         if(_koa != null)
         _koa.GetComponent<SC_MoveKoaSync>().SetPilotMeshActive();
-        _curKoaGuide = _boidsTab[1].transform;
         _boidsTab[1].GetComponent<BoxCollider>().enabled = false;
 
     }
@@ -158,7 +179,23 @@ public class SC_KoaManager : MonoBehaviour
         {
             if (_koa != null)
             {
-                _koa.transform.position = _curKoaGuide.position;
+                switch(curBoidSettings.koaBehavior)
+                {
+                    case (BoidSettings.KoaBehavior.Boid):
+
+                        _koa.transform.position = _curKoaGuide.position;
+
+                        break;
+
+
+                    case (BoidSettings.KoaBehavior.Center):
+
+                        _koa.transform.position = Vector3.Lerp(_koa.transform.position, _curKoaGuide.position, curBoidSettings.maxSpeed * Time.deltaTime);
+
+                        break;
+                        
+                }
+
                 int nbActiveBoid = 0;
                 for (int i = 0; i < _boidsTab.Length; i++)
                 {
@@ -261,10 +298,28 @@ public class SC_KoaManager : MonoBehaviour
     /// <param name="KoaTargetWeight"></param>
     public void SetBehavior(BoidSettings newSettings, bool KoaTargetWeight = false)
     {
+        curBoidSettings = newSettings; ;
         for (int i = 0; i < _boidsTab.Length; i++)
         {
-            _boidsTab[i].SetNewSettings(newSettings);
-            curBoidSettings = newSettings;;
+            _boidsTab[i].SetNewSettings(curBoidSettings);
+            
+        }
+
+        switch (curBoidSettings.koaBehavior)
+        {
+            case (BoidSettings.KoaBehavior.Boid):
+
+                _curKoaGuide = _boidsTab[1].transform; 
+
+                break;
+
+
+            case (BoidSettings.KoaBehavior.Center):
+
+                _curKoaGuide = flockManager.transform;
+
+                break;
+
         }
     }
 
