@@ -20,8 +20,6 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 
     public void Action()
     {
-        Debug.Log("DO THE ACTION BY INTERFACE");
-
         if(this.index != null)
         {
             for(int i= 0; i < scriptWithChild.child.Length; i++)
