@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SC_RaycastRealWorld : MonoBehaviour
+public class SC_RaycastOPMapPerspective : MonoBehaviour
 {
+    #region Singleton
 
+    private static SC_RaycastOPMapPerspective _instance;
+    public static SC_RaycastOPMapPerspective Instance { get { return _instance; } }
+
+    #endregion
     //camera cockpit
     public GameObject Cam_Map;
     private Ray ray;
@@ -13,6 +18,18 @@ public class SC_RaycastRealWorld : MonoBehaviour
     GameObject OldObjectClic;
     public Text debugText;
 
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -22,27 +39,22 @@ public class SC_RaycastRealWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //en Update dans ce script pour l'instant, mais à appeler par un autre script ultérieurement?
-        if(Input.GetMouseButton(0))
-        {
-            castRayInWorld();
-        }
-        
+
     }
 
     /// <summary>
     /// récupère le hit du cockpit et tire un rayon depuis les coordonnées UV de la collision avec l'écran.
     /// </summary>
-    void castRayInWorld()
+    public void castRayInWorld(RaycastHit hit)
     {
-        RaycastHit hit = Cam_Map.GetComponent<SC_RaycastVirtual>().getRay();
+       
         ray = this.GetComponent<Camera>().ViewportPointToRay(hit.textureCoord);
 
         //Debug.Log(hit.textureCoord);
         if (Physics.Raycast(ray, out hit))
         {
             //Debug.Log("Collider est " + hit.collider.name);
-            if(hit.collider.GetComponent<IF_ClicableForOperator>() != null)
+            if(hit.collider.GetComponent<IF_KoaForOperator>() != null)
             {
                 if (hit.collider.GetComponent<SC_KoaSettingsOP>() != null)
                 {

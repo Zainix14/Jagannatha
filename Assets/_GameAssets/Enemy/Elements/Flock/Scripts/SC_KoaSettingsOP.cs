@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
+public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
 {
     Vector3 sensibility;
     float timer;
@@ -139,5 +139,10 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_ClicableForOperator
             newColor = Tab_colorSpawn[type];
 
         GetComponent<MeshRenderer>().material.color = newColor;
+    }
+
+    public void Action()
+    {
+
     }
 }

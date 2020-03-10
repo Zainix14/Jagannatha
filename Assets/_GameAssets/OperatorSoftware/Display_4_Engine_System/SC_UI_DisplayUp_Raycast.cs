@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_RaycastVirtual : MonoBehaviour
+public class SC_UI_DisplayUp_Raycast : MonoBehaviour
 {
     private RaycastHit hit;
     private Camera curCam;
 
-    //public GameObject guide;
+    // Start is called before the first frame update
     void Start()
     {
         curCam = this.gameObject.GetComponent<Camera>();
@@ -16,27 +16,17 @@ public class SC_RaycastVirtual : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //int layerMask = 1 << 9;
-        //Cast un ray à partir du casque
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = curCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                //Debug.DrawRay(transform.position, hit.point * hit.distance, Color.yellow);
+                if (hit.collider.GetComponent<IF_clicableAction>() != null)
+                {
+                    hit.collider.GetComponent<IF_clicableAction>().Action();
 
+                }
             }
         }
-
     }
-
-    /// <summary>
-    /// Renvois le raycasthit du cockpit
-    /// </summary>
-    /// <returns></returns>
-    public RaycastHit getRay()
-    {
-        return hit;
-    }
-
 }

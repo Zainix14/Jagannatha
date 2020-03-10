@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IF_ClicableForOperator
+public interface IF_KoaForOperator
 {
     Vector3 GetSensibility();
     string GetKoaID();
