@@ -23,6 +23,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     float f_TransImpulseZ;
     float f_TorqueImpulseZ;
     Quaternion TargetRotY;
+    public enum Dir { Left, None, Right }
+    public Dir CurDir;
+    public Dir TargetDir;
 
     //Rotation Verticale
     [Header("Vertical Rotation Settings")]
@@ -146,7 +149,26 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     }
 
-    IEnumerator GoTargetRot(float Duration)
+    void CheckDir()
+    {
+
+        if(CurDir != TargetDir)
+        {
+
+            if(TargetDir == Dir.None)
+            {
+                GoTargetRot(0.5f, Dir.None);
+            }
+            else
+            {
+                GoTargetRot(1, TargetDir);
+            }
+
+        }
+
+    }
+
+    IEnumerator GoTargetRot(float Duration, Dir ToDir)
     {
 
         float i = 0.0f;
@@ -163,6 +185,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
+        CurDir = ToDir;
     }
 
     public void SetBreakdownState(bool State)
