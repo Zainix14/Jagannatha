@@ -28,8 +28,8 @@ public class SC_passwordLock : MonoBehaviour
     [SerializeField]
     GameObject objectElectricPlug;
 
-    [SerializeField]
-    bool cheatCode = true;
+ 
+    public bool cheatCode = true;
 
     void Start()
     {
