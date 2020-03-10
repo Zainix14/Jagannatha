@@ -111,13 +111,13 @@ public class SC_CrossHairMove : MonoBehaviour
         if (hitCockpit != null)
         {
 
-            if (b_TargetKoa && b_OnKoa && b_Snapping)
+            if (b_Snapping && b_TargetKoa && b_OnKoa )
             {
                 //Snap
                 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
                 transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
             }
-            else if ( (!b_TargetKoa && !b_OnKoa) || !b_Snapping)
+            else if (!b_Snapping || (!b_TargetKoa && !b_OnKoa))
             {
                 //Manual
                 hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
