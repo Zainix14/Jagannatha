@@ -47,6 +47,7 @@ public class SC_FlockManager : MonoBehaviour
     bool isActive;
     bool isSpawning;
 
+    Quaternion flockInitialRot;
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
     [HideInInspector]
@@ -95,7 +96,7 @@ public class SC_FlockManager : MonoBehaviour
     public void InitializeFlock(FlockSettings newFlockSettings,BezierSolution.BezierSpline spawnSpline,Vector3Int sensitivity)
     {
         flockSettings = newFlockSettings;
-        
+        flockInitialRot = transform.rotation;
 
         inAttack = false;
         isSpawning = true;
@@ -145,7 +146,10 @@ public class SC_FlockManager : MonoBehaviour
     #region Update
     void Update()
     {
-        if(isSpawning && !isActive)
+        if (isActive && _curBoidSetting != null)
+            transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
+
+        if (isSpawning && !isActive)
         {
 
             bezierWalkerTime.Execute(Time.deltaTime);
@@ -305,6 +309,7 @@ public class SC_FlockManager : MonoBehaviour
 
     public void StartNewBehavior(int behaviorIndex)
     {
+        transform.rotation = flockInitialRot;
         _curBoidSetting = _BoidSettings[behaviorIndex];
         _curSpline = _splineTab[behaviorIndex];
         bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
