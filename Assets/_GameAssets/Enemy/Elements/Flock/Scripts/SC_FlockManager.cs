@@ -66,9 +66,9 @@ public class SC_FlockManager : MonoBehaviour
 
     enum PathType
     {
+        Spawn,
         Roam,
-        line,
-        AttackPlayer,
+        AttackPlayer
     }
 
     PathType curtype;
@@ -173,6 +173,9 @@ public class SC_FlockManager : MonoBehaviour
                     }
                 }
                 isSpawning = false;
+                StartNewPath(PathType.Roam);
+
+
             }
         }
         if(isActive && !isSpawning)

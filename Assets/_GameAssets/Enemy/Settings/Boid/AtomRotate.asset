@@ -10,25 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: Split_Atom
+  m_Name: AtomTurn
   m_EditorClassIdentifier: 
   minSpeed: 50
   maxSpeed: 50
   perceptionRadius: 0.2
   avoidanceRadius: 25
-  maxSteerForce: 20.5
-  alignWeight: 185.32
-  cohesionWeight: 106.8
-  seperateWeight: 5.51
-  targetWeight: 81.37
+  maxSteerForce: 60
+  alignWeight: 0
+  cohesionWeight: 0
+  seperateWeight: 0
+  targetWeight: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 67108864
+    m_Bits: 0
   boundsRadius: 0.1
   avoidCollisionWeight: 5
   collisionAvoidDst: 5
+  koaBehavior: 3
+  coverDistance: 0
+  axisRotationSpeed: {x: 1, y: 1, z: 1}
   split: 1
-  splitNumber: 8
+  splitNumber: 64
   curveX:
     serializedVersion: 2
     m_Curve:
@@ -146,9 +149,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 25, y: 25, z: 25}
-  frequence: {x: 1, y: 1, z: 1}
+  amplitude: {x: 40, y: 40, z: 40}
+  frequence: {x: 0.5, y: 0.5, z: 0.5}
   invert: 1
-  invertAxis: {x: 0, y: 0, z: 1}
-  speedOnSpline: 10
+  invertAxis: {x: 0, y: 1, z: 1}
+  speedOnSpline: 0
   spline: {fileID: 8158630672628145991, guid: 2cbfe71a8ee1b8441859e94a965a85e1, type: 3}
