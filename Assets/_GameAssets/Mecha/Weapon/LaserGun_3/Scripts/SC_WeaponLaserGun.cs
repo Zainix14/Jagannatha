@@ -167,8 +167,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
         Bullet.transform.LookAt(Target.transform.position);
 
-        if (mrBullet.enabled == false)
-            mrBullet.enabled = true;
+        //if (mrBullet.enabled == false)
+        //    mrBullet.enabled = true;
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
         Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,

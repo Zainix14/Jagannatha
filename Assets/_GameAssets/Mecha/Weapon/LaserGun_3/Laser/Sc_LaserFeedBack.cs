@@ -35,11 +35,11 @@ public class Sc_LaserFeedBack : MonoBehaviour
 
     public void EnableLaser(RaycastHit hit)
     {
-        //if (SoundSourceNumb == 0)
-        //{
-        //    SFX_LaserBeam = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_LaserBeam2", true, 0.1f);
-        //    SoundSourceNumb += 1;
-        //}
+        if (SoundSourceNumb == 0)
+        {
+            SFX_LaserBeam = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_LaserBeam2", true, 0.1f);
+            SoundSourceNumb += 1;
+        }
 
         GetComponentInChildren<Animator>().SetBool("IsFire", true);
     }
@@ -57,31 +57,31 @@ public class Sc_LaserFeedBack : MonoBehaviour
     public void SetColor(Color32 NewColor)
     {
 
-    //    if(CurColor != NewColor)
-    //    {
+        //if (CurColor != NewColor)
+        //{
 
-    //        WeapMainSC.AlignColor(CurColor);
+        //    WeapMainSC.AlignColor(CurColor);
 
-    //        CurColor = NewColor;
+        //    CurColor = NewColor;
 
-    //        Gradient gradiend = new Gradient();
-    //        GradientColorKey[] colorKeys = new GradientColorKey[3];
-    //        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        //    Gradient gradiend = new Gradient();
+        //    GradientColorKey[] colorKeys = new GradientColorKey[3];
+        //    GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
 
-    //        alphaKeys[0].time = 0;
-    //        alphaKeys[0].alpha = 1;
+        //    alphaKeys[0].time = 0;
+        //    alphaKeys[0].alpha = 1;
 
-    //        alphaKeys[1].time = 1;
-    //        alphaKeys[1].alpha = 1;
+        //    alphaKeys[1].time = 1;
+        //    alphaKeys[1].alpha = 1;
 
-    //        colorKeys[0].color = NewColor;
-    //        colorKeys[1].color = NewColor;
-    //        colorKeys[2].color = NewColor;
+        //    colorKeys[0].color = NewColor;
+        //    colorKeys[1].color = NewColor;
+        //    colorKeys[2].color = NewColor;
 
-    //        gradiend.SetKeys(colorKeys, alphaKeys);
-    //        gradiend.SetKeys(colorKeys, alphaKeys);
+        //    gradiend.SetKeys(colorKeys, alphaKeys);
+        //    gradiend.SetKeys(colorKeys, alphaKeys);
 
-    //    }     
+        //}
 
     }
 

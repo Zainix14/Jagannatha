@@ -64,10 +64,10 @@ public class SC_BulletLaserGun : NetworkBehaviour
         transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
         transform.LookAt(Target.transform.position);
 
-        if (!mr.enabled && Visible)
-            mr.enabled = true;
-        else if (mr.enabled && !Visible)
-            mr.enabled = false;
+        //if (!mr.enabled && Visible)
+        //    mr.enabled = true;
+        //else if (mr.enabled && !Visible)
+        //    mr.enabled = false;
 
         //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
         transform.localScale = new Vector3(f_Scale_P, f_Scale_P, Vector3.Distance(helper_startPos.transform.position, Target.transform.position));

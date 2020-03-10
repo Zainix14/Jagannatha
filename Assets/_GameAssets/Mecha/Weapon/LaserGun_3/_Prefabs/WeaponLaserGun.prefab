@@ -211,9 +211,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainLaserScript: {fileID: 2210348525288903360}
   FirePoint: {fileID: 7460222069811358692}
-  lr: {fileID: 0}
-  lr2: {fileID: 0}
-  Sparkle: {fileID: 0}
   CurColor: {r: 0, g: 0, b: 0, a: 0}
   WeapMainSC: {fileID: 0}
 --- !u!1 &7460222069811358692
@@ -278,6 +275,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kahme
       objectReference: {fileID: 0}
+    - target: {fileID: 7669846089742068969, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: m_TagString
+      value: WeaponAnim
+      objectReference: {fileID: 0}
     - target: {fileID: 7669846089742068978, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -291,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 7669846089742068978, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.42
+      value: 9.6
       objectReference: {fileID: 0}
     - target: {fileID: 7669846089742068978, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
@@ -333,6 +335,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7669846089967534084, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9fff76eb68ad4c44b87be9e2ca168a80, type: 2}
     - target: {fileID: 7669846089967534086, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
       propertyPath: m_IsActive
