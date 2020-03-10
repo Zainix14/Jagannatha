@@ -131,7 +131,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         SetIsEnPanne(true);
 
 
-        sc_syncvar.TourbilolChangeValueWanted(index, desiredValue);
+        sc_syncvar.TourbilolChangeValueWanted(index, desiredValue/90);
         sc_syncvar.TourbilolChangeIsPanne(index, true);
 
 
@@ -145,7 +145,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         SetIsEnPanne(false);
 
 
-        sc_syncvar.TourbilolChangeValueWanted(index, desiredValue);
+        sc_syncvar.TourbilolChangeValueWanted(index, Mathf.Floor(desiredValue/90));
         sc_syncvar.TourbilolChangeIsPanne(index, false);
 
 

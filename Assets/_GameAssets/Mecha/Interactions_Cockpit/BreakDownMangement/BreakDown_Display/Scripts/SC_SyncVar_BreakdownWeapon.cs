@@ -121,8 +121,8 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
     {
         if (!isServer)
         {
-            Debug.Log(SL_Tourbilols[0].value);
-
+            Debug.Log(SL_Tourbilols[0].isEnPanne);
+            Debug.Log(SL_Tourbilols[1].isEnPanne);
         }
     }
 }
