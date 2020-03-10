@@ -9,6 +9,8 @@ public class SC_tourbilol : MonoBehaviour
 
     float totalAngle = 0;
 
+    public int index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
