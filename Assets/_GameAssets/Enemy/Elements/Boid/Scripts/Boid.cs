@@ -101,14 +101,23 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     /// 
+    private void OnTriggerEnter(Collider other)
+    {
+        //JE TOUCHE LE PLAYER 
+        if (other.gameObject.layer == 20)
+        {
+            Sc_ScreenShake.Instance.ShakeIt(0.010f, 0.1f);
+            SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
+            DestroyBoid(DestructionType.Solo);
+        }
+    }
 
 
-
-    /// <summary>
-    /// Update fait maison |
-    /// Appelé à chaque frame dans l'update du BoidManager
-    /// </summary>
-    public void UpdateBoid () {
+        /// <summary>
+        /// Update fait maison |
+        /// Appelé à chaque frame dans l'update du BoidManager
+        /// </summary>
+        public void UpdateBoid () {
 
         if(isActive && (!DestructionAnim || destructionType == DestructionType.Massive))
         {
@@ -269,6 +278,7 @@ public class Boid : MonoBehaviour {
         }
 
 
+
         if(powerPerCent > 90)
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
@@ -279,6 +289,7 @@ public class Boid : MonoBehaviour {
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
         }
+
 
 
     }
