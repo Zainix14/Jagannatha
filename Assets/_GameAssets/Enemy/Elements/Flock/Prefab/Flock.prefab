@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8703027724778714921}
   - component: {fileID: 2865312559487441127}
   - component: {fileID: 114714860802865328}
+  - component: {fileID: 114143847499283182}
   - component: {fileID: 114248703974702296}
   m_Layer: 0
   m_Name: Flock
@@ -83,6 +84,27 @@ MonoBehaviour:
   speed: 10
   rotationLerpModifier: 99
   m_normalizedT: 0
+  onPathCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &114143847499283182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285113734633859291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d12b9f97514694e962a3395a73e638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelMode: 0
+  n_travelTime: 0
+  m_normalizedT: 0
+  movementLerpModifier: 10
+  rotationLerpModifier: 99
+  lookAt: 1
   onPathCompleted:
     m_PersistentCalls:
       m_Calls: []

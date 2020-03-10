@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SC_updateDisplay_float : MonoBehaviour
 {
 
-    SC_SyncVar_BreakdownTest sc_syncvar;
+    SC_SyncVar_BreakdownDisplay sc_syncvar;
     Text text_component_cur;
 
     GameObject Mng_SyncVar = null;
@@ -42,7 +42,7 @@ public class SC_updateDisplay_float : MonoBehaviour
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
     }
 
     // Update is called once per frame

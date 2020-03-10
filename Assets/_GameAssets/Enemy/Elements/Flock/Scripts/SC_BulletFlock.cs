@@ -1,13 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SC_BulletFlock : MonoBehaviour
+public class SC_BulletFlock : NetworkBehaviour
 {
+
+    public bool b_IsFire = false;
     Rigidbody rb = null;
+    [SerializeField]
+    float f_Scale_OP = 2f;
+    Vector3 ScaleOP;
+
     void Start()
     {
         GetRigidBody();
+        ScaleOP = new Vector3(f_Scale_OP, f_Scale_OP, f_Scale_OP);
+    }
+
+    void Update()
+    {
+        if(isServer && b_IsFire)
+            RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, ScaleOP);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -15,8 +29,8 @@ public class SC_BulletFlock : MonoBehaviour
         //JE TOUCHE LE PLAYER 
         if(other.gameObject.layer == 20)
         {
-            Sc_ScreenShake.Instance.ShakeIt(0.05f,0.1f);
-            SC_CockpitShake.Instance.ShakeIt(0.05f, 0.1f);
+            Sc_ScreenShake.Instance.ShakeIt(0.015f,0.1f);
+            SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
 
             //on fait subir des dmg au joueur
             SC_MainBreakDownManager.Instance.causeDamageOnSystem(1);
@@ -40,10 +54,12 @@ public class SC_BulletFlock : MonoBehaviour
         {
             GetComponent<Rigidbody>().isKinematic = true;
             transform.position = new Vector3(1000, 1000, 1000);
-        }
+            b_IsFire = false;
+            if (isServer)
+                RpcDisplayFBulletOP(this.gameObject, this.transform.position, this.transform.rotation, this.transform.localScale);
+        }    
 
     }
-
 
     void GetRigidBody()
     {
@@ -51,4 +67,16 @@ public class SC_BulletFlock : MonoBehaviour
         if (rb == null)
             Debug.LogWarning("SC_BulletMiniGun - ResetPos - Can't Find RigidBody");
     }
+
+    [ClientRpc]
+    public void RpcDisplayFBulletOP(GameObject target, Vector3 position, Quaternion rotation, Vector3 scale)
+    {
+        if (!isServer)
+        {
+            target.transform.position = position;
+            target.transform.rotation = rotation;
+            target.transform.localScale = scale;
+        }
+    }
+
 }

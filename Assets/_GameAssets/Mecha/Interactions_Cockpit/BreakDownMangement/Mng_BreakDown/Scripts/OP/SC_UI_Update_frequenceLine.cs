@@ -54,7 +54,7 @@ public class SC_UI_Update_frequenceLine : MonoBehaviour
     SC_SyncVar_calibr sc_syncvar;
 
 
-    public SC_RaycastRealWorld scriptRaycast;
+    public SC_RaycastOPMapPerspective scriptRaycast;
 
 
     void Start()

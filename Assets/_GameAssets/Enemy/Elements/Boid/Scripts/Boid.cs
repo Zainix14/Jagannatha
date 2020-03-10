@@ -20,7 +20,9 @@ public class Boid : MonoBehaviour {
     Vector3 initScale;
 
     [SerializeField]
-    Material[] mats;
+    Material[] M_tabHit;
+    [SerializeField]
+    Material[] M_tabType;
     MeshRenderer meshRenderer;
 
     Vector3 deathPos;
@@ -73,13 +75,14 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="target"></param>
-    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager)
+    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager, int type)
     {
         this.koaManager = koaManager;
         destructionType = DestructionType.none;
         curFlick = 0;
         transform.localScale = initScale;
-        meshRenderer.material = mats[0];
+        meshRenderer.material = M_tabType[type];
+        M_tabHit[0] = M_tabType[type];
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
         this.sensitivity = sensitivity;
@@ -98,14 +101,23 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     /// 
+    private void OnTriggerEnter(Collider other)
+    {
+        //JE TOUCHE LE PLAYER 
+        if (other.gameObject.layer == 20)
+        {
+            Sc_ScreenShake.Instance.ShakeIt(0.010f, 0.1f);
+            SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
+            DestroyBoid(DestructionType.Solo);
+        }
+    }
 
 
-
-    /// <summary>
-    /// Update fait maison |
-    /// Appelé à chaque frame dans l'update du BoidManager
-    /// </summary>
-    public void UpdateBoid () {
+        /// <summary>
+        /// Update fait maison |
+        /// Appelé à chaque frame dans l'update du BoidManager
+        /// </summary>
+        public void UpdateBoid () {
 
         if(isActive && (!DestructionAnim || destructionType == DestructionType.Massive))
         {
@@ -268,6 +280,7 @@ public class Boid : MonoBehaviour {
         }
 
 
+
         if(powerPerCent > 90)
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
@@ -278,6 +291,7 @@ public class Boid : MonoBehaviour {
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
         }
+
 
 
     }
@@ -315,12 +329,12 @@ public class Boid : MonoBehaviour {
         {
             if (curFlick % 2 == 0)
             {
-                meshRenderer.material = mats[1];
+                meshRenderer.material = M_tabHit[1];
             }
             else
             {
 
-                meshRenderer.material = mats[0];
+                meshRenderer.material = M_tabHit[0];
             }
 
 

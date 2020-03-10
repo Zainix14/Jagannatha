@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SC_UI_Update_Switch : MonoBehaviour
 {
-    SC_SyncVar_BreakdownTest sc_syncvar;
+    SC_SyncVar_BreakdownDisplay sc_syncvar;
     GameObject Mng_SyncVar = null;
 
     Color curColor = new Color(255, 159, 0, 255);
@@ -61,6 +61,6 @@ public class SC_UI_Update_Switch : MonoBehaviour
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
     }
 }
