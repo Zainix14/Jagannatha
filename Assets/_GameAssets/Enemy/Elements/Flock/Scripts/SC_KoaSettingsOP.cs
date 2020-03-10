@@ -66,6 +66,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         if(curLife <= 0)
         {
             Debug.Log("ca me gave a lfinsbroooooooooown, cest la culture de la bétrave son nom c'est alphonse Brooooown, LA PUISSANCE DU PORT DU HAVRE");
+            //https://www.youtube.com/watch?v=VUjn2Vs65Z8
             var vfx = Instantiate(VFX_koadeath);
             vfx.transform.position = transform.position;
             vfx.GetComponent<ParticleSystem>().startColor = Tab_color[type];
