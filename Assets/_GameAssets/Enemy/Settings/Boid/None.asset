@@ -10,25 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: Split_Sharingan
+  m_Name: None
   m_EditorClassIdentifier: 
-  minSpeed: 5
-  maxSpeed: 12
-  perceptionRadius: 50
-  avoidanceRadius: 10
-  maxSteerForce: 8
-  alignWeight: 8
-  cohesionWeight: 50
-  seperateWeight: 50
-  targetWeight: 8
+  minSpeed: 0
+  maxSpeed: 0
+  perceptionRadius: 0
+  avoidanceRadius: 0
+  maxSteerForce: 0
+  alignWeight: 0
+  cohesionWeight: 0
+  seperateWeight: 0
+  targetWeight: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 67108864
-  boundsRadius: 0.1
-  avoidCollisionWeight: 5
-  collisionAvoidDst: 5
-  split: 1
-  splitNumber: 5
+    m_Bits: 0
+  boundsRadius: 0
+  avoidCollisionWeight: 0
+  collisionAvoidDst: 0
+  koaBehavior: 3
+  axisRotationSpeed: {x: 0, y: 0, z: 0}
+  split: 0
+  splitNumber: 0
   curveX:
     serializedVersion: 2
     m_Curve:
@@ -109,28 +111,37 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: -0.5
+      inSlope: -0.025288071
+      outSlope: -0.025288071
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.39849296
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      time: 0.5
+      value: 0.49980715
+      inSlope: -0.03850621
+      outSlope: -0.03850621
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
+      outWeight: 0.20164688
+    - serializedVersion: 3
+      time: 1
+      value: -0.50683016
+      inSlope: 0.0076743006
+      outSlope: 0.0076743006
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.665261
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 20, y: 20, z: 1}
-  frequence: {x: 0.2, y: 0.2, z: 1}
+  amplitude: {x: 0, y: 0, z: 0}
+  frequence: {x: 0, y: 0, z: 0}
   invert: 0
-  invertAxis: {x: 0, y: 0, z: 0}
-  speedOnSpline: 10
-  spline: {fileID: 8158630672628145991, guid: 2cbfe71a8ee1b8441859e94a965a85e1, type: 3}
+  invertAxis: {x: 1, y: 0, z: 0}
+  speedOnSpline: 0
+  spline: {fileID: 0}

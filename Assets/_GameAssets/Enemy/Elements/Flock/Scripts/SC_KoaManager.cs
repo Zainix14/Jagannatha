@@ -182,7 +182,7 @@ public class SC_KoaManager : MonoBehaviour
                 if (respawnTimer > (60f / curFlockSettings.regenerationRate))
                 {
                     respawnTimer = 0;
-                    GenerateNewBoid();
+                    //GenerateNewBoid();
                 }
             }
             if (!regeneration)
@@ -226,8 +226,8 @@ public class SC_KoaManager : MonoBehaviour
                     {
                         nbActive++;
                         x += _boidsTab[i].transform.position.x;
-                        y += _boidsTab[i].transform.position.x;
-                        z += _boidsTab[i].transform.position.x;
+                        y += _boidsTab[i].transform.position.y;
+                        z += _boidsTab[i].transform.position.z;
                     }
                 }
 
@@ -395,7 +395,7 @@ public class SC_KoaManager : MonoBehaviour
     void AnimDestroy()
     {
         CustomSoundManager.Instance.PlaySound(_koa.gameObject, "SFX_Explosion_Flock", false, 0.1f, false);
-        SetBehavior(curFlockSettings.boidSettings[2]);
+        SetBehavior(curFlockSettings.boidSettings[3]);
 
         //SetBehavior(DeathSettings);
         foreach (Boid b in _boidsTab) b.DestroyBoid(Boid.DestructionType.Massive);

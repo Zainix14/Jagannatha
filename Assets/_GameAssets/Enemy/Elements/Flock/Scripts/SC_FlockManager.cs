@@ -66,9 +66,9 @@ public class SC_FlockManager : MonoBehaviour
 
     enum PathType
     {
-        Roam,
-        line,
-        AttackPlayer,
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2
     }
 
     PathType curtype;
@@ -126,7 +126,6 @@ public class SC_FlockManager : MonoBehaviour
             if (_BoidSettings[i].spline != null)
             {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
-
                 _splineTab[i].transform.position = transform.position;
                 _splineTab[i].transform.rotation = Random.rotation;
             }
@@ -173,6 +172,9 @@ public class SC_FlockManager : MonoBehaviour
                     }
                 }
                 isSpawning = false;
+                StartNewPath(PathType.Roam);
+
+
             }
         }
         if(isActive && !isSpawning)
@@ -283,14 +285,18 @@ public class SC_FlockManager : MonoBehaviour
         curtype = pathType;
         switch (pathType)
         {
+            case PathType.Spawn:
+                StartNewBehavior((int)PathType.Spawn);
+                break;
+
             case PathType.Roam:
-                StartNewBehavior(0);
+                StartNewBehavior((int)PathType.Roam);
                 break;
 
 
             case PathType.AttackPlayer:
 
-                StartNewBehavior(1);
+                StartNewBehavior((int)PathType.AttackPlayer);
                 flockWeaponManager.StartFire();
 
                 break;
