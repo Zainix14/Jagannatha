@@ -99,12 +99,7 @@ public class SC_FlockDisplay : MonoBehaviour
 
 
         inAttack = false;
-        if (!flockSettings.spawnRandom)
-            transform.position = flockSettings.SpawnPosition;
-        else
-        {
-            transform.position = GetRandomSpawnPosition();
-        }
+    
         _mainGuide = gameObject.transform; //Main guide prends la valeur de this (CF : Variable _mainGuide)
 
         _GuideList = new List<Transform>();//Instanciation de la guide list

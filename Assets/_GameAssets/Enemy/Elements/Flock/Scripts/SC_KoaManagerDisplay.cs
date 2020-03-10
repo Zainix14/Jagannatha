@@ -127,7 +127,7 @@ public class SC_KoaManagerDisplay : MonoBehaviour
 
             SC_KoaManager s = null;
             //Lance l'initialisation de celui-ci avec le comportement initial et le premier guide
-            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, s);
+            boid.Initialize(curBoidSettings, _guideList[0], sensitivity, s, (int)curFlockSettings.attackType);
         }
 
         //Instantie le Koa
@@ -250,7 +250,7 @@ public class SC_KoaManagerDisplay : MonoBehaviour
                     rnd = Random.Range(1, _guideList.Count);
                 }
                 SC_KoaManager s = null;
-                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity,s);
+                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd],sensitivity,s,(int)curFlockSettings.attackType);
                 return;
             }
         }
