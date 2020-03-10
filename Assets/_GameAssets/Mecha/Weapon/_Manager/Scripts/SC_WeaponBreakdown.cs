@@ -47,7 +47,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         interactible = GameObject.FindGameObjectsWithTag("InteractibleWeapon");
 
-        //Invoke("Demarage", 0.5f);
+        Invoke("Demarage", 0.5f);
     }
 
 
@@ -92,6 +92,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                     CurNbOfBreakdown++;
 
                     SetNewBreakdown(50);
+                    Debug.Log("50%");
 
 
                     curBreakdown++;
@@ -110,21 +111,21 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-      
-        if(offPercentage > 0)
+
+        if (offPercentage > 0)
         {
             offTime = offPercentage / frequency;
             onPercentage = 100 - offPercentage;
             onTime = onPercentage / frequency;
             curTimer += Time.deltaTime;
 
-            if(curTimer >= onTime && bCanFire == true)
+            if (curTimer >= onTime && bCanFire == true)
             {
                 curTimer = 0;
                 bCanFire = false;
             }
 
-            if(curTimer >= offTime && bCanFire == false)
+            if (curTimer >= offTime && bCanFire == false)
             {
                 curTimer = 0;
                 bCanFire = true;
@@ -132,6 +133,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
 
         }
+        else
+            bCanFire = true;
 
         ///////DEBUG
 
@@ -143,13 +146,17 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         if (Input.GetKeyDown(KeyCode.R))
         {
             RepairBreakdownDebug();
+            
+            
         }
-
+        Debug.Log("offpercent " + offPercentage);
+        Debug.Log("canfire " + bCanFire);
     }
 
     public void SetNewBreakdown(int percent, float frequency = 25)
     {
         offPercentage += percent;
+        Debug.Log("Offpercent before " + (offPercentage - percent) + "   Offpercent after " + offPercentage);
         if (offPercentage > 100)
             offPercentage = 100;
 
@@ -182,21 +189,23 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
 
+        Debug.Log(n_BreakdownValue);
 
-        if (n_BreakdownValue > 5 && !b_BreakdownTest)
+        if (n_BreakdownValue > 0 && !b_BreakdownTest)
         {
+            SetNewBreakdown(50 * CurNbOfBreakdown);
             b_BreakdownTest = true;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
         }
         else if (n_BreakdownValue == 0 && b_BreakdownTest)
         {
-
+            EndBreakdown();
             b_BreakdownTest = false;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
 
         }
 
-        //Permet de régler les demi-pannes d'écrans
+        //Permet de régler les demi-pannes 
         else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
         {
             EndBreakdown();
