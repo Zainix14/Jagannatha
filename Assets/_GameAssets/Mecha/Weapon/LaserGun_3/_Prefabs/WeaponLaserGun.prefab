@@ -212,6 +212,9 @@ MonoBehaviour:
   MainLaserScript: {fileID: 2210348525288903360}
   FirePoint: {fileID: 7460222069811358692}
   CurColor: {r: 0, g: 0, b: 0, a: 0}
+  Laser: {fileID: 9061922979539864453}
+  EnergyBall: {fileID: 9061922979266380669}
+  ChargeSpark: {fileID: 9061922980439107130}
   WeapMainSC: {fileID: 0}
 --- !u!1 &7460222069811358692
 GameObject:
@@ -269,6 +272,16 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.rotation3D
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846088927798596, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846089232195956, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7669846089742068969, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
@@ -356,6 +369,24 @@ PrefabInstance:
 --- !u!4 &9061922980616211150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7669846089742068978, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9061922979539864453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7669846088652090809, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9061922980439107130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7669846089967534086, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9061922979266380669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7669846088927798593, guid: c10e83375715eeb4e95f77f947c50cc5,
     type: 3}
   m_PrefabInstance: {fileID: 1707619149161342524}
   m_PrefabAsset: {fileID: 0}

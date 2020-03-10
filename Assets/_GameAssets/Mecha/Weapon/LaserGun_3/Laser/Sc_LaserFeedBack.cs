@@ -18,8 +18,14 @@ public class Sc_LaserFeedBack : MonoBehaviour
     int SoundSourceNumb;
     [SerializeField]
     Color CurColor;
+    public GameObject Laser;
+    public GameObject EnergyBall;
+    public GameObject ChargeSpark;
     [SerializeField]
     SC_WeaponLaserGun WeapMainSC;
+    public ParticleSystem.MainModule LaserPS;
+    public ParticleSystem.MainModule EnergyBallPS;
+    public ParticleSystem.MainModule ChargeSparkPS;
 
     void Awake()
     {
@@ -57,31 +63,33 @@ public class Sc_LaserFeedBack : MonoBehaviour
     public void SetColor(Color32 NewColor)
     {
 
-        //if (CurColor != NewColor)
-        //{
+        if (CurColor != NewColor)
+        {
+            CurColor = NewColor;
 
-        //    WeapMainSC.AlignColor(CurColor);
+            Gradient gradiend = new Gradient();
+            GradientColorKey[] colorKeys = new GradientColorKey[3];
+            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
 
-        //    CurColor = NewColor;
+            alphaKeys[0].time = 0;
+            alphaKeys[0].alpha = 1;
 
-        //    Gradient gradiend = new Gradient();
-        //    GradientColorKey[] colorKeys = new GradientColorKey[3];
-        //    GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+            alphaKeys[1].time = 1;
+            alphaKeys[1].alpha = 1;
 
-        //    alphaKeys[0].time = 0;
-        //    alphaKeys[0].alpha = 1;
+            colorKeys[0].color = NewColor;
+            colorKeys[1].color = NewColor;
+            colorKeys[2].color = NewColor;
 
-        //    alphaKeys[1].time = 1;
-        //    alphaKeys[1].alpha = 1;
-
-        //    colorKeys[0].color = NewColor;
-        //    colorKeys[1].color = NewColor;
-        //    colorKeys[2].color = NewColor;
-
-        //    gradiend.SetKeys(colorKeys, alphaKeys);
-        //    gradiend.SetKeys(colorKeys, alphaKeys);
-
-        //}
+            gradiend.SetKeys(colorKeys, alphaKeys);
+            gradiend.SetKeys(colorKeys, alphaKeys);
+            LaserPS = Laser.GetComponent<ParticleSystem>().main;
+            ChargeSparkPS = ChargeSpark.GetComponent<ParticleSystem>().main;
+            EnergyBallPS = EnergyBall.GetComponent<ParticleSystem>().main;
+            LaserPS.startColor = gradiend;
+            ChargeSparkPS.startColor = gradiend;
+            EnergyBallPS.startColor = gradiend;
+        }
 
     }
 
