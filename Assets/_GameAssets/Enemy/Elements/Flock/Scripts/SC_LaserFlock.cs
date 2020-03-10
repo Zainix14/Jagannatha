@@ -24,6 +24,7 @@ public class SC_LaserFlock : NetworkBehaviour
     {
         Vector3 ScaleOP = new Vector3(f_Scale_OP, f_Scale_OP, this.transform.localScale.z);
         RpcDisplayFLaserOP(this.gameObject, this.transform.position, this.transform.rotation, ScaleOP);
+        
     }
 
     [ClientRpc]

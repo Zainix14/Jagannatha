@@ -100,13 +100,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
             {
 
                 case RotationMode.TSR:
-                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
-                    transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);                  
                     break;
 
                 case RotationMode.Torque:
                     zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
-                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
                 case RotationMode.Higher:
@@ -116,13 +114,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
                     else
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
-                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
                 case RotationMode.Normalize:
                     MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
-                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
                 case RotationMode.Clamp:
@@ -131,13 +127,14 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                         MixImpulseZ = 1;
                     MixImpulseZ *= f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
-                    transform.rotation *= Quaternion.Lerp(transform.rotation, zQuaternion, f_LerpRotZ);
                     break;
 
                 default:
                     break;
 
             }
+
+            transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
 
         }
 
