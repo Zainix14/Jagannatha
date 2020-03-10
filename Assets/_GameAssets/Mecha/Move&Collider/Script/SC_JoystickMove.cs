@@ -16,10 +16,14 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Header("Smooth Coroutine Infos")]
     [SerializeField]
     bool b_UseCoroutine = false;
+    [Range(0, 2)]
+    public float f_Duration = 0.5f;
     public enum Dir { None, Left, Right, Off }
     public Dir CurDir = Dir.None;
     public Dir TargetDir = Dir.None;
     public Dir CoroDir = Dir.Off;
+    [SerializeField]
+    AnimationCurve Acceleration;
 
     //Rotation Horizontale
     [Header("Horizontal Rotation Settings")]
@@ -46,7 +50,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     float f_ImpulseX;
-    Quaternion xQuaternion;
+    Quaternion xQuaternion; 
 
     // Update is called once per frame
     void FixedUpdate()
@@ -161,17 +165,18 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                 TargetDir = Dir.Left;
 
             //transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
-            TargetRotY = Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            TargetRotY = this.transform.rotation * zQuaternion;
 
             if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
                 CheckDir();
-            else
-                transform.rotation *= Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
+            else if (!b_UseCoroutine || (CoroDir == Dir.Off && CurDir == TargetDir))
+                transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
 
         }
         else
         {
             TargetDir = Dir.None;
+            TargetRotY = this.transform.rotation;
             if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
                 CheckDir();
         }
@@ -184,11 +189,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
         StopAllCoroutines();
         if (TargetDir == Dir.None)
-            StartCoroutine(GoTargetRot(0.5f, Dir.None));
+            StartCoroutine(GoTargetRot(f_Duration, Dir.None));
         else if (CurDir == Dir.None)
-            StartCoroutine(GoTargetRot(0.5f, TargetDir));
+            StartCoroutine(GoTargetRot(f_Duration, TargetDir));
         else
-            StartCoroutine(GoTargetRot(1.0f, TargetDir));
+            StartCoroutine(GoTargetRot(f_Duration*2, TargetDir));
     }
 
     IEnumerator GoTargetRot(float Duration, Dir ToDir)
@@ -196,17 +201,18 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         CoroDir = ToDir;
 
-        float i = 0;
+        float t = 0;
         float rate = 1 / Duration;
 
         Quaternion StartRot = transform.rotation;
 
-        while (i < 1)
+        while (t < 1)
         {
 
-            i += Time.deltaTime * rate;
+            t += Time.deltaTime * rate;
+            float Lerp = Acceleration.Evaluate(t); 
 
-            transform.rotation = Quaternion.Slerp(StartRot, TargetRotY, i);
+            transform.rotation = Quaternion.Slerp(StartRot, TargetRotY, Lerp);
 
             yield return 0;
 
