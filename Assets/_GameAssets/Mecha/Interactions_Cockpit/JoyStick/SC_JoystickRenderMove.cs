@@ -40,7 +40,7 @@ public class SC_JoystickRenderMove : MonoBehaviour
         f_CurRotT = (Mathf.Abs(f_TorqueImpulseZ) * f_MaxRotT / 1) * Mathf.Sign(f_TorqueImpulseZ);
         f_CurRotV = (Mathf.Abs(f_ImpulseX) * f_MaxRotV / 1) * Mathf.Sign(f_ImpulseX);
 
-        Debug.Log((-90 + f_CurRotV) + " - " + f_MaxRotT + " - " + f_CurRotH);
+        //Debug.Log((-90 + f_CurRotV) + " - " + f_MaxRotT + " - " + f_CurRotH);
 
     }
 
