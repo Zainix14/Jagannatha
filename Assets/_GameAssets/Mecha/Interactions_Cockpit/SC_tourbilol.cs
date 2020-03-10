@@ -49,12 +49,53 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
             //FORMATAGE ET ENVOIE COTE OP
             //Ici on crante par 90°
-            sendToSynchVar(Mathf.Floor(totalAngle/90));
+
+            if (oldRot != curRot)
+            {
+                sendToSynchVar(Mathf.Floor(totalAngle / 90));
+                IsValueOk();
+            }
+            
 
             oldRot = curRot;
 
         }
+
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Debug.Log(isEnPanne);
+
+
+        }
+        
     }
+
+
+    public void IsValueOk()
+    {
+
+        if (Mathf.Abs(totalAngle - desiredValue) < 89)
+        {
+
+            if (isEnPanne)
+            {
+                SetIsEnPanne(false);
+
+                sc_syncvar.TourbilolChangeIsPanne(index, false);
+
+            }
+        }
+        else if(!isEnPanne)
+        {
+
+            SetIsEnPanne(true);
+            sc_syncvar.TourbilolChangeIsPanne(index, true);
+
+        }
+
+    }
+    
 
 
     public bool isBreakdown()
