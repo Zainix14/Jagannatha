@@ -24,8 +24,8 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     float f_TorqueImpulseZ;
     Quaternion TargetRotY;
     public enum Dir { Left, None, Right }
-    public Dir CurDir;
-    public Dir TargetDir;
+    public Dir CurDir = Dir.None;
+    public Dir TargetDir = Dir.None;
 
     //Rotation Verticale
     [Header("Vertical Rotation Settings")]
@@ -99,30 +99,40 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             Quaternion zQuaternion = new Quaternion();
             float MixImpulseZ;
+            float CurImpulse = 0;
 
             switch (TypeRotationZ)
             {
 
                 case RotationMode.TSR:
-                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);                  
+                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
+                    CurImpulse = f_TransImpulseZ;
                     break;
 
                 case RotationMode.Torque:
                     zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                    CurImpulse = f_TorqueImpulseZ;
                     break;
 
                 case RotationMode.Higher:
                     float absTorque = Mathf.Abs(f_TorqueImpulseZ);
                     float absTrans = Mathf.Abs(f_TransImpulseZ);
                     if (absTorque >= absTrans)
+                    {
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                        CurImpulse = f_TorqueImpulseZ;
+                    }
                     else
+                    {
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
+                        CurImpulse = f_TransImpulseZ;
+                    }                     
                     break;
 
                 case RotationMode.Normalize:
                     MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    CurImpulse = MixImpulseZ;
                     break;
 
                 case RotationMode.Clamp:
@@ -131,6 +141,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                         MixImpulseZ = 1;
                     MixImpulseZ *= f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    CurImpulse = MixImpulseZ;
                     break;
 
                 default:
@@ -138,11 +149,20 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             }
 
+            if (CurImpulse > 0)
+                TargetDir = Dir.Right;
+            else if (CurImpulse < 0)
+                TargetDir = Dir.Left;
+
             //transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
             TargetRotY = Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
 
             transform.rotation *= Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
 
+        }
+        else
+        {
+            TargetDir = Dir.None;
         }
 
         #endregion
