@@ -16,6 +16,7 @@ public class SC_HitMarker : MonoBehaviour
     MeshRenderer meshRenderer;
     Material mat;
     bool bAnimation;
+    public GameObject Weapon;
 
     [SerializeField]
     float animationTime;
@@ -100,7 +101,10 @@ public class SC_HitMarker : MonoBehaviour
 
         if(bAnimation)
         {
-
+            if(Weapon == null)
+            {
+                Weapon = GameObject.FindGameObjectWithTag("WeaponAnim");
+            }
             /// INSERTFLICK
             /*
             curTime += Time.deltaTime;
@@ -120,8 +124,15 @@ public class SC_HitMarker : MonoBehaviour
             {
                 transform.localScale += new Vector3(scale, scale, scale);
             }*/
-            if(turn)
-            transform.Rotate(new Vector3(0, 0, 300 * Time.deltaTime));
+            if (turn)
+            {
+                transform.Rotate(new Vector3(0, 0, 300 * Time.deltaTime));
+                Weapon.GetComponent<Animator>().SetBool("IsCalib", true);
+            }
+            else
+            {
+                Weapon.GetComponent<Animator>().SetBool("IsCalib", false);
+            }
         }
     }
 
