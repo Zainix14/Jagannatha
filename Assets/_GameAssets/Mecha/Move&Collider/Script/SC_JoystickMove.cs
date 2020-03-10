@@ -22,6 +22,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     public RotationMode TypeRotationZ;
     float f_TransImpulseZ;
     float f_TorqueImpulseZ;
+    Quaternion TargetRotY;
 
     //Rotation Verticale
     [Header("Vertical Rotation Settings")]
@@ -134,11 +135,33 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             }
 
-            transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            //transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            TargetRotY = Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+
+            transform.rotation *= Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
 
         }
 
         #endregion
+
+    }
+
+    IEnumerator GoTargetRot(float Duration)
+    {
+
+        float i = 0.0f;
+        float rate = 1.0f / Duration;
+
+        while (i < 1.0)
+        {
+
+            i += Time.deltaTime * rate;
+
+            transform.rotation *= Quaternion.Slerp(transform.rotation, TargetRotY, i);
+
+            yield return 0;
+
+        }
 
     }
 
