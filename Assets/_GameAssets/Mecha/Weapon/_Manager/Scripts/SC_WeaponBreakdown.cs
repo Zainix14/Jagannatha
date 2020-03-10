@@ -47,7 +47,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         interactible = GameObject.FindGameObjectsWithTag("InteractibleWeapon");
 
-        Invoke("Demarage", 0.5f);
+        //Invoke("Demarage", 0.5f);
     }
 
 
