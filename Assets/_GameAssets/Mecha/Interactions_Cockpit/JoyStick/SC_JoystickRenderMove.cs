@@ -46,11 +46,14 @@ public class SC_JoystickRenderMove : MonoBehaviour
 
     void ApplyRot()
     {
-        //TargetTRS.transform.Rotate(-90 + f_CurRotV, f_MaxRotT, f_CurRotH, Space.Self); 
-        Quaternion targetRot = new Quaternion();
-        targetRot.eulerAngles = new Vector3(-90 - f_CurRotH, f_CurRotT, f_CurRotV);
-        //TargetTRS.localRotation = targetRot;
-
+        //Init Quaternion
+        Quaternion targetRot = TargetTRS.transform.localRotation;
+        //On Syncronise la Rot
+        targetRot = Quaternion.Euler(-f_CurRotH, f_CurRotT, -f_CurRotV);
+        //On applique un offset pour remetre le stick droit
+        targetRot *= Quaternion.Euler(-90, 0, 0);
+        //Application de la rotation
+        TargetTRS.localRotation = targetRot;
     }
 
 }
