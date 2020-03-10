@@ -194,27 +194,23 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     IEnumerator GoTargetRot(float Duration, Dir ToDir)
     {
 
-        Debug.Log("Start Cor");
-
         CoroDir = ToDir;
 
-        float i = 0.0f;
-        float rate = 1.0f / Duration;
+        float i = 0;
+        float rate = 1 / Duration;
 
-        while (i < 1.0)
+        Quaternion StartRot = transform.rotation;
+
+        while (i < 1)
         {
-
-            Debug.Log("While Cor");
 
             i += Time.deltaTime * rate;
 
-            transform.rotation *= Quaternion.Slerp(transform.rotation, TargetRotY, i);
+            transform.rotation = Quaternion.Slerp(StartRot, TargetRotY, i);
 
             yield return 0;
 
         }
-
-        Debug.Log("End Cor");
 
         CurDir = ToDir;
         CoroDir = Dir.Off;
