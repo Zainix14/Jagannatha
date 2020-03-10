@@ -11,6 +11,10 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     #endregion
 
+    public bool b_BreakdownTest = false;
+
+    public int CurNbOfBreakdown = 0;
+
     public float frequency;
     int offPercentage;
     int onPercentage;
@@ -20,6 +24,10 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     float onTime;
 
     bool bCanFire;
+
+
+    [SerializeField]
+    public GameObject[] interactible;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,7 +42,70 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         }
         offPercentage = 0;
         bCanFire = true;
+
+        //LES ITNERACTIBLES d'ARME NECESSITENT CE TAG
+
+        interactible = GameObject.FindGameObjectsWithTag("InteractibleWeapon");
+
+        Invoke("Demarage", 0.5f);
     }
+
+
+    void Demarage()
+    {
+        StartNewBreakdown(interactible.Length);
+    }
+
+
+
+    public void StartNewBreakdown(int nbBreakdown)
+    {
+        int curBreakdown = nbBreakdown;
+        bool newBreakdown = true;
+        for (int i = 0; i < nbBreakdown; i++)
+        {
+            if (newBreakdown && !b_BreakdownTest && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+            {
+                int noBreakdown = 0;
+                for (int j = 0; j < interactible.Length; j++)
+                {
+                    if (!interactible[j].GetComponent<IInteractible>().isBreakdown())
+                    {
+                        noBreakdown++;
+                    }
+                }
+                if (noBreakdown == 0)
+                {
+                    newBreakdown = false;
+                    break;
+                }
+
+                int rnd = Random.Range(0, interactible.Length);
+                if (interactible[rnd].GetComponent<IInteractible>().isBreakdown())
+                {
+                    i--;
+                }
+                else
+                {
+                    interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
+                    //on itere le nombre de pannes total
+                    CurNbOfBreakdown++;
+
+                    SetNewBreakdown(50);
+
+
+                    curBreakdown++;
+                    if (curBreakdown == nbBreakdown)
+                    {
+                        newBreakdown = false;
+                    }
+                }
+            }
+        }
+
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -85,5 +156,55 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
+        int n_BreakdownValue = 0;
+
+        for (int j = 0; j < interactible.Length; j++)
+        {
+            if (interactible[j].GetComponent<IInteractible>().isBreakdown())
+            {
+                n_BreakdownValue++;
+            }
+        }
+
+        //on update le nombre de pannes
+        CurNbOfBreakdown = n_BreakdownValue;
+
+
+        if (n_BreakdownValue > 5 && !b_BreakdownTest)
+        {
+            b_BreakdownTest = true;
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
+        }
+        else if (n_BreakdownValue == 0 && b_BreakdownTest)
+        {
+
+            b_BreakdownTest = false;
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
+
+        }
+
+        //Permet de régler les demi-pannes d'écrans
+        else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
+        {
+            EndBreakdown();
+
+        }
+
+
     }
+
+    /// <summary>
+    /// Focntion permettant de réparer tous les boutons automatiquement
+    /// </summary>
+    public void RepairBreakdownDebug()
+    {
+        for (int j = 0; j < interactible.Length; j++)
+        {
+
+            interactible[j].GetComponent<IInteractible>().Repair();
+
+        }
+
+    }
+
 }
