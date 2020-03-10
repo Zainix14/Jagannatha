@@ -14,12 +14,14 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
 
     private RaycastHit hit;
 
+    [SerializeField]
     Camera camRaycast;
 
-
+    [SerializeField]
+    Camera[] otherCam;
     void Start()
     {
-        camRaycast = GetComponent<Camera>();
+        //camRaycast = GetComponent<Camera>();
     }
     void Awake()
     {
@@ -59,6 +61,27 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
 
             }
         }
+
+        #region CheatChode
+
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            camRaycast = otherCam[0];
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            camRaycast = otherCam[1];
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            camRaycast = otherCam[2];
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            camRaycast = otherCam[3];
+        }
+
+        #endregion
 
     }
 
