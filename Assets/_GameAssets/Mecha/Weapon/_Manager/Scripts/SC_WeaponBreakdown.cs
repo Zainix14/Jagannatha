@@ -199,8 +199,15 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         {
             offPercentage = 50 * CurNbOfBreakdown;
 
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
+        }
+        else if (n_BreakdownValue > 1)
+        {
+            offPercentage = 50 * CurNbOfBreakdown;
+
             b_BreakdownTest = true;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
+
         }
         else if (n_BreakdownValue == 0 && b_BreakdownTest)
         {
