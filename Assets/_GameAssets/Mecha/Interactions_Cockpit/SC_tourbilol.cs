@@ -129,6 +129,11 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         bool good = false;
         while (good == false)
         {
+            if(type == tourbiType.tourbiFirst)
+            {
+                //ca fait qqchose
+            }
+
             desiredValue = Random.Range(-4, 3) * 90;
 
             if (Mathf.Abs(desiredValue - totalAngle) > 90 )
