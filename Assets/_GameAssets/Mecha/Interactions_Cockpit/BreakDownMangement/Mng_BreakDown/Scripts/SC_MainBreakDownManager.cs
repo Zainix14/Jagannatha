@@ -147,6 +147,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             //on répare touuuus les systemes
             sc_screens_controller.RepairAll();
+            SC_WeaponBreakdown.Instance.EndBreakdown();
 
             //remonter le bouton de validation
             SC_main_breakdown_validation.Instance.bringUp();

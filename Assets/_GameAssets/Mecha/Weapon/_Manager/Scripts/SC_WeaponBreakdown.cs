@@ -92,8 +92,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                 else
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
-                    //on itere le nombre de pannes total
-                    CurNbOfBreakdown++;
+
 
                     SetNewBreakdown(50);
 
@@ -110,7 +109,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             }
         }
 
-
+        CheckBreakdown();
     }
 
 
@@ -157,6 +156,12 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             
         }
 
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            CheckBreakdown();
+
+        }
+
     }
 
     public void SetNewBreakdown(int percent, float frequency = 25)
@@ -194,8 +199,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
-
-        if (n_BreakdownValue > 0)
+    
+        if (n_BreakdownValue == 1)
         {
             offPercentage = 50 * CurNbOfBreakdown;
 
