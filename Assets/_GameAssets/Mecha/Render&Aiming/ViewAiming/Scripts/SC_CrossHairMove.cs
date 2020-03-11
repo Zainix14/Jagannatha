@@ -39,6 +39,11 @@ public class SC_CrossHairMove : MonoBehaviour
     [SerializeField]
     AnimationCurve SnapCurve;
 
+    public enum Target { None, View, Koa }
+    public Target SnapTarget = Target.None;
+    public Target CrossHairTarget = Target.None;
+    public Target CoroTarget = Target.None;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +58,7 @@ public class SC_CrossHairMove : MonoBehaviour
             GetReferences();
 
         if (Cam_Cockpit != null && Cam_Mech != null)
-            UpdatePos();
+            UpdatePosII();
 
     }
 
@@ -127,6 +132,88 @@ public class SC_CrossHairMove : MonoBehaviour
             transform.LookAt(Cam_Mech.transform);
 
         }
+
+    }
+
+    void UpdatePosII()
+    {
+
+        Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
+
+        if (hitCockpit != null)
+        {
+
+            if (b_Snapping && CrossHairTarget == SnapTarget)
+            {
+
+                //Snap
+                if (SnapTarget == Target.Koa)
+                {
+                    hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+                //Manual
+                else
+                {                  
+                    hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+            }
+            else if (b_Snapping && CrossHairTarget != SnapTarget)
+            {
+                CheckTarget();
+            }
+            //DefaultCase = Manual
+            else
+            {  
+                hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            }
+
+            transform.LookAt(Cam_Mech.transform);
+
+        }
+
+    }
+
+    void CheckTarget()
+    {
+        if(CrossHairTarget != SnapTarget && CoroTarget != SnapTarget)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Snapping(SnapTarget));
+        }
+    }
+
+    IEnumerator Snapping(Target SnapTarget)
+    {
+
+        CoroTarget = SnapTarget;
+
+        float t = 0.0f;
+        float rate = 1.0f / f_Duration;
+
+        while (t < 1.0)
+        {
+
+            t += Time.deltaTime * rate;
+            float Lerp = SnapCurve.Evaluate(t);
+
+            Vector3 hitCockpit = new Vector3();
+
+            if (SnapTarget == Target.Koa)
+                hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+            else
+                hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
+
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
+
+            yield return 0;
+
+        }
+    
+        CrossHairTarget = SnapTarget;
+        CoroTarget = Target.None;
 
     }
 

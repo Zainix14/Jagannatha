@@ -104,6 +104,7 @@ public class SC_KoaManager : MonoBehaviour
                 type = 3;
                 break;
         }
+
         koaNumID = SC_BoidPool.Instance.GetFlockID();
         koaID = koaCharID + "#" + koaNumID;
 
@@ -215,6 +216,7 @@ public class SC_KoaManager : MonoBehaviour
                 break;
 
             case (BoidSettings.KoaBehavior.Average):
+
                 float x = 0;
                 float y = 0;
                 float z = 0;
@@ -231,13 +233,10 @@ public class SC_KoaManager : MonoBehaviour
                     }
                 }
 
+
                 x /= nbActive;
                 y /= nbActive;
                 z /= nbActive;
-
-                x += flockManager.transform.position.x;
-                y += flockManager.transform.position.y;
-                z += flockManager.transform.position.z;
 
                 _koa.transform.position = new Vector3(x, y, z);
 
