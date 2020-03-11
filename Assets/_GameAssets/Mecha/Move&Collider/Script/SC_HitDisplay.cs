@@ -48,6 +48,6 @@ public class SC_HitDisplay : MonoBehaviour
     {
         Vector3 Direction = hitPos.normalized;
         rotor.transform.position = pivot.transform.position;
-        rotor.transform.position += Direction * rotorDistance;
+        rotor.transform.position += new Vector3(Direction.x * rotorDistance,0, Direction.z * rotorDistance);
     }
 }
