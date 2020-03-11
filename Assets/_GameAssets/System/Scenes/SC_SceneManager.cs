@@ -74,14 +74,14 @@ public class SC_SceneManager : NetworkBehaviour
         SceneManager.LoadScene(3);
     }
 
-    void LoadGamePilot()
-    {
-        SceneManager.LoadScene(4);
-    }
+    //void LoadGamePilot()
+    //{
+    //    SceneManager.LoadScene(4);
+    //}
 
-    void LoadGameOperator()
-    {
-        SceneManager.LoadScene(5);
-    }
+    //void LoadGameOperator()
+    //{
+    //    SceneManager.LoadScene(5);
+    //}
 
 }
