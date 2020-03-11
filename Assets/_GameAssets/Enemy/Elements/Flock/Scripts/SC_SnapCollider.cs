@@ -42,6 +42,7 @@ public class SC_SnapCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Mng_CheckList == null || MechCam == null)
             GetReferences();
 
@@ -90,7 +91,6 @@ public class SC_SnapCollider : MonoBehaviour
             Collider.height = CurHeight;
 
         }
-
         
         if (DistFromMech < MinDistRadius)
             Collider.radius = MinRadius;
@@ -108,9 +108,9 @@ public class SC_SnapCollider : MonoBehaviour
             float CurRadius = CurRadiusRatio + MinRadius;
 
             Collider.radius = CurRadius;
+
         }
         
-
     }
 
 }
