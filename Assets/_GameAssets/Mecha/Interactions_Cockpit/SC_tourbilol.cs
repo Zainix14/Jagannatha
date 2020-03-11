@@ -127,19 +127,38 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         // pour l'instant je pars sur 2 tours pour obtenir la totalité des positions possibles avec un changement d'état tous les 90°
 
         bool good = false;
+
+        int count = 0;
         while (good == false)
         {
             if(type == tourbiType.tourbiFirst)
             {
-                //ca fait qqchose
-            }
+                int rand = Random.Range(0,2);
 
-            desiredValue = Random.Range(-4, 3) * 90;
+                desiredValue = rand * -4 * 90;
+
+            }
+            else
+            {
+                desiredValue = Random.Range(-4, 3) * 90;
+            }
+                
 
             if (Mathf.Abs(desiredValue - totalAngle) > 90 )
             {
                 good = true;
             }
+
+            count++;
+
+            if (count > 10)
+            {
+                Debug.LogError("La boucle elle est FUCKEE");
+                break;
+                
+            }
+                
+
         }
 
 
