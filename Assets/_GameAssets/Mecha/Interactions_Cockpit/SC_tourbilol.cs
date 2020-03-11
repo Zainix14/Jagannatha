@@ -121,7 +121,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         {
             desiredValue = Random.Range(-4, 4) * 90;
 
-            if (Mathf.Abs(desiredValue - totalAngle) > 89 )
+            if (Mathf.Abs(desiredValue - totalAngle) > 90 )
             {
                 good = true;
             }
