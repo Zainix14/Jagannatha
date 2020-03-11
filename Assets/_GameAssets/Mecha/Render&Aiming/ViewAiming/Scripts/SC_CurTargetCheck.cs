@@ -19,8 +19,6 @@ public class SC_CurTargetCheck : MonoBehaviour
             b_OnKoa = true;
             AimIndicatorSC.SetTarget(other);
             AimIndicatorSC.b_TargetKoa = true;
-            //CrossHairSC.b_TargetKoa = true;
-            //CrossHairSC.GoTo(1);
             CrossHairSC.SnapTarget = SC_CrossHairMove.Target.Koa;
         }        
     }
@@ -37,8 +35,6 @@ public class SC_CurTargetCheck : MonoBehaviour
         b_OnKoa = false;
         AimIndicatorSC.SetTarget(null);
         AimIndicatorSC.b_TargetKoa = false;
-        //CrossHairSC.b_TargetKoa = false;
-        //CrossHairSC.GoTo(0);
         CrossHairSC.SnapTarget = SC_CrossHairMove.Target.View;
     }
 

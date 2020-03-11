@@ -87,6 +87,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
     }
 
+    #region BulletCreation
+
+    //Plus Utilisé
     void CreateBulletPull()
     {
 
@@ -127,6 +130,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         BulletSC.frequency = frequency;
     }
 
+    #endregion
+
+    #region FireFunctions
 
     public void Trigger()
     {
@@ -138,6 +144,13 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         {
             LaserFB.DiseableLaser();
         }
+    }
+
+    public void ReleaseTrigger()
+    {
+        Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
+        AimHit.b_OnFire = false;
+        LaserFB.DiseableLaser();
     }
 
     void Fire()
@@ -157,23 +170,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             }
                 
         }
-
-    }
-
-    void DebugLaser()
-    {
-
-        //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
-        Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
-        Bullet.transform.LookAt(Target.transform.position);
-
-        //if (mrBullet.enabled == false)
-        //    mrBullet.enabled = true;
-
-        //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
-        Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,
-                                                Bullet.transform.localScale.y,
-                                                Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
 
     }
 
@@ -206,12 +202,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     }
 
-    public void ReleaseTrigger()
-    {
-        Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
-        AimHit.b_OnFire = false;
-        LaserFB.DiseableLaser();
-    }
+    #endregion
+
+    #region Breakdown
 
     public void SetBreakdownState(bool State)
     {
@@ -220,8 +213,11 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public void SetEngineBreakdownState(bool State) { }
 
-    public Vector3Int GetWeaponSensitivity() { return sensitivity; }
+    #endregion
 
+    #region Sensitivity
+
+    public Vector3Int GetWeaponSensitivity() { return sensitivity; }
 
     public void SetSensitivity(int index, int value)
     {
@@ -244,9 +240,32 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         }
     }
 
+    #endregion
+
+    #region Debug&Color
+
+    void DebugLaser()
+    {
+
+        //Positionne le laser a la base de l'arme (GunPos) et l'oriente dans la direction du point visée par le joueur
+        Bullet.transform.position = Vector3.Lerp(helper_startPos.transform.position, Target.transform.position, .5f);
+        Bullet.transform.LookAt(Target.transform.position);
+
+        if (mrBullet.enabled == false)
+            mrBullet.enabled = true;
+
+        //Scale en Z le laser pour l'agrandir jusqu'a ce qu'il touche le point visée par le joueur (C STYLE TAHU)
+        Bullet.transform.localScale = new Vector3(Bullet.transform.localScale.x,
+                                                Bullet.transform.localScale.y,
+                                                Vector3.Distance(helper_startPos.transform.position, Target.transform.position));
+
+    }
+
     public void AlignColor(Color32 targetColor)
     {
         CurColor = targetColor;
     }
+
+    #endregion
 
 }
