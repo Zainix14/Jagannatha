@@ -61,7 +61,10 @@ public class SC_BulletLaserGun : NetworkBehaviour
         if (!isServer)
         {
 
-            if(Mat.color != targetColor)
+            if (!mr.enabled)
+                mr.enabled = true;
+
+            if (Mat.color != targetColor)
                 Mat.color = targetColor;
 
             target.transform.position = position;
