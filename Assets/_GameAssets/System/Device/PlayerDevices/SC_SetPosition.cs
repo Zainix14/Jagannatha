@@ -30,7 +30,7 @@ public class SC_SetPosition : MonoBehaviour
 
     void SetPos()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0 && this.gameObject.transform.position.y != f_CockpitPos)
+        if (SceneManager.GetActiveScene().buildIndex != 1 && this.gameObject.transform.position.y != f_CockpitPos)
         {
             b_PosSet = true;
             this.gameObject.transform.position = new Vector3(0, f_CockpitPos, 0);
