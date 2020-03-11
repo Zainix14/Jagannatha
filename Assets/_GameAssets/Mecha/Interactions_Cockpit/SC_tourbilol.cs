@@ -17,6 +17,15 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
     private SC_SyncVar_BreakdownWeapon sc_syncvar;
 
+    [SerializeField]
+    tourbiType type;
+
+    enum tourbiType
+    {
+        tourbiFirst,
+        tourbiSecond
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +37,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
     }
 
+    //Il faut faire 1/4 de tour de valve pour changer d'un cran la valeur signifiante
     // Update is called once per frame
     void Update()
     {
@@ -38,12 +48,12 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
             if(Mathf.Abs(oldRot - curRot)<260)
                  totalAngle += oldRot-curRot;
             //si on veut limiter à un tour
-            /*
+            
             if (totalAngle < -360)
-                totalAngle += 360;
+                totalAngle = 359;
             else if (totalAngle > 360)
-                totalAngle -= 360;
-                */
+                totalAngle = -360;
+                
             //Debug.Log(totalAngle);
 
 
@@ -119,7 +129,12 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         bool good = false;
         while (good == false)
         {
-            desiredValue = Random.Range(-4, 4) * 90;
+            if(type == tourbiType.tourbiFirst)
+            {
+                //ca fait qqchose
+            }
+
+            desiredValue = Random.Range(-4, 3) * 90;
 
             if (Mathf.Abs(desiredValue - totalAngle) > 90 )
             {
