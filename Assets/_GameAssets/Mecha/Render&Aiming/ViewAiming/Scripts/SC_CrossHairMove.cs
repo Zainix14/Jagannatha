@@ -58,7 +58,7 @@ public class SC_CrossHairMove : MonoBehaviour
             GetReferences();
 
         if (Cam_Cockpit != null && Cam_Mech != null)
-            UpdatePosII();
+            UpdatePos();
 
     }
 
@@ -108,34 +108,6 @@ public class SC_CrossHairMove : MonoBehaviour
     #endregion
 
     void UpdatePos()
-    {
-
-        //Manual
-        Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
-
-        if (hitCockpit != null)
-        {
-
-            if (b_Snapping && b_TargetKoa && b_OnKoa )
-            {
-                //Snap
-                hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
-                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
-            }
-            else if (!b_Snapping || (!b_TargetKoa && !b_OnKoa))
-            {
-                //Manual
-                hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
-                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
-            }
-
-            transform.LookAt(Cam_Mech.transform);
-
-        }
-
-    }
-
-    void UpdatePosII()
     {
 
         Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
@@ -214,80 +186,6 @@ public class SC_CrossHairMove : MonoBehaviour
     
         CrossHairTarget = SnapTarget;
         CoroTarget = Target.None;
-
-    }
-
-    /// <summary>
-    /// 0 = ToView
-    /// 1 = ToKoa
-    /// </summary>
-    /// <param name="nCor"></param>
-    public void GoTo(int nCor)
-    {
-        if(b_Snapping)
-            switch (nCor)
-            {
-                case 0:
-                    if(!b_GoToViewRun)
-                        StartCoroutine(GoToView());
-                    break;
-
-                case 1:
-                    if (!b_GoToKoaRun)
-                        StartCoroutine(GoToKoa());
-                    break;
-            }
-    }
-
-    IEnumerator GoToKoa()
-    {
-
-        b_GoToKoaRun = true;
-
-        float t = 0.0f;
-        float rate = 1.0f / f_Duration;
-
-        while (t < 1.0)
-        {
-
-            t += Time.deltaTime * rate;
-            float Lerp = SnapCurve.Evaluate(t);
-
-            Vector3 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
-            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
-
-            yield return 0;
-
-        }
-
-        b_OnKoa = true;
-        b_GoToKoaRun = false;
-        
-    }
-
-    IEnumerator GoToView()
-    {
-
-        b_GoToViewRun = true;
-
-        float t = 0.0f;
-        float rate = 1.0f / f_Duration;
-
-        while (t < 1.0)
-        {
-
-            t += Time.deltaTime * rate;
-            float Lerp = SnapCurve.Evaluate(t);
-
-            Vector3 hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
-            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
-
-            yield return 0;
-
-        }
-
-        b_OnKoa = false;
-        b_GoToViewRun = false;
 
     }
 
