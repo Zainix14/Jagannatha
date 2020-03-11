@@ -5,76 +5,77 @@ using UnityEngine;
 public class SC_CrossHairMove : MonoBehaviour
 {
 
+    [Header("References")]
     [SerializeField]
-    bool b_Snapping = true;
-
-    bool b_AlreadyCheck = false;
-
-    public GameObject Mng_CheckList = null;
-
-    public Camera Cam_Mech = null;
-    public Camera Cam_Cockpit = null;
-
+    bool b_RefsGet = false;   
     [SerializeField]
     GameObject AimIndicator;
     [SerializeField]
     GameObject ViewIndicator;
+    GameObject Mng_CheckList = null;
+    Camera Cam_Mech = null;
+    Camera Cam_Cockpit = null;
+    bool b_IsVR = false;
+    bool b_IsFPS = false;
 
-    public bool b_IsVR = false;
-    public bool b_IsFPS = false;
+    [Header("CrossHair Parameters")]
+    public float f_CrossHairDist = 5f;
 
+    [Header("Snap Infos")]
+    [SerializeField]
+    bool b_Snapping = true;
+    [SerializeField]
     public bool b_TargetKoa = false;
-    public float f_CrossHairDist = 2f;
-
     [SerializeField]
     bool b_OnKoa = false;
-    [Range(0,2)]
-    public float f_DurationLerp = 1f;
 
+    [Header("Snap Coroutine Infos")]
+    [Range(0, 2)]
+    public float f_Duration = 1.0f;
     [SerializeField]
-    bool b_GoToKoaRun = false;
+    bool b_GoToKoaRun = false; 
     [SerializeField]
-    bool b_GoToViewRun = false;
+    bool b_GoToViewRun = false; 
+    [SerializeField]
+    AnimationCurve SnapCurve;
+
+    public enum Target { None, View, Koa }
+    public Target SnapTarget = Target.None;
+    public Target CrossHairTarget = Target.None;
+    public Target CoroTarget = Target.None;
 
     // Start is called before the first frame update
     void Start()
     {
-        GetCheckListManager();
+        GetReferences();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //Debug.Log(b_GoToKoaRun);
-
-        if (Mng_CheckList == null)
-            GetCheckListManager();
-
-        if (Mng_CheckList != null && !b_IsFPS && !b_IsVR)
-            GetDeviceState();
-
-        if (Cam_Cockpit == null)
-            GetCockpitCam();
-
-        if (Mng_CheckList != null && Cam_Mech == null)
-            GetMechCam();
+        
+        if (!b_RefsGet)
+            GetReferences();
 
         if (Cam_Cockpit != null && Cam_Mech != null)
-            UpdatePos();
+            UpdatePosII();
 
     }
 
-    void GetCheckListManager()
+    #region GetReferences
+
+    void GetReferences()
     {
-
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_CheckList == null && !b_AlreadyCheck)
-            Debug.LogWarning("SC_CrossHairMove - Can't Find Mng_CheckList");
-        if(!b_AlreadyCheck)
-            b_AlreadyCheck = true;
-
+        if(Mng_CheckList == null)
+            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+        if (Mng_CheckList != null && (!b_IsVR && !b_IsFPS))
+            GetDeviceState();
+        if (Mng_CheckList != null && Cam_Cockpit == null && (b_IsFPS || b_IsVR))
+            GetCockpitCam();
+        if (Mng_CheckList != null && Cam_Mech == null)
+            GetMechCam();
+        if (Cam_Cockpit != null && Cam_Mech != null)
+            b_RefsGet = true;
     }
 
     void GetDeviceState()
@@ -104,6 +105,8 @@ public class SC_CrossHairMove : MonoBehaviour
         Cam_Mech = Mng_CheckList.GetComponent<SC_CheckList>().GetCamMecha();
     }
 
+    #endregion
+
     void UpdatePos()
     {
 
@@ -113,13 +116,13 @@ public class SC_CrossHairMove : MonoBehaviour
         if (hitCockpit != null)
         {
 
-            if (b_TargetKoa && b_OnKoa && b_Snapping)
+            if (b_Snapping && b_TargetKoa && b_OnKoa )
             {
                 //Snap
                 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
                 transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
             }
-            else if ( (!b_TargetKoa && !b_OnKoa) || !b_Snapping)
+            else if (!b_Snapping || (!b_TargetKoa && !b_OnKoa))
             {
                 //Manual
                 hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
@@ -129,6 +132,88 @@ public class SC_CrossHairMove : MonoBehaviour
             transform.LookAt(Cam_Mech.transform);
 
         }
+
+    }
+
+    void UpdatePosII()
+    {
+
+        Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
+
+        if (hitCockpit != null)
+        {
+
+            if (b_Snapping && CrossHairTarget == SnapTarget)
+            {
+
+                //Snap
+                if (SnapTarget == Target.Koa)
+                {
+                    hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+                //Manual
+                else
+                {                  
+                    hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+            }
+            else if (b_Snapping && CrossHairTarget != SnapTarget)
+            {
+                CheckTarget();
+            }
+            //DefaultCase = Manual
+            else
+            {  
+                hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            }
+
+            transform.LookAt(Cam_Mech.transform);
+
+        }
+
+    }
+
+    void CheckTarget()
+    {
+        if(CrossHairTarget != SnapTarget && CoroTarget != SnapTarget)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Snapping(SnapTarget));
+        }
+    }
+
+    IEnumerator Snapping(Target SnapTarget)
+    {
+
+        CoroTarget = SnapTarget;
+
+        float t = 0.0f;
+        float rate = 1.0f / f_Duration;
+
+        while (t < 1.0)
+        {
+
+            t += Time.deltaTime * rate;
+            float Lerp = SnapCurve.Evaluate(t);
+
+            Vector3 hitCockpit = new Vector3();
+
+            if (SnapTarget == Target.Koa)
+                hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+            else
+                hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
+
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
+
+            yield return 0;
+
+        }
+    
+        CrossHairTarget = SnapTarget;
+        CoroTarget = Target.None;
 
     }
 
@@ -157,19 +242,19 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToKoa()
     {
 
-        //Debug.Log("GoToKoa");
         b_GoToKoaRun = true;
 
-        float i = 0.0f;
-        float rate = 1.0f / f_DurationLerp;
+        float t = 0.0f;
+        float rate = 1.0f / f_Duration;
 
-        while (i < 1.0)
+        while (t < 1.0)
         {
 
-            i += Time.deltaTime * rate;
+            t += Time.deltaTime * rate;
+            float Lerp = SnapCurve.Evaluate(t);
 
             Vector3 hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
-            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, i);
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
 
             yield return 0;
 
@@ -183,19 +268,19 @@ public class SC_CrossHairMove : MonoBehaviour
     IEnumerator GoToView()
     {
 
-        //Debug.Log("GoToView");
         b_GoToViewRun = true;
 
-        float i = 0.0f;
-        float rate = 1.0f / f_DurationLerp;
+        float t = 0.0f;
+        float rate = 1.0f / f_Duration;
 
-        while (i < 1.0)
+        while (t < 1.0)
         {
 
-            i += Time.deltaTime * rate;
+            t += Time.deltaTime * rate;
+            float Lerp = SnapCurve.Evaluate(t);
 
             Vector3 hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
-            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, i);
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
 
             yield return 0;
 
