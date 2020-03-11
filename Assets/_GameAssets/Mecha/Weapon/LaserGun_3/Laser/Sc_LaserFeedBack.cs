@@ -83,12 +83,15 @@ public class Sc_LaserFeedBack : MonoBehaviour
 
             gradiend.SetKeys(colorKeys, alphaKeys);
             gradiend.SetKeys(colorKeys, alphaKeys);
+
             LaserPS = Laser.GetComponent<ParticleSystem>().main;
             ChargeSparkPS = ChargeSpark.GetComponent<ParticleSystem>().main;
             EnergyBallPS = EnergyBall.GetComponent<ParticleSystem>().main;
+
             LaserPS.startColor = gradiend;
             ChargeSparkPS.startColor = gradiend;
             EnergyBallPS.startColor = gradiend;
+
         }
 
     }
