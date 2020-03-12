@@ -33,9 +33,8 @@ public class SC_passwordLock : MonoBehaviour
 
     void Start()
     {
-        //if (cheatCode)
-        
-#if UNITY_EDITOR
+        if (cheatCode)
+        {
             for (int i = 0; i < 4; i++)
             {
                 canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
@@ -46,13 +45,12 @@ public class SC_passwordLock : MonoBehaviour
 
             unlock = false;
             countTime = 0;
-#else
+        }
+        else
+        {
+            canvasMng.GetComponent<SC_CanvasManager>().lockScreenDisplay();
+        }
 
-        //else
-
-        canvasMng.GetComponent<SC_CanvasManager>().lockScreenDisplay();
-
-#endif
     }
 
     // Update is called once per frame
