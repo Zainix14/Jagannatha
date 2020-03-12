@@ -30,7 +30,8 @@ public class SC_DeviceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.J))
+            GetJoyStickName();
     }
 
     void IsCheck()
@@ -49,6 +50,11 @@ public class SC_DeviceManager : MonoBehaviour
         {
             b_IsFPS = true;
         }
+    }
+
+    void GetJoyStickName()
+    {
+        Debug.Log(Input.GetJoystickNames());
     }
 
 }

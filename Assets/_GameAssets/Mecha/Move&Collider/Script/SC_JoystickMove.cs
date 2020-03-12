@@ -104,8 +104,8 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
 
-        Debug.Log("Torque - " + Input.GetAxis("Torque"));
-        Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
+        //Debug.Log("Torque - " + Input.GetAxis("Torque"));
+        //Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
 
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
