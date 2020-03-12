@@ -74,13 +74,13 @@ public class SC_DisableVR : MonoBehaviour
             VR_Assets.gameObject.SetActive(false);
         }
         
-        if (n_SceneIndex != 1)
+        if (n_SceneIndex != 1 && n_SceneIndex != 2)
         {
             b_IsActive = false;        
             Cam_FPS.gameObject.SetActive(true);
         }
                
-        if(n_SceneIndex == 3 || n_SceneIndex == 5)
+        if(n_SceneIndex == 4)
             this.gameObject.SetActive(false);
 
     }
