@@ -135,8 +135,37 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
             {
                 int rand = Random.Range(0,2);
 
-                desiredValue = rand * -4 * 90;
+                if (rand == 0)
+                {
 
+                    desiredValue = 3 * 90;
+                }
+                else
+                    desiredValue = -90;
+
+            }
+            else if (type == tourbiType.tourbiSecond)
+            {
+                int rand = Random.Range(0, 3);
+
+                switch(rand)
+                {
+                    case 0:
+
+                        desiredValue = -4 * 90;
+
+                        break;
+                    case 1:
+
+                        desiredValue = -2 * 90;
+
+                        break;
+                    case 2:
+
+                        desiredValue = 1 * 90;
+
+                        break;
+                }
             }
             else
             {

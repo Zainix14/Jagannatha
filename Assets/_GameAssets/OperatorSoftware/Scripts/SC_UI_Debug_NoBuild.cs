@@ -24,14 +24,16 @@ public class SC_UI_Debug_NoBuild : MonoBehaviour
         {
             Desactivate(childNormal[i]);
         }
-        _SC_passwordLock.cheatCode = false;
+        //_SC_passwordLock.cheatCode = false;
+
 #if UNITY_EDITOR
+
 
         for (int i = 0; i < childNormal.Length; i++)
         {
             Activate(childNormal[i]);
         }
-        _SC_passwordLock.cheatCode = true;
+        //_SC_passwordLock.cheatCode = true;
 #endif
 
 
@@ -47,10 +49,12 @@ public class SC_UI_Debug_NoBuild : MonoBehaviour
         {
             Desactivate(childInvert[i]);
         }
-
+        //_SC_passwordLock.cheatCode = true;
 #endif
 
+        //Debug.Log(_SC_passwordLock.cheatCode);
     }
+    
 
     // Update is called once per frame
     void Update()

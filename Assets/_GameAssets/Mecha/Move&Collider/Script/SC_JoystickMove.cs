@@ -104,6 +104,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
 
+        //Debug.Log("Torque - " + Input.GetAxis("Torque"));
+        //Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
+
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
@@ -185,6 +188,8 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     }
 
+    #region Coroutines Functions
+
     void CheckDir()
     {
         StopAllCoroutines();
@@ -223,6 +228,10 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     }
 
+    #endregion
+
+    #region BreakDown
+
     public void SetBreakdownState(bool State)
     {
         b_InBreakdown = State;
@@ -232,4 +241,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
         b_BreakEngine = State;
     }
+
+    #endregion
 }
