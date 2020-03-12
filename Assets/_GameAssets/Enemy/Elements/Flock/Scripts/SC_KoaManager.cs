@@ -23,7 +23,7 @@ public class SC_KoaManager : MonoBehaviour
     int maxLife = 10;
     int KoaLife = 10;
 
-    char koaCharID;
+    string koaCharID;
     int koaNumID;
     string koaID;
     int type;
@@ -82,31 +82,31 @@ public class SC_KoaManager : MonoBehaviour
         {
             case FlockSettings.AttackType.none:
 
-                koaCharID = 'A';
+                koaCharID = "Neutral";
                 type = 0;
                 break;
 
             case FlockSettings.AttackType.Bullet:
 
-                koaCharID = 'B';
+                koaCharID = "Bullet";
                 type = 1;
                 break;
 
             case FlockSettings.AttackType.Laser:
 
-                koaCharID = 'C';
+                koaCharID = "Laser";
                 type = 2;
                 break;
 
             case FlockSettings.AttackType.Kamikaze:
 
-                koaCharID = 'D';
+                koaCharID = "Kamikaze";
                 type = 3;
                 break;
         }
 
         koaNumID = SC_BoidPool.Instance.GetFlockID();
-        koaID = koaCharID + "#" + koaNumID;
+        koaID = koaCharID + " #" + koaNumID;
 
         //Instanciation des list de Boid et de Guide
         _boidsTab = SC_BoidPool.Instance.GetBoid(curFlockSettings.maxBoid);
@@ -204,14 +204,15 @@ public class SC_KoaManager : MonoBehaviour
         {
             case (BoidSettings.KoaBehavior.Boid):
 
-                _koa.transform.position = _boidsTab[1].transform.position;
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, _boidsTab[1].transform.position, 10 * Time.deltaTime);
+                
 
                 break;
 
 
             case (BoidSettings.KoaBehavior.Center):
 
-                _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, 10 * Time.deltaTime);
 
                 break;
 
@@ -238,7 +239,10 @@ public class SC_KoaManager : MonoBehaviour
                 y /= nbActive;
                 z /= nbActive;
 
-                _koa.transform.position = new Vector3(x, y, z);
+                
+
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, new Vector3(x, y, z), 10 * Time.deltaTime);
+         
 
                 break;
 
