@@ -13,7 +13,6 @@ public class WaveSettings : ScriptableObject
 
     [Header("Backup")]
     public bool backup;
-    public float timeBetweenSpawnBackup;
     public FlockSettings[] backupSpawnFlock;
     public int[] backupSpawnPosition;
 
@@ -21,6 +20,9 @@ public class WaveSettings : ScriptableObject
     public float timeBeforeBackup;
     [Tooltip("-1 if no dead condition wanted")]
     public float flockLeftBeforeBackup;
+
+    public float timeBetweenSpawnBackup;
+
 
 
 
