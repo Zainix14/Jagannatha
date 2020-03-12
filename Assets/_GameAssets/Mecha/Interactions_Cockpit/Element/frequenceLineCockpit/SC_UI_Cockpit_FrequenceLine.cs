@@ -90,6 +90,7 @@ public class SC_UI_Cockpit_FrequenceLine : MonoBehaviour
             lineRenderer.material.color = curColor;
 
             Sc_LaserFeedBack.Instance.SetColor(curColor);
+            SC_WeaponLaserGun.Instance.AlignColor(curColor);
 
         }
     }

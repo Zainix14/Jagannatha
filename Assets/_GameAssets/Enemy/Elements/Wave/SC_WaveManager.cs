@@ -80,6 +80,14 @@ public class SC_WaveManager : MonoBehaviour
         {
             _FlockList[0].GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,0,0));
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            foreach(GameObject b in _FlockList)
+            {
+                b.GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100, 0, 0));
+            }           
+        }
     }
     #endregion
 
@@ -97,7 +105,6 @@ public class SC_WaveManager : MonoBehaviour
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
 
-        waveStarted = true;
 
         
     }
@@ -112,6 +119,7 @@ public class SC_WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
         }
         StopCoroutine(SpawnInitialFlock());
+        waveStarted = true;
         curBackupTimer = 0;
 
 
@@ -152,7 +160,7 @@ public class SC_WaveManager : MonoBehaviour
                     StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
                 }
-                else if (curBackupTimer >= _curWaveSettings.timeBeforeBackup)
+                else if (curBackupTimer >= _curWaveSettings.timeBeforeBackup && _curWaveSettings.timeBeforeBackup!=-1)
                 {
                     StartCoroutine(SpawnBackupFlock());
                     backupSend = true;
@@ -186,8 +194,6 @@ public class SC_WaveManager : MonoBehaviour
         {
             waveEnded = true;
             SC_PhaseManager.Instance.EndWave();
-           
-
         }
     }
 

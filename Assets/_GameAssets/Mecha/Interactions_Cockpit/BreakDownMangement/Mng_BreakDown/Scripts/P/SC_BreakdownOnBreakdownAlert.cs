@@ -58,96 +58,102 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
     IEnumerator Timer(float duration)
     {
-        go_timer.SetActive(true);
-        textComponent.color = Color.white;
-
-        timer = duration;
-
-        while (timer > 0)
+        while (true)
         {
-            timer -= Time.deltaTime;
 
-            if (timer < 0)
-                timer = 0;
+            go_timer.SetActive(true);
+            textComponent.color = Color.white;
 
-            if (go_timer.activeSelf == true && timer % clignFreq > Random.Range(0f, 1))
+            timer = duration;
+
+            while (timer > 0)
             {
-                go_timer.SetActive(false);
-                timerStorage = timer;
+                timer -= Time.deltaTime;
 
+                if (timer < 0)
+                    timer = 0;
+
+                if (go_timer.activeSelf == true && timer % clignFreq > Random.Range(0f, 1))
+                {
+                    go_timer.SetActive(false);
+                    timerStorage = timer;
+
+                }
+
+
+                if (go_timer.activeSelf == false && timerStorage - timer > 0.02f)
+                    go_timer.SetActive(true);
+
+
+                textComponent.SetText(((Mathf.Round(timer * 100)) / 100).ToString());
+
+                yield return null;
             }
 
+            if(timer == 0)
+            {
+                Sc_ScreenShake.Instance.ShakeIt(0.02f, 1f);
+            }
 
-            if (go_timer.activeSelf == false && timerStorage-timer > 0.02f)
+            Debug.Log("Damage/shake/FX");
+
+            for (int i = 0; i < 4; i++)
+            {
+                yield return new WaitForSeconds(.4f);
+                go_timer.SetActive(false);
+                if (i < 3)
+                    textComponent.SetText(textComponent.text + "0");
+                else
+                {
+                    textComponent.SetText("XXXX");
+                    textComponent.color = Color.red;
+                }
+
+
+                yield return new WaitForSeconds(.4f);
                 go_timer.SetActive(true);
 
-
-            textComponent.SetText(((Mathf.Round(timer*100))/100).ToString());
-
-            yield return null;
-        }
-
-
-
-        Debug.Log("Damage/shake/FX");
-
-        for (int i = 0; i<4; i++)
-        {
-            yield return new WaitForSeconds(.4f);
-            go_timer.SetActive(false);
-            if (i < 3)
-                textComponent.SetText(textComponent.text + "0");
-            else
-            {
-                textComponent.SetText("XXXX");
-                textComponent.color = Color.red;
             }
-                
-            
-           yield return new WaitForSeconds(.4f);
-            go_timer.SetActive(true);
 
-        }
+            yield return new WaitForSeconds(1.5f);
 
-        yield return new WaitForSeconds(1.5f);
+            textComponent.SetText("ERROR");
 
-        textComponent.SetText("ERROR");
+            yield return new WaitForSeconds(1.5f);
 
-        yield return new WaitForSeconds(1.5f);
+            textComponent.SetText("ALERT");
 
-        textComponent.SetText("ALERT");
+            yield return new WaitForSeconds(0.8f);
 
-        yield return new WaitForSeconds(0.8f);
+            textComponent.SetText("CANNOT");
 
-        textComponent.SetText("CANNOT");
+            yield return new WaitForSeconds(0.6f);
 
-        yield return new WaitForSeconds(0.6f);
+            textComponent.SetText("REBOOT");
 
-        textComponent.SetText("REBOOT");
+            yield return new WaitForSeconds(0.8f);
 
-        yield return new WaitForSeconds(0.8f);
+            textComponent.SetText("CRITICAL");
 
-        textComponent.SetText("CRITICAL");
+            yield return new WaitForSeconds(0.6f);
 
-        yield return new WaitForSeconds(0.6f);
-
-        textComponent.SetText("FAILURE");
+            textComponent.SetText("FAILURE");
 
 
-        for (int i = 0; i < 9; i++)
-        {
+            for (int i = 0; i < 9; i++)
+            {
+                go_timer.SetActive(false);
+                yield return new WaitForSeconds(0.1f);
+                go_timer.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+
+            }
+
+            yield return new WaitForSeconds(1f);
+
             go_timer.SetActive(false);
-            yield return new WaitForSeconds(0.1f);
-            go_timer.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
 
         }
-
-        yield return new WaitForSeconds(1f);
-
-        go_timer.SetActive(false);
-
-
 
     }
 

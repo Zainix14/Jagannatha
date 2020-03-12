@@ -127,7 +127,7 @@ public class SC_FlockManager : MonoBehaviour
             {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
                 _splineTab[i].transform.position = transform.position;
-                _splineTab[i].transform.rotation = Random.rotation;
+
             }
         }
 
@@ -150,13 +150,12 @@ public class SC_FlockManager : MonoBehaviour
 
         if (isSpawning && !isActive)
         {
-
             bezierWalkerTime.Execute(Time.deltaTime);
         }
 
         if(isActive && isSpawning)
         {
-            float speed = 0.5f;
+            float speed = 0.75f;
             int rndRangePilote = Random.Range(90, 150);
             Vector3 target = new Vector3(_Player.transform.position.x, rndRangePilote, _Player.transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
@@ -168,7 +167,6 @@ public class SC_FlockManager : MonoBehaviour
                     if (_splineTab[i] != null)
                     {
                         _splineTab[i].transform.position = transform.position;
-                        _splineTab[i].transform.rotation = Random.rotation;
                     }
                 }
                 isSpawning = false;
