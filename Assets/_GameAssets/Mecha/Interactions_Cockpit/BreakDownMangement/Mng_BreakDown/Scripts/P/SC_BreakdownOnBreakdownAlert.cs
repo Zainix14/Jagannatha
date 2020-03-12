@@ -17,7 +17,7 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
     #endregion
 
-    public float timerDuration = 10f;
+    public float timerDuration = 30f;
     float timer = 0f;
 
     public GameObject go_timer;
