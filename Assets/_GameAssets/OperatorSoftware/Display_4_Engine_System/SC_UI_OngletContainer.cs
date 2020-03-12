@@ -13,12 +13,12 @@ public class SC_UI_OngletContainer : MonoBehaviour
     Image[] onglet;
     Vector3 ongletActifPos;
     public Transform particleFB;
-    public RectTransform particleRect;
+    //public RectTransform particleRect;
     bool toPlace = false;
     // Start is called before the first frame update
     void Start()
     {
-        particleRect = particleFB.GetComponent<RectTransform>();
+        particleFB = particleFB.GetComponent<RectTransform>();
         checkActive();
     }
 
@@ -28,8 +28,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
         
         if (toPlace)
         {
-            particleRect.localPosition = Vector3.Lerp(ongletActifPos, particleRect.localPosition, Time.deltaTime*50f);
-            if (particleRect.transform.localPosition == ongletActifPos && ongletActifPos != Vector3.zero)
+            particleFB.localPosition = Vector3.Lerp(ongletActifPos, particleFB.localPosition, Time.deltaTime*50f);
+            if (particleFB.transform.localPosition == ongletActifPos && ongletActifPos != Vector3.zero)
             {
                 toPlace = false;
             }
