@@ -329,6 +329,7 @@ public class SC_KoaManager : MonoBehaviour
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(curBoidSettings);
+            _koa.transform.position = flockManager.transform.position;
 
         }
 
