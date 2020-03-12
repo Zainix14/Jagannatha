@@ -9,6 +9,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     float init_rot_cylindre;
 
+    public Material[] solutions_mat;
+    public MeshRenderer solution;
+
+    int oldSolutionNb = 40;
+    int solutionNb;
+
     private void Awake()
     {
         tableau_barres = new GameObject[gameObject.transform.childCount];
@@ -106,6 +112,71 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         }
         
+        if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -4)
+        {
+
+            if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].valueWanted == -1)
+            {
+                solutionNb = 0;
+            }
+            else
+                solutionNb = 1;
+
+        }
+        else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -2)
+        {
+
+            if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].valueWanted == -1)
+            {
+                solutionNb = 2;
+            }
+            else
+                solutionNb = 3;
+
+        }
+        else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == 1)
+        {
+
+            if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].valueWanted == -1)
+            {
+                solutionNb = 5;
+            }
+            else
+                solutionNb = 4;
+
+        }
+
+
+        if (solutionNb !=oldSolutionNb)
+        {
+            switch (solutionNb)
+            {
+                case 0:
+                    solution.material = solutions_mat[0];
+                    break;
+                case 1:
+                    solution.material = solutions_mat[1];
+                    break;
+                case 2:
+                    solution.material = solutions_mat[2];
+                    break;
+                case 3:
+                    solution.material = solutions_mat[3];
+                    break;
+                case 4:
+                    solution.material = solutions_mat[4];
+                    break;
+                case 5:
+                    solution.material = solutions_mat[5];
+                    break;
+
+
+
+            }
+
+            oldSolutionNb = solutionNb;
+
+        }
 
 
     }
