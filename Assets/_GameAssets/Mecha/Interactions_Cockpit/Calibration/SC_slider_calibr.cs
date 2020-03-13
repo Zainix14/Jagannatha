@@ -29,7 +29,7 @@ public class SC_slider_calibr : MonoBehaviour
     [SerializeField, Range(0, 0.1f)]
     float MAX_VIBRATION_DISTANCE = 0.03f;
 
-    #region SlideI Variables
+    #region Slide Variables
 
     public bool _freezeAlongX = true;
     public bool _freezeAlongY = false;
@@ -39,16 +39,22 @@ public class SC_slider_calibr : MonoBehaviour
     private float _localY = 0;
     private float _localZ = 0;
 
-    private float newX;
-    private float oldX;
+    private Vector3 SliderPos;
+    [SerializeField]
+    private float SliderLenght;
+    [SerializeField]
+    private float SliderCurPos;
+    [SerializeField]
+    private float SliderNewRatio;
+    [SerializeField]
+    private float SliderOldRatio;
 
     #endregion
 
     void Start ()
     {
 
-        oldX = transform.position.x;
-        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
+        InitSlider();
 
         GetReferences();
 
@@ -80,10 +86,20 @@ public class SC_slider_calibr : MonoBehaviour
 
     void Update ()
     {
-        SlideI();
+        Slide();
     }
 
-    void SlideI()
+    void InitSlider()
+    {
+        sliderRigidbody = gameObject.GetComponent<Rigidbody>();
+        Vector3 SliderLenghtVector = RightLimit.transform.position - LeftLimit.transform.position;
+        SliderLenght = SliderLenghtVector.magnitude - LeftLimit.transform.localScale.x;
+        SliderPos = this.transform.position - LeftLimit.transform.position;
+        SliderCurPos = SliderPos.magnitude;
+        SliderOldRatio = Ratio(SliderCurPos, SliderLenght, 0.45f, 0.0f, -0.45f);
+    }
+
+    void Slide()
     {
 
         //on traduit la position en position locale pour la freeze
@@ -92,51 +108,28 @@ public class SC_slider_calibr : MonoBehaviour
         _localZ = transform.localPosition.z;
 
         //Freeze Axes
-        if (_freezeAlongX) _localX = 0;
-        if (_freezeAlongY) _localY = 0;
-        if (_freezeAlongZ) _localZ = 0;
+        if (_freezeAlongX) _localX = LeftLimit.transform.localPosition.x;
+        if (_freezeAlongY) _localY = LeftLimit.transform.localPosition.y;
+        if (_freezeAlongZ) _localZ = LeftLimit.transform.localPosition.z;
         gameObject.transform.localPosition = new Vector3(_localX, _localY, _localZ);
 
-        //sécurité juste en y
-        if (transform.localPosition.y < -0.45f)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, -0.45f, transform.localPosition.z);
-        }
-        else if (transform.localPosition.y > 0.45f)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, 0.45f, transform.localPosition.z);
-        }
+        SliderPos = this.transform.position - LeftLimit.transform.position;
+        SliderCurPos = SliderPos.magnitude;
 
-        newX = gameObject.transform.localPosition.y;
+        SliderNewRatio = Ratio(SliderCurPos, SliderLenght, 0.45f, 0.0f, -0.45f);
 
-        //on envoie la valeur à la syncvar si celle ci a changé
-        if (newX != oldX)
-            SendToSynchVar(Mathf.Round(gameObject.transform.localPosition.y * 100) / 100);
+        if (SliderNewRatio != SliderOldRatio)
+            SendToSynchVar(SliderNewRatio);
 
+        //Vibration
         if (controller != null)
         {
-            float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
+            float distance = Mathf.Min(Mathf.Abs(SliderNewRatio - SliderOldRatio), MAX_VIBRATION_DISTANCE);
             float vibrationStrength = (distance / MAX_VIBRATION_DISTANCE) * MAX_VIBRATION_STRENGTH;
             controller.Vibrate(VIBRATION_DURATION_IN_MILLISECONDS, vibrationStrength);
         }
 
-        oldX = newX;
-
-    }
-
-    void SlideII()
-    {
-
-        //on traduit la position en position locale pour la freeze
-        _localX = transform.localPosition.x;
-        _localY = transform.localPosition.y;
-        _localZ = transform.localPosition.z;
-
-        //Freeze Axes
-        if (_freezeAlongX) _localX = 0;
-        if (_freezeAlongY) _localY = 0;
-        if (_freezeAlongZ) _localZ = 0;
-        gameObject.transform.localPosition = new Vector3(_localX, _localY, _localZ);
+        SliderOldRatio = SliderNewRatio;
 
     }
 
