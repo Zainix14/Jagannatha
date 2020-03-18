@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IF_BreakdownManager
 {
-
     void CheckBreakdown();
 
 }
