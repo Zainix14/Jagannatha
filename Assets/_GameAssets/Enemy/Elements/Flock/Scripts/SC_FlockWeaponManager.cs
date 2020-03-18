@@ -144,7 +144,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
                         this.GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,100,100));
                         Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
                         SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
-                        SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
+                        SC_MainBreakDownManager.Instance.causeDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
                         //https://www.youtube.com/watch?v=kXYiU_JCYtU
 
                     }
@@ -185,6 +185,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
         Vector3 dir = new Vector3(transform.forward.x , transform.forward.y , transform.forward.z );
 
         bulletPool[n_CurBullet].GetComponent<SC_BulletFlock>().b_IsFire = true;
+        bulletPool[n_CurBullet].GetComponent<SC_BulletFlock>().flockSettings = flockSettings;
 
         rb.AddForce(dir * 24000);
 
@@ -216,8 +217,8 @@ public class SC_FlockWeaponManager : MonoBehaviour
             Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
             SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
             SC_HitDisplay.Instance.Hit(transform.position);
+            SC_MainBreakDownManager.Instance.causeDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
 
-            SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
             startLaser = false;
         }
 

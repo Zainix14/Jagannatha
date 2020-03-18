@@ -13,8 +13,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     #endregion
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
-    public SC_BreakdownDisplayManager Mng_BreakDownTest;
-    private SC_BreakdownOnBreakdownAlert SC_BreakDownAlert;
 
     // ecrans d'erreur
 
@@ -234,21 +232,38 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
 
 
-    public void causeDamageOnSystem(int DmgValue)
+    public void causeDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
     {
-        life -= DmgValue;
-
-        if (life <= 0)
+        switch(attackFocus)
         {
+            case FlockSettings.AttackFocus.Display:
+
+                life -= DmgValue;
+
+                if (life <= 0)
+                {
+                    life = 10;
+                    SC_BreakdownDisplayManager.Instance.StartNewBreakdown(DmgValue);
+
+                }
+
+                break;
+
+            case FlockSettings.AttackFocus.Movement:
 
 
-            life = 10;
-            Mng_BreakDownTest.StartNewBreakdown(1);
+                break;
+
+            case FlockSettings.AttackFocus.Weapon:
+
+                SC_WeaponBreakdown.Instance.StartNewBreakdown(DmgValue);
+
+                break;
 
         }
 
 
-
+  
     }
 
 }

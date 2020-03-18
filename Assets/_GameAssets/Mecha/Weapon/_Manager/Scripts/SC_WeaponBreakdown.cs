@@ -93,7 +93,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
 
-
                     SetNewBreakdown(50);
 
                     curBreakdown++;
@@ -168,8 +167,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         offPercentage += percent;
 
-        if (offPercentage > 100)
-            offPercentage = 100;
+        if (offPercentage > 50)
+            offPercentage = 50;
 
         this.frequency = frequency;
     }
@@ -202,13 +201,13 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     
         if (n_BreakdownValue == 1)
         {
-            offPercentage = 50 * CurNbOfBreakdown;
+            offPercentage = 25 * CurNbOfBreakdown;
 
             SC_MainBreakDownManager.Instance.CheckBreakdown();
         }
         else if (n_BreakdownValue > 1)
         {
-            offPercentage = 50 * CurNbOfBreakdown;
+            offPercentage = 25 * CurNbOfBreakdown;
 
             b_BreakdownTest = true;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
