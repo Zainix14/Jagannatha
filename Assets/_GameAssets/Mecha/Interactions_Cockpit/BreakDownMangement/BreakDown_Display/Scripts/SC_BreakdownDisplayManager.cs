@@ -11,7 +11,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     public static SC_BreakdownDisplayManager Instance { get { return _instance; } }
 
     #endregion
-    public bool b_BreakdownTest = false;
+    public bool b_MaxBreakdown = false;
 
     private IF_BreakdownManager Mng_BreakdownMain;
 
@@ -80,7 +80,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for(int i=0;i< nbBreakdown;i++)
         {
-            if (newBreakdown && !b_BreakdownTest && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+            if (newBreakdown && !b_MaxBreakdown && !SC_MainBreakDownManager.Instance.b_BreakEngine)
             {
                 int noBreakdown = 0;
                 for (int j = 0; j < interactible.Length; j++)
@@ -136,21 +136,21 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         CurNbOfBreakdown = n_BreakdownValue;
 
 
-        if (n_BreakdownValue > 5 && !b_BreakdownTest)
+        if (n_BreakdownValue > 5 && !b_MaxBreakdown)
         {
-            b_BreakdownTest = true;
+            b_MaxBreakdown = true;
             Mng_BreakdownMain.CheckBreakdown();
         }          
-        else if (n_BreakdownValue ==0 && b_BreakdownTest)
+        else if (n_BreakdownValue ==0 && b_MaxBreakdown)
         {
 
-            b_BreakdownTest = false;
+            b_MaxBreakdown = false;
             Mng_BreakdownMain.CheckBreakdown();
   
         }
 
         //Permet de régler les demi-pannes d'écrans
-        else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
+        else if (n_BreakdownValue == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
         {
             sc_screens_controller.RepairAll();
 
