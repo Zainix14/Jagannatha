@@ -12,7 +12,8 @@ public class SC_main_breakdown_validation : MonoBehaviour
     #endregion
 
     public bool isValidated = false;
-
+    GameObject SFX_Validate;
+    GameObject SFX_ValidateSound;
 
     private void Awake()
     {
@@ -95,7 +96,16 @@ public class SC_main_breakdown_validation : MonoBehaviour
     {
         //On check pour savoir si tous les systemes sont déjà réparés en additionant leurs compteurs
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
-        isValidated = true;
+        {
+            isValidated = true;
+            SFX_Validate = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_voice_rebooting_system", false, 1f);
+            SFX_ValidateSound = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_reboot_button_validate", false, 0.1f);
+        }
+        else
+        {
+            SFX_Validate = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_voice_system_failure", false, 0.5f);
+            SFX_ValidateSound = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_reboot_button_fail", false, 0.1f);
+        }
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         textStopBlink();
 
