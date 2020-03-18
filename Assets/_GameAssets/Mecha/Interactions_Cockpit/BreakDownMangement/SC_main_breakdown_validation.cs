@@ -15,6 +15,9 @@ public class SC_main_breakdown_validation : MonoBehaviour
     GameObject SFX_Validate;
     GameObject SFX_ValidateSound;
 
+
+    private GameObject Mng_SyncVar;
+    private SC_SyncVar_Main_Breakdown sc_syncvar;
     private void Awake()
     {
 
@@ -31,7 +34,16 @@ public class SC_main_breakdown_validation : MonoBehaviour
         // Start is called before the first frame update
         void Start()
     {
+        GetReferences();
+    }
 
+    void GetReferences()
+    {
+
+        if (Mng_SyncVar == null)
+            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
+        if (Mng_SyncVar != null && sc_syncvar == null)
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_Main_Breakdown>();
     }
     /*
     IEnumerator getTo(Vector3 destination)
@@ -55,23 +67,29 @@ public class SC_main_breakdown_validation : MonoBehaviour
         
     }
     */
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.V))
         {
             Validate();
             
 
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.F))
+        if (sc_syncvar == null || Mng_SyncVar == null)
+            GetReferences();
+
+        if (sc_syncvar != null)
         {
-            this.GetComponent<Animator>().SetBool("BOUGE", false);
+
         }
-        */
-    }
+            /*
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                this.GetComponent<Animator>().SetBool("BOUGE", false);
+            }
+            */
+        }
 
     public void bringDown()
     {
@@ -81,15 +99,19 @@ public class SC_main_breakdown_validation : MonoBehaviour
     public void bringUp()
     {
         this.GetComponent<Animator>().SetBool("BOUGE", false);
+        
     }
 
     public void textBlink()
     {
         this.GetComponent<Animator>().SetBool("B_Blink", true);
+        sc_syncvar.checkReboot(true);
+
     }
     public void textStopBlink()
     {
         this.GetComponent<Animator>().SetBool("B_Blink", false);
+        sc_syncvar.checkReboot(false);
     }
 
     public void Validate()
