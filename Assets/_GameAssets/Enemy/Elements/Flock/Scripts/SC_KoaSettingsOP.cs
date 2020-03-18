@@ -32,7 +32,8 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     [SerializeField]
     GameObject VFX_koadeath;
 
-    
+    [SerializeField]
+    TrailRenderer trail;
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -140,6 +141,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
             newColor = Tab_colorSpawn[type];
 
         GetComponent<MeshRenderer>().material.color = newColor;
+        GetComponent<TrailRenderer>().material.color = newColor;
     }
 
     public void Action()
