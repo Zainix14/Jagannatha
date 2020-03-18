@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class SC_slider_calibr : MonoBehaviour
 {
@@ -48,6 +49,15 @@ public class SC_slider_calibr : MonoBehaviour
     private float SliderNewRatio;
     [SerializeField]
     private float SliderOldRatio;
+
+
+    //storage des valeurs traduites de 1 à 6 pour les vibrations de crans
+    private int oldIntValue;
+    private int curIntValue;
+
+
+    //Texte d'affichage de la valeur actuelle
+    public TMP_Text text_value_display;
 
     #endregion
 
@@ -118,8 +128,31 @@ public class SC_slider_calibr : MonoBehaviour
 
         SliderNewRatio = Ratio(SliderCurPos, SliderLenght, 0.45f, 0.0f, -0.45f);
 
+
+        //Envoi à la syncVar, stockage de la valeur traduite en int et vibration si changement de cran
         if (SliderNewRatio != SliderOldRatio)
+        {
             SendToSynchVar(SliderNewRatio);
+
+            curIntValue = (int)((SliderNewRatio + 0.4f) * 6.25f);
+
+            text_value_display.text = (curIntValue + 1).ToString();
+
+            if (oldIntValue != curIntValue)
+            {
+                controller.Vibrate(50, 0.3f);
+                Debug.Log("vibrate");
+
+            }
+
+
+
+            oldIntValue = curIntValue;
+
+        }
+            
+
+            
 
         //Vibration
         if (controller != null)
@@ -133,6 +166,7 @@ public class SC_slider_calibr : MonoBehaviour
 
     }
 
+    //Met aussi à jour l'affichage de la valeur sur le slider
     void SendToSynchVar (float value)
     {    
         if (sc_syncvar_calibr == null)
@@ -145,6 +179,7 @@ public class SC_slider_calibr : MonoBehaviour
             value = (value + 0.4f) * 6.25f;
 
             int intvalue = (int)value;
+
 
             sc_syncvar_calibr.CalibrInts[index] = intvalue;
 
