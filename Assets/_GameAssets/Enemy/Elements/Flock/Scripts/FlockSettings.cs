@@ -18,7 +18,7 @@ public class FlockSettings : ScriptableObject
     }
 
     public AttackFocus attackFocus ;
-
+    public int damageOnSystem;
     public enum AttackFocus
     {
         Display,
