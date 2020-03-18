@@ -10,8 +10,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public static SC_WeaponBreakdown Instance { get { return _instance; } }
 
     #endregion
-
-    public bool b_BreakdownTest = false;
+    
+    public bool b_MaxBreakdown = false;
 
     public int CurNbOfBreakdown = 0;
 
@@ -24,7 +24,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     float onTime;
 
     bool bCanFire;
-
 
     [SerializeField]
     public GameObject[] interactible;
@@ -48,6 +47,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         interactible = GameObject.FindGameObjectsWithTag("InteractibleWeapon");
 
         Invoke("Demarage", 0.5f);
+        
     }
 
 
@@ -65,7 +65,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         bool newBreakdown = true;
         for (int i = 0; i < nbBreakdown; i++)
         {
-            if (newBreakdown && !b_BreakdownTest)
+            if (newBreakdown && !b_MaxBreakdown)
             {
 
                 int noBreakdown = 0;
@@ -93,7 +93,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
                 {
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
 
-                    SetNewBreakdown(50);
+                    SetNewBreakdown(25);
 
                     curBreakdown++;
 
@@ -158,7 +158,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         if (Input.GetKeyDown(KeyCode.Y))
         {
             CheckBreakdown();
-
         }
 
     }
@@ -166,7 +165,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public void SetNewBreakdown(int percent, float frequency = 25)
     {
         offPercentage += percent;
-
         if (offPercentage > 50)
             offPercentage = 50;
 
@@ -209,20 +207,20 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         {
             offPercentage = 25 * CurNbOfBreakdown;
 
-            b_BreakdownTest = true;
+            b_MaxBreakdown = true;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
 
         }
-        else if (n_BreakdownValue == 0 && b_BreakdownTest)
+        else if (n_BreakdownValue == 0 && b_MaxBreakdown)
         {
             EndBreakdown();
-            b_BreakdownTest = false;
+            b_MaxBreakdown = false;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
 
         }
 
         //Permet de régler les demi-pannes 
-        else if (n_BreakdownValue == 0 && !b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
+        else if (n_BreakdownValue == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
         {
             EndBreakdown();
 
