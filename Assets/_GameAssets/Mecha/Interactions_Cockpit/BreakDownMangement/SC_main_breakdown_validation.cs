@@ -61,7 +61,7 @@ public class SC_main_breakdown_validation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             Validate();
-
+            
 
         }
         /*
@@ -82,12 +82,22 @@ public class SC_main_breakdown_validation : MonoBehaviour
         this.GetComponent<Animator>().SetBool("BOUGE", false);
     }
 
+    public void textBlink()
+    {
+        this.GetComponent<Animator>().SetBool("B_Blink", true);
+    }
+    public void textStopBlink()
+    {
+        this.GetComponent<Animator>().SetBool("B_Blink", false);
+    }
+
     public void Validate()
     {
         //On check pour savoir si tous les systemes sont déjà réparés en additionant leurs compteurs
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
         isValidated = true;
         SC_MainBreakDownManager.Instance.CheckBreakdown();
+        textStopBlink();
 
     }
 

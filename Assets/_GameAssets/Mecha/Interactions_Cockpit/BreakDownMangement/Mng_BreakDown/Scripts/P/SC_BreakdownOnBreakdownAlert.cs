@@ -171,7 +171,8 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
     public void StopGlobalAlert()
     {
-        StopCoroutine(coroutineTimer);
+        if(coroutineTimer != null)
+            StopCoroutine(coroutineTimer);
 
         go_timer.SetActive(false);
     }
