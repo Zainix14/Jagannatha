@@ -13,8 +13,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     #endregion
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
-    public SC_BreakdownDisplayManager Mng_BreakdownDisplay;
-    private SC_BreakdownOnBreakdownAlert SC_BreakDownAlert;
 
     // ecrans d'erreur
 
@@ -245,7 +243,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 if (life <= 0)
                 {
                     life = 10;
-                    Mng_BreakdownDisplay.StartNewBreakdown(1);
+                    SC_BreakdownDisplayManager.Instance.StartNewBreakdown(DmgValue);
 
                 }
 
