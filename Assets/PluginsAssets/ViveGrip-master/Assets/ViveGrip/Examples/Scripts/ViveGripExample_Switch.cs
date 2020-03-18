@@ -10,7 +10,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     private bool desiredValue = false;
 
-
+    public GameObject Button1;
+    public GameObject Button2;
+    public GameObject Button3;
+    public GameObject Button4;
+    public GameObject Button5;
 
 
     private GameObject Mng_SyncVar;
@@ -57,9 +61,30 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         
        
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Flip();
+            index = 0;
+            Flip(Button1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            index = 1;
+            Flip(Button2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            index = 2;
+            Flip(Button3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            index = 3;
+            Flip(Button4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            index = 4;
+            Flip(Button5);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -78,12 +103,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         IsValueOk();
     }
 
-    public void Flip()
+    public void Flip(GameObject TargetButton)
     {
 
-        Vector3 rotation = transform.localEulerAngles;
+        Vector3 rotation = TargetButton.transform.localEulerAngles;
         rotation.x *= -1;
-        transform.localEulerAngles = rotation;
+        TargetButton.transform.localEulerAngles = rotation;
 
         curState = !curState;
         sendToSynchVar(curState);
