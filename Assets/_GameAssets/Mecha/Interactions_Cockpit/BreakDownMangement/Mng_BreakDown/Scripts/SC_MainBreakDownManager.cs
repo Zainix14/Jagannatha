@@ -72,7 +72,14 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+
+            SC_BreakdownDisplayManager.Instance.CheckBreakdown();
+            Debug.Log(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown);
+
+
+        }
     }
 
     void GetReferences()
