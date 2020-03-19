@@ -1238,10 +1238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d03f9a0d4b694cbc0108cd653f68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  b_BreakdownTest: 0
+  b_MaxBreakdown: 0
   screenController: {fileID: 0}
-  interactible: []
   CurNbOfBreakdown: 0
+  interactible: []
 --- !u!114 &7823681771185629487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4262,6 +4262,11 @@ PrefabInstance:
       propertyPath: LocalBreakdownMng
       value: 
       objectReference: {fileID: 4077517945183357751}
+    - target: {fileID: 1795339269582670075, guid: 6664ff07623a3af4ea5842af17a6983f,
+        type: 3}
+      propertyPath: probability
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1795339269765263174, guid: 6664ff07623a3af4ea5842af17a6983f,
         type: 3}
       propertyPath: m_Layer
@@ -4447,6 +4452,11 @@ PrefabInstance:
       propertyPath: LocalBreakdownMng
       value: 
       objectReference: {fileID: 4077517945183357751}
+    - target: {fileID: 1795339269582670075, guid: 6664ff07623a3af4ea5842af17a6983f,
+        type: 3}
+      propertyPath: probability
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1795339269765263174, guid: 6664ff07623a3af4ea5842af17a6983f,
         type: 3}
       propertyPath: m_Layer
@@ -4834,6 +4844,11 @@ PrefabInstance:
       propertyPath: LocalBreakdownMng
       value: 
       objectReference: {fileID: 4077517945183357751}
+    - target: {fileID: 1795339269582670075, guid: 6664ff07623a3af4ea5842af17a6983f,
+        type: 3}
+      propertyPath: probability
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1795339269765263174, guid: 6664ff07623a3af4ea5842af17a6983f,
         type: 3}
       propertyPath: m_Layer

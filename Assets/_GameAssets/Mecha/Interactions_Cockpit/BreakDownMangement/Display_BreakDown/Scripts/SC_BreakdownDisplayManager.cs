@@ -104,7 +104,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
                 int rnd = Random.Range(0, interactible.Length);
 
-                if (interactible[rnd].GetComponent<IInteractible>().isBreakdown())
+                if (interactible[rnd].GetComponent<IInteractible>().isBreakdown() || !interactible[rnd].GetComponent<IInteractible>().testAgainstOdds())
                 {
                     i--;
                 }

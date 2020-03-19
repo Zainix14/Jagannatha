@@ -223,5 +223,8 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
     }
 
-
+    public bool testAgainstOdds()
+    {
+        return true;
+    }
 }
