@@ -118,6 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2569438518141463450}
+  - component: {fileID: 3503210260224092048}
   m_Layer: 9
   m_Name: BreakDownWeapon
   m_TagString: Untagged
@@ -141,6 +142,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3503210260224092048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4351316507534690389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f349188bcbc6d24b80e8d084f369224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  b_MaxBreakdown: 0
+  CurNbOfBreakdown: 0
+  frequency: 10
+  offPercentage: 0
+  interactible: []
 --- !u!1 &4550863785449694226
 GameObject:
   m_ObjectHideFlags: 0

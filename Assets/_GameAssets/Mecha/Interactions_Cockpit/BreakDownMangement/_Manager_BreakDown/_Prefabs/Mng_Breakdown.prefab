@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2653310943489722879}
   - component: {fileID: 3475608641703514830}
-  - component: {fileID: 114607496681244684}
   m_Layer: 9
   m_Name: Mng_Breakdown
   m_TagString: Mng_BreakdownMain
@@ -51,6 +50,10 @@ MonoBehaviour:
   Mng_Checklist: {fileID: 0}
   Mng_BreakDownAlert: {fileID: 0}
   screenController: {fileID: 0}
+  nbOfBreakDownBeforeTotalBreak: 5
+  Displaylife: 10
+  WeaponLife: 10
+  MovementLife: 10
   b_BreakEngine: 0
   b_BreakMove: 0
   b_BreakScreen: 0
@@ -58,27 +61,6 @@ MonoBehaviour:
   b_BreakMiniGun: 0
   b_BreakShrapnel: 0
   b_BreakFlameThrower: 0
-  nbOfBreakDownBeforeTotalBreak: 5
-  Displaylife: 10
-  WeaponLife: 10
-  MovementLife: 10
---- !u!114 &114607496681244684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672966092027048479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f349188bcbc6d24b80e8d084f369224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  b_MaxBreakdown: 0
-  CurNbOfBreakdown: 0
-  frequency: 10
-  offPercentage: 0
-  interactible: []
 --- !u!95 &7586310513933518275
 Animator:
   serializedVersion: 3
