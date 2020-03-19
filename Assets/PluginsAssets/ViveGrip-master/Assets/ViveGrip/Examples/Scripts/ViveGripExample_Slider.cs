@@ -32,6 +32,11 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public GameObject LocalBreakdownMng;
 
     private SC_SyncVar_BreakdownDisplay sc_syncvar;
+
+
+    [Range(0, 1)]
+    public float probability = 1;
+
     /*
     [SerializeField]
     button bouton;
@@ -231,4 +236,16 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }
 
+
+    public bool testAgainstOdds()
+    {
+        float rand = Random.Range(0f, 1f);
+
+        if (rand < probability)
+            return true;
+        else
+            return false;
+
+
+    }
 }

@@ -8,4 +8,7 @@ public interface IInteractible
     void Repair();
     bool isBreakdown();
 
+    //effectue un test de probabilité et retourne le resultat
+    bool testAgainstOdds();
+
 }
