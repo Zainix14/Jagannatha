@@ -7,10 +7,13 @@ public class SC_BulletFlock : NetworkBehaviour
 {
 
     public bool b_IsFire = false;
+    public FlockSettings flockSettings;
     Rigidbody rb = null;
     [SerializeField]
     float f_Scale_OP = 2f;
     Vector3 ScaleOP;
+
+
 
     void Start()
     {
@@ -31,9 +34,10 @@ public class SC_BulletFlock : NetworkBehaviour
         {
             Sc_ScreenShake.Instance.ShakeIt(0.015f,0.1f);
             SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
-
+            SC_HitDisplay.Instance.Hit(transform.position);
             //on fait subir des dmg au joueur
-            SC_MainBreakDownManager.Instance.causeDamageOnSystem(1);
+            if(flockSettings != null)
+            SC_MainBreakDownManager.Instance.CauseDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
 
             ResetPos();
         }

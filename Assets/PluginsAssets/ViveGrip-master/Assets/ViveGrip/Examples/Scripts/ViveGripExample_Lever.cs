@@ -183,4 +183,9 @@ public class ViveGripExample_Lever : MonoBehaviour, IInteractible
         }
     }
 
+    public bool testAgainstOdds()
+    {
+        return true;
+    }
+
 }

@@ -28,13 +28,14 @@ public class SC_passwordLock : MonoBehaviour
     [SerializeField]
     GameObject objectElectricPlug;
 
-    [SerializeField]
-    bool cheatCode = true;
+ 
+    public bool cheatCode = true;
 
     void Start()
     {
-        if (cheatCode)
-        {
+        //if (cheatCode)
+        
+#if UNITY_EDITOR
             for (int i = 0; i < 4; i++)
             {
                 canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
@@ -45,12 +46,13 @@ public class SC_passwordLock : MonoBehaviour
 
             unlock = false;
             countTime = 0;
-        }
-        else
-        {
-            canvasMng.GetComponent<SC_CanvasManager>().lockScreenDisplay();
-        }
+#else
 
+        //else
+
+        canvasMng.GetComponent<SC_CanvasManager>().lockScreenDisplay();
+
+#endif
     }
 
     // Update is called once per frame

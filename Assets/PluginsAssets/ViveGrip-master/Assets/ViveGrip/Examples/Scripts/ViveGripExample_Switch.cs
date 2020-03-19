@@ -10,8 +10,8 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     private bool desiredValue = false;
 
-
-
+    [Range(0,1)]
+    public float probability = 1;
 
     private GameObject Mng_SyncVar;
     private SC_SyncVar_BreakdownDisplay sc_syncvar;
@@ -57,10 +57,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         
        
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Flip();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -200,6 +197,19 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
 
+    }
+
+   
+   public bool testAgainstOdds()
+    {
+        float rand = Random.Range(0f, 1f);
+
+        if (rand < probability)
+            return true;
+        else
+            return false;
+
+        
     }
 
 }

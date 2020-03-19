@@ -21,8 +21,6 @@ public class Boid : MonoBehaviour {
 
     [SerializeField]
     Material[] M_tabHit;
-    [SerializeField]
-    Material[] M_tabType;
     MeshRenderer meshRenderer;
 
     Vector3 deathPos;
@@ -81,8 +79,6 @@ public class Boid : MonoBehaviour {
         destructionType = DestructionType.none;
         curFlick = 0;
         transform.localScale = initScale;
-        meshRenderer.material = M_tabType[type];
-        M_tabHit[0] = M_tabType[type];
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
         this.sensitivity = sensitivity;
@@ -108,6 +104,8 @@ public class Boid : MonoBehaviour {
         {
             Sc_ScreenShake.Instance.ShakeIt(0.010f, 0.1f);
             SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
+            SC_HitDisplay.Instance.Hit(transform.position);
+
             DestroyBoid(DestructionType.Solo);
         }
     }

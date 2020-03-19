@@ -47,6 +47,7 @@ public class SC_FlockManager : MonoBehaviour
     bool isActive;
     bool isSpawning;
 
+    Quaternion flockInitialRot;
     //---------------------------------------------      MultiGuide Variables  (Split)   ----------------------------------------------------------//
 
     [HideInInspector]
@@ -65,9 +66,9 @@ public class SC_FlockManager : MonoBehaviour
 
     enum PathType
     {
-        Roam,
-        line,
-        AttackPlayer,
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2
     }
 
     PathType curtype;
@@ -95,7 +96,7 @@ public class SC_FlockManager : MonoBehaviour
     public void InitializeFlock(FlockSettings newFlockSettings,BezierSolution.BezierSpline spawnSpline,Vector3Int sensitivity)
     {
         flockSettings = newFlockSettings;
-        
+        flockInitialRot = transform.rotation;
 
         inAttack = false;
         isSpawning = true;
@@ -125,9 +126,8 @@ public class SC_FlockManager : MonoBehaviour
             if (_BoidSettings[i].spline != null)
             {
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
-
                 _splineTab[i].transform.position = transform.position;
-                _splineTab[i].transform.rotation = Random.rotation;
+
             }
         }
 
@@ -145,15 +145,17 @@ public class SC_FlockManager : MonoBehaviour
     #region Update
     void Update()
     {
-        if(isSpawning && !isActive)
-        {
+        if (isActive && _curBoidSetting != null)
+            transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
 
+        if (isSpawning && !isActive)
+        {
             bezierWalkerTime.Execute(Time.deltaTime);
         }
 
         if(isActive && isSpawning)
         {
-            float speed = 0.5f;
+            float speed = 0.75f;
             int rndRangePilote = Random.Range(90, 150);
             Vector3 target = new Vector3(_Player.transform.position.x, rndRangePilote, _Player.transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
@@ -165,10 +167,12 @@ public class SC_FlockManager : MonoBehaviour
                     if (_splineTab[i] != null)
                     {
                         _splineTab[i].transform.position = transform.position;
-                        _splineTab[i].transform.rotation = Random.rotation;
                     }
                 }
                 isSpawning = false;
+                StartNewPath(PathType.Roam);
+
+
             }
         }
         if(isActive && !isSpawning)
@@ -279,14 +283,18 @@ public class SC_FlockManager : MonoBehaviour
         curtype = pathType;
         switch (pathType)
         {
+            case PathType.Spawn:
+                StartNewBehavior((int)PathType.Spawn);
+                break;
+
             case PathType.Roam:
-                StartNewBehavior(0);
+                StartNewBehavior((int)PathType.Roam);
                 break;
 
 
             case PathType.AttackPlayer:
 
-                StartNewBehavior(1);
+                StartNewBehavior((int)PathType.AttackPlayer);
                 flockWeaponManager.StartFire();
 
                 break;
@@ -305,6 +313,7 @@ public class SC_FlockManager : MonoBehaviour
 
     public void StartNewBehavior(int behaviorIndex)
     {
+        transform.rotation = flockInitialRot;
         _curBoidSetting = _BoidSettings[behaviorIndex];
         _curSpline = _splineTab[behaviorIndex];
         bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;

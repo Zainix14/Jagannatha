@@ -123,7 +123,7 @@ public class SC_extRayCast : MonoBehaviour
         {
 
             hitCockpit = transform.rotation * hitCockpit;
-            int layerMask = 1 << 21 | 1 << 10;
+            int layerMask = 1 << 21 | 1 << 11;
             layerMask = ~layerMask;
             if (Physics.Raycast(transform.position, hitCockpit, out hit, 5000f, layerMask))
             {

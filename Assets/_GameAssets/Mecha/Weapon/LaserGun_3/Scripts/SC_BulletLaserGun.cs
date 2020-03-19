@@ -22,38 +22,6 @@ public class SC_BulletLaserGun : NetworkBehaviour
         mr = this.GetComponent<MeshRenderer>();
     }
 
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-
-        if (other.gameObject.layer == 26)
-        {
-
-            if (timer > (1 / frequency))
-            {
-                timer = 0;
-                other.GetComponent<Boid>().HitBoid(sensitivity);
-            }
-
-            timer += Time.deltaTime;
-        }              
-
-        if (other.gameObject.layer == 25)
-        {
-
-            if (timer > (1 / frequency))
-            {
-                timer = 0;
-                other.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
-            }
-
-            timer += Time.deltaTime;
-            
-        }
-                
-    }
-    */
-
     public void DisplayLaser(GameObject helper_startPos, GameObject Target, bool Visible, Color32 targetColor)
     {
 
@@ -93,7 +61,10 @@ public class SC_BulletLaserGun : NetworkBehaviour
         if (!isServer)
         {
 
-            if(Mat.color != targetColor)
+            if (!mr.enabled)
+                mr.enabled = true;
+
+            if (Mat.color != targetColor)
                 Mat.color = targetColor;
 
             target.transform.position = position;

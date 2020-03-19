@@ -32,7 +32,8 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     [SerializeField]
     GameObject VFX_koadeath;
 
-    
+    [SerializeField]
+    TrailRenderer trail;
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -65,7 +66,8 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         this.curKoaLife = curLife;
         if(curLife <= 0)
         {
-            Debug.Log("ca me gave a lfinsbroooooooooown, cest la culture de la bétrave son nom c'est alphonse Brooooown, LA PUISSANCE DU PORT DU HAVRE");
+
+            //https://www.youtube.com/watch?v=VUjn2Vs65Z8
             var vfx = Instantiate(VFX_koadeath);
             vfx.transform.position = transform.position;
             vfx.GetComponent<ParticleSystem>().startColor = Tab_color[type];
@@ -139,6 +141,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
             newColor = Tab_colorSpawn[type];
 
         GetComponent<MeshRenderer>().material.color = newColor;
+        GetComponent<TrailRenderer>().material.color = newColor;
     }
 
     public void Action()

@@ -18,7 +18,7 @@ public class FlockSettings : ScriptableObject
     }
 
     public AttackFocus attackFocus ;
-
+    public int damageOnSystem;
     public enum AttackFocus
     {
         Display,
@@ -53,7 +53,7 @@ public class FlockSettings : ScriptableObject
     [Header("Boids")]
 
 
-    [Tooltip("Index 0 : Roam | Index 1 : Attack")]
+    [Tooltip("Index 0 : Spawn | Index 1 : Roam | Index 2 : Attack | Index 3 : Destruction")]
     public BoidSettings[] boidSettings;
 
     public int spawnTimer = 10;

@@ -15,15 +15,17 @@ public class Sc_LaserFeedBack : MonoBehaviour
     public SC_WeaponLaserGun MainLaserScript;
     public GameObject FirePoint;
     GameObject SFX_LaserBeam;
-    public LineRenderer lr;
-    public LineRenderer lr2;
     int SoundSourceNumb;
     [SerializeField]
-    ParticleSystem Sparkle;
-    [SerializeField]
     Color CurColor;
+    public GameObject Laser;
+    public GameObject EnergyBall;
+    public GameObject ChargeSpark;
     [SerializeField]
     SC_WeaponLaserGun WeapMainSC;
+    public ParticleSystem.MainModule LaserPS;
+    public ParticleSystem.MainModule EnergyBallPS;
+    public ParticleSystem.MainModule ChargeSparkPS;
 
     void Awake()
     {
@@ -39,29 +41,13 @@ public class Sc_LaserFeedBack : MonoBehaviour
 
     public void EnableLaser(RaycastHit hit)
     {
-        if(SoundSourceNumb == 0)
+        if (SoundSourceNumb == 0)
         {
             SFX_LaserBeam = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_LaserBeam2", true, 0.1f);
             SoundSourceNumb += 1;
         }
-        
-        if (!lr.enabled)
-            lr.enabled = true;
-        if (!lr2.enabled)
-            lr2.enabled = true;
 
-        var targetPoint = lr.worldToLocalMatrix.MultiplyPoint(hit.point);
-        lr.SetPosition(0, Vector3.zero);
-        lr.SetPosition(1, targetPoint);
-
-        lr2.SetPosition(0, Vector3.zero);
-        lr2.SetPosition(1, lr.GetPosition(1));   
-
-        if (!Sparkle.isPlaying)
-            Sparkle.Play();
-
-        Sparkle.transform.position = hit.point;      
-
+        GetComponentInChildren<Animator>().SetBool("IsFire", true);
     }
 
     public void DiseableLaser()
@@ -71,24 +57,14 @@ public class Sc_LaserFeedBack : MonoBehaviour
             SFX_LaserBeam.GetComponent<AudioSource>().Stop();
             SoundSourceNumb = 0;
         }
-        if (Sparkle.isPlaying)
-            Sparkle.Stop();
-
-        if (lr.enabled)
-            lr.enabled = false;
-        if (lr2.enabled)
-            lr2.enabled = false;
-
+        GetComponentInChildren<Animator>().SetBool("IsFire", false);
     }
 
     public void SetColor(Color32 NewColor)
     {
 
-        if(CurColor != NewColor)
+        if (CurColor != NewColor)
         {
-
-            WeapMainSC.AlignColor(CurColor);
-
             CurColor = NewColor;
 
             Gradient gradiend = new Gradient();
@@ -108,9 +84,15 @@ public class Sc_LaserFeedBack : MonoBehaviour
             gradiend.SetKeys(colorKeys, alphaKeys);
             gradiend.SetKeys(colorKeys, alphaKeys);
 
-            lr.colorGradient = gradiend;
-            lr2.colorGradient = gradiend;
-        }     
+            LaserPS = Laser.GetComponent<ParticleSystem>().main;
+            ChargeSparkPS = ChargeSpark.GetComponent<ParticleSystem>().main;
+            EnergyBallPS = EnergyBall.GetComponent<ParticleSystem>().main;
+
+            LaserPS.startColor = gradiend;
+            ChargeSparkPS.startColor = gradiend;
+            EnergyBallPS.startColor = gradiend;
+
+        }
 
     }
 

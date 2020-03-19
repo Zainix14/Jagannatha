@@ -12,6 +12,19 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [SerializeField]
     bool b_BreakEngine = false;
 
+    //Coroutines Infos
+    [Header("Smooth Coroutine Infos")]
+    [SerializeField]
+    bool b_UseCoroutine = false;
+    [Range(0, 2)]
+    public float f_Duration = 0.5f;
+    public enum Dir { None, Left, Right, Off }
+    public Dir CurDir = Dir.None;
+    public Dir TargetDir = Dir.None;
+    public Dir CoroDir = Dir.Off;
+    [SerializeField]
+    AnimationCurve Acceleration;
+
     //Rotation Horizontale
     [Header("Horizontal Rotation Settings")]
     [SerializeField]
@@ -22,6 +35,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     public RotationMode TypeRotationZ;
     float f_TransImpulseZ;
     float f_TorqueImpulseZ;
+    Quaternion TargetRotY;
 
     //Rotation Verticale
     [Header("Vertical Rotation Settings")]
@@ -36,7 +50,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     float f_ImpulseX;
-    Quaternion xQuaternion;
+    Quaternion xQuaternion; 
 
     // Update is called once per frame
     void FixedUpdate()
@@ -90,35 +104,48 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
 
+        //Debug.Log("Torque - " + Input.GetAxis("Torque"));
+        //Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
+
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
             Quaternion zQuaternion = new Quaternion();
             float MixImpulseZ;
+            float CurImpulse = 0;
 
             switch (TypeRotationZ)
             {
 
                 case RotationMode.TSR:
-                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);                  
+                    zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
+                    CurImpulse = f_TransImpulseZ;
                     break;
 
                 case RotationMode.Torque:
                     zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                    CurImpulse = f_TorqueImpulseZ;
                     break;
 
                 case RotationMode.Higher:
                     float absTorque = Mathf.Abs(f_TorqueImpulseZ);
                     float absTrans = Mathf.Abs(f_TransImpulseZ);
                     if (absTorque >= absTrans)
+                    {
                         zQuaternion = Quaternion.AngleAxis(f_TorqueImpulseZ, Vector3.up);
+                        CurImpulse = f_TorqueImpulseZ;
+                    }
                     else
+                    {
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
+                        CurImpulse = f_TransImpulseZ;
+                    }                     
                     break;
 
                 case RotationMode.Normalize:
                     MixImpulseZ = (Input.GetAxis("Rotation") + Input.GetAxis("Horizontal")) / 2 * f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    CurImpulse = MixImpulseZ;
                     break;
 
                 case RotationMode.Clamp:
@@ -127,6 +154,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                         MixImpulseZ = 1;
                     MixImpulseZ *= f_RotationSpeedZ;
                     zQuaternion = Quaternion.AngleAxis(MixImpulseZ, Vector3.up);
+                    CurImpulse = MixImpulseZ;
                     break;
 
                 default:
@@ -134,13 +162,75 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             }
 
-            transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            if (CurImpulse > 0)
+                TargetDir = Dir.Right;
+            else if (CurImpulse < 0)
+                TargetDir = Dir.Left;
 
+            //transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            TargetRotY = this.transform.rotation * zQuaternion;
+
+            if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
+                CheckDir();
+            else if (!b_UseCoroutine || (CoroDir == Dir.Off && CurDir == TargetDir))
+                transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
+
+        }
+        else
+        {
+            TargetDir = Dir.None;
+            TargetRotY = this.transform.rotation;
+            if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
+                CheckDir();
         }
 
         #endregion
 
     }
+
+    #region Coroutines Functions
+
+    void CheckDir()
+    {
+        StopAllCoroutines();
+        if (TargetDir == Dir.None)
+            StartCoroutine(GoTargetRot(f_Duration, Dir.None));
+        else if (CurDir == Dir.None)
+            StartCoroutine(GoTargetRot(f_Duration, TargetDir));
+        else
+            StartCoroutine(GoTargetRot(f_Duration*2, TargetDir));
+    }
+
+    IEnumerator GoTargetRot(float Duration, Dir ToDir)
+    {
+
+        CoroDir = ToDir;
+
+        float t = 0;
+        float rate = 1 / Duration;
+
+        Quaternion StartRot = transform.rotation;
+
+        while (t < 1)
+        {
+
+            t += Time.deltaTime * rate;
+            float Lerp = Acceleration.Evaluate(t); 
+
+            transform.rotation = Quaternion.Slerp(StartRot, TargetRotY, Lerp);
+
+            yield return 0;
+
+        }
+
+        CurDir = ToDir;
+        CoroDir = Dir.Off;
+
+    }
+
+    #endregion
+
+    #region BreakDown
 
     public void SetBreakdownState(bool State)
     {
@@ -151,4 +241,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
         b_BreakEngine = State;
     }
+
+    #endregion
 }
