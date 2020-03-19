@@ -218,7 +218,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    public void CauseDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
+
+
+    public void causeDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
     {
 
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbOfBreakdown < nbOfBreakDownBeforeTotalBreak)
@@ -242,10 +244,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         int rnd;
                         rnd = Random.Range(0, 2);
                         if(rnd == 0)
-                        CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, cascade);
+                        causeDamageOnSystem(FlockSettings.AttackFocus.Movement, cascade);
                         
                         else
-                        CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, cascade);
+                        causeDamageOnSystem(FlockSettings.AttackFocus.Weapon, cascade);
 
                     }
 
@@ -264,7 +266,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     SC_MovementBreakdown.Instance.StartNewBreakdown(1);
                     
                     if (SC_MovementBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        causeDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
 
                 }
 
@@ -282,7 +284,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
 
                     if(SC_WeaponBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        causeDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
 
                 }
 
