@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 12409152}
   - component: {fileID: 7096056805937735952}
   - component: {fileID: 5216497713586629987}
+  - component: {fileID: 2026717567086875325}
   - component: {fileID: 3528529443087752890}
   - component: {fileID: 8337570576096585721}
   - component: {fileID: 2152082151833153284}
@@ -534,6 +535,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   VT3_CockpitAimRaycast: {x: 0, y: 0, z: 0}
+  VT3_HitPos: {x: 0, y: 0, z: 0}
+--- !u!114 &2026717567086875325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c0ec34826eab9342bd916064954df63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3528529443087752890
 MonoBehaviour:
   m_ObjectHideFlags: 0
