@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SC_UI_Update_Switch : MonoBehaviour
+public class SC_UI_Update_SwitchDisplay : MonoBehaviour
 {
     SC_SyncVar_BreakdownDisplay sc_syncvar;
     GameObject Mng_SyncVar = null;
