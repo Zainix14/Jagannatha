@@ -36,7 +36,6 @@ public class BoidSettings : ScriptableObject {
         Boid
 
     }
-    public Vector3 axisRotationSpeed = new Vector3(0,0,0);
 
     [Header("Rotation")]
 
