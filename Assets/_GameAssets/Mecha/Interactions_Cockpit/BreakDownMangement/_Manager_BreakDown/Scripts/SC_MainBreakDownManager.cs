@@ -52,6 +52,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     #endregion Variables
 
+    #region Init
+
     void Awake()
     {
 
@@ -100,6 +102,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
 
     }
+
+    #endregion Init
 
     void Update()
     {

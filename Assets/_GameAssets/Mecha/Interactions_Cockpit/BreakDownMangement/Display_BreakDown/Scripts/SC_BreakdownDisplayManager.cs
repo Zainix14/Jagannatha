@@ -167,6 +167,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     }
 
+    #region DebugMethod
+
     /// <summary>
     /// Focntion permettant de réparer tous les boutons automatiquement
     /// </summary>
@@ -180,6 +182,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     public void RepairSingleBreakdownDebug()
     {
+
         List<GameObject> list = new List<GameObject>();
         for(int i =0; i< interactible.Length;i++)
         {
@@ -195,6 +198,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         list[rnd].GetComponent<IInteractible>().Repair();
 
     }
+
+    #endregion DebugMethod
 
 }
 

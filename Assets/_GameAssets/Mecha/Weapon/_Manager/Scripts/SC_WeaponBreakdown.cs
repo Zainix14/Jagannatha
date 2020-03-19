@@ -75,6 +75,36 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     #endregion Init
 
+    void Update()
+    {
+
+        if (offPercentage > 0)
+        {
+
+            offTime = offPercentage / frequency;
+            onPercentage = 100 - offPercentage;
+            onTime = onPercentage / frequency;
+            curTimer += Time.deltaTime;
+
+            if (curTimer >= onTime && bCanFire == true)
+            {
+                curTimer = 0;
+                bCanFire = false;
+            }
+
+            if (curTimer >= offTime && bCanFire == false)
+            {
+                curTimer = 0;
+                bCanFire = true;
+            }
+
+        }
+
+        else
+            bCanFire = true;
+
+    }
+
     public void StartNewBreakdown(int nbBreakdown)
     {
 
@@ -137,37 +167,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         CheckBreakdown();
 
-    }
-
-    void Update()
-    {
-
-        if (offPercentage > 0)
-        {
-
-            offTime = offPercentage / frequency;
-            onPercentage = 100 - offPercentage;
-            onTime = onPercentage / frequency;
-            curTimer += Time.deltaTime;
-
-            if (curTimer >= onTime && bCanFire == true)
-            {
-                curTimer = 0;
-                bCanFire = false;
-            }
-
-            if (curTimer >= offTime && bCanFire == false)
-            {
-                curTimer = 0;
-                bCanFire = true;
-            }
-
-        }
-
-        else
-            bCanFire = true;
-
-    }
+    }  
 
     public void SetNewBreakdown(int percent, float frequency = 25)
     {
@@ -178,16 +178,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         this.frequency = frequency;
 
-    }
-
-    public void EndBreakdown()
-    {
-        offPercentage = 0;
-    }
-
-    public bool CanFire()
-    {
-        return bCanFire;
     }
 
     public void CheckBreakdown()
@@ -207,7 +197,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
-    
+
         if (n_BreakdownValue == 1)
         {
 
@@ -239,10 +229,22 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         //Permet de régler les demi-pannes 
         else if (n_BreakdownValue == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
         {
-            EndBreakdown();            
+            EndBreakdown();
         }
 
     }
+
+    public void EndBreakdown()
+    {
+        offPercentage = 0;
+    }
+
+    public bool CanFire()
+    {
+        return bCanFire;
+    }
+
+    #region DebugMethod
 
     /// <summary>
     /// Focntion permettant de réparer tous les boutons automatiquement
@@ -254,5 +256,26 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             interactible[j].GetComponent<IInteractible>().Repair();
         }
     }
+
+    public void RepairSingleBreakdownDebug()
+    {
+
+        List<GameObject> list = new List<GameObject>();
+        for (int i = 0; i < interactible.Length; i++)
+        {
+
+            if (interactible[i].GetComponent<IInteractible>().isBreakdown())
+            {
+                list.Add(interactible[i]);
+            }
+
+        }
+
+        int rnd = Random.Range(0, list.Count);
+        list[rnd].GetComponent<IInteractible>().Repair();
+
+    }
+
+    #endregion DebugMethod
 
 }
