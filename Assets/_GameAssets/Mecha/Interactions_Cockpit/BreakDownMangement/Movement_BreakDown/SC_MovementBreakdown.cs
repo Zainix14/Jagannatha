@@ -11,12 +11,18 @@ public class SC_MovementBreakdown : MonoBehaviour
 
     #endregion
 
+    #region Variables
+
     public bool b_MaxBreakdown = false;
 
     public int CurNbOfBreakdown = 0;
 
-    [SerializeField]
+    [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
+
+    #endregion Variables
+
+    #region Init
 
     void Awake()
     {
@@ -52,6 +58,7 @@ public class SC_MovementBreakdown : MonoBehaviour
         StartNewBreakdown(interactible.Length);
     }
 
+    #endregion Init
 
     public void StartNewBreakdown(int nbBreakdown)
     {
@@ -166,6 +173,9 @@ public class SC_MovementBreakdown : MonoBehaviour
         //Reset fin de panne
     }
 
+    /// <summary>
+    /// Focntion permettant de réparer tous les boutons automatiquement
+    /// </summary>
     public void RepairBreakdownDebug()
     {
         for (int j = 0; j < interactible.Length; j++)

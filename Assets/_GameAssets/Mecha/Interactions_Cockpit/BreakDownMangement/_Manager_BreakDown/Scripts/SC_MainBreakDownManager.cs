@@ -11,6 +11,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     #endregion
 
+    #region Variables
+
     [Header("References")]
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
@@ -46,7 +48,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public bool b_BreakShrapnel = false;
     GameObject ShrapnelSystem;
     public bool b_BreakFlameThrower = false;
-    GameObject FlameSystem;  
+    GameObject FlameSystem;
+
+    #endregion Variables
 
     void Awake()
     {
@@ -65,6 +69,36 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     void Start()
     {       
         GetReferences();
+    }
+
+    void GetReferences()
+    {
+
+        if (Mng_Checklist == null)
+            Mng_Checklist = GameObject.FindGameObjectWithTag("Mng_CheckList");
+
+        if (Mng_Checklist != null && MoveSystem == null)
+            MoveSystem = Mng_Checklist.GetComponent<SC_CheckList_Mecha>().GetMechCollider();
+
+        if (Mng_Checklist != null && RenderSystem == null)
+            RenderSystem = Mng_Checklist.GetComponent<SC_CheckList_ViewAiming>().GetScreens();
+
+        if (Mng_Checklist != null && WeaponSystem == null)
+            WeaponSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMngWeapons();
+
+        if (Mng_Checklist != null && MiniGunSystem == null)
+            MiniGunSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMiniGun();
+
+        if (Mng_Checklist != null && ShrapnelSystem == null)
+            ShrapnelSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetShrapnel();
+
+        if (Mng_Checklist != null && FlameSystem == null)
+            FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
+
+        //get du script qui gere l'affichage des ecrans de panne
+        if (screenController != null && sc_screens_controller == null)
+            sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
+
     }
 
     void Update()
@@ -101,36 +135,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, 1);
         }
-
-    }
-
-    void GetReferences()
-    {
-
-        if (Mng_Checklist == null)
-            Mng_Checklist = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_Checklist != null && MoveSystem == null)
-            MoveSystem = Mng_Checklist.GetComponent<SC_CheckList_Mecha>().GetMechCollider();
-
-        if (Mng_Checklist != null && RenderSystem == null)
-            RenderSystem = Mng_Checklist.GetComponent<SC_CheckList_ViewAiming>().GetScreens();
-
-        if (Mng_Checklist != null && WeaponSystem == null)
-            WeaponSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMngWeapons();
-
-        if (Mng_Checklist != null && MiniGunSystem == null)
-            MiniGunSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMiniGun();
-
-        if (Mng_Checklist != null && ShrapnelSystem == null)
-            ShrapnelSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetShrapnel();
-
-        if (Mng_Checklist != null && FlameSystem == null)
-            FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
-
-        //get du script qui gere l'affichage des ecrans de panne
-        if(screenController != null && sc_screens_controller == null)
-        sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
 
     }
 

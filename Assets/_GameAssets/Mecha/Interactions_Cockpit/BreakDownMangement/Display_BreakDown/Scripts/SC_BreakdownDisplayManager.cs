@@ -11,19 +11,27 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     public static SC_BreakdownDisplayManager Instance { get { return _instance; } }
 
     #endregion
+
+    #region Variables
+
     public bool b_MaxBreakdown = false;
 
     private IF_BreakdownManager Mng_BreakdownMain;
 
     public GameObject screenController;
-    private SC_breakdown_displays_screens sc_screens_controller;
 
-    [SerializeField]
-    public GameObject[] interactible;
+    private SC_breakdown_displays_screens sc_screens_controller;
 
     public int CurNbOfBreakdown = 0;
 
     bool canBreak = true;
+
+    [Header("Interactibles"), SerializeField]
+    public GameObject[] interactible;
+
+    #endregion Variables
+
+    #region Init
 
     void Awake()
     {
@@ -61,32 +69,12 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         interactible = GameObject.FindGameObjectsWithTag("Interactible");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            StartNewBreakdown(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RepairBreakdownDebug();
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(interactible.Length);
-            Debug.Log(CurNbOfBreakdown);
-        } 
-
-    }
-
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
     }
+
+    #endregion Init
 
     public void StartNewBreakdown(int nbBreakdown)
     {

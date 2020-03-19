@@ -10,13 +10,16 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public static SC_WeaponBreakdown Instance { get { return _instance; } }
 
     #endregion
-    
+
+    #region Variables
+
     public bool b_MaxBreakdown = false;
 
     public int CurNbOfBreakdown = 0;
 
     public float frequency;
     public int offPercentage;
+
     int onPercentage;
 
     float curTimer;
@@ -25,8 +28,12 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     bool bCanFire;
 
-    [SerializeField]
+    [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
+
+    #endregion Variables
+
+    #region Init
 
     // Start is called before the first frame update
     void Awake()
@@ -63,9 +70,10 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     void Demarage()
     {
-        StartNewBreakdown(interactible.Length);
-       
+        StartNewBreakdown(interactible.Length);     
     }
+
+    #endregion Init
 
     public void StartNewBreakdown(int nbBreakdown)
     {
@@ -131,7 +139,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
