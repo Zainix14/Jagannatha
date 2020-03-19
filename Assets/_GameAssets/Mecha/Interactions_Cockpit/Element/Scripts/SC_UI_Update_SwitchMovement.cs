@@ -38,11 +38,13 @@ public class SC_UI_Update_SwitchMovement : MonoBehaviour
 
         if (sc_syncvar != null)
         {
-           // Debug.Log("CLIENT : NB éléments ds struc : " + sc_syncvar.m_pows[index].power);
+            // Debug.Log("CLIENT : NB éléments ds struc : " + sc_syncvar.m_pows[index].power);
+
+
 
             if (sc_syncvar.SL_switches[index].isEnPanne)
             {
-                Debug.Log("MOVEMENT EN PANNE");
+
                 stateInterrupteur.material = breakdownMat;
                 warning.SetActive(true);
                 sparkle.SetActive(false);
