@@ -16,6 +16,8 @@ public class SC_HitDisplay : MonoBehaviour
     GameObject pivot;
     [SerializeField]
     GameObject rotor;
+    [SerializeField]
+    GameObject Mech;
 
     [SerializeField]
     float rotorDistance;
@@ -41,7 +43,7 @@ public class SC_HitDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Hit(Vector3 hitPos)
