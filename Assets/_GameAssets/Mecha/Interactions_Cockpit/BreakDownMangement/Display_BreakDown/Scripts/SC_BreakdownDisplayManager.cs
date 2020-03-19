@@ -14,20 +14,19 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     #region Variables
 
-    public bool b_MaxBreakdown = false;
-
-    private IF_BreakdownManager Mng_BreakdownMain;
-
+    [Header("References")]
     public GameObject screenController;
-
+    private IF_BreakdownManager Mng_BreakdownMain;
     private SC_breakdown_displays_screens sc_screens_controller;
 
+    [Header("BreakDown Var")]
+    public bool b_MaxBreakdown = false;
     public int CurNbOfBreakdown = 0;
-
-    bool canBreak = true;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
+
+    //bool canBreak = true;
 
     #endregion Variables
 

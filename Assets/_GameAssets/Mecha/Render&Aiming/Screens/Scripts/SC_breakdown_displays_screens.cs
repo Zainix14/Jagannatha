@@ -9,25 +9,30 @@ using UnityEngine;
 public class SC_breakdown_displays_screens : MonoBehaviour
 {
 
-
     #region Singleton
 
     private static SC_breakdown_displays_screens _instance;
     public static SC_breakdown_displays_screens Instance { get { return _instance; } }
 
     #endregion
-    bool gameEnded = false;
 
-    private int curNbPanne = 0;
-
+    [Header("References")]
     public Renderer[] tab_screens_renderers;
     public Material[] mat;
-
     GameObject Mng_SyncVar = null;
     GameObject BreakDownAudioSource;
     SC_SyncVar_StateMecha_Display sc_syncvar_display;
 
+    [Header("States")]
+    [SerializeField]
     bool demarage = true;
+    [SerializeField]
+    bool gameEnded = false;
+
+    [Header("BreakDown Infos")]
+    [SerializeField]
+    int curNbPanne = 0;
+    
     void Awake()
     {
         if (_instance != null && _instance != this)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_MovementBreakdown : MonoBehaviour
+public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 {
     #region Singleton
 
@@ -13,9 +13,11 @@ public class SC_MovementBreakdown : MonoBehaviour
 
     #region Variables
 
+    [Header("BreakDown Var")]
     public bool b_MaxBreakdown = false;
-
     public int CurNbOfBreakdown = 0;
+    public enum BreakdownState { None, State01, State02, State03, Full }
+    public BreakdownState MovementState;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;

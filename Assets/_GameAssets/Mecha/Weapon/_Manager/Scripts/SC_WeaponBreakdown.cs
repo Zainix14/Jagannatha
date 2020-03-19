@@ -13,19 +13,17 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     #region Variables
 
+    [Header("BreakDown Var")]
     public bool b_MaxBreakdown = false;
-
     public int CurNbOfBreakdown = 0;
 
+    [Header("BreakDownTimer Var")]
     public float frequency;
     public int offPercentage;
-
     int onPercentage;
-
     float curTimer;
     float offTime;
     float onTime;
-
     bool bCanFire;
 
     [Header("Interactibles"), SerializeField]
@@ -77,32 +75,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
     void Update()
     {
-
-        if (offPercentage > 0)
-        {
-
-            offTime = offPercentage / frequency;
-            onPercentage = 100 - offPercentage;
-            onTime = onPercentage / frequency;
-            curTimer += Time.deltaTime;
-
-            if (curTimer >= onTime && bCanFire == true)
-            {
-                curTimer = 0;
-                bCanFire = false;
-            }
-
-            if (curTimer >= offTime && bCanFire == false)
-            {
-                curTimer = 0;
-                bCanFire = true;
-            }
-
-        }
-
-        else
-            bCanFire = true;
-
+        BreakDownTimer();
     }
 
     public void StartNewBreakdown(int nbBreakdown)
@@ -237,6 +210,36 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public void EndBreakdown()
     {
         offPercentage = 0;
+    }
+
+    void BreakDownTimer()
+    {
+
+        if (offPercentage > 0)
+        {
+
+            offTime = offPercentage / frequency;
+            onPercentage = 100 - offPercentage;
+            onTime = onPercentage / frequency;
+            curTimer += Time.deltaTime;
+
+            if (curTimer >= onTime && bCanFire == true)
+            {
+                curTimer = 0;
+                bCanFire = false;
+            }
+
+            if (curTimer >= offTime && bCanFire == false)
+            {
+                curTimer = 0;
+                bCanFire = true;
+            }
+
+        }
+
+        else
+            bCanFire = true;
+
     }
 
     public bool CanFire()
