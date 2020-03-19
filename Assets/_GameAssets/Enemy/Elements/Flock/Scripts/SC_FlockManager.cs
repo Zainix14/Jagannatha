@@ -56,20 +56,23 @@ public class SC_FlockManager : MonoBehaviour
     List<Vector3> _curCurveDistanceList; //Permet de stocké la distance sur les courbes pour chaque guide lors du split
 
     Vector3Int sensitivity;
-//--------------------------------------------------------------------------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------------------------------------------------------------------------//
 
 
     [HideInInspector]
     public bool _merged = false;  //Booléen d'état : nuée fusionnée avec une/des autre(s)
 
-    float startAttackTimer =0;
+    float startAttackTimer = 0;
 
     enum PathType
     {
         Spawn = 0,
         Roam = 1,
-        AttackPlayer = 2
+        AttackPlayer = 2,
+        Reaction = 4
     }
+
+    float reactionTimer = 0;
 
     PathType curtype;
 
@@ -125,8 +128,8 @@ public class SC_FlockManager : MonoBehaviour
         {
             if (_BoidSettings[i].spline != null)
             {
+                
                 _splineTab[i] = Instantiate(_BoidSettings[i].spline);
-                _splineTab[i].transform.position = transform.position;
 
             }
         }
@@ -165,8 +168,13 @@ public class SC_FlockManager : MonoBehaviour
                 for (int i = 0; i < _BoidSettings.Length; i++)
                 {
                     if (_splineTab[i] != null)
-                    {
+                    { 
                         _splineTab[i].transform.position = transform.position;
+
+                        if(i == 4)
+                        {
+                            _splineTab[i].transform.position = new Vector3(0, 50, 0);
+                        }
                     }
                 }
                 isSpawning = false;
@@ -178,7 +186,7 @@ public class SC_FlockManager : MonoBehaviour
         if(isActive && !isSpawning)
         {
             AttackUpdate();
-
+            ReactionUpdate();
             //Si le flock est split, déplace les guides
             if (_splited)
                 MultiGuideMovement();
@@ -255,7 +263,7 @@ public class SC_FlockManager : MonoBehaviour
     void AttackUpdate()
     {
 
-        if (flockSettings.attackType != FlockSettings.AttackType.none)
+        if (flockSettings.attackType != FlockSettings.AttackType.none && curtype != PathType.Reaction)
         {
             if (inAttack == false) startAttackTimer += Time.deltaTime;
 
@@ -268,6 +276,29 @@ public class SC_FlockManager : MonoBehaviour
         }
         transform.LookAt(_Player.transform);
     }
+
+    void ReactionUpdate()
+    {
+        if(curtype == PathType.Reaction)
+        {
+            reactionTimer += Time.deltaTime;
+            if(reactionTimer > flockSettings.reactionDuration)
+            {
+                for (int i = 0; i < _splineTab.Length; i++)
+                {
+                    if (_splineTab[i] != null)
+                    {
+                        if(i != 4)
+                        _splineTab[i].transform.position = transform.position;
+                    }
+                }
+                StartNewPath(PathType.Roam);
+                reactionTimer = 0;
+            }
+        }
+    }
+
+
     #endregion
     //---------------------------------------------------------------------//
 
@@ -298,6 +329,12 @@ public class SC_FlockManager : MonoBehaviour
                 flockWeaponManager.StartFire();
 
                 break;
+
+            case PathType.Reaction:
+
+                StartNewBehavior((int)PathType.Reaction);
+
+                break;
         }
 
     }
@@ -316,16 +353,15 @@ public class SC_FlockManager : MonoBehaviour
         transform.rotation = flockInitialRot;
         _curBoidSetting = _BoidSettings[behaviorIndex];
         _curSpline = _splineTab[behaviorIndex];
-        bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
 
-        if (_curSpline != null)
-        {
-            bezierWalkerSpeed.SetNewSpline(_curSpline);
-        }
+        int rnd = Random.Range(0, 2);
+        if(rnd == 0)
+            bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
         else
-        {
-            bezierWalkerSpeed.speed = 0;
-        }
+            bezierWalkerSpeed.speed = -_curBoidSetting.speedOnSpline;
+
+        bezierWalkerSpeed.SetNewSpline(_curSpline);
+      
         Reassemble();
         if (_curBoidSetting.split)
         {
@@ -420,6 +456,11 @@ public class SC_FlockManager : MonoBehaviour
         GetComponent<SC_FlockWeaponManager>().DestroyFx();
         SC_WaveManager.Instance.FlockDestroyed(this.gameObject);
         Destroy(this.gameObject);
+    }
+
+    public void ReactionFlock()
+    {
+        StartNewPath(PathType.Reaction);
     }
 
     public void EndAttack()

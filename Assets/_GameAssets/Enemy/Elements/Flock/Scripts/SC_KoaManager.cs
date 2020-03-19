@@ -429,5 +429,25 @@ public class SC_KoaManager : MonoBehaviour
 
     }
 
+    public void BoidHit(Vector3 gunSensitivity)
+    {
+        float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
+        float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
+        float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
+
+        float ecart = x + y + z;
+
+
+        float power = 6 - ecart;
+
+        if (power < 0) power = 0;
+        float powerPerCent = (power / 6) * 100;
+
+        if (powerPerCent < curFlockSettings.maxReactionSensibilityPerCent)
+        {
+            flockManager.ReactionFlock();
+        }
+    }
+
 
 }
