@@ -21,6 +21,16 @@ public class SC_MovementBreakdown : MonoBehaviour
     void Awake()
     {
 
+        InitSingleton();
+
+        GetInteractibles();
+
+        Invoke("Demarage", 0.5f);
+
+    }
+
+    void InitSingleton()
+    {
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -29,14 +39,14 @@ public class SC_MovementBreakdown : MonoBehaviour
         {
             _instance = this;
         }
-
-        //LES ITNERACTIBLES d'ARME NECESSITENT CE TAG
-
-        interactible = GameObject.FindGameObjectsWithTag("InteractibleMovement");
-
-        Invoke("Demarage", 0.5f);
-
     }
+
+    void GetInteractibles()
+    {
+        //LES ITNERACTIBLES d'ARME NECESSITENT CE TAG
+        interactible = GameObject.FindGameObjectsWithTag("InteractibleMovement");
+    }
+
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
@@ -154,6 +164,14 @@ public class SC_MovementBreakdown : MonoBehaviour
     public void EndBreakdown()
     {
         //Reset fin de panne
+    }
+
+    public void RepairBreakdownDebug()
+    {
+        for (int j = 0; j < interactible.Length; j++)
+        {
+            interactible[j].GetComponent<IInteractible>().Repair();
+        }
     }
 
 }

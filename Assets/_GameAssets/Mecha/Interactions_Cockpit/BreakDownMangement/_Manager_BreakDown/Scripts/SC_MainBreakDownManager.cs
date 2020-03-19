@@ -17,6 +17,14 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public GameObject screenController;
     private SC_breakdown_displays_screens sc_screens_controller;
 
+    [Header("References breakDown SC")]
+    [SerializeField]
+    SC_BreakdownDisplayManager DisplayBreakdownSC;
+    [SerializeField]
+    SC_WeaponBreakdown WeaponBreakdownSC;
+    [SerializeField]
+    SC_MovementBreakdown MovementBreakdownSC;
+
     [Header("System Lifes")]
     public int nbOfBreakDownBeforeTotalBreak = 7;
     public int Displaylife = 10;
@@ -61,11 +69,37 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     void Update()
     {
+        DebugInput();
+    }
 
+    void DebugInput()
+    {
         if (Input.GetKeyDown(KeyCode.Y))
         {
             SC_BreakdownDisplayManager.Instance.CheckBreakdown();
             Debug.Log(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DisplayBreakdownSC.RepairBreakdownDebug();
+            WeaponBreakdownSC.RepairBreakdownDebug();
+            MovementBreakdownSC.RepairBreakdownDebug();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            CauseDamageOnSystem(FlockSettings.AttackFocus.Display, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Exclaim))
+        {
+            CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, 1);
         }
 
     }
@@ -215,7 +249,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    public void causeDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
+    public void CauseDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
     {
 
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbOfBreakdown < nbOfBreakDownBeforeTotalBreak)
@@ -240,10 +274,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         rnd = Random.Range(0, 2);
 
                         if(rnd == 0)
-                        causeDamageOnSystem(FlockSettings.AttackFocus.Movement, cascade);
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, cascade);
                         
                         else
-                        causeDamageOnSystem(FlockSettings.AttackFocus.Weapon, cascade);
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, cascade);
 
                     }
 
@@ -263,7 +297,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     SC_MovementBreakdown.Instance.StartNewBreakdown(1);
                     
                     if (SC_MovementBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                        causeDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
 
                 }
 
@@ -281,7 +315,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
 
                     if(SC_WeaponBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                        causeDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
 
                 }
 
