@@ -37,7 +37,7 @@ public class SC_BulletFlock : NetworkBehaviour
             SC_HitDisplay.Instance.Hit(transform.position);
             //on fait subir des dmg au joueur
             if(flockSettings != null)
-            SC_MainBreakDownManager.Instance.causeDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
+            SC_MainBreakDownManager.Instance.CauseDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
 
             ResetPos();
         }
