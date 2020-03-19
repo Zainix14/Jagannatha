@@ -14,22 +14,15 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     public float probability = 1;
 
     private GameObject Mng_SyncVar;
-    private SC_SyncVar_BreakdownDisplay sc_syncvar;
+    private IF_SyncVar_Sliders sc_syncvar;
     public GameObject LocalBreakdownMng;
 
     public int index;
-    /*
-    [SerializeField]
-    button bouton;
 
-    enum button
-    {
-        inter1,
-        inter2,
-        inter3
 
-    }
-    */
+    public enum TargetSystem { Display, Movement }
+    public TargetSystem MovementState = TargetSystem.Display;
+
 
     void Start() {
 
@@ -47,7 +40,13 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
+        {
+            if (MovementState == TargetSystem.Display)
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
+            else if (MovementState == TargetSystem.Movement)
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownMovement>();
+        }
+            
 
        
     }
