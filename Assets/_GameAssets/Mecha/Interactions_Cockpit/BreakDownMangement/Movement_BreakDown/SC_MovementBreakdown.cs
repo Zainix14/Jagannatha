@@ -115,7 +115,7 @@ public class SC_MovementBreakdown : MonoBehaviour
         CheckBreakdown();
     }
 
-    void SetNewBreakdown()
+    public void SetNewBreakdown()
     {
         // A coder ici les effet de breakdown
     }
@@ -173,6 +173,8 @@ public class SC_MovementBreakdown : MonoBehaviour
         //Reset fin de panne
     }
 
+    #region DebugMethod
+
     /// <summary>
     /// Focntion permettant de réparer tous les boutons automatiquement
     /// </summary>
@@ -183,5 +185,26 @@ public class SC_MovementBreakdown : MonoBehaviour
             interactible[j].GetComponent<IInteractible>().Repair();
         }
     }
+
+    public void RepairSingleBreakdownDebug()
+    {
+
+        List<GameObject> list = new List<GameObject>();
+        for (int i = 0; i < interactible.Length; i++)
+        {
+
+            if (interactible[i].GetComponent<IInteractible>().isBreakdown())
+            {
+                list.Add(interactible[i]);
+            }
+
+        }
+
+        int rnd = Random.Range(0, list.Count);
+        list[rnd].GetComponent<IInteractible>().Repair();
+
+    }
+
+    #endregion DebugMethod
 
 }
