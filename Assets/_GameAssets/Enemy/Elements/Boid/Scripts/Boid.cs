@@ -287,7 +287,7 @@ public class Boid : MonoBehaviour {
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
         }
-
+        koaManager.BoidHit(gunSensitivity);
 
 
     }
