@@ -16,10 +16,13 @@ public class SC_UI_OngletContainer : MonoBehaviour
     //public RectTransform particleRect;
     bool toPlace = false;
     // Start is called before the first frame update
+    public int curIndex;
     void Start()
     {
         particleFB = particleFB.GetComponent<RectTransform>();
-        checkActive();
+        curIndex = 0;
+        //checkActive();
+        preshotPos();
     }
 
     // Update is called once per frame
@@ -42,12 +45,28 @@ public class SC_UI_OngletContainer : MonoBehaviour
     {
         for(int i =0; i< child.Length;i++)
         {
-            if(child[i].active)
+            if(i == curIndex)
             {
                 ongletActifPos = onglet[i].transform.localPosition;
                 toPlace = true;
             }
             
+        }
+    }
+    //Only for the start
+    void preshotPos()
+    {
+        
+        for (int i = 0; i < child.Length; i++)
+        {
+            if (i == curIndex)
+            {
+               child[i].transform.localPosition = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                child[i].transform.localPosition = new Vector3(0, 0, 400);
+            }
         }
     }
 }
