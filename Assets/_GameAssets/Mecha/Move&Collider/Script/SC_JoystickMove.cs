@@ -22,6 +22,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     bool b_BreakEngine = false;
     [SerializeField, Range(0, 3)]
     int n_BreakDownLvl = 0;
+    public enum BrokenDir { Left, Right }
+    public BrokenDir CurBrokenDir = BrokenDir.Left;
+
 
     //Coroutines Infos
     [Header("Smooth Coroutine Infos")]
@@ -193,6 +196,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             if (CurImpulse > 0)
                 TargetDir = Dir.Right;
+
             else if (CurImpulse < 0)
                 TargetDir = Dir.Left;
 
@@ -201,10 +205,12 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
                 CheckDir();
+
             else if (!b_UseCoroutine || (CoroDir == Dir.Off && CurDir == TargetDir))
                 transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
 
         }
+
         else
         {
             TargetDir = Dir.None;

@@ -155,6 +155,19 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         b_MaxBreakdown = false;
         n_BreakDownLvl = 0;
+
+        int rnd = Random.Range(0, 1);
+        if(rnd == 0)
+        {
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.BrokenDir.Left;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.BrokenDir.Left;
+        }
+        else
+        {
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.BrokenDir.Right;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.BrokenDir.Right;
+        }
+        
     }
 
     int CurNbInteractBreak()
