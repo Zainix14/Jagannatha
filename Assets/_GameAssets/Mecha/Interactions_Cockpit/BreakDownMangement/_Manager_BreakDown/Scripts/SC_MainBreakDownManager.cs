@@ -119,7 +119,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_WeaponBreakdown.Instance.CheckBreakdown();
             Debug.Log("weapon : " +SC_WeaponBreakdown.Instance.CurNbOfBreakdown);
             SC_MovementBreakdown.Instance.CheckBreakdown();
-            Debug.Log("movement" +SC_MovementBreakdown.Instance.CurNbOfBreakdown);
+            Debug.Log("movement" +SC_MovementBreakdown.Instance.CurNbInteractInBreakdown);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -153,7 +153,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             GetReferences();
 
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche une panne complete
-        if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbOfBreakdown > nbOfBreakDownBeforeTotalBreak)
+        if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbInteractInBreakdown > nbOfBreakDownBeforeTotalBreak)
         {
 
             //Si on est pas encore en panne totale
@@ -175,14 +175,14 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
-        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.CurNbOfBreakdown ==0 &&  !SC_main_breakdown_validation.Instance.isValidated)
+        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.CurNbInteractInBreakdown ==0 &&  !SC_main_breakdown_validation.Instance.isValidated)
         {
             //Fait clignoter le Text du bouton
             SC_main_breakdown_validation.Instance.textBlink();
         }
 
         //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
-        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.CurNbOfBreakdown  ==0 && SC_main_breakdown_validation.Instance.isValidated)
+        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.CurNbInteractInBreakdown  ==0 && SC_main_breakdown_validation.Instance.isValidated)
         {
 
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
@@ -269,7 +269,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_WeaponBreakdown.Instance.CheckBreakdown();
         SC_MovementBreakdown.Instance.CheckBreakdown();
 
-        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbOfBreakdown) < nbOfBreakDownBeforeTotalBreak)
+        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.CurNbInteractInBreakdown) < nbOfBreakDownBeforeTotalBreak)
         {
             switch (attackFocus)
             {
