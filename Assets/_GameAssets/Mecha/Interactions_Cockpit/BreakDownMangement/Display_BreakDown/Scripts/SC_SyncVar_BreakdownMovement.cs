@@ -3,52 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
+public class SC_SyncVar_BreakdownMovement : NetworkBehaviour, IF_SyncVar_Sliders
 {
-    /// <summary>
-    /// //////////////////////////////////List struct des Sliders
-    /// </summary>
 
-        //nombre de sliders pour l'init
-    public int slidersNb = 6;
+    #region Singleton
 
-    public struct Slider
-    {
-        public float value;
-        public float valueWanted;
-        public bool isEnPanne;
+    private static SC_SyncVar_BreakdownMovement _instance;
+    public static SC_SyncVar_BreakdownMovement Instance { get { return _instance; } }
 
+    #endregion
 
-        public Slider(float v1, float v2, bool v3) : this()
-        {
-            this.value = v1;
-            this.valueWanted = v2;
-            this.isEnPanne = v3;
-        }
-
-        public void setValue(float newValue)
-        {
-            this.value = newValue;
-        }
-
-        public void setValueWanted(float newValue)
-        {
-            this.valueWanted = newValue;
-        }
-
-        public void setIsEnPanne(bool newValue)
-        {
-            this.isEnPanne = newValue;
-        }
-
-    }
-
-    public class SyncListSliders : SyncListStruct<Slider>
-    {
-
-    }
-
-    public SyncListSliders SL_sliders = new SyncListSliders();
 
 
 
@@ -61,7 +25,7 @@ public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
     /// </summary>
 
     //nombre de switches pour l'init
-    public int switchesNb = 1;
+    public int switchesNb = 3;
 
     public struct Switch
     {
@@ -108,28 +72,17 @@ public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
 
 
 
-        /*
-    [SyncVar]
-    public float potar1value = 0;
-    [SyncVar]
-    public float potar1valueWanted = 0;
-    [SyncVar]
-    public bool potar1isEnPanne = false;
-
-    [SyncVar]
-    public float potar2value = 0;
-    [SyncVar]
-    public float potar2valueWanted = 0;
-    [SyncVar]
-    public bool potar2isEnPanne = false;
-
-    [SyncVar]
-    public float potar3value = 0;
-    [SyncVar]
-    public float potar3valueWanted = 0;
-    [SyncVar]
-    public bool potar3isEnPanne = false;
-    */
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
 
     void Start()
@@ -138,13 +91,6 @@ public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
         
         if (isServer)
         {
-            //init des sliders
-
-            for (int i = 0; i < slidersNb; i++)
-            {
-                SL_sliders.Add(new Slider(0f, 0f, false));
-            }
-
 
             //init des Switches
 
@@ -166,31 +112,6 @@ public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
 
     }
 
-/// FONCTIONS DE SET dans la list de struc des slider, can we make it more compact?
-    public void SliderChangeValue(int index, float newValue)
-    {
-        Slider slider = SL_sliders[index];
-        slider.setValue(newValue);
-        SL_sliders.RemoveAt(index);
-        SL_sliders.Insert(index, slider);
-
-    }
-    public void SliderChangeValueWanted(int index, float newValue)
-    {
-        Slider slider = SL_sliders[index];
-        slider.setValueWanted(newValue);
-        SL_sliders.RemoveAt(index);
-        SL_sliders.Insert(index, slider);
-
-    }
-    public void SliderChangeIsPanne(int index, bool newValue)
-    {
-        Slider slider = SL_sliders[index];
-        slider.setIsEnPanne(newValue);
-        SL_sliders.RemoveAt(index);
-        SL_sliders.Insert(index, slider);
-
-    }
 
 
     /// FONCTIONS DE SET dans la list de struc des switches, can we make it more compact?
@@ -219,7 +140,7 @@ public class SC_SyncVar_BreakdownDisplay : NetworkBehaviour, IF_SyncVar_Sliders
 
     }
 
-
+    
 
 
 }
