@@ -59,7 +59,7 @@ public class BoidSettings : ScriptableObject {
     [Tooltip("Axe d'inversion")]
     public Vector3 invertAxis;
 
-    [Tooltip("Vitesse sur spline looool")]
+    [Tooltip("Vitesse sur spline")]
     public float speedOnSpline;
-    public BezierSolution.BezierSpline spline;
+    public float settingDuration;
 }

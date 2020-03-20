@@ -50,11 +50,25 @@ public class FlockSettings : ScriptableObject
     public float speedToTarget;
 
 
+    [Header("Reaction")]
+    [Tooltip("in second")]
+    public float reactionDuration = 3;
+    [Tooltip("Pourcentage de sensibilité a partir duquel le flock ne réagit plus au tir")]
+    public int maxReactionSensibilityPerCent = 50;
+
     [Header("Boids")]
 
 
-    [Tooltip("Index 0 : Spawn | Index 1 : Roam | Index 2 : Attack | Index 3 : Destruction")]
-    public BoidSettings[] boidSettings;
+    [Tooltip("Index 0 : Spawn | Index 1 : Roam | Index 2 : Attack | Index 3 : Destruction | Index 4 : Réaction")]
+    public BoidSettings[] spawnSettings;
+    public BoidSettings[] roamSettings;
+    public BoidSettings[] attackSettings;
+    public BoidSettings[] destructionSettings;
+    public BoidSettings[] reactionSettings;
+
+
+    public BezierSolution.BezierSpline[] splines;
+
 
     public int spawnTimer = 10;
 

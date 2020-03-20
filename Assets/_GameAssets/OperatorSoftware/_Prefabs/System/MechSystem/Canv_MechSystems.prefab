@@ -711,6 +711,7 @@ MonoBehaviour:
   - {fileID: 2070384953729646428}
   - {fileID: 8978933041602384328}
   particleFB: {fileID: 6896665828945494966}
+  curIndex: 0
 --- !u!82 &5283548059076886130
 AudioSource:
   m_ObjectHideFlags: 0
@@ -883,7 +884,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rotate
+  m_Text: Movement
 --- !u!1 &4534467788282555604
 GameObject:
   m_ObjectHideFlags: 0
@@ -11500,7 +11501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 1
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!1 &8362834520160829762
 GameObject:
   m_ObjectHideFlags: 0
@@ -11602,7 +11603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!1 &8493325689212383835
 GameObject:
   m_ObjectHideFlags: 0
@@ -11704,7 +11705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!82 &1060508041585795901
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12274,7 +12275,7 @@ PrefabInstance:
     - target: {fileID: 7070655555890904674, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
@@ -12487,6 +12488,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1421818250078810676}
     m_Modifications:
+    - target: {fileID: 3847471757590555541, guid: 953684a80472adf41b9a1eb0d111ec03,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5169861611375556321, guid: 953684a80472adf41b9a1eb0d111ec03,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12621,6 +12627,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: System_Movements
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169861611795617339, guid: 953684a80472adf41b9a1eb0d111ec03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851595801150013078, guid: 953684a80472adf41b9a1eb0d111ec03,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -254
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 953684a80472adf41b9a1eb0d111ec03, type: 3}
