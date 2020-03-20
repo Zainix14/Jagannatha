@@ -14,15 +14,10 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     #region Variables
 
     [Header("BreakDown Var")]
-    public bool b_MaxBreakdown = false;
-    public int CurNbInteractInBreakdown = 0;
-    [SerializeField]
-    int n_BreakDOwnLvlMax = 3;
-    [SerializeField]
+    public bool b_MaxBreakdown = false;   
+    [SerializeField, Range(0,3)]
     int n_BreakDownLvl = 0;
-    [SerializeField]
-    int n_InteractibleInBreakDown = 0;
-
+    public int n_InteractibleInBreakDown = 0;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -135,17 +130,17 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     {
 
         //on update le nombre de pannes
-        CurNbInteractInBreakdown = CurNbInteractBreak();
+        n_InteractibleInBreakDown = CurNbInteractBreak();
 
-        if(CurNbInteractInBreakdown == interactible.Length)
+        if(n_InteractibleInBreakDown == interactible.Length)
             b_MaxBreakdown = true;   
 
         //Resolution du System (MaxBreakDown)
-        else if (CurNbInteractInBreakdown == 0 && b_MaxBreakdown)
+        else if (n_InteractibleInBreakDown == 0 && b_MaxBreakdown)
             EndBreakdown();
 
         //Resolution du Systeme (Normal BreakDown)
-        else if (CurNbInteractInBreakdown == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
+        else if (n_InteractibleInBreakDown == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
             EndBreakdown();
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
