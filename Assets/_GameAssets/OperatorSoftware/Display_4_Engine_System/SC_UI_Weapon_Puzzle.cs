@@ -69,55 +69,48 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
 
         oldAngleMain = this.transform.rotation;
 
+
         #region Check des valeurs
         switch (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value)
         {
             //solution1
             case -4:
-
                 newAngleMain = Quaternion.Euler(0, init_rot_cylindre , 0);
 
                 break;
                 
             case -3:
-
                 newAngleMain = Quaternion.Euler(0, 35 , 0);
 
                 break;
                 
                 //solution2
             case -2:
-
                 newAngleMain = Quaternion.Euler(0, 70, 0);
 
                 break;
 
             case -1:
-
                 newAngleMain = Quaternion.Euler(0,  100, 0);
 
                 break;
                 
             case 0:
-
                 newAngleMain = Quaternion.Euler(0, 140, 0);
 
                 break;
                //solution3 
             case 1:
-
                 newAngleMain = Quaternion.Euler(0, 178, 0);
 
                 break;
                 
             case 2:
-
                 newAngleMain = Quaternion.Euler(0, 220, 0);
 
                 break;
                 
             case 3:
-
                 newAngleMain = Quaternion.Euler(0,  300, 0);
 
                 break;
@@ -167,13 +160,15 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
 
         if (!SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].isEnPanne && !SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].isEnPanne)
         {
-            Debug.Log("PLUS DE PANNE");
-            solutionNb = 6;
+            solutionNb = 420;
         }
+
         if (solutionNb !=oldSolutionNb)
         {
+
             switch (solutionNb)
             {
+                
                 case 0:
                     solution.material = solutions_mat[0];
                     break;
@@ -181,7 +176,6 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
                     solution.material = solutions_mat[1];
                     break;
                 case 2:
-
                     solution.material = solutions_mat[2];
                     break;
                 case 3:
@@ -193,18 +187,14 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
                 case 5:
                     solution.material = solutions_mat[5];
                     break;
-                case 6:
+                case 420:
                     solution.material = neutral_mat;
                     break;
 
-
+                    
             }
-
-        
-
             oldSolutionNb = solutionNb;
-
-
+            Debug.Log(solutionNb);
         }
         #endregion
 
