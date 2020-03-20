@@ -83,14 +83,40 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!b_InBreakdown && !b_BreakEngine)
+        if (!b_BreakEngine)
         {
+            DebugInput();
             VerticalRot();
             HorizontalRot();
-        }      
+        }        
     }
 
     #region Moves
+
+    void DebugInput()
+    {
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+
+        }
+
+        else if (Input.GetKey(KeyCode.D))
+        {
+
+        }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+        }
+
+    }
 
     void VerticalRot()
     {
