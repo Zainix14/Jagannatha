@@ -159,13 +159,13 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         int rnd = Random.Range(0, 1);
         if(rnd == 0)
         {
-            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.BrokenDir.Left;
-            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.BrokenDir.Left;
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Left;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Left;
         }
         else
         {
-            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.BrokenDir.Right;
-            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.BrokenDir.Right;
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Right;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Right;
         }
         
     }

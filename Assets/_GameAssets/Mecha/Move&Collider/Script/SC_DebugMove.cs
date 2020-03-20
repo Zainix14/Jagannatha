@@ -19,8 +19,8 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
     bool b_BreakEngine = false;
     [SerializeField, Range(0, 3)]
     int n_BreakDownLvl = 0;
-    public enum BrokenDir { Left, Right }
-    public BrokenDir CurBrokenDir = BrokenDir.Left;
+    public enum Dir { None, Left, Right, Off }
+    public Dir CurBrokenDir = Dir.Left;
 
     [Header("Rotation Infos")]
     public float f_Speed = 10f;
