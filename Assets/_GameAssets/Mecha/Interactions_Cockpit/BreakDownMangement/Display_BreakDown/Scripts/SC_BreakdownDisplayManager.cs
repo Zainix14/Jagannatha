@@ -20,13 +20,13 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     private SC_breakdown_displays_screens sc_screens_controller;
 
     [Header("BreakDown Var")]
+    [SerializeField]
+    int n_MaxBreakInterB4MaxBD = 5;
     public bool b_MaxBreakdown = false;
     public int CurNbOfBreakdown = 0;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
-
-    //bool canBreak = true;
 
     #endregion Variables
 
@@ -146,7 +146,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
 
-        if (n_BreakdownValue > 5 && !b_MaxBreakdown)
+        if (n_BreakdownValue >= n_MaxBreakInterB4MaxBD && !b_MaxBreakdown)
         {
             b_MaxBreakdown = true;
             Mng_BreakdownMain.CheckBreakdown();
