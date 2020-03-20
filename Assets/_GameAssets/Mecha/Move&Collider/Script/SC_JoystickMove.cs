@@ -12,12 +12,16 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     #endregion
 
+    #region Variables
+
     //Breakdown Infos
     [Header("Breakdown Infos")]
     [SerializeField]
     bool b_InBreakdown = false;
     [SerializeField]
     bool b_BreakEngine = false;
+    [SerializeField, Range(0, 3)]
+    int n_BreakDownLvl = 0;
 
     //Coroutines Infos
     [Header("Smooth Coroutine Infos")]
@@ -59,9 +63,10 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     float f_ImpulseX;
     Quaternion xQuaternion;
 
+    #endregion Variables
+
     void Awake()
     {
-
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -70,20 +75,22 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         {
             _instance = this;
         }
-
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (!b_InBreakdown && !b_BreakEngine)
-            Move();
+        {
+            VerticalRot();
+            HorizontalRot();
+        }      
     }
 
-    void Move()
-    {
+    #region Moves
 
-        #region Rotation Verticale
+    void VerticalRot()
+    {
 
         f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
 
@@ -118,9 +125,10 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-        #endregion
+    }
 
-        #region Rotation Horizontale
+    void HorizontalRot()
+    {
 
         f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
         f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
@@ -160,7 +168,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                     {
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
                         CurImpulse = f_TransImpulseZ;
-                    }                     
+                    }
                     break;
 
                 case RotationMode.Normalize:
@@ -205,9 +213,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                 CheckDir();
         }
 
-        #endregion
-
     }
+
+    #endregion Moves
 
     #region Coroutines Functions
 
@@ -261,6 +269,11 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     public void SetEngineBreakdownState(bool State)
     {
         b_BreakEngine = State;
+    }
+
+    public void AlignBreakdownLevel(int n_Level)
+    {
+        n_BreakDownLvl = n_Level;
     }
 
     #endregion
