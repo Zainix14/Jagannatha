@@ -74,7 +74,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         {
             n_BreakDownLvl += nbBreakdown;
             SetInteractibleInBreakdown(n_BreakDownLvl);
-            //CheckBreakdown();
+            CheckBreakdown();
         }
 
     }
