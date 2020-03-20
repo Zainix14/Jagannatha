@@ -193,6 +193,7 @@ public class SC_FlockDisplay : MonoBehaviour
                 curState = 0;
             }
             StartNewBehavior(curState);
+            Debug.Log(curState+1);
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -202,8 +203,8 @@ public class SC_FlockDisplay : MonoBehaviour
             {
                 curState = _BoidSettings.Length-1;
             }
-
             StartNewBehavior(curState);
+            Debug.Log(curState+1);
         }
     }
 
@@ -213,8 +214,6 @@ public class SC_FlockDisplay : MonoBehaviour
 
         StopAllCoroutines();
         curSettingsIndex = 0;
-        _curSpline = _splineTab[behaviorIndex];
-        bezierWalkerSpeed.SetNewSpline(_curSpline);
 
         StartCoroutine(SwitchSettings(_BoidSettings[behaviorIndex]));
 
