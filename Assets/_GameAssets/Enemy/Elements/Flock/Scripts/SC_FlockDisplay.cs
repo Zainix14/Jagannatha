@@ -26,11 +26,20 @@ public class SC_FlockDisplay : MonoBehaviour
 
     GameObject _Player;
 
+    BoidSettings[][] _BoidSettings;
+
+    BoidSettings[] spawnSettings;
+    BoidSettings[] roamSettings;
+    BoidSettings[] attackSettings;
+    BoidSettings[] destructionSettings;
+    BoidSettings[] reactionSettings;
+
+    int curSettingsIndex;
 
     [SerializeField]
     FlockSettings flockDisplay;
 
-    BoidSettings[] _BoidSettings; //Contient toute la liste des Settings de boid possible (Comportement)
+   
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
     FlockSettings flockSettings; //Flocksettings de la nuée (défini a la création par le waveSettings)
@@ -40,7 +49,11 @@ public class SC_FlockDisplay : MonoBehaviour
 
     [SerializeField]
     BezierSolution.BezierSpline splineLine;
-    BezierSolution.BezierWalkerWithSpeed bezierWalker;
+
+
+
+    BezierSolution.BezierWalkerWithSpeed bezierWalkerSpeed;
+    BezierSolution.BezierWalkerWithTime bezierWalkerTime;
 
     bool inAttack;
     bool isActive;
@@ -83,7 +96,9 @@ public class SC_FlockDisplay : MonoBehaviour
     void Awake()
     {
         isActive = false;
-           bezierWalker = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
+        bezierWalkerSpeed = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
+        bezierWalkerTime = GetComponent<BezierSolution.BezierWalkerWithTime>();
+
     }
 
 
@@ -108,27 +123,40 @@ public class SC_FlockDisplay : MonoBehaviour
         _GuideList = new List<Transform>();//Instanciation de la guide list
         _curCurveDistanceList = new List<Vector3>(); // Instanciation de la list de distance sur les courbes pour chaque guide
 
+        _BoidSettings = new BoidSettings[5][];
 
-        _BoidSettings = flockSettings.boidSettings;
+        spawnSettings = flockSettings.spawnSettings;
+        roamSettings = flockSettings.roamSettings;
+        attackSettings = flockSettings.attackSettings;
+        destructionSettings = flockSettings.destructionSettings;
+        reactionSettings = flockSettings.reactionSettings;
+
+        _BoidSettings[0] = spawnSettings;
+        _BoidSettings[1] = roamSettings;
+        _BoidSettings[2] = attackSettings;
+        _BoidSettings[3] = destructionSettings;
+        _BoidSettings[4] = reactionSettings;
+
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManagerDisplay>(); //Récupère le Koa manager du koa instancié
 
-        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn, _BoidSettings[0], flockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn, spawnSettings[0], flockSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
      
 
         _splineTab = new BezierSolution.BezierSpline[_BoidSettings.Length];
-        for (int i = 0; i < _BoidSettings.Length; i++)
+        for (int i = 0; i < flockSettings.splines.Length; i++)
         {
-            if (_BoidSettings[i].spline != null)
+
+            if (flockSettings.splines[i] != null)
             {
-                _splineTab[i] = Instantiate(_BoidSettings[i].spline);
-                _splineTab[i].transform.position = transform.position;
-                _splineTab[i].transform.rotation = Random.rotation;
+                _splineTab[i] = Instantiate(flockSettings.splines[i]);
+
             }
+
         }
         _curSpline = splineLine;
-        bezierWalker.SetNewSpline(_curSpline);
+        bezierWalkerSpeed.SetNewSpline(_curSpline);
         ActivateFlock();
         isActive = true;
     }
@@ -146,7 +174,7 @@ public class SC_FlockDisplay : MonoBehaviour
             MultiGuideMovement();
 
         //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
-        bezierWalker.Execute(Time.deltaTime);
+        bezierWalkerSpeed.Execute(Time.deltaTime);
 
         if(isActive && _curBoidSetting != null)
         transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
@@ -160,12 +188,10 @@ public class SC_FlockDisplay : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             curState++;
-            if (curState == flockSettings.boidSettings.Length)
+            if (curState == _BoidSettings.Length)
             {
                 curState = 0;
             }
-
-            Debug.Log(flockSettings.boidSettings[curState]);
             StartNewBehavior(curState);
         }
 
@@ -174,32 +200,63 @@ public class SC_FlockDisplay : MonoBehaviour
             curState--;
             if (curState == -1)
             {
-                curState = flockSettings.boidSettings.Length-1;
+                curState = _BoidSettings.Length-1;
             }
-            Debug.Log(flockSettings.boidSettings[curState]);
 
             StartNewBehavior(curState);
         }
     }
 
-    IEnumerator ChangeState()
+    public void StartNewBehavior(int behaviorIndex)
     {
-        while(true)
-        {
-            float waitTime = 15f;
-            if (curState == flockSettings.boidSettings.Length)
-            {
-                curState = 0;
-            }
-            if (curState == flockSettings.boidSettings.Length-1)
-                waitTime = 1f;
-            StartNewBehavior(curState);
-            curState++;
+        transform.rotation = flockInitialRot;
 
-            yield return new WaitForSeconds(waitTime);
+        StopAllCoroutines();
+        curSettingsIndex = 0;
+        _curSpline = _splineTab[behaviorIndex];
+        bezierWalkerSpeed.SetNewSpline(_curSpline);
+
+        StartCoroutine(SwitchSettings(_BoidSettings[behaviorIndex]));
+
+    }
+
+    IEnumerator SwitchSettings(BoidSettings[] settings)
+    {
+        while (true)
+        {
+            _curBoidSetting = settings[curSettingsIndex];
+
+            int rnd = Random.Range(0, 2);
+            if (rnd == 0)
+                bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
+            else
+                bezierWalkerSpeed.speed = -_curBoidSetting.speedOnSpline;
+
+            Reassemble();
+            if (_curBoidSetting.split)
+            {
+                SplitDivision(_curBoidSetting.splitNumber);
+            }
+            _SCKoaManager.SetBehavior(_curBoidSetting);
+            //https://www.youtube.com/watch?v=bOZT-UpRA2Y
+
+            if (settings.Length == 1)
+            {
+                StopAllCoroutines();
+                break;
+            }
+
+            yield return new WaitForSeconds(_curBoidSetting.settingDuration);
+
+            curSettingsIndex++;
+            if (curSettingsIndex >= settings.Length)
+                curSettingsIndex = 0;
+
         }
 
     }
+
+
     /// <summary>
     /// Guides movement when the flock is Split
     /// </summary>
@@ -261,25 +318,6 @@ public class SC_FlockDisplay : MonoBehaviour
     }
 
 
-    void AttackUpdate()
-    {
-
-        if (flockSettings.attackType != FlockSettings.AttackType.none)
-        {
-            if (inAttack == false) startAttackTimer += Time.deltaTime;
-
-            if (startAttackTimer >= flockSettings.timeBetweenAttacks)
-            {
-                inAttack = true;
-                StartNewPath(PathType.AttackPlayer);
-                startAttackTimer = 0;
-            }
-            if (inAttack)
-            {
-                transform.LookAt(_Player.transform);
-            }
-        }
-    }
     #endregion
     //---------------------------------------------------------------------//
 
@@ -290,19 +328,6 @@ public class SC_FlockDisplay : MonoBehaviour
     //---------------------------------------------------------------------//
     #region Utilities
 
-    void StartNewPath(PathType pathType)
-    {
-        curtype = pathType;
-        switch (pathType)
-        {
-            case PathType.Roam:
-                StartNewBehavior(0);
-                break;
-
-
-        }
-
-    }
 
     void ActivateFlock()
     {
@@ -314,21 +339,6 @@ public class SC_FlockDisplay : MonoBehaviour
     }
 
 
-    public void StartNewBehavior(int behaviorIndex)
-    {
-        transform.rotation = flockInitialRot;
-        _curBoidSetting = _BoidSettings[behaviorIndex];
-        bezierWalker.speed = _curBoidSetting.speedOnSpline;
-
-        Reassemble();
-        if (_curBoidSetting.split)
-        {
-            SplitDivision(_curBoidSetting.splitNumber);
-        }
-        _SCKoaManager.SetBehavior(_curBoidSetting);
-        //https://www.youtube.com/watch?v=bOZT-UpRA2Y
-
-    }
 
 
     /// <summary>
@@ -418,7 +428,6 @@ public class SC_FlockDisplay : MonoBehaviour
     public void EndAttack()
     {
         inAttack = false;
-        StartNewPath(PathType.Roam);
     }
 
 

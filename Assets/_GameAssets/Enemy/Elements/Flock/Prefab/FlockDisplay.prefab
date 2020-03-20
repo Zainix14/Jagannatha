@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7654427869972465053}
   - component: {fileID: 114994286558072070}
   - component: {fileID: 1859276958885358172}
+  - component: {fileID: 5606397213877427923}
   m_Layer: 0
   m_Name: FlockDisplay
   m_TagString: Untagged
@@ -70,6 +71,27 @@ MonoBehaviour:
   speed: 10
   rotationLerpModifier: 99
   m_normalizedT: 0
+  onPathCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5606397213877427923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285113734633859291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d12b9f97514694e962a3395a73e638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelMode: 0
+  n_travelTime: 0
+  m_normalizedT: 0
+  movementLerpModifier: 10
+  rotationLerpModifier: 10
+  lookAt: 1
   onPathCompleted:
     m_PersistentCalls:
       m_Calls: []
