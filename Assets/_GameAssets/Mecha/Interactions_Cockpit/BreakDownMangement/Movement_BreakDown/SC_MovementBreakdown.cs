@@ -15,9 +15,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     [Header("BreakDown Var")]
     public bool b_MaxBreakdown = false;
-    public int CurNbOfBreakdown = 0;
-    public enum BreakdownState { None, State01, State02, State03, Full }
-    public BreakdownState MovementState;
+    public int CurNbInteractInBreakdown = 0;
+    [SerializeField]
+    int n_BreakDOwnLvlMax = 3;
+    [SerializeField]
+    int n_BreakDownLvl = 0;
+    [SerializeField]
+    int n_InteractibleInBreakDown = 0;
+
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -64,48 +69,58 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     public void StartNewBreakdown(int nbBreakdown)
     {
-        int curBreakdown = 0;
+
+        if(!b_MaxBreakdown)
+        {
+            n_BreakDownLvl += nbBreakdown;
+            //SetInteractibleInBreakdown(n_BreakDownLvl);
+            //CheckBreakdown();
+        }
+
+    }
+
+    void SetInteractibleInBreakdown(int n_InteractibleToBreak)
+    {
+
         bool newBreakdown = true;
 
-        for (int i = 0; i < nbBreakdown; i++)
+        for (int i = 0; i < n_InteractibleToBreak; i++)
         {
 
             if (newBreakdown && !b_MaxBreakdown)
             {
 
-                int noBreakdown = 0;
+                //Nb d'Interactible deja en panne
+                n_InteractibleInBreakDown = CurNbInteractBreak();
 
-                for (int j = 0; j < interactible.Length; j++)
-                {
-                    if (!interactible[j].GetComponent<IInteractible>().isBreakdown())
-                    {
-                        noBreakdown++;
-                    }
-                }
-
-                if (noBreakdown == 0)
+                //Si tout est en Breakdown quitter la boucle
+                if (n_InteractibleInBreakDown >= n_InteractibleToBreak)
                 {
                     newBreakdown = false;
                     break;
                 }
+                else
+                    i = CurNbInteractBreak();
 
+                //Choix Aleatoire d'un nteractible
                 int rnd = Random.Range(0, interactible.Length);
+
+                //Si il est deja en panne la boucle recule de  (annule le passage actuel)
                 if (interactible[rnd].GetComponent<IInteractible>().isBreakdown())
-                {
                     i--;
-                }
+
+                //Met un Interactible en Panne
                 else
                 {
 
                     interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
 
-                    SetNewBreakdown();
+                    n_InteractibleInBreakDown = CurNbInteractBreak();
 
-                    curBreakdown++;
-
-                    if (curBreakdown == nbBreakdown)
+                    if (n_InteractibleInBreakDown == n_InteractibleToBreak)
                     {
                         newBreakdown = false;
+                        break;
                     }
 
                 }
@@ -114,12 +129,22 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         }
 
-        CheckBreakdown();
     }
 
-    public void SetNewBreakdown()
+    int CurNbInteractBreak()
     {
-        // A coder ici les effet de breakdown
+
+        int n_InBreakdown = 0;
+
+        //Cb d'interactibles sont en Breakdown
+        for (int j = 0; j < interactible.Length; j++)
+        {
+            if (interactible[j].GetComponent<IInteractible>().isBreakdown())
+                n_InBreakdown++;
+        }
+
+        return n_InBreakdown;
+
     }
 
     public void CheckBreakdown()
@@ -136,7 +161,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
 
         //on update le nombre de pannes
-        CurNbOfBreakdown = n_BreakdownValue;
+        CurNbInteractInBreakdown = n_BreakdownValue;
 
         if (n_BreakdownValue == 1)
         {

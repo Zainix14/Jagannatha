@@ -711,6 +711,7 @@ MonoBehaviour:
   - {fileID: 2070384953729646428}
   - {fileID: 8978933041602384328}
   particleFB: {fileID: 6896665828945494966}
+  curIndex: 0
 --- !u!82 &5283548059076886130
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11500,7 +11501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 1
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!1 &8362834520160829762
 GameObject:
   m_ObjectHideFlags: 0
@@ -11602,7 +11603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!1 &8493325689212383835
 GameObject:
   m_ObjectHideFlags: 0
@@ -11704,7 +11705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  scriptWithChild: {fileID: 3801815549123785550}
+  ongletContainer: {fileID: 3801815549123785550}
 --- !u!82 &1060508041585795901
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12113,7 +12114,7 @@ PrefabInstance:
     - target: {fileID: 7721296559958792677, guid: fd6ca9e382de6c84ca6409e7237d6332,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd6ca9e382de6c84ca6409e7237d6332, type: 3}
