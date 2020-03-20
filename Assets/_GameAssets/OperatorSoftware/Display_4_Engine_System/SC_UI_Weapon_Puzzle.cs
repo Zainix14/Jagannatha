@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_weapon_puzzle_op_display : MonoBehaviour
+public class SC_UI_Weapon_Puzzle : MonoBehaviour
 {
     GameObject[] tableau_barres;
     float[] tableau_init_rot_z;
@@ -53,6 +53,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             GO.transform.rotation = Quaternion.Euler(-90, 0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f);
         }
         */
+
         for (int i =0; i< tableau_barres.Length; i++)
         {
             
@@ -65,7 +66,8 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
 
         oldAngleMain = this.transform.rotation;
-        
+
+        #region Check des valeurs
         switch (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value)
         {
             //solution1
@@ -120,9 +122,10 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 
 
         }
+        #endregion
 
         this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
-
+        #region Solution selon valueWanted
         if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -4)
         {
 
@@ -156,8 +159,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 solutionNb = 4;
 
         }
+        #endregion
 
-
+        #region Change Material selon solutionNb
         if (solutionNb !=oldSolutionNb)
         {
             switch (solutionNb)
@@ -187,8 +191,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
             oldSolutionNb = solutionNb;
 
+
         }
+        #endregion
 
 
     }
+
+
 }
