@@ -142,7 +142,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Exclaim))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, 1);
         }
@@ -276,87 +276,74 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             switch (attackFocus)
             {
-
+                ////////////////////////////////////////////////////////////////////////////////////////////DISPLAY
                 case FlockSettings.AttackFocus.Display:
 
-                    Displaylife -= DmgValue;
-
-                    if (Displaylife <= 0)
+                    if (!SC_BreakdownDisplayManager.Instance.b_MaxBreakdown)
+                        Displaylife -= DmgValue;
+                    else
                     {
-                        int cascade = Mathf.Abs(Displaylife);
 
+                        int rnd;
+                        rnd = Random.Range(0, 2);
 
-                        SC_BreakdownDisplayManager.Instance.StartNewBreakdown(2);
+                        if (rnd == 0)
+                            CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, DmgValue);
 
-                        if (!SC_BreakdownDisplayManager.Instance.b_MaxBreakdown)
-                            Displaylife = 10;
                         else
-                            Displaylife = 0;
-                        
-
-
-                        if (SC_BreakdownDisplayManager.Instance.b_MaxBreakdown && cascade != 0)
-                        {
-
-                            int rnd;
-                            rnd = Random.Range(0, 2);
-
-                            if (rnd == 0)
-                                CauseDamageOnSystem(FlockSettings.AttackFocus.Movement, cascade);
-
-                            else
-                                CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, cascade);
-
-                        }
+                            CauseDamageOnSystem(FlockSettings.AttackFocus.Weapon, DmgValue);
 
                     }
 
-                    break;
+                    if (Displaylife <= 0)
+                    {
 
+                        SC_BreakdownDisplayManager.Instance.StartNewBreakdown(2);
+
+                        Displaylife = 10;
+
+                    }
+
+                break;
+
+                ////////////////////////////////////////////////////////////////////////////////////////////MOVEMENT
                 case FlockSettings.AttackFocus.Movement:
 
-                    MovementLife -= DmgValue;
+                    if (!SC_MovementBreakdown.Instance.b_MaxBreakdown)
+                        MovementLife -= DmgValue;
+                    else
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, DmgValue);
 
                     if (MovementLife <= 0)
                     {
 
-                        int cascade = Mathf.Abs(MovementLife);
                         SC_MovementBreakdown.Instance.StartNewBreakdown(1);
 
-                        if (!SC_MovementBreakdown.Instance.b_MaxBreakdown)
-                            MovementLife = 10;
-                        else
-                            MovementLife = 0;
-
-                        if (SC_MovementBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                            CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        MovementLife = 10;
 
                     }
 
-                    break;
+                break;
 
+                ////////////////////////////////////////////////////////////////////////////////////////////WEAPON
                 case FlockSettings.AttackFocus.Weapon:
 
-                    WeaponLife -= DmgValue;
+                    if (!SC_WeaponBreakdown.Instance.b_MaxBreakdown)
+                        WeaponLife -= DmgValue;
+                    else
+                        CauseDamageOnSystem(FlockSettings.AttackFocus.Display, DmgValue);
+
 
                     if (WeaponLife <= 0)
                     {
 
-                        int cascade = Mathf.Abs(WeaponLife);
                         SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
 
-                        if (!SC_WeaponBreakdown.Instance.b_MaxBreakdown)
-                            WeaponLife = 10;
-                        else
-                            WeaponLife = 0;
-
-
-                        if (SC_WeaponBreakdown.Instance.b_MaxBreakdown && cascade != 0)
-                            CauseDamageOnSystem(FlockSettings.AttackFocus.Display, cascade);
+                        WeaponLife = 10;
 
                     }
-
-                    break;
+  
+                break;
 
             }
         }
