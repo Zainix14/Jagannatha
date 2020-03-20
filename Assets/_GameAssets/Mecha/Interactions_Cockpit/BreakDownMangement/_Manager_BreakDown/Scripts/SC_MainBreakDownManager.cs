@@ -29,9 +29,12 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     [Header("System Lifes")]
     public int nbOfBreakDownBeforeTotalBreak;
-    public int Displaylife = 10;
-    public int WeaponLife = 10;
-    public int MovementLife = 10;
+    [SerializeField, Range(0,10)]
+    int Displaylife = 10;
+    [SerializeField, Range(0, 10)]
+    int WeaponLife = 10;
+    [SerializeField, Range(0, 10)]
+    int MovementLife = 10;
 
     [Header("Systems States")]
     public bool b_BreakEngine = false;
