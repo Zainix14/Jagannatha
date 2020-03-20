@@ -5,6 +5,13 @@ using UnityEngine;
 public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 {
 
+    #region Singleton
+
+    private static SC_JoystickMove _instance;
+    public static SC_JoystickMove Instance { get { return _instance; } }
+
+    #endregion
+
     //Breakdown Infos
     [Header("Breakdown Infos")]
     [SerializeField]
@@ -50,7 +57,21 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     float f_ImpulseX;
-    Quaternion xQuaternion; 
+    Quaternion xQuaternion;
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+    }
 
     // Update is called once per frame
     void FixedUpdate()
