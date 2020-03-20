@@ -14,15 +14,10 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     #region Variables
 
     [Header("BreakDown Var")]
-    public bool b_MaxBreakdown = false;
-    public int CurNbInteractInBreakdown = 0;
-    [SerializeField]
-    int n_BreakDOwnLvlMax = 3;
-    [SerializeField]
+    public bool b_MaxBreakdown = false;   
+    [SerializeField, Range(0,3)]
     int n_BreakDownLvl = 0;
-    [SerializeField]
-    int n_InteractibleInBreakDown = 0;
-
+    public int n_InteractibleInBreakDown = 0;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -73,8 +68,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         if(!b_MaxBreakdown)
         {
             n_BreakDownLvl += nbBreakdown;
-            //SetInteractibleInBreakdown(n_BreakDownLvl);
-            //CheckBreakdown();
+            SetInteractibleInBreakdown(n_BreakDownLvl);
+            CheckBreakdown();
         }
 
     }
@@ -93,7 +88,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
                 //Nb d'Interactible deja en panne
                 n_InteractibleInBreakDown = CurNbInteractBreak();
 
-                //Si tout est en Breakdown quitter la boucle
+                //Si il y 'a deja plus d'Interactible en panne que demander
                 if (n_InteractibleInBreakDown >= n_InteractibleToBreak)
                 {
                     newBreakdown = false;
@@ -129,6 +124,33 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         }
 
+    }   
+
+    public void CheckBreakdown()
+    {
+
+        //on update le nombre de pannes
+        n_InteractibleInBreakDown = CurNbInteractBreak();
+
+        if(n_InteractibleInBreakDown == interactible.Length)
+            b_MaxBreakdown = true;   
+
+        //Resolution du System (MaxBreakDown)
+        else if (n_InteractibleInBreakDown == 0 && b_MaxBreakdown)
+            EndBreakdown();
+
+        //Resolution du Systeme (Normal BreakDown)
+        else if (n_InteractibleInBreakDown == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
+            EndBreakdown();
+
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
+
+    }
+
+    public void EndBreakdown()
+    {
+        b_MaxBreakdown = false;
+        n_BreakDownLvl = 0;
     }
 
     int CurNbInteractBreak()
@@ -145,59 +167,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         return n_InBreakdown;
 
-    }
-
-    public void CheckBreakdown()
-    {
-
-        int n_BreakdownValue = 0;
-
-        for (int j = 0; j < interactible.Length; j++)
-        {
-            if (interactible[j].GetComponent<IInteractible>().isBreakdown())
-            {
-                n_BreakdownValue++;
-            }
-        }
-
-        //on update le nombre de pannes
-        CurNbInteractInBreakdown = n_BreakdownValue;
-
-        if (n_BreakdownValue == 1)
-        {
-            //Effet quand panne rang 1
-            SC_MainBreakDownManager.Instance.CheckBreakdown();
-        }
-        else if (n_BreakdownValue == 2)
-        {
-            //Effet quand panne rang 2
-            SC_MainBreakDownManager.Instance.CheckBreakdown();
-        }
-        else if (n_BreakdownValue > 2)
-        {
-            //Effet quand panne rang Max
-            b_MaxBreakdown = true;
-            SC_MainBreakDownManager.Instance.CheckBreakdown();
-
-        }
-        else if (n_BreakdownValue == 0 && b_MaxBreakdown)
-        {
-            EndBreakdown();
-            b_MaxBreakdown = false;
-            SC_MainBreakDownManager.Instance.CheckBreakdown();
-        }
-
-        //Permet de régler les demi-pannes 
-        else if (n_BreakdownValue == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
-        {
-            EndBreakdown();
-        }
-
-    }
-
-    public void EndBreakdown()
-    {
-        //Reset fin de panne
     }
 
     #region DebugMethod
