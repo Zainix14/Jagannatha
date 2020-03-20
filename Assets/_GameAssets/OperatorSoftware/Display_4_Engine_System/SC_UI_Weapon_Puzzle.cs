@@ -12,6 +12,8 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
     float init_rot_cylindre;
 
     public Material[] solutions_mat;
+    [SerializeField]
+    Material neutral_mat;
     public MeshRenderer solution;
 
     int oldSolutionNb = 40;
@@ -162,6 +164,12 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
         #endregion
 
         #region Change Material selon solutionNb
+
+        if (!SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].isEnPanne && !SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].isEnPanne)
+        {
+            Debug.Log("PLUS DE PANNE");
+            solutionNb = 6;
+        }
         if (solutionNb !=oldSolutionNb)
         {
             switch (solutionNb)
@@ -173,6 +181,7 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
                     solution.material = solutions_mat[1];
                     break;
                 case 2:
+
                     solution.material = solutions_mat[2];
                     break;
                 case 3:
@@ -184,10 +193,14 @@ public class SC_UI_Weapon_Puzzle : MonoBehaviour
                 case 5:
                     solution.material = solutions_mat[5];
                     break;
-
+                case 6:
+                    solution.material = neutral_mat;
+                    break;
 
 
             }
+
+        
 
             oldSolutionNb = solutionNb;
 
