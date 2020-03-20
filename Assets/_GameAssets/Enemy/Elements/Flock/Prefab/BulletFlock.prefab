@@ -123,7 +123,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.85572815
+  m_Radius: 2.69
   m_Center: {x: 0, y: 0, z: 2.455728}
 --- !u!54 &8038598900498192308
 Rigidbody:
@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b_IsFire: 0
+  flockSettings: {fileID: 0}
+  f_Scale_OP: 2
 --- !u!114 &114425495187766138
 MonoBehaviour:
   m_ObjectHideFlags: 0
