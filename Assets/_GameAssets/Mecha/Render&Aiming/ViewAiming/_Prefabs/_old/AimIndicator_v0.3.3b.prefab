@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2528193439796635749}
   - component: {fileID: 4296744086624114827}
   - component: {fileID: 8631846182940226999}
-  - component: {fileID: 985608127591587776}
   - component: {fileID: 2331946749952167909}
+  - component: {fileID: 985608127591587776}
   - component: {fileID: 1627033305918037306}
   m_Layer: 21
   m_Name: AimIndicator_v0.3.3b
@@ -94,18 +94,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &985608127591587776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5690911000053831803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c35195e4490d2c498585c8ed7a7862f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &2331946749952167909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -122,6 +110,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &985608127591587776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5690911000053831803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c35195e4490d2c498585c8ed7a7862f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1627033305918037306
 MonoBehaviour:
   m_ObjectHideFlags: 0
