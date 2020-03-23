@@ -4,29 +4,34 @@ using UnityEngine;
 
 public class SC_playvideo : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField]
+    bool b_OnPlay = false;
+
     void Start()
     {
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).loop = true;
-        if (!((MovieTexture)GetComponent<Renderer>().material.mainTexture).isPlaying)
-            ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
-
+        PlayVideo();
     }
 
     public void PlayVideo()
     {
+
         ((MovieTexture)GetComponent<Renderer>().material.mainTexture).loop = true;
+
         if(!((MovieTexture)GetComponent<Renderer>().material.mainTexture).isPlaying)
             ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
-    }
-    public void StopVideo()
-    {
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
+
+        b_OnPlay = true;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopVideo()
     {
-        
+
+        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
+
+        b_OnPlay = false;
+
     }
+
 }
