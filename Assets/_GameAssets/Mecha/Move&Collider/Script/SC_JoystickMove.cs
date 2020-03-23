@@ -85,7 +85,8 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
         if (!b_BreakEngine)
         {
-            DebugInput();
+            GetImpulses();
+            DebugGetImpulses();
             VerticalRot();
             HorizontalRot();
         }        
@@ -93,35 +94,20 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     #region Moves
 
-    void DebugInput()
+    void GetImpulses()
     {
 
-        if (Input.GetKey(KeyCode.Q))
-        {
+        //Vertical Impulse
+        f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
 
-        }
-
-        else if (Input.GetKey(KeyCode.D))
-        {
-
-        }
-
-        if (Input.GetKey(KeyCode.Z))
-        {
-
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-
-        }
+        //Horizontal Impulses
+        f_TorqueImpulseZ = Input.GetAxis("Torque") * f_CurRotationSpeedZ;
+        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_CurRotationSpeedZ;
 
     }
 
     void VerticalRot()
     {
-
-        f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
 
         if (f_ImpulseX != 0)
         {
@@ -158,12 +144,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
     void HorizontalRot()
     {
-
-        f_TorqueImpulseZ = Input.GetAxis("Torque") * f_CurRotationSpeedZ;
-        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_CurRotationSpeedZ;
-
-        //Debug.Log("Torque - " + Input.GetAxis("Torque"));
-        //Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
 
         //Une Direction Input
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
@@ -329,4 +309,40 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     }
 
     #endregion
+
+    #region DebugMethods
+
+    /// <summary>
+    /// Get Impulse by Keyboard | 
+    /// Overwrite JoyStick Value | 
+    /// </summary>
+    void DebugGetImpulses()
+    {
+
+        //Horizontal Impulses
+        if (Input.GetKey(KeyCode.Q))
+        {
+            f_TorqueImpulseZ = -1 * f_CurRotationSpeedZ;
+            f_TransImpulseZ = -1 * f_CurRotationSpeedZ;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            f_TorqueImpulseZ = 1 * f_CurRotationSpeedZ;
+            f_TransImpulseZ = 1 * f_CurRotationSpeedZ;
+        }
+
+        //Vertical Impulse
+        if (Input.GetKey(KeyCode.Z))
+        {
+            f_ImpulseX = 1 * f_RotationSpeedX;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            f_ImpulseX = -1 * f_RotationSpeedX;
+        }
+
+    }
+
+    #endregion DebugMethods
+
 }
