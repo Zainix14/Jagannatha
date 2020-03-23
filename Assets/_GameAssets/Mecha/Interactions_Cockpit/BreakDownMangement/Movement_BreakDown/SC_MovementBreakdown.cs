@@ -147,7 +147,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
-        SC_DebugMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
     }
 
@@ -160,12 +159,10 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         if(rnd == 0)
         {
             SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Left;
-            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Left;
         }
         else
         {
             SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Right;
-            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Right;
         }
         
     }
