@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1937589195603177483}
   - component: {fileID: 3968405143956545582}
   - component: {fileID: 214141113353299557}
+  - component: {fileID: 8280345066216145980}
   m_Layer: 23
   m_Name: AimIndicator
   m_TagString: Untagged
@@ -139,3 +140,17 @@ MonoBehaviour:
   b_TargetKoa: 0
   LerpFactor: 0.7
   TargetPos: {fileID: 0}
+--- !u!114 &8280345066216145980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378141483871184789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4231a63811e9ba47a804febf6db7e84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: {x: 0, y: 0, z: 0}
+  b_OnFire: 0
