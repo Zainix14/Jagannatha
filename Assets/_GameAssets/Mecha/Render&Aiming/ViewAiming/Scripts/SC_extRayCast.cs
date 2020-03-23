@@ -10,23 +10,24 @@ using UnityEngine;
 public class SC_extRayCast : MonoBehaviour
 {
 
+    
     bool b_AlreadyCheck = false;
-
     GameObject Mng_CheckList = null;
 
+    [Header("References")]
     //camera cockpit
     public Camera CockpitCam = null;
     //objet sur lequel est projetté la rendermap
     public GameObject Screens;
     //indicateur 3D placé au point de contact sur le terrain
-    public GameObject Indicator;
+    public GameObject Indicator; 
 
-    private Vector3 v3_curDir = new Vector3(0,0,0);
-
-    private RaycastHit hit;
-
+    [Header("Device Infos")]
     public bool b_IsVR = false;
     public bool b_IsFPS = false;
+
+    private Vector3 v3_curDir = new Vector3(0, 0, 0);
+    private RaycastHit hit;
 
     void Start()
     {
