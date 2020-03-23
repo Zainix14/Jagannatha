@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
 {
-    bool b_InBreakdown = false;
-    bool b_BreakEngine = false;
 
+    #region Singleton
+
+    private static SC_DebugMove _instance;
+    public static SC_DebugMove Instance { get { return _instance; } }
+
+    #endregion
+
+    [Header("Breakdown Infos")]
+    [SerializeField]
+    bool b_InBreakdown = false;
+    [SerializeField]
+    bool b_BreakEngine = false;
+    [SerializeField, Range(0, 3)]
+    int n_BreakDownLvl = 0;
+    public enum Dir { None, Left, Right, Off }
+    public Dir CurBrokenDir = Dir.Left;
+
+    [Header("Rotation Infos")]
     public float f_Speed = 10f;
     public float f_RotFactor = 1f;
     Rigidbody rb;
@@ -22,6 +38,17 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
     float f_RotationSpeedX = 1.0f;
     public float f_LerpRotX = 1f;
 
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +85,7 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
             zQuaternion = Quaternion.AngleAxis(-f_RotationSpeedZ, Vector3.up);
             transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
         }
+
         else if (Input.GetKey(KeyCode.D))
         {
             //rb.AddTorque(transform.up * f_Speed * f_RotFactor, ForceMode.Force);
@@ -90,4 +118,9 @@ public class SC_DebugMove : MonoBehaviour, IF_BreakdownSystem
     {
         b_BreakEngine = State;
     }
+    public void AlignBreakdownLevel(int n_Level)
+    {
+        n_BreakDownLvl = n_Level;
+    }
+
 }

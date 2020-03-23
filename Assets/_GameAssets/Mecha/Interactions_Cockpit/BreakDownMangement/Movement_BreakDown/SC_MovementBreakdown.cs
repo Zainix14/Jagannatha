@@ -14,8 +14,10 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     #region Variables
 
     [Header("BreakDown Var")]
-    public bool b_MaxBreakdown = false;   
-    [SerializeField, Range(0,3)]
+    public bool b_MaxBreakdown = false;
+    [SerializeField]
+    int n_MaxBreakdownLvl = 3;
+    [SerializeField, Range(0, 3)]
     int n_BreakDownLvl = 0;
     public int n_InteractibleInBreakDown = 0;
 
@@ -144,6 +146,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             EndBreakdown();
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
+        SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
+        SC_DebugMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
     }
 
@@ -151,6 +155,19 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         b_MaxBreakdown = false;
         n_BreakDownLvl = 0;
+
+        int rnd = Random.Range(0, 1);
+        if(rnd == 0)
+        {
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Left;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Left;
+        }
+        else
+        {
+            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Right;
+            SC_DebugMove.Instance.CurBrokenDir = SC_DebugMove.Dir.Right;
+        }
+        
     }
 
     int CurNbInteractBreak()

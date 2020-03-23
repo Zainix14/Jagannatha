@@ -5,12 +5,26 @@ using UnityEngine;
 public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 {
 
+    #region Singleton
+
+    private static SC_JoystickMove _instance;
+    public static SC_JoystickMove Instance { get { return _instance; } }
+
+    #endregion
+
+    #region Variables
+
     //Breakdown Infos
     [Header("Breakdown Infos")]
     [SerializeField]
     bool b_InBreakdown = false;
     [SerializeField]
     bool b_BreakEngine = false;
+    [SerializeField, Range(0, 3)]
+    int n_BreakDownLvl = 0;
+    public enum Dir { None, Left, Right, Off }
+    public Dir CurBrokenDir = Dir.Left;
+
 
     //Coroutines Infos
     [Header("Smooth Coroutine Infos")]
@@ -18,7 +32,6 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     bool b_UseCoroutine = false;
     [Range(0, 2)]
     public float f_Duration = 0.5f;
-    public enum Dir { None, Left, Right, Off }
     public Dir CurDir = Dir.None;
     public Dir TargetDir = Dir.None;
     public Dir CoroDir = Dir.Off;
@@ -29,6 +42,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Header("Horizontal Rotation Settings")]
     [SerializeField]
     float f_RotationSpeedZ = 1.0f;
+    float f_CurRotationSpeedZ = 1.0f;
     [SerializeField]
     float f_LerpRotZ = 1f;  
     public enum RotationMode { TSR, Torque, Normalize, Higher, Clamp }
@@ -50,21 +64,50 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
     float f_ImpulseX;
-    Quaternion xQuaternion; 
+    Quaternion xQuaternion;
+
+    #endregion Variables
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!b_InBreakdown && !b_BreakEngine)
-            Move();
+        if (!b_BreakEngine)
+        {
+            GetImpulses();
+            DebugGetImpulses();
+            VerticalRot();
+            HorizontalRot();
+        }        
     }
 
-    void Move()
+    #region Moves
+
+    void GetImpulses()
     {
 
-        #region Rotation Verticale
-
+        //Vertical Impulse
         f_ImpulseX = Input.GetAxis("Vertical") * f_RotationSpeedX;
+
+        //Horizontal Impulses
+        f_TorqueImpulseZ = Input.GetAxis("Torque") * f_CurRotationSpeedZ;
+        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_CurRotationSpeedZ;
+
+    }
+
+    void VerticalRot()
+    {
 
         if (f_ImpulseX != 0)
         {
@@ -97,16 +140,12 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-        #endregion
+    }
 
-        #region Rotation Horizontale
+    void HorizontalRot()
+    {
 
-        f_TorqueImpulseZ = Input.GetAxis("Torque") * f_RotationSpeedZ;
-        f_TransImpulseZ = Input.GetAxis("Horizontal") * f_RotationSpeedZ;
-
-        //Debug.Log("Torque - " + Input.GetAxis("Torque"));
-        //Debug.Log("Horizontal - " + Input.GetAxis("Horizontal"));
-
+        //Une Direction Input
         if (f_TorqueImpulseZ != 0 || f_TransImpulseZ != 0)
         {
 
@@ -114,6 +153,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
             float MixImpulseZ;
             float CurImpulse = 0;
 
+            //Calcul Selon Mode de Rotation
             switch (TypeRotationZ)
             {
 
@@ -139,7 +179,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                     {
                         zQuaternion = Quaternion.AngleAxis(f_TransImpulseZ, Vector3.up);
                         CurImpulse = f_TransImpulseZ;
-                    }                     
+                    }
                     break;
 
                 case RotationMode.Normalize:
@@ -162,20 +202,34 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             }
 
+            //Direction
             if (CurImpulse > 0)
                 TargetDir = Dir.Right;
             else if (CurImpulse < 0)
                 TargetDir = Dir.Left;
 
-            //transform.rotation *= Quaternion.Slerp(transform.rotation, zQuaternion, f_LerpRotZ);
+            //Defini la rotation ciblé
             TargetRotY = this.transform.rotation * zQuaternion;
 
-            if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
-                CheckDir();
-            else if (!b_UseCoroutine || (CoroDir == Dir.Off && CurDir == TargetDir))
-                transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
+            if(CurBrokenDir == CurDir)
+            {
+                if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir && n_BreakDownLvl < 3)
+                    CheckDir();
+                else if ( ( !b_UseCoroutine || ( CoroDir == Dir.Off && CurDir == TargetDir ) ) && n_BreakDownLvl < 2 )
+                    transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
+            }
+
+            else
+            {
+                if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
+                    CheckDir();
+                else if (!b_UseCoroutine || (CoroDir == Dir.Off && CurDir == TargetDir))
+                    transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotY, f_LerpRotZ);
+            }        
 
         }
+        
+        //Pas de Direction
         else
         {
             TargetDir = Dir.None;
@@ -184,9 +238,9 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
                 CheckDir();
         }
 
-        #endregion
-
     }
+
+    #endregion Moves
 
     #region Coroutines Functions
 
@@ -242,5 +296,53 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
         b_BreakEngine = State;
     }
 
+    public void AlignBreakdownLevel(int n_Level)
+    {
+
+        n_BreakDownLvl = n_Level;
+
+        if (n_BreakDownLvl == 0)
+            f_CurRotationSpeedZ = f_RotationSpeedZ;
+        else
+            f_CurRotationSpeedZ = f_RotationSpeedZ / 2;
+
+    }
+
     #endregion
+
+    #region DebugMethods
+
+    /// <summary>
+    /// Get Impulse by Keyboard | 
+    /// Overwrite JoyStick Value | 
+    /// </summary>
+    void DebugGetImpulses()
+    {
+
+        //Horizontal Impulses
+        if (Input.GetKey(KeyCode.Q))
+        {
+            f_TorqueImpulseZ = -1 * f_CurRotationSpeedZ;
+            f_TransImpulseZ = -1 * f_CurRotationSpeedZ;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            f_TorqueImpulseZ = 1 * f_CurRotationSpeedZ;
+            f_TransImpulseZ = 1 * f_CurRotationSpeedZ;
+        }
+
+        //Vertical Impulse
+        if (Input.GetKey(KeyCode.Z))
+        {
+            f_ImpulseX = 1 * f_RotationSpeedX;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            f_ImpulseX = -1 * f_RotationSpeedX;
+        }
+
+    }
+
+    #endregion DebugMethods
+
 }
