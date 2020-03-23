@@ -87,7 +87,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
     public void IsValueOk()
     {
 
-        if (Mathf.Abs(totalAngle - desiredValue) < 89)
+        if (/*Mathf.Abs(totalAngle - desiredValue) < 89*/ Mathf.Floor(totalAngle / 90) == Mathf.Floor(desiredValue / 90))
         {
 
             if (isEnPanne)
@@ -98,7 +98,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
             }
         }
-        else/* if(!isEnPanne)*/
+        else if(!isEnPanne)
         {
 
             SetIsEnPanne(true);
