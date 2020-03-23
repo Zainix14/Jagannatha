@@ -57,7 +57,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507104c717baf2a42b3182bc27bce158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 0}
+  SpatialDamage: {fileID: 0}
+  CurIndex: 3
+  CurSpatial: {fileID: 0}
 --- !u!1 &1283266316766246387
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507104c717baf2a42b3182bc27bce158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 0}
+  SpatialDamage: {fileID: 0}
+  CurIndex: 2
+  CurSpatial: {fileID: 0}
 --- !u!1 &6748457292115811149
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b_InBreakdown: 0
   b_BreakEngine: 0
+  n_BreakDownLvl: 0
+  CurBrokenDir: 1
   b_UseCoroutine: 1
   f_Duration: 0.5
   CurDir: 0
@@ -430,6 +436,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b881ed66a84aa5b46b70e77b4c27af60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_InBreakdown: 0
+  b_BreakEngine: 0
+  n_BreakDownLvl: 0
+  CurBrokenDir: 1
   f_Speed: 50
   f_RotFactor: 100
   f_RotationSpeedZ: 1
@@ -495,7 +505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507104c717baf2a42b3182bc27bce158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 0}
+  SpatialDamage: {fileID: 0}
+  CurIndex: 1
+  CurSpatial: {fileID: 0}
 --- !u!1 &8850920501439398922
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,4 +565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507104c717baf2a42b3182bc27bce158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 0}
+  SpatialDamage: {fileID: 0}
+  CurIndex: 0
+  CurSpatial: {fileID: 0}
