@@ -71,6 +71,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     void Demarage()
     {
         StartNewBreakdown(interactible.Length);
+        sc_screens_controller.PanneAll();
+
     }
 
     #endregion Init

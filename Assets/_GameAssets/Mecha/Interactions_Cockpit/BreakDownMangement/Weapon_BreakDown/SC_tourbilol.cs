@@ -72,9 +72,11 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         }
 
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.Y) && index == 0)
         {
-            Debug.Log(isEnPanne);
+            Debug.Log("total : " + totalAngle);
+            Debug.Log("desired : " + desiredValue);
+
 
 
         }
@@ -85,7 +87,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
     public void IsValueOk()
     {
 
-        if (Mathf.Abs(totalAngle - desiredValue) < 89)
+        if (/*Mathf.Abs(totalAngle - desiredValue) < 89*/ Mathf.Floor(totalAngle / 90) == Mathf.Floor(desiredValue / 90))
         {
 
             if (isEnPanne)
