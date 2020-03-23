@@ -72,9 +72,11 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         }
 
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.Y) && index == 0)
         {
-            Debug.Log(isEnPanne);
+            Debug.Log("total : " + totalAngle);
+            Debug.Log("desired : " + desiredValue);
+
 
 
         }
@@ -96,7 +98,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
             }
         }
-        else if(!isEnPanne)
+        else/* if(!isEnPanne)*/
         {
 
             SetIsEnPanne(true);
