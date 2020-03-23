@@ -8,8 +8,6 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     SC_SyncVar_StateMecha_Display sc_syncvar;
     GameObject Mng_SyncVar = null;
 
-    //[SerializeField]
-    Image exampleDisplay;
 
     [SerializeField]
     GameObject warning;
@@ -24,16 +22,21 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         displays = new Transform[sc_syncvar.nbDisplay];
 
-        for (int i =0; i< sc_syncvar.nbDisplay ; i++)
+        displays = new Transform[sc_syncvar.nbDisplay];
+        SC_UI_StateMecha_CheckDisplay[] tabChild;
+        tabChild =  transform.GetComponentsInChildren<SC_UI_StateMecha_CheckDisplay>(); 
+
+        for (int i = 0; i < tabChild.Length; i++)
         {
-            displays[i] = this.transform.GetChild(i);
-            //Debug.Log("Ecran index " + i + " est " + displays[i].name);
+            displays[i] = tabChild[i].transform;
         }
+
+        
     }
 
     // Update is called once per frame
