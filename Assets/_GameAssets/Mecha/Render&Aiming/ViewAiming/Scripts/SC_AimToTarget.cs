@@ -5,18 +5,15 @@ using UnityEngine;
 public class SC_AimToTarget : MonoBehaviour
 {
 
-    [Header("References")]
     [SerializeField]
     GameObject ViewIndicator;
     [SerializeField]
     SC_CurTargetCheck AimIndicSC;
 
-    [Header("Target Infos")]
-    public bool b_TargetKoa = false;
-
-    [Header("Aiming Parameters")]
     [Range(0,1)]
-    public float LerpFactor;  
+    public float LerpFactor;
+
+    public bool b_TargetKoa = false;
     public Transform TargetPos;
 
     // Update is called once per frame

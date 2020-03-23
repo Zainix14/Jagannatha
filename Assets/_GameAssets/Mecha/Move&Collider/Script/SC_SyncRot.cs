@@ -5,8 +5,13 @@ using UnityEngine;
 public class SC_SyncRot : MonoBehaviour
 {
 
-    [Header("References")]
     public Transform Target;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -14,5 +19,4 @@ public class SC_SyncRot : MonoBehaviour
         if (Target != null)
             this.transform.rotation = Target.rotation;
     }
-
 }
