@@ -5,11 +5,14 @@ using UnityEngine;
 public class SC_CurTargetCheck : MonoBehaviour
 {
 
+    [Header("Aim Parameters")]
     [SerializeField]
     SC_AimToTarget AimIndicatorSC;
     [SerializeField]
     SC_CrossHairMove CrossHairSC;
 
+    [Header("Target Infos")]
+    [SerializeField]
     bool b_OnKoa = false;
 
     private void OnTriggerEnter(Collider other)

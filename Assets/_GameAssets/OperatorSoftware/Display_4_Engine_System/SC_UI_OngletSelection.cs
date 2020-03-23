@@ -40,7 +40,6 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 
         //}
 
-        Debug.Log("Clic sur onglet" + index);
         for (int i = 0; i < ongletContainer.child.Length; i++)
         {
             if (i == index)
