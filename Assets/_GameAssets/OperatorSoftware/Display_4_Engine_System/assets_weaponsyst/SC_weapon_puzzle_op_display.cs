@@ -12,6 +12,8 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     float init_rot_cylindre;
 
     public Material[] solutions_mat;
+    [SerializeField]
+    Material neutral_mat;
     public MeshRenderer solution;
 
     int oldSolutionNb = 40;
@@ -20,6 +22,11 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     Quaternion oldAngleMain;
     Quaternion newAngleMain;
+
+    [SerializeField]
+    GameObject[] rotBarTab;
+    [SerializeField]
+    Material[] rotBarMatTab;
     private void Awake()
     {
         tableau_barres = new GameObject[gameObject.transform.childCount];
@@ -157,7 +164,16 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         }
 
+        if (!SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].isEnPanne && !SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].isEnPanne)
+        {
+            solutionNb = 420;
 
+            checkColorBar(0);
+        }
+        else 
+        {
+            checkColorBar(1);
+        }
         if (solutionNb !=oldSolutionNb)
         {
             switch (solutionNb)
@@ -180,6 +196,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 case 5:
                     solution.material = solutions_mat[5];
                     break;
+                case 420:
+                    solution.material = neutral_mat;
+                    break;
 
 
 
@@ -191,4 +210,13 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
 
     }
+    void checkColorBar(int indexMax)
+    {
+        for (int i = 0; i < rotBarTab.Length; i++)
+        {
+            rotBarTab[i].GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
+        }
+        this.GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
+    }
+    
 }
