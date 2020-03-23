@@ -12,24 +12,20 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     #endregion
 
-    bool b_InBreakdown = false;
+    #region Variables
 
-    GameObject Mng_CheckList;
-    GameObject NetPlayerP;
-
+    [Header("References")]   
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
     public GameObject Target;
-
+    GameObject Mng_CheckList;
+    GameObject NetPlayerP;
     SC_AimHit AimHit;
+    public Sc_LaserFeedBack LaserFB;
 
-    Vector3 LaserDir;
-    public float frequency;
-    float f_LaserTimer = 0;
-
-    //Bullet Var
+    [Header("Laser Parameters")]
     [SerializeField]
-    bool b_DebugLaser = false;
+    bool b_DebugLaser = false; 
     [SerializeField]
     GameObject _bulletContainer;
     GameObject Bullet;
@@ -38,19 +34,29 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     [SerializeField]
     Color CurColor;
 
-    Vector3Int sensitivity;
+    [Header("Breakdown Infos")]
+    [SerializeField]
+    bool b_InBreakdown = false;
 
-    //Bullets Tab
-    GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
-    MeshRenderer[] t_MrBullet;
-    public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
-    int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
+    [Header("Laser Infos")]
+    public float frequency;
+    float f_LaserTimer = 0;
+    Vector3 LaserDir;
 
-    //Raycast
+    [Header("Raycast Infos")]
     public RaycastHit LaserHit;
     int layerMask = 1 << 5 | 1 << 15 | 1 << 16 | 1 << 25 | 1 << 26;
 
-    public Sc_LaserFeedBack LaserFB;
+    [Header("Bullet Infos (Normally no Used)")]
+    public int n_BulletMagazine; //Nombre de balles totale dans le bullet pool (a initialisé dans l'éditeur)
+    GameObject[] t_Bullet; //Tableau permettant de stocker toutes les balles initialisées (Bullet pool )
+    MeshRenderer[] t_MrBullet;   
+    int n_CurBullet; //Permet de stocker la prochaine balle a tirer dans le chargeur
+    Vector3Int sensitivity;
+
+    
+
+    #endregion Variables
 
     void Awake()
     {
@@ -66,18 +72,9 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         CreateBullet();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Mng_CheckList == null || Target == null)
-            GetReferences();
-        if (Input.GetKeyDown(KeyCode.L))
-            b_DebugLaser = !b_DebugLaser;
-    }
-
     void GetReferences()
     {
-        if(Mng_CheckList == null)
+        if (Mng_CheckList == null)
             Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
         if (Target == null && Mng_CheckList != null)
             Target = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
@@ -85,6 +82,15 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
             AimHit = Target.GetComponent<SC_AimHit>();
         if (Mng_CheckList != null && NetPlayerP == null)
             NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Mng_CheckList == null || Target == null)
+            GetReferences();
+        if (Input.GetKeyDown(KeyCode.L))
+            b_DebugLaser = !b_DebugLaser;
     }
 
     #region BulletCreation
