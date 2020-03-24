@@ -27,6 +27,11 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     Quaternion CoroAngleMain;
 
     [SerializeField]
+    float f_AngleMainCorDuration = 0.5f;
+
+    Coroutine CurAngleMainCoro;
+
+    [SerializeField]
     GameObject[] rotBarTab;
     [SerializeField]
     Material[] rotBarMatTab;
@@ -143,10 +148,16 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
         //this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
 
-        if(CoroAngleMain != newAngleMain)
+        if(newAngleMain != oldAngleMain && newAngleMain != CoroAngleMain)
         {
-            StopCoroutine(GoTargetRotMainAngle(1, newAngleMain));
-            StartCoroutine(GoTargetRotMainAngle(1, newAngleMain));
+
+            //Debug.Log("SC_weapon_puzzle_op_display - CallCoro");
+
+            if (CurAngleMainCoro != null)
+                StopCoroutine(CurAngleMainCoro);
+
+            CurAngleMainCoro = StartCoroutine(GoTargetRotMainAngle(f_AngleMainCorDuration, newAngleMain));
+
         }
 
     }
@@ -264,6 +275,8 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     IEnumerator GoTargetRotMainAngle(float Duration, Quaternion TargetRot)
     {
 
+        //Debug.Log("SC_weapon_puzzle_op_display - StartCoro");
+
         float t = 0;
         float rate = 1 / Duration;
 
@@ -273,16 +286,19 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         while (t < 1)
         {
 
-            Debug.Log("SC_weapon_puzzle_op_display - InCoro");
+            //Debug.Log("SC_weapon_puzzle_op_display - InCoro");
 
             t += Time.deltaTime * rate;
             float Lerp = Acceleration.Evaluate(t);
 
             this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
+            //this.transform.eulerAngles = Vector3.Slerp(StartRot.eulerAngles, CoroAngleMain.eulerAngles, Lerp);
 
             yield return 0;
 
         }
+
+        //Debug.Log("SC_weapon_puzzle_op_display - EndCoro");
 
     }
 
