@@ -148,6 +148,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
+        if (n_InteractibleInBreakDown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+        }
     }
 
     public void EndBreakdown()

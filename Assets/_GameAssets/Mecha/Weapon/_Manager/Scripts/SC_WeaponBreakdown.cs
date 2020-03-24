@@ -204,7 +204,14 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         {
             EndBreakdown();
         }
-
+        if (CurNbOfBreakdown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+        }
     }
 
     public void EndBreakdown()

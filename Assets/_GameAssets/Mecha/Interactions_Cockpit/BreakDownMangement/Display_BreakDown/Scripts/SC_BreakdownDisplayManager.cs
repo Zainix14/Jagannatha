@@ -165,7 +165,14 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
             sc_screens_controller.RepairAll();
         }
-
+        if (CurNbOfBreakdown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+        }
     }
 
     #region DebugMethod
