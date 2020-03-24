@@ -10,57 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: _TestSettings
+  m_Name: Hard_DodgeTransi
   m_EditorClassIdentifier: 
   minSpeed: 100
-  maxSpeed: 300
+  maxSpeed: 200
   perceptionRadius: 50
   avoidanceRadius: 100
-  maxSteerForce: 60
-  alignWeight: 40
-  cohesionWeight: 20
-  seperateWeight: 40
-  targetWeight: 30
+  maxSteerForce: 10
+  alignWeight: 10
+  cohesionWeight: 0
+  seperateWeight: 200
+  targetWeight: 100
   obstacleMask:
     serializedVersion: 2
     m_Bits: 67108864
-  boundsRadius: 0.5
-  avoidCollisionWeight: 10
-  collisionAvoidDst: 1
+  boundsRadius: 0.1
+  avoidCollisionWeight: 20
+  collisionAvoidDst: 10
   koaBehavior: 1
   coverDistance: 0
-  axisRotationSpeed: {x: 20, y: 50, z: 20}
+  axisRotationSpeed: {x: 10, y: 10, z: 10}
   split: 1
-  splitNumber: 5
+  splitNumber: 100
   curveX:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.0004303107
-      outSlope: -0.0004303107
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.84814966
-    - serializedVersion: 3
-      time: 2.0811243
-      value: 1.3706954
-      inSlope: 0.00023940206
-      outSlope: 0.00023940206
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 4.1328125
-      value: 1.0062256
-      inSlope: 0.0006220242
-      outSlope: 0.0006220242
-      tangentMode: 0
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.17532393
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -71,20 +62,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.679245
-      outSlope: 0.679245
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.025
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.68553406
-      outSlope: 0.68553406
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.037500024
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -93,28 +84,37 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -0.3935074
-      outSlope: -0.3935074
+      time: -1.0077324
+      value: 0.9899292
+      inSlope: -4.347857
+      outSlope: -4.347857
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.50465554
-      value: 0.8014143
-      inSlope: 0.0036984235
-      outSlope: 0.0036984235
-      tangentMode: 34
+      time: 0.13441348
+      value: -3.9759579
+      inSlope: 0.6089179
+      outSlope: 0.6089179
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.7888399
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.40090424
-      outSlope: 0.40090424
+      time: 0.14597225
+      value: 5.7161684
+      inSlope: 0.0031446093
+      outSlope: 0.0031446093
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.6232758
+      value: 0.9892578
+      inSlope: -3.1996882
+      outSlope: -3.1996882
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -122,9 +122,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 5, y: 5, z: 5}
-  frequence: {x: 5, y: 5, z: 5}
+  amplitude: {x: 4, y: 2, z: 4}
+  frequence: {x: 5, y: 1, z: 5}
   invert: 1
-  invertAxis: {x: 1, y: 1, z: 1}
-  speedOnSpline: 30
+  invertAxis: {x: 0.12, y: 0.56, z: 1.41}
+  speedOnSpline: 10
   settingDuration: 3

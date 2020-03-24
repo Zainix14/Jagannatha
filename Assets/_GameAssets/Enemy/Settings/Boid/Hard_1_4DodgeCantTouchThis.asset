@@ -10,54 +10,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: Buzzin2Far
+  m_Name: Hard_DodgeCantTouchThis
   m_EditorClassIdentifier: 
-  minSpeed: 100
-  maxSpeed: 200
-  perceptionRadius: 200
-  avoidanceRadius: 1.3
-  maxSteerForce: 10
-  alignWeight: 15
-  cohesionWeight: 20
-  seperateWeight: 0
-  targetWeight: 50
+  minSpeed: 200
+  maxSpeed: 300
+  perceptionRadius: 50
+  avoidanceRadius: 100
+  maxSteerForce: 500
+  alignWeight: 10
+  cohesionWeight: 0
+  seperateWeight: 200
+  targetWeight: 20
   obstacleMask:
     serializedVersion: 2
     m_Bits: 67108864
   boundsRadius: 0.1
-  avoidCollisionWeight: 5
-  collisionAvoidDst: 5
+  avoidCollisionWeight: 20
+  collisionAvoidDst: 10
   koaBehavior: 1
   coverDistance: 0
-  axisRotationSpeed: {x: 20, y: 0, z: 20}
+  axisRotationSpeed: {x: 10, y: 10, z: 10}
   split: 1
-  splitNumber: 5
+  splitNumber: 100
   curveX:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.00541687
-      inSlope: 1.9742666
-      outSlope: 1.9742666
+      value: 1
+      inSlope: -0.1347901
+      outSlope: -0.1347901
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5016012
-      value: 0.99571145
-      inSlope: -0.0063427687
-      outSlope: -0.0063427687
+      time: 0.5791667
+      value: 0.92193407
+      inSlope: 0.025356568
+      outSlope: 0.025356568
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.00541687
-      inSlope: -1.9869522
-      outSlope: -1.9869522
+      value: 1
+      inSlope: 0.18550323
+      outSlope: 0.18550323
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -70,60 +70,27 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: -0.5
-      inSlope: -0.025288071
-      outSlope: -0.025288071
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.39849296
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.49980715
-      inSlope: -0.03850621
-      outSlope: -0.03850621
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.20164688
-    - serializedVersion: 3
-      time: 1
-      value: -0.50683016
-      inSlope: 0.0076743006
-      outSlope: 0.0076743006
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.665261
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  curveZ:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.0005187988
-      inSlope: 1.0024855
-      outSlope: 1.0024855
+      value: 1
+      inSlope: -0.0700832
+      outSlope: -0.0700832
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5019263
-      value: 0.5036926
-      inSlope: -0.0038771033
-      outSlope: -0.0038771033
-      tangentMode: 34
+      time: 0.5141797
+      value: 0.96396464
+      inSlope: -40.175262
+      outSlope: -40.175262
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.0006993254
     - serializedVersion: 3
       time: 1
-      value: 0.0005187988
-      inSlope: -1.0102397
-      outSlope: -1.0102397
+      value: 1
+      inSlope: 0.074174255
+      outSlope: 0.074174255
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -131,9 +98,51 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 5, y: 5, z: 5}
-  frequence: {x: 1, y: 1, z: 1}
+  curveZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.0077324
+      value: 0.9899292
+      inSlope: -4.347857
+      outSlope: -4.347857
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.13441348
+      value: -3.9759579
+      inSlope: -2.9284902
+      outSlope: -2.9284902
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7888399
+      outWeight: 0.88857204
+    - serializedVersion: 3
+      time: 0.5515814
+      value: 5.739049
+      inSlope: -1.8186252
+      outSlope: -1.8186252
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.6232758
+      value: 0.9892578
+      inSlope: -4.432039
+      outSlope: -4.432039
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  amplitude: {x: 4, y: 2, z: 4}
+  frequence: {x: 5, y: 1, z: 5}
   invert: 1
-  invertAxis: {x: 1, y: 1, z: 1}
-  speedOnSpline: 50
-  settingDuration: 2
+  invertAxis: {x: 0.12, y: 0.56, z: 1.41}
+  speedOnSpline: 25
+  settingDuration: 3

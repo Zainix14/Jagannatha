@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: Swallow Koa
+  m_Name: Buzzin3SwallowKoa
   m_EditorClassIdentifier: 
   minSpeed: 5
   maxSpeed: 50
@@ -27,7 +27,7 @@ MonoBehaviour:
   boundsRadius: 0.1
   avoidCollisionWeight: 5
   collisionAvoidDst: 5
-  koaBehavior: 0
+  koaBehavior: 1
   coverDistance: 0
   axisRotationSpeed: {x: 0, y: 0, z: 0}
   split: 1
@@ -135,5 +135,5 @@ MonoBehaviour:
   frequence: {x: 20, y: 5, z: 10}
   invert: 0
   invertAxis: {x: 1, y: 1, z: 1}
-  speedOnSpline: 25
-  settingDuration: 3
+  speedOnSpline: 10
+  settingDuration: 4
