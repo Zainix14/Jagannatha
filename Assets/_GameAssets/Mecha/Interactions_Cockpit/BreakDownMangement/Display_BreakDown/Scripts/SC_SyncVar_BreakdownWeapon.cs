@@ -15,7 +15,6 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
 
     public int tourbilolNb = 2;
 
-
     public struct Tourbilol
     {
         public float value;

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SC_weapon_puzzle_op_display : MonoBehaviour
 {
+
+    #region Variables
+
     GameObject[] tableau_barres;
     float[] tableau_init_rot_z;
     Quaternion[] tableau_old_rot;
@@ -19,7 +22,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     int oldSolutionNb = 40;
     int solutionNb;
 
-
     Quaternion oldAngleMain;
     Quaternion newAngleMain;
 
@@ -27,8 +29,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     GameObject[] rotBarTab;
     [SerializeField]
     Material[] rotBarMatTab;
+
+    #endregion Variables
+
     private void Awake()
     {
+
         tableau_barres = new GameObject[gameObject.transform.childCount];
         tableau_old_rot = new Quaternion[gameObject.transform.childCount];
         tableau_new_rot = new Quaternion[gameObject.transform.childCount];
@@ -43,23 +49,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         }
 
         init_rot_cylindre = gameObject.transform.eulerAngles.y;
+
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        /*
-        foreach(GameObject GO in tableau_barres)
-        {
-            GO.transform.rotation = Quaternion.Euler(-90, 0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f);
-        }
-        */
+
         for (int i =0; i< tableau_barres.Length; i++)
         {
             
@@ -70,11 +65,11 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         //this.transform.rotation = Quaternion.Euler(0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value * 22.5f + init_rot_cylindre, 0);
 
-
         oldAngleMain = this.transform.rotation;
         
         switch (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value)
         {
+
             //solution1
             case -4:
 
@@ -125,7 +120,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
                 break;
                 
-
         }
 
         this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
@@ -137,6 +131,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 0;
             }
+
             else
                 solutionNb = 1;
 
@@ -148,6 +143,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 2;
             }
+
             else
                 solutionNb = 3;
 
@@ -159,6 +155,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 5;
             }
+
             else
                 solutionNb = 4;
 
@@ -170,37 +167,45 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
             checkColorBar(0);
         }
+
         else 
         {
             checkColorBar(1);
         }
+
         if (solutionNb !=oldSolutionNb)
         {
+
             switch (solutionNb)
             {
+
                 case 0:
                     solution.material = solutions_mat[0];
                     break;
+
                 case 1:
                     solution.material = solutions_mat[1];
                     break;
+
                 case 2:
                     solution.material = solutions_mat[2];
                     break;
+
                 case 3:
                     solution.material = solutions_mat[3];
                     break;
+
                 case 4:
                     solution.material = solutions_mat[4];
                     break;
+
                 case 5:
                     solution.material = solutions_mat[5];
                     break;
+
                 case 420:
                     solution.material = neutral_mat;
                     break;
-
-
 
             }
 
@@ -208,15 +213,18 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         }
 
-
     }
+
     void checkColorBar(int indexMax)
     {
+
         for (int i = 0; i < rotBarTab.Length; i++)
         {
             rotBarTab[i].GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
         }
+
         this.GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
+
     }
     
 }
