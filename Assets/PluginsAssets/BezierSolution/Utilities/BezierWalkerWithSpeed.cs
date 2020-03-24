@@ -101,7 +101,6 @@ namespace BezierSolution
                         if (!onPathCompletedCalledAt1)
                         {
                             onPathCompletedCalledAt1 = true;
-
 #if UNITY_EDITOR
                             if (UnityEditor.EditorApplication.isPlaying)
 #endif
