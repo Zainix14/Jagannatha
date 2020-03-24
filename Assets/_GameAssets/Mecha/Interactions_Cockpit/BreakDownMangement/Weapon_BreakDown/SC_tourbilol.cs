@@ -5,6 +5,9 @@ using UnityEngine;
 public class SC_tourbilol : MonoBehaviour, IInteractible
 {
 
+    private SC_SyncVar_BreakdownWeapon sc_syncvar;
+
+    float f_InitRot;
     float oldRot;
     float curRot;
 
@@ -16,8 +19,6 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
     private float desiredValue = 0f;
 
-    private SC_SyncVar_BreakdownWeapon sc_syncvar;
-
     enum tourbiType { tourbiFirst, tourbiSecond }
 
     [SerializeField]
@@ -25,7 +26,8 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
   
     void Start()
     {
-        oldRot = this.transform.localEulerAngles.z;
+        f_InitRot = this.transform.localEulerAngles.z;
+        oldRot = f_InitRot;
         sc_syncvar = SC_SyncVar_BreakdownWeapon.Instance;
     }
 
@@ -34,42 +36,38 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
     {
 
         if (this.transform.localEulerAngles.z != oldRot)
-        { 
+            UpdateAngle();
 
-            curRot = this.transform.localEulerAngles.z ;
-
-            if(Mathf.Abs(oldRot - curRot)<260)
-                 totalAngle += oldRot-curRot;
-
-            //si on veut limiter à un tour           
-            if (totalAngle < -360)
-                totalAngle = 359;
-
-            else if (totalAngle > 360)
-                totalAngle = -360;
-                
-            //Debug.Log(totalAngle);
-
-            //FORMATAGE ET ENVOIE COTE OP
-            //Ici on crante par 90°
-
-            if (oldRot != curRot)
-            {
-                sendToSynchVar(Mathf.Floor(totalAngle / 90));
-                IsValueOk();
-            }
-            
-            oldRot = curRot;
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y) && index == 0)
-        {
-            Debug.Log("total : " + totalAngle);
-            Debug.Log("desired : " + desiredValue);
-
-        }
+        if (Input.GetKeyDown(KeyCode.Y))
+            DebugValue();
         
+    }
+    
+    void UpdateAngle()
+    {
+
+        curRot = this.transform.localEulerAngles.z;
+
+        if (Mathf.Abs(oldRot - curRot) < 260)
+            totalAngle += oldRot - curRot;
+
+        //si on veut limiter à un tour           
+        if (totalAngle < -360)
+            totalAngle = 359;
+
+        else if (totalAngle > 360)
+            totalAngle = -360;
+
+        //FORMATAGE ET ENVOIE COTE OP
+        //Ici on crante par 90°
+        if (oldRot != curRot)
+        {
+            sendToSynchVar(Mathf.Floor(totalAngle / 90));
+            IsValueOk();
+        }
+
+        oldRot = curRot;
+
     }
 
     public void IsValueOk()
@@ -93,16 +91,13 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         }
 
     }
-    
-    public bool isBreakdown()
-    {
-        return isEnPanne;
-    }
 
     void sendToSynchVar(float value)
     {
         sc_syncvar.TourbilolChangeValue(index, value);
     }
+
+
 
     public void ChangeDesired()
     {
@@ -184,6 +179,13 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
     }
 
+    public bool testAgainstOdds()
+    {
+        return true;
+    }
+
+    #region Breakdown
+
     public void Repair()
     {
 
@@ -191,9 +193,14 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
         SetIsEnPanne(false);
 
-        sc_syncvar.TourbilolChangeValueWanted(index, Mathf.Floor(desiredValue/90));
+        sc_syncvar.TourbilolChangeValueWanted(index, Mathf.Floor(desiredValue / 90));
         sc_syncvar.TourbilolChangeIsPanne(index, false);
 
+    }
+
+    public bool isBreakdown()
+    {
+        return isEnPanne;
     }
 
     void SetIsEnPanne(bool value)
@@ -202,9 +209,19 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         SC_WeaponBreakdown.Instance.CheckBreakdown();
     }
 
-    public bool testAgainstOdds()
+    #endregion Breakdown
+
+    #region DebugMethods
+
+    void DebugValue()
     {
-        return true;
+        if (index == 0)
+        {
+            Debug.Log("total : " + totalAngle);
+            Debug.Log("desired : " + desiredValue);
+        }
     }
+
+    #endregion DebugMethods
 
 }

@@ -45,7 +45,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_barres[i] = gameObject.transform.GetChild(i).gameObject;
             tableau_init_rot_z[i] = gameObject.transform.GetChild(i).localEulerAngles.y;
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
-
         }
 
         init_rot_cylindre = gameObject.transform.eulerAngles.y;
@@ -55,35 +54,48 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     void Update()
     {
 
-        for (int i =0; i< tableau_barres.Length; i++)
-        {
-            
-            tableau_new_rot[i] = Quaternion.Euler(-90, 0, tableau_init_rot_z[i] +SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f+22.5f);
-            tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
-            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles,0.25f);
-        }
+        UpdateBarAngles();
 
-        //this.transform.rotation = Quaternion.Euler(0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value * 22.5f + init_rot_cylindre, 0);
+        UpdateAngleMain();
+
+        SetSolution();
+
+        ApplySolution();
+
+    }   
+
+    void UpdateBarAngles()
+    {
+        for (int i = 0; i < tableau_barres.Length; i++)
+        {
+            tableau_new_rot[i] = Quaternion.Euler(-90, 0, tableau_init_rot_z[i] + SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f + 22.5f);
+            tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
+            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
+        }
+    }
+
+    void UpdateAngleMain()
+    {
 
         oldAngleMain = this.transform.rotation;
-        
+
         switch (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value)
         {
 
             //solution1
             case -4:
 
-                newAngleMain = Quaternion.Euler(0, init_rot_cylindre , 0);
+                newAngleMain = Quaternion.Euler(0, init_rot_cylindre, 0);
 
                 break;
-                
+
             case -3:
 
-                newAngleMain = Quaternion.Euler(0, 35 , 0);
+                newAngleMain = Quaternion.Euler(0, 35, 0);
 
                 break;
-                
-                //solution2
+
+            //solution2
             case -2:
 
                 newAngleMain = Quaternion.Euler(0, 70, 0);
@@ -92,37 +104,43 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
             case -1:
 
-                newAngleMain = Quaternion.Euler(0,  100, 0);
+                newAngleMain = Quaternion.Euler(0, 100, 0);
 
                 break;
-                
+
             case 0:
 
                 newAngleMain = Quaternion.Euler(0, 140, 0);
 
                 break;
-               //solution3 
+            //solution3 
             case 1:
 
                 newAngleMain = Quaternion.Euler(0, 178, 0);
 
                 break;
-                
+
             case 2:
 
                 newAngleMain = Quaternion.Euler(0, 220, 0);
 
                 break;
-                
+
             case 3:
 
-                newAngleMain = Quaternion.Euler(0,  300, 0);
+                newAngleMain = Quaternion.Euler(0, 300, 0);
 
                 break;
-                
+
         }
 
+        //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
         this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+
+    }
+
+    void SetSolution()
+    {
 
         if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -4)
         {
@@ -136,6 +154,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 solutionNb = 1;
 
         }
+
         else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -2)
         {
 
@@ -148,6 +167,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 solutionNb = 3;
 
         }
+
         else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == 1)
         {
 
@@ -164,16 +184,18 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         if (!SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].isEnPanne && !SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].isEnPanne)
         {
             solutionNb = 420;
-
             checkColorBar(0);
         }
 
-        else 
-        {
+        else
             checkColorBar(1);
-        }
 
-        if (solutionNb !=oldSolutionNb)
+    }
+
+    void ApplySolution()
+    {
+
+        if (solutionNb != oldSolutionNb)
         {
 
             switch (solutionNb)
@@ -203,7 +225,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                     solution.material = solutions_mat[5];
                     break;
 
-                case 420:
+                default:
                     solution.material = neutral_mat;
                     break;
 
@@ -211,7 +233,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
             oldSolutionNb = solutionNb;
 
-        }
+        }    
 
     }
 
