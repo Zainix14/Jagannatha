@@ -7,7 +7,10 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
     public int index;
     public SC_UI_OngletContainer ongletContainer;
 
-    
+    bool isBreakdown;
+
+    [SerializeField]
+    Animator warningNotif;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +20,16 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
     // Update is called once per frame
     void Update()
     {
-        
+        if(isBreakdown)
+        {
+            
+            
+        }
+        else
+        {
+            
+        }
+
     }
 
     public void Action()
@@ -52,8 +64,19 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
             {
                 ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 400);
             }
-        }
+        }   
+    }
 
-            
+    public void isBreakdownSystem(bool state)
+    {
+        if(state)
+        {
+            warningNotif.SetBool("b_OnNotif", true);
+        }
+        else
+        {
+            warningNotif.SetBool("b_OnNotif", false);
+        }
+        Debug.Log("Panne "+ state+ " à l'onglet : " + index);
     }
 }

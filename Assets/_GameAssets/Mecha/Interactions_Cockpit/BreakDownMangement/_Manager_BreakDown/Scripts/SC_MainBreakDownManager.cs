@@ -155,6 +155,37 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if( MoveSystem == null || RenderSystem == null || WeaponSystem == null)
             GetReferences();
 
+        #region Verif si chaque system est en panne
+        if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+        }
+
+        if (SC_WeaponBreakdown.Instance.CurNbOfBreakdown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
+        }
+            
+
+        if (SC_MovementBreakdown.Instance.n_InteractibleInBreakDown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+        }
+        #endregion
+
+
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche une panne complete
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown > nbOfBreakDownBeforeTotalBreak)
         {
@@ -347,6 +378,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             }
         }
+        CheckBreakdown();
 
   
     }
