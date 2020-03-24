@@ -24,11 +24,15 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     Quaternion oldAngleMain;
     Quaternion newAngleMain;
+    Quaternion CoroAngleMain;
 
     [SerializeField]
     GameObject[] rotBarTab;
     [SerializeField]
     Material[] rotBarMatTab;
+
+    [SerializeField]
+    AnimationCurve Acceleration;
 
     #endregion Variables
 
@@ -49,12 +53,14 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         init_rot_cylindre = gameObject.transform.eulerAngles.y;
 
+        CoroAngleMain = transform.rotation;
+
     }
 
     void Update()
     {
 
-        UpdateBarAngles();
+        UpdateAngleBar();
 
         UpdateAngleMain();
 
@@ -64,7 +70,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     }   
 
-    void UpdateBarAngles()
+    void UpdateAngleBar()
     {
         for (int i = 0; i < tableau_barres.Length; i++)
         {
@@ -135,7 +141,13 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         }
 
         //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
-        this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+        //this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+
+        if(CoroAngleMain != newAngleMain)
+        {
+            StopCoroutine(GoTargetRotMainAngle(1, newAngleMain));
+            StartCoroutine(GoTargetRotMainAngle(1, newAngleMain));
+        }
 
     }
 
@@ -248,5 +260,30 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         this.GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
 
     }
-    
+
+    IEnumerator GoTargetRotMainAngle(float Duration, Quaternion TargetRot)
+    {
+
+        float t = 0;
+        float rate = 1 / Duration;
+
+        Quaternion StartRot = transform.rotation;
+        CoroAngleMain = TargetRot;
+
+        while (t < 1)
+        {
+
+            Debug.Log("SC_weapon_puzzle_op_display - InCoro");
+
+            t += Time.deltaTime * rate;
+            float Lerp = Acceleration.Evaluate(t);
+
+            this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
+
+            yield return 0;
+
+        }
+
+    }
+
 }
