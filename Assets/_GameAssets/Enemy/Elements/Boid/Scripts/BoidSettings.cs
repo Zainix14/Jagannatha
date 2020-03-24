@@ -15,7 +15,7 @@ public class BoidSettings : ScriptableObject {
     public float alignWeight = 1;
     public float cohesionWeight = 1;
     public float seperateWeight = 1;
-
+        
     public float targetWeight = 1;
 
     [Header ("Collisions Settings")]
@@ -27,7 +27,7 @@ public class BoidSettings : ScriptableObject {
     [Header("Koa Settings")]
 
     public KoaBehavior koaBehavior;
-
+    public int coverDistance = 0;
     public enum KoaBehavior
     {
         Center,
@@ -36,7 +36,11 @@ public class BoidSettings : ScriptableObject {
         Boid
 
     }
+
+    [Header("Rotation")]
+
     public Vector3 axisRotationSpeed = new Vector3(0,0,0);
+
 
     [Header("Split Settings")]
 
