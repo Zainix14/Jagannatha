@@ -5,18 +5,40 @@ using UnityEngine.UI;
 
 public class SC_UI_OngletContainer : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_UI_OngletContainer _instance;
+    public static SC_UI_OngletContainer Instance { get { return _instance; } }
+
+    #endregion
+
     //[SerializeField]
     public GameObject[] child;
 
 
     [SerializeField]
-    Image[] onglet;
+    GameObject[] onglet;
     Vector3 ongletActifPos;
     public Transform particleFB;
     //public RectTransform particleRect;
     bool toPlace = false;
     // Start is called before the first frame update
     public int curIndex;
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
+
     void Start()
     {
         particleFB = particleFB.GetComponent<RectTransform>();
@@ -68,5 +90,19 @@ public class SC_UI_OngletContainer : MonoBehaviour
                 child[i].transform.localPosition = new Vector3(0, 0, 400);
             }
         }
+    }
+
+    public void playDisplayTabAlert(bool state)
+    {
+        onglet[0].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+    }
+
+    public void playWeaponTabAlert(bool state)
+    {
+        onglet[1].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+    }
+    public void playMovementTabAlert(bool state)
+    {
+        onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
     }
 }
