@@ -158,6 +158,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
             b_MaxBreakdown = false;
             Mng_BreakdownMain.CheckBreakdown();
+
+            Debug.Log("CHECKBREAKDOWN");
         }
 
         //Permet de régler les demi-pannes d'écrans
@@ -168,6 +170,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         if (CurNbOfBreakdown > 0)
         {
             SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+            Debug.Log("ICI GOOD ?");
         }
         else
         {

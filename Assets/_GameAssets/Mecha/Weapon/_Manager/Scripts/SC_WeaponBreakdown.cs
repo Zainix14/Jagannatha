@@ -196,7 +196,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             EndBreakdown();
             b_MaxBreakdown = false;
             SC_MainBreakDownManager.Instance.CheckBreakdown();
-
+            Debug.Log("Check  " + CurNbOfBreakdown);
         }
 
         //Permet de régler les demi-pannes 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 {
@@ -11,24 +12,17 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 
     [SerializeField]
     Animator warningNotif;
+    [SerializeField]
+    Image img_warningNotif;
     // Start is called before the first frame update
     void Start()
     {
-
+        //img_warningNotif.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isBreakdown)
-        {
-            
-            
-        }
-        else
-        {
-            
-        }
 
     }
 
@@ -71,12 +65,21 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
     {
         if(state)
         {
-            warningNotif.SetBool("b_OnNotif", true);
+            //this.GetComponentInChildren<Image>().enabled = true;
+            this.warningNotif.SetBool("b_OnNotif", true);
+            Debug.Log("Anim play on " + index);
         }
         else
         {
-            warningNotif.SetBool("b_OnNotif", false);
+            this.warningNotif.SetBool("b_OnNotif", false);
+            Debug.Log("Anim stop on " + index);
+            //Invoke("desactivateImage", 0.5f);
         }
-        Debug.Log("Panne "+ state+ " à l'onglet : " + index);
+        //Debug.Log("Panne "+ state+ " à l'onglet : " + index);
+    }
+
+    void desactivateImage()
+    {
+        this.GetComponentInChildren<Image>().enabled = false;
     }
 }
