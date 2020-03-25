@@ -93,9 +93,8 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
 
             //Old Method
-            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
-
-            /*
+            //tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
+ 
             //Coroutine Method
             if (tableau_new_rot[i] != tableau_old_rot[i] && tableau_new_rot[i] != CoroAngleBar[i])
             {
@@ -106,7 +105,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 CurAngleBarCoro[i] = StartCoroutine(GoTargetRotBarAngle(f_AngleBarCorDuration, tableau_new_rot[i], i));
 
             }
-            */
 
         }
 
@@ -118,7 +116,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         float t = 0;
         float rate = 1 / Duration;
 
-        Quaternion StartRot = transform.rotation;
+        Quaternion StartRot = tableau_barres[Index].transform.rotation;
         CoroAngleBar[Index] = TargetRot;
 
         while (t < 1)
@@ -127,7 +125,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             t += Time.deltaTime * rate;
             float Lerp = Acceleration.Evaluate(t);
 
-            this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
+            tableau_barres[Index].transform.rotation = Quaternion.Slerp(StartRot, CoroAngleBar[Index], Lerp);
 
             yield return 0;
 
