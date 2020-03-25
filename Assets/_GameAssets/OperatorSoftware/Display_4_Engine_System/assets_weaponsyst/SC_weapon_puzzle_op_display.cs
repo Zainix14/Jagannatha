@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SC_weapon_puzzle_op_display : MonoBehaviour
 {
+
+    #region Variables
+
     GameObject[] tableau_barres;
     float[] tableau_init_rot_z;
     Quaternion[] tableau_old_rot;
@@ -19,16 +22,28 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     int oldSolutionNb = 40;
     int solutionNb;
 
-
     Quaternion oldAngleMain;
     Quaternion newAngleMain;
+    Quaternion CoroAngleMain;
+
+    [SerializeField]
+    float f_AngleMainCorDuration = 0.5f;
+
+    Coroutine CurAngleMainCoro;
 
     [SerializeField]
     GameObject[] rotBarTab;
     [SerializeField]
     Material[] rotBarMatTab;
+
+    [SerializeField]
+    AnimationCurve Acceleration;
+
+    #endregion Variables
+
     private void Awake()
     {
+
         tableau_barres = new GameObject[gameObject.transform.childCount];
         tableau_old_rot = new Quaternion[gameObject.transform.childCount];
         tableau_new_rot = new Quaternion[gameObject.transform.childCount];
@@ -39,56 +54,59 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_barres[i] = gameObject.transform.GetChild(i).gameObject;
             tableau_init_rot_z[i] = gameObject.transform.GetChild(i).localEulerAngles.y;
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
-
         }
 
         init_rot_cylindre = gameObject.transform.eulerAngles.y;
+
+        CoroAngleMain = transform.rotation;
+
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        /*
-        foreach(GameObject GO in tableau_barres)
+
+        UpdateAngleBar();
+
+        UpdateAngleMain();
+
+        SetSolution();
+
+        ApplySolution();
+
+    }   
+
+    void UpdateAngleBar()
+    {
+        for (int i = 0; i < tableau_barres.Length; i++)
         {
-            GO.transform.rotation = Quaternion.Euler(-90, 0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f);
-        }
-        */
-        for (int i =0; i< tableau_barres.Length; i++)
-        {
-            
-            tableau_new_rot[i] = Quaternion.Euler(-90, 0, tableau_init_rot_z[i] +SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f+22.5f);
+            tableau_new_rot[i] = Quaternion.Euler(-90, 0, tableau_init_rot_z[i] + SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f + 22.5f);
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
-            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles,0.25f);
+            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
         }
+    }
 
-        //this.transform.rotation = Quaternion.Euler(0, SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value * 22.5f + init_rot_cylindre, 0);
-
+    void UpdateAngleMain()
+    {
 
         oldAngleMain = this.transform.rotation;
-        
+
         switch (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].value)
         {
+
             //solution1
             case -4:
 
-                newAngleMain = Quaternion.Euler(0, init_rot_cylindre , 0);
+                newAngleMain = Quaternion.Euler(0, init_rot_cylindre, 0);
 
                 break;
-                
+
             case -3:
 
-                newAngleMain = Quaternion.Euler(0, 35 , 0);
+                newAngleMain = Quaternion.Euler(0, 35, 0);
 
                 break;
-                
-                //solution2
+
+            //solution2
             case -2:
 
                 newAngleMain = Quaternion.Euler(0, 70, 0);
@@ -97,38 +115,55 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
             case -1:
 
-                newAngleMain = Quaternion.Euler(0,  100, 0);
+                newAngleMain = Quaternion.Euler(0, 100, 0);
 
                 break;
-                
+
             case 0:
 
                 newAngleMain = Quaternion.Euler(0, 140, 0);
 
                 break;
-               //solution3 
+            //solution3 
             case 1:
 
                 newAngleMain = Quaternion.Euler(0, 178, 0);
 
                 break;
-                
+
             case 2:
 
                 newAngleMain = Quaternion.Euler(0, 220, 0);
 
                 break;
-                
+
             case 3:
 
-                newAngleMain = Quaternion.Euler(0,  300, 0);
+                newAngleMain = Quaternion.Euler(0, 300, 0);
 
                 break;
-                
 
         }
 
-        this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+        //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
+        //this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+
+        if(newAngleMain != oldAngleMain && newAngleMain != CoroAngleMain)
+        {
+
+            //Debug.Log("SC_weapon_puzzle_op_display - CallCoro");
+
+            if (CurAngleMainCoro != null)
+                StopCoroutine(CurAngleMainCoro);
+
+            CurAngleMainCoro = StartCoroutine(GoTargetRotMainAngle(f_AngleMainCorDuration, newAngleMain));
+
+        }
+
+    }
+
+    void SetSolution()
+    {
 
         if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -4)
         {
@@ -137,10 +172,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 0;
             }
+
             else
                 solutionNb = 1;
 
         }
+
         else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == -2)
         {
 
@@ -148,10 +185,12 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 2;
             }
+
             else
                 solutionNb = 3;
 
         }
+
         else if (SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].valueWanted == 1)
         {
 
@@ -159,6 +198,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             {
                 solutionNb = 5;
             }
+
             else
                 solutionNb = 4;
 
@@ -167,56 +207,99 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         if (!SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[1].isEnPanne && !SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].isEnPanne)
         {
             solutionNb = 420;
-
             checkColorBar(0);
         }
-        else 
-        {
+
+        else
             checkColorBar(1);
-        }
-        if (solutionNb !=oldSolutionNb)
+
+    }
+
+    void ApplySolution()
+    {
+
+        if (solutionNb != oldSolutionNb)
         {
+
             switch (solutionNb)
             {
+
                 case 0:
                     solution.material = solutions_mat[0];
                     break;
+
                 case 1:
                     solution.material = solutions_mat[1];
                     break;
+
                 case 2:
                     solution.material = solutions_mat[2];
                     break;
+
                 case 3:
                     solution.material = solutions_mat[3];
                     break;
+
                 case 4:
                     solution.material = solutions_mat[4];
                     break;
+
                 case 5:
                     solution.material = solutions_mat[5];
                     break;
-                case 420:
+
+                default:
                     solution.material = neutral_mat;
                     break;
-
-
 
             }
 
             oldSolutionNb = solutionNb;
 
-        }
-
+        }    
 
     }
+
     void checkColorBar(int indexMax)
     {
+
         for (int i = 0; i < rotBarTab.Length; i++)
         {
             rotBarTab[i].GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
         }
+
         this.GetComponent<MeshRenderer>().material = rotBarMatTab[indexMax];
+
     }
-    
+
+    IEnumerator GoTargetRotMainAngle(float Duration, Quaternion TargetRot)
+    {
+
+        //Debug.Log("SC_weapon_puzzle_op_display - StartCoro");
+
+        float t = 0;
+        float rate = 1 / Duration;
+
+        Quaternion StartRot = transform.rotation;
+        CoroAngleMain = TargetRot;
+
+        while (t < 1)
+        {
+
+            //Debug.Log("SC_weapon_puzzle_op_display - InCoro");
+
+            t += Time.deltaTime * rate;
+            float Lerp = Acceleration.Evaluate(t);
+
+            this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
+            //this.transform.eulerAngles = Vector3.Slerp(StartRot.eulerAngles, CoroAngleMain.eulerAngles, Lerp);
+
+            yield return 0;
+
+        }
+
+        //Debug.Log("SC_weapon_puzzle_op_display - EndCoro");
+
+    }
+
 }

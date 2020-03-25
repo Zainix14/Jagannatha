@@ -457,6 +457,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ec1353c85bf94fb458c87305dd6bae0f, type: 2}
   neutral_mat: {fileID: 2100000, guid: 424937854becdc547aa71eb96c911c21, type: 2}
   solution: {fileID: 23475790028993732}
+  f_AngleMainCorDuration: 3
   rotBarTab:
   - {fileID: 1309689482492928}
   - {fileID: 1525837105665450}
@@ -464,3 +465,27 @@ MonoBehaviour:
   rotBarMatTab:
   - {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   - {fileID: 2100000, guid: 97e03cbd94065564ea4d3417797d06e4, type: 2}
+  Acceleration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
