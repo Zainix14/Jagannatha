@@ -25,11 +25,13 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     Quaternion oldAngleMain;
     Quaternion newAngleMain;
     Quaternion CoroAngleMain;
+    Quaternion[] CoroAngleBar;
 
     [SerializeField]
     float f_AngleMainCorDuration = 0.5f;
 
     Coroutine CurAngleMainCoro;
+    Coroutine[] CurBarMainCoro;
 
     [SerializeField]
     GameObject[] rotBarTab;
@@ -54,6 +56,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_barres[i] = gameObject.transform.GetChild(i).gameObject;
             tableau_init_rot_z[i] = gameObject.transform.GetChild(i).localEulerAngles.y;
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
+            CoroAngleBar[i] = tableau_barres[i].transform.localRotation;
         }
 
         init_rot_cylindre = gameObject.transform.eulerAngles.y;
@@ -79,9 +82,22 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     {
         for (int i = 0; i < tableau_barres.Length; i++)
         {
+
             tableau_new_rot[i] = Quaternion.Euler(-90, 0, tableau_init_rot_z[i] + SC_SyncVar_BreakdownWeapon.Instance.SL_Tourbilols[0].value * 22.5f + 22.5f);
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
+
             tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
+
+            if (tableau_new_rot[i] != tableau_old_rot[i] && tableau_new_rot[i] != CoroAngleBar[i])
+            {
+
+                if (CurBarMainCoro[i] != null)
+                    StopCoroutine(CurBarMainCoro[i]);
+
+                CurBarMainCoro[i] = StartCoroutine(GoTargetRotBarAngle(f_AngleMainCorDuration, tableau_new_rot[i], i));
+
+            }
+
         }
     }
 
@@ -150,8 +166,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         if(newAngleMain != oldAngleMain && newAngleMain != CoroAngleMain)
         {
-
-            //Debug.Log("SC_weapon_puzzle_op_display - CallCoro");
 
             if (CurAngleMainCoro != null)
                 StopCoroutine(CurAngleMainCoro);
@@ -275,8 +289,6 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
     IEnumerator GoTargetRotMainAngle(float Duration, Quaternion TargetRot)
     {
 
-        //Debug.Log("SC_weapon_puzzle_op_display - StartCoro");
-
         float t = 0;
         float rate = 1 / Duration;
 
@@ -286,19 +298,37 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         while (t < 1)
         {
 
-            //Debug.Log("SC_weapon_puzzle_op_display - InCoro");
-
             t += Time.deltaTime * rate;
             float Lerp = Acceleration.Evaluate(t);
 
             this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
-            //this.transform.eulerAngles = Vector3.Slerp(StartRot.eulerAngles, CoroAngleMain.eulerAngles, Lerp);
 
             yield return 0;
 
         }
 
-        //Debug.Log("SC_weapon_puzzle_op_display - EndCoro");
+    }
+
+    IEnumerator GoTargetRotBarAngle(float Duration, Quaternion TargetRot, int Index)
+    {
+
+        float t = 0;
+        float rate = 1 / Duration;
+
+        Quaternion StartRot = transform.rotation;
+        CoroAngleBar[Index] = TargetRot;
+
+        while (t < 1)
+        {
+
+            t += Time.deltaTime * rate;
+            float Lerp = Acceleration.Evaluate(t);
+
+            this.transform.rotation = Quaternion.Slerp(StartRot, CoroAngleMain, Lerp);
+
+            yield return 0;
+
+        }
 
     }
 
