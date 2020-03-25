@@ -26,8 +26,18 @@ public class SC_FlockManager : MonoBehaviour
 
     GameObject _Player;
 
-    
-    BoidSettings[] _BoidSettings; //Contient toute la liste des Settings de boid possible (Comportement)
+
+    BoidSettings[][] _BoidSettings;
+
+    BoidSettings[] spawnSettings;
+    BoidSettings[] roamSettings;
+    BoidSettings[] attackSettings;
+    BoidSettings[] destructionSettings;
+    BoidSettings[] reactionSettings;
+
+    int curSettingsIndex;
+
+
     BoidSettings _curBoidSetting; //Contient le settings actuel
 
     FlockSettings flockSettings; //Flocksettings de la nuée (défini a la création par le waveSettings)
@@ -69,6 +79,7 @@ public class SC_FlockManager : MonoBehaviour
         Spawn = 0,
         Roam = 1,
         AttackPlayer = 2,
+        Death = 3,
         Reaction = 4
     }
 
@@ -114,24 +125,36 @@ public class SC_FlockManager : MonoBehaviour
         _GuideList = new List<Transform>();//Instanciation de la guide list
         _curCurveDistanceList = new List<Vector3>(); // Instanciation de la list de distance sur les courbes pour chaque guide
 
+        _BoidSettings = new BoidSettings[5][];
 
-        _BoidSettings = flockSettings.boidSettings;
+        spawnSettings = flockSettings.spawnSettings;
+        roamSettings = flockSettings.roamSettings;
+        attackSettings = flockSettings.attackSettings;
+        destructionSettings = flockSettings.destructionSettings;
+        reactionSettings = flockSettings.reactionSettings;
+
+        _BoidSettings[0] = spawnSettings;
+        _BoidSettings[1] = roamSettings;
+        _BoidSettings[2] = attackSettings;
+        _BoidSettings[3] = destructionSettings;
+        _BoidSettings[4] = reactionSettings;
 
         _KoaManager = Instantiate(_KoaPrefab, transform);//Instantiate Koa
         _SCKoaManager = _KoaManager.GetComponent<SC_KoaManager>(); //Récupère le Koa manager du koa instancié
-        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn,_BoidSettings[0],newFlockSettings,sensitivity);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
+        _SCKoaManager.Initialize(_mainGuide, flockSettings.boidSpawn, spawnSettings[0],newFlockSettings,sensitivity);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
         flockWeaponManager.Initialize(flockSettings);
 
-        _splineTab = new BezierSolution.BezierSpline[_BoidSettings.Length];
+        _splineTab = new BezierSolution.BezierSpline[flockSettings.splines.Length];
 
-        for (int i = 0; i < _BoidSettings.Length; i++)
+        for (int i = 0; i < flockSettings.splines.Length; i++)
         {
-            if (_BoidSettings[i].spline != null)
-            {
-                
-                _splineTab[i] = Instantiate(_BoidSettings[i].spline);
+           
+                if (flockSettings.splines[i] != null)
+                {
+                    _splineTab[i] = Instantiate(flockSettings.splines[i]);
 
-            }
+                }
+            
         }
 
 
@@ -159,7 +182,7 @@ public class SC_FlockManager : MonoBehaviour
         if(isActive && isSpawning)
         {
             float speed = 0.75f;
-            int rndRangePilote = Random.Range(90, 150);
+            int rndRangePilote = Random.Range(110, 150);
             Vector3 target = new Vector3(_Player.transform.position.x, rndRangePilote, _Player.transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
             if (transform.position.y >= 60)
@@ -330,6 +353,12 @@ public class SC_FlockManager : MonoBehaviour
 
                 break;
 
+            case PathType.Death:
+
+
+                StartNewBehavior((int)PathType.Death);
+                break;
+
             case PathType.Reaction:
 
                 StartNewBehavior((int)PathType.Reaction);
@@ -351,24 +380,49 @@ public class SC_FlockManager : MonoBehaviour
     public void StartNewBehavior(int behaviorIndex)
     {
         transform.rotation = flockInitialRot;
-        _curBoidSetting = _BoidSettings[behaviorIndex];
+
+        StopAllCoroutines();
+        curSettingsIndex = 0;
         _curSpline = _splineTab[behaviorIndex];
-
-        int rnd = Random.Range(0, 2);
-        if(rnd == 0)
-            bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
-        else
-            bezierWalkerSpeed.speed = -_curBoidSetting.speedOnSpline;
-
         bezierWalkerSpeed.SetNewSpline(_curSpline);
-      
-        Reassemble();
-        if (_curBoidSetting.split)
+
+        StartCoroutine(SwitchSettings(_BoidSettings[behaviorIndex]));
+
+    }
+
+    IEnumerator SwitchSettings(BoidSettings[] settings)
+    {
+        while(true)
         {
-            SplitDivision(_curBoidSetting.splitNumber);
+            _curBoidSetting = settings[curSettingsIndex];
+
+            int rnd = Random.Range(0, 2);
+            if (rnd == 0)
+                bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
+            else
+                bezierWalkerSpeed.speed = -_curBoidSetting.speedOnSpline;
+
+            Reassemble();
+            if (_curBoidSetting.split)
+            {
+                SplitDivision(_curBoidSetting.splitNumber);
+            }
+            _SCKoaManager.SetBehavior(_curBoidSetting);
+            //https://www.youtube.com/watch?v=bOZT-UpRA2Y
+
+            if(settings.Length == 1)
+            {
+                StopAllCoroutines();
+                break;
+            }
+
+            yield return new WaitForSeconds(_curBoidSetting.settingDuration);
+
+            curSettingsIndex++;
+            if (curSettingsIndex >= settings.Length)
+                curSettingsIndex = 0;
+
         }
-        _SCKoaManager.SetBehavior(_curBoidSetting);
-        //https://www.youtube.com/watch?v=bOZT-UpRA2Y
 
     }
 
@@ -449,7 +503,11 @@ public class SC_FlockManager : MonoBehaviour
         _SCKoaManager.Split(_GuideList);
     }
 
-
+    
+    public void AnimDestroy()
+    {
+        StartNewPath(PathType.Death);
+    }
 
     public void DestroyFlock()
     {

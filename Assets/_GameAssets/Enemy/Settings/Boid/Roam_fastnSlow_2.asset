@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
-  m_Name: DoubleRingDancer
+  m_Name: Roam_fastnSlow_2
   m_EditorClassIdentifier: 
-  minSpeed: 50
-  maxSpeed: 50
-  perceptionRadius: 0.2
-  avoidanceRadius: 25
-  maxSteerForce: 60
-  alignWeight: 0
+  minSpeed: 20
+  maxSpeed: 40
+  perceptionRadius: 219.58
+  avoidanceRadius: 132.99
+  maxSteerForce: 1
+  alignWeight: 50
   cohesionWeight: 0
   seperateWeight: 0
-  targetWeight: 10
+  targetWeight: 100
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 67108864
   boundsRadius: 0.1
-  avoidCollisionWeight: 5
-  collisionAvoidDst: 5
-  koaBehavior: 1
-  axisRotationSpeed: {x: 0, y: 2, z: 2}
+  avoidCollisionWeight: 56.13
+  collisionAvoidDst: 43.16
+  koaBehavior: 3
+  coverDistance: 0
+  axisRotationSpeed: {x: 0, y: 0, z: 0}
   split: 1
-  splitNumber: 64
+  splitNumber: 100
   curveX:
     serializedVersion: 2
     m_Curve:
@@ -111,15 +112,15 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
+      value: -0.5
+      inSlope: -0.025288071
+      outSlope: -0.025288071
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.39849296
     - serializedVersion: 3
-      time: 0.25
+      time: 0.5
       value: 0.49980715
       inSlope: -0.03850621
       outSlope: -0.03850621
@@ -128,7 +129,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.20164688
     - serializedVersion: 3
-      time: 0.73901
+      time: 1
       value: -0.50683016
       inSlope: 0.0076743006
       outSlope: 0.0076743006
@@ -136,21 +137,12 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.665261
-    - serializedVersion: 3
-      time: 1
-      value: 0.0015397072
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  amplitude: {x: 40, y: 40, z: 40}
-  frequence: {x: 0.5, y: 0, z: 0.5}
+  amplitude: {x: 10, y: 10, z: 10}
+  frequence: {x: 1, y: 1, z: 1}
   invert: 1
-  invertAxis: {x: 0, y: 1, z: 1}
-  speedOnSpline: 10
-  settingDuration: 3
+  invertAxis: {x: 1, y: 1, z: 1}
+  speedOnSpline: 50
+  settingDuration: 5

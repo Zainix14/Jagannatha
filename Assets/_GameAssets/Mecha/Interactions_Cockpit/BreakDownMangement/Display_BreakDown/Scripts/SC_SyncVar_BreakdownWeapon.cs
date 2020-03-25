@@ -15,13 +15,11 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
 
     public int tourbilolNb = 2;
 
-
     public struct Tourbilol
     {
         public float value;
         public float valueWanted;
         public bool isEnPanne;
-
 
         public Tourbilol(float v1, float v2, bool v3) : this()
         {
@@ -54,8 +52,6 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
 
     public SyncListTourbilols SL_Tourbilols = new SyncListTourbilols();
 
-
-
     /// ////////////////////////////////////////////////////////////////////// /// //////////////////////////////////////////////////////////////////////
     /// ////////////////////////////////////////////////////////////////////// /// //////////////////////////////////////////////////////////////////////
 
@@ -71,8 +67,6 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         if (isServer)
@@ -87,7 +81,6 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
         }
     }
 
-
     /// FONCTIONS DE SET dans la list de struc des slider, can we make it more compact?
     public void TourbilolChangeValue(int index, float newValue)
     {
@@ -97,6 +90,7 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
         SL_Tourbilols.Insert(index, tourbilol);
 
     }
+
     public void TourbilolChangeValueWanted(int index, float newValue)
     {
         Tourbilol slider = SL_Tourbilols[index];
@@ -105,6 +99,7 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
         SL_Tourbilols.Insert(index, slider);
 
     }
+
     public void TourbilolChangeIsPanne(int index, bool newValue)
     {
         Tourbilol slider = SL_Tourbilols[index];
@@ -114,15 +109,4 @@ public class SC_SyncVar_BreakdownWeapon : NetworkBehaviour
 
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isServer)
-        {
-            //Debug.Log(SL_Tourbilols[0].isEnPanne);
-            //Debug.Log(SL_Tourbilols[1].isEnPanne);
-        }
-    }
 }
