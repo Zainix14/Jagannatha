@@ -93,9 +93,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
 
             //Old Method
-            //tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
+            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
  
-            
+            /*
             //Coroutine Method
             if (tableau_new_rot[i] != tableau_old_rot[i] && tableau_new_rot[i] != CoroAngleBar[i])
             {
@@ -106,7 +106,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 CurAngleBarCoro[i] = StartCoroutine(GoTargetRotBarAngle(f_AngleBarCorDuration, tableau_new_rot[i], i));
 
             }
-            
+            */
 
         }
 
@@ -197,9 +197,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         //Old Method
         //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
-        //this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+        this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
 
-        
+        /*
         //Coroutine Method       
         if (newAngleMain != oldAngleMain && newAngleMain != CoroAngleMain)
         {
@@ -210,7 +210,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             CurAngleMainCoro = StartCoroutine(GoTargetRotMainAngle(f_AngleMainCorDuration, newAngleMain));
 
         }
-        
+        */
 
     }
 
