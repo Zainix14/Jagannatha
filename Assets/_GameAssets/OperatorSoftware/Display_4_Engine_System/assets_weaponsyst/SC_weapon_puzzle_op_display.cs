@@ -50,6 +50,8 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
         tableau_old_rot = new Quaternion[gameObject.transform.childCount];
         tableau_new_rot = new Quaternion[gameObject.transform.childCount];
         tableau_init_rot_z = new float[gameObject.transform.childCount];
+        CoroAngleBar = new Quaternion[gameObject.transform.childCount];
+        CurBarMainCoro = new Coroutine[gameObject.transform.childCount];
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
