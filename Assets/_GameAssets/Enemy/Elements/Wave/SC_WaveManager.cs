@@ -43,6 +43,7 @@ public class SC_WaveManager : MonoBehaviour
     Vector3Int sensitivityA;
     Vector3Int sensitivityB;
     Vector3Int sensitivityC;
+    Vector3Int sensitivityD;
 
     #endregion
     //---------------------------------------------------------------------//
@@ -211,29 +212,46 @@ public class SC_WaveManager : MonoBehaviour
     {
         Vector3Int newSensitivity = new Vector3Int(0, 0, 0);
         Vector3Int baseSensitivity = new Vector3Int(0, 0, 0);
+
         switch(flockSettings.attackType)
         {
             case FlockSettings.AttackType.none:
+
                 baseSensitivity = sensitivityA;
+
                 break;
 
 
             case FlockSettings.AttackType.Bullet:
+
                 baseSensitivity = sensitivityB;
+
                 break;
 
 
             case FlockSettings.AttackType.Laser:
+
                 baseSensitivity = sensitivityC;
+
+                break;     
+            
+            
+            case FlockSettings.AttackType.Kamikaze:
+
+                baseSensitivity = sensitivityD;
+
                 break;
         }
 
 
         int[] tabValue = new int[3];
+
         tabValue[0] = baseSensitivity.x;
         tabValue[1] = baseSensitivity.y;
         tabValue[2] = baseSensitivity.z;
+
         int remainingOffset = 2;
+
         for (int i = 0; i<3;i++)
         {
             if(remainingOffset>0)
@@ -300,6 +318,7 @@ public class SC_WaveManager : MonoBehaviour
         int x;
         int y;
         int z;
+
         x = Random.Range(0, 6);
         y = Random.Range(0, 6);
         z = Random.Range(0, 6);
@@ -314,8 +333,9 @@ public class SC_WaveManager : MonoBehaviour
 
         sensitivityC = new Vector3Int(GetRangedValue(x), GetRangedValue(y), GetRangedValue(z));
 
-
+        sensitivityD = new Vector3Int(5, 5, 5);
     }
+
     int GetRangedValue(int baseValue)
     {
         int newValue;
@@ -346,7 +366,6 @@ public class SC_WaveManager : MonoBehaviour
         int rnd = Random.Range(-1, 2);
         int newValue = baseValue + rnd;
         if (newValue < 0) newValue = 0; if (newValue > 5) newValue = 5;
-
         return newValue;
         
     }
