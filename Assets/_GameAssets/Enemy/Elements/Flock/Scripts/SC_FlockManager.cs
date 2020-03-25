@@ -182,7 +182,7 @@ public class SC_FlockManager : MonoBehaviour
         if(isActive && isSpawning)
         {
             float speed = 0.75f;
-            int rndRangePilote = Random.Range(90, 150);
+            int rndRangePilote = Random.Range(110, 150);
             Vector3 target = new Vector3(_Player.transform.position.x, rndRangePilote, _Player.transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
             if (transform.position.y >= 60)
