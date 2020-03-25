@@ -7,39 +7,42 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     #region Variables
 
-    GameObject[] tableau_barres;
-    float[] tableau_init_rot_z;
-    Quaternion[] tableau_old_rot;
-    Quaternion[] tableau_new_rot;
-
-    float init_rot_cylindre;
-
-    public Material[] solutions_mat;
-    [SerializeField]
-    Material neutral_mat;
-    public MeshRenderer solution;
-
-    int oldSolutionNb = 40;
-    int solutionNb;
-
-    Quaternion oldAngleMain;
-    Quaternion newAngleMain;
-    Quaternion CoroAngleMain;
-    Quaternion[] CoroAngleBar;
-
-    [SerializeField]
-    float f_AngleMainCorDuration = 0.5f;
-
-    Coroutine CurAngleMainCoro;
-    Coroutine[] CurAngleBarCoro;
-
+    //Bar Variables
+    [Header("References")]
     [SerializeField]
     GameObject[] rotBarTab;
     [SerializeField]
     Material[] rotBarMatTab;
+    public Material[] solutions_mat;
+    [SerializeField]
+    Material neutral_mat;
+    public MeshRenderer solution;
+    GameObject[] tableau_barres;
+    float[] tableau_init_rot_z;
+    Quaternion[] tableau_old_rot;
+    Quaternion[] tableau_new_rot;  
+    float init_rot_cylindre;
 
+    //Coroutine
+    [Header("Coroutines Parameters")]
+    [SerializeField]
+    float f_AngleMainCorDuration = 0.2f;
+    [SerializeField]
+    float f_AngleBarCorDuration = 0.2f;
     [SerializeField]
     AnimationCurve Acceleration;
+    Coroutine CurAngleMainCoro;
+    Coroutine[] CurAngleBarCoro;
+
+    //Solutions
+    int oldSolutionNb = 40;
+    int solutionNb;
+
+    //Angles
+    Quaternion oldAngleMain;
+    Quaternion newAngleMain;
+    Quaternion CoroAngleMain;
+    Quaternion[] CoroAngleBar;
 
     #endregion Variables
 
@@ -82,6 +85,7 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
     void UpdateAngleBar()
     {
+
         for (int i = 0; i < tableau_barres.Length; i++)
         {
 
@@ -89,8 +93,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
             tableau_old_rot[i] = tableau_barres[i].transform.localRotation;
 
             //Old Method
-            //tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
+            tableau_barres[i].transform.localEulerAngles = Vector3.Slerp(tableau_old_rot[i].eulerAngles, tableau_new_rot[i].eulerAngles, 0.25f);
 
+            /*
             //Coroutine Method
             if (tableau_new_rot[i] != tableau_old_rot[i] && tableau_new_rot[i] != CoroAngleBar[i])
             {
@@ -98,11 +103,13 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
                 if (CurAngleBarCoro[i] != null)
                     StopCoroutine(CurAngleBarCoro[i]);
 
-                CurAngleBarCoro[i] = StartCoroutine(GoTargetRotBarAngle(f_AngleMainCorDuration, tableau_new_rot[i], i));
+                CurAngleBarCoro[i] = StartCoroutine(GoTargetRotBarAngle(f_AngleBarCorDuration, tableau_new_rot[i], i));
 
             }
+            */
 
         }
+
     }
 
     IEnumerator GoTargetRotBarAngle(float Duration, Quaternion TargetRot, int Index)
@@ -190,9 +197,9 @@ public class SC_weapon_puzzle_op_display : MonoBehaviour
 
         //Old Method
         //C'EST LUI LE BATARD QUAND -4 EST IMPLIQUER
-        //this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
+        this.transform.eulerAngles = Vector3.Slerp(oldAngleMain.eulerAngles, newAngleMain.eulerAngles, 0.25f);
 
-        //Coroutine Method
+        //Coroutine Method       
         if (newAngleMain != oldAngleMain && newAngleMain != CoroAngleMain)
         {
 
