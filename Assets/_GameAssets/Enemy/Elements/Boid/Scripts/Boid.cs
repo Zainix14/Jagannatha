@@ -100,7 +100,7 @@ public class Boid : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         //JE TOUCHE LE PLAYER 
-        if (other.gameObject.layer == 27)
+        if (other.gameObject.layer == 20)
         {
             Sc_ScreenShake.Instance.ShakeIt(0.010f, 0.1f);
             SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);

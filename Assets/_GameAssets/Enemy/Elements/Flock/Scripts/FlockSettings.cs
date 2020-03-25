@@ -60,7 +60,15 @@ public class FlockSettings : ScriptableObject
 
 
     [Tooltip("Index 0 : Spawn | Index 1 : Roam | Index 2 : Attack | Index 3 : Destruction | Index 4 : Réaction")]
-    public BoidSettings[] boidSettings;
+    public BoidSettings[] spawnSettings;
+    public BoidSettings[] roamSettings;
+    public BoidSettings[] attackSettings;
+    public BoidSettings[] destructionSettings;
+    public BoidSettings[] reactionSettings;
+
+
+    public BezierSolution.BezierSpline[] splines;
+
 
     public int spawnTimer = 10;
 
