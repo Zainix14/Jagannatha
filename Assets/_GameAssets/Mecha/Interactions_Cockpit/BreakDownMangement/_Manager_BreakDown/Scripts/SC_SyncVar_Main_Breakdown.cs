@@ -59,7 +59,7 @@ public class SC_SyncVar_Main_Breakdown : NetworkBehaviour
 
         if (!isServer)
             SC_UI_OngletContainer.Instance.playDisplayTabAlert(state);
-        
+
     }
     public void onPanneWeaponChange(bool state)
     {

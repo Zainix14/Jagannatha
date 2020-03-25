@@ -150,11 +150,11 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         if (n_InteractibleInBreakDown > 0)
         {
-            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
         }
         else
         {
-            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
         }
     }
 
