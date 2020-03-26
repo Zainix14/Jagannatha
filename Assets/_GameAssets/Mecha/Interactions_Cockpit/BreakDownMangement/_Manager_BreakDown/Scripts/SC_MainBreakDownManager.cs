@@ -193,10 +193,27 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             //Si on est pas encore en panne totale
             if (!b_BreakEngine)
             {
+                ///////important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
+
+
+                if (SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0)
+                    SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
+
+                if (SC_MovementBreakdown.Instance.n_BreakDownLvl == 0)
+                    SC_MovementBreakdown.Instance.StartNewBreakdown(1);
+
+                //cequi n'arrivera sans doute jamais kek
+                if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
+                    SC_BreakdownDisplayManager.Instance.StartNewBreakdown(1);
+
+                ///////
+
                 b_BreakEngine = true;
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
+
+
 
                 //on fout tous les systemes en panne à balle
                 sc_screens_controller.PanneAll();
@@ -303,7 +320,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_WeaponBreakdown.Instance.CheckBreakdown();
         SC_MovementBreakdown.Instance.CheckBreakdown();
 
-        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown) < nbOfBreakDownBeforeTotalBreak)
+        
+        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown) < nbOfBreakDownBeforeTotalBreak && !b_BreakEngine)
         {
             switch (attackFocus)
             {

@@ -16,8 +16,8 @@ public class SC_Send_rot_vision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        SC_SyncVar_vision_arrow.Instance.rotCasque = this.transform.eulerAngles.y;
+        if(SC_SyncVar_vision_arrow.Instance != null)
+            SC_SyncVar_vision_arrow.Instance.rotCasque = this.transform.eulerAngles.y;
 
     }
 }
