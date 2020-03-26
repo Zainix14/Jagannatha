@@ -18,7 +18,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     int n_MaxBreakdownLvl = 3;
     [SerializeField, Range(0, 3)]
-    int n_BreakDownLvl = 0;
+    public int n_BreakDownLvl = 0;
     public int n_InteractibleInBreakDown = 0;
 
     [Header("Interactibles"), SerializeField]
