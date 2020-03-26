@@ -303,7 +303,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_WeaponBreakdown.Instance.CheckBreakdown();
         SC_MovementBreakdown.Instance.CheckBreakdown();
 
-        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown) < nbOfBreakDownBeforeTotalBreak)
+        
+        if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown) < nbOfBreakDownBeforeTotalBreak && !b_BreakEngine)
         {
             switch (attackFocus)
             {
