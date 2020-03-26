@@ -16,7 +16,7 @@ public class SC_PhaseManager : MonoBehaviour
 
     #endregion
     PhaseSettings curPhaseSettings;
-    WaveSettings[] waves;
+    public WaveSettings[] waves;
 
 
     int curWaveIndex;
