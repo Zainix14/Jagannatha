@@ -9,8 +9,6 @@ public class SC_SpawnInfo : MonoBehaviour
     private static SC_SpawnInfo _instance;
     public static SC_SpawnInfo Instance { get { return _instance; } }
 
-
-
     #endregion
 
 

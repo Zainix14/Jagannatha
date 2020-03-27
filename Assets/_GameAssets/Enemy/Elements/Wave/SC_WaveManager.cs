@@ -114,9 +114,11 @@ public class SC_WaveManager : MonoBehaviour
 
         for (int i = 0; i < _curWaveSettings.initialSpawnFlock.Length; i++)
         {
-                SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
-       
-                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
+            SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
+
+            SC_KoaSpawn.Instance.SpawnKoa();
+
+            yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
         }
         StopCoroutine(SpawnInitialFlock());
         waveStarted = true;
@@ -136,9 +138,11 @@ public class SC_WaveManager : MonoBehaviour
     {
         for (int i = 0; i < _curWaveSettings.backupSpawnFlock.Length; i++)
         {
-                SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
-       
-                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
+            SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
+
+            SC_KoaSpawn.Instance.SpawnKoa();
+
+            yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
         }
         StopCoroutine(SpawnBackupFlock());
     }
