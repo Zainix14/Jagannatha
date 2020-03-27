@@ -104,9 +104,19 @@ public class SC_WaveManager : MonoBehaviour
             resetVariables();
             _curWaveSettings = newWaveSettings;
 
-            if (!_curWaveSettings.backup)
-                backupSend = true;
-            StartCoroutine(SpawnInitialFlock()); 
+        resetVariables();
+        _curWaveSettings = newWaveSettings;
+
+        if (!_curWaveSettings.backup)
+            backupSend = true;
+        StartCoroutine(SpawnInitialFlock());
+
+        if(SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
+        SC_KoaSpawn.Instance.PreparationKoa(SC_PhaseManager.Instance.curWaveIndex + 1);
+
+
+
+
     }
     IEnumerator SpawnInitialFlock()
     {

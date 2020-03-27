@@ -19,7 +19,7 @@ public class SC_PhaseManager : MonoBehaviour
     public WaveSettings[] waves;
 
 
-    int curWaveIndex;
+    public int curWaveIndex;
     // Start is called before the first frame update
     void Awake()
     {
