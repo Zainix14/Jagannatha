@@ -39,12 +39,13 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     [Header("Systems States")]
     public bool b_BreakEngine = false;
     GameObject MoveSystem;
-    public bool b_BreakMove = false;
+    //public bool b_BreakMove = false;
     GameObject RenderSystem;
-    public bool b_BreakScreen = false;
+    //public bool b_BreakScreen = false;
     GameObject WeaponSystem;
-    public bool b_BreakWeapons = false;
+    //public bool b_BreakWeapons = false;
 
+    /*
     [Header("Old Var (Normally no Used)")]
     public bool b_BreakMiniGun = false;
     GameObject MiniGunSystem;
@@ -52,6 +53,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     GameObject ShrapnelSystem;
     public bool b_BreakFlameThrower = false;
     GameObject FlameSystem;
+    */
 
     #endregion Variables
 
@@ -90,7 +92,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if (Mng_Checklist != null && WeaponSystem == null)
             WeaponSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMngWeapons();
-
+        /*
         if (Mng_Checklist != null && MiniGunSystem == null)
             MiniGunSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMiniGun();
 
@@ -99,6 +101,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if (Mng_Checklist != null && FlameSystem == null)
             FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
+        */
 
         //get du script qui gere l'affichage des ecrans de panne
         if (screenController != null && sc_screens_controller == null)
@@ -156,6 +159,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             GetReferences();
 
         #region Verif si chaque system est en panne
+
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown > 0)
         {
             SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
@@ -183,8 +187,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
         }
-        #endregion
 
+        #endregion
 
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche une panne complete
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown > nbOfBreakDownBeforeTotalBreak)
@@ -212,8 +216,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
-
-
 
                 //on fout tous les systemes en panne à balle
                 sc_screens_controller.PanneAll();
@@ -396,9 +398,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             }
         }
+
         CheckBreakdown();
 
-  
     }
 
 }
