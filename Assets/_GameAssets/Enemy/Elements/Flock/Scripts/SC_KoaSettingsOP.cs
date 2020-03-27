@@ -34,6 +34,21 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
 
     [SerializeField]
     TrailRenderer trail;
+
+    public enum koaState
+    {
+        spawn, 
+        roam,
+        atttack,
+        reaction
+    }
+
+    public koaState currentState;
+    public void setState(int curState)
+    {
+
+    }
+
     public void SetSensibility(Vector3 sensibility)
     {
         this.sensibility = sensibility;
@@ -75,6 +90,10 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
             vfx.GetComponent<ParticleSystem>().Play();
         }
     }
+    public void SetKoaState(int curState)
+    {
+        this.currentState = (koaState) curState;
+    }
 
     public void SetKoamaxLife(int maxLife)
     {
@@ -103,6 +122,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     public float GetTimeBeforeSpawn()
     {
         return timeBeforeSpawn;
+    }
+
+    public int getState()
+    {
+        return (int) currentState;
     }
 
     void Update()
