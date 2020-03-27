@@ -193,7 +193,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         #endregion
 
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche une panne complete
-        if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown > nbOfBreakDownBeforeTotalBreak)
+        if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown >= nbOfBreakDownBeforeTotalBreak)
         {
 
             //Si on est pas encore en panne totale
@@ -225,6 +225,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                 //descendre le bouton de validation
                 SC_main_breakdown_validation.Instance.isValidated = false;
+                SC_main_breakdown_validation.Instance.textStopBlink();
                 SC_main_breakdown_validation.Instance.bringDown();
 
             }
