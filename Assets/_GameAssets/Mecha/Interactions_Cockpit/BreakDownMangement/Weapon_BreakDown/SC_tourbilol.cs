@@ -97,8 +97,6 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
         sc_syncvar.TourbilolChangeValue(index, value);
     }
 
-
-
     public void ChangeDesired()
     {
 

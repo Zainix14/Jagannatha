@@ -21,7 +21,7 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     [Header("Drop the Weapon")]
     [Tooltip("Tableau avec toute les Armes")]
     [SerializeField]
-    public GameObject[] tab_Weapons; //Tableau des cameras
+    public GameObject[] tab_Weapons; //Tableau des Armes
 
     public int n_CurWeapon = 0;
 
@@ -51,13 +51,18 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
     void IsCheck()
     {
+
         Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+
         if (Mng_CheckList != null)
             Mng_CheckList.GetComponent<SC_CheckList_Weapons>().Mng_Weapons = this.gameObject;
+
         else if (!b_AlreadyCheck)
             Debug.LogWarning("SC_WeaponManager - Can't Find Mng_CheckList");
+
         if (!b_AlreadyCheck)
             b_AlreadyCheck = true;
+
     }
 
     // Update is called once per frame
@@ -73,11 +78,11 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     }
 
     void CreateWeapon()
-    {
+    {       
         for (int i = 0; i < tab_Weapons.Length; i++)
         {
             tab_Weapons[i] = Instantiate(tab_Weapons[i]);
-        }
+        }       
     }
 
     void CheckWeapon()
@@ -90,16 +95,22 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
     void Fire()
     {
+
         if (!b_OnFire)
             b_OnFire = true;
+
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
+
     }
 
     void StopFire()
     {
+
         if (b_OnFire)
             b_OnFire = false;
+
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().ReleaseTrigger();
+
         SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
 
     }
@@ -116,7 +127,7 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
         if (!b_InBreakdown)
         {
-
+ 
             n_CurWeapon = n_Index;
 
             for (int i = 0; i < tab_Weapons.Length; i++)
