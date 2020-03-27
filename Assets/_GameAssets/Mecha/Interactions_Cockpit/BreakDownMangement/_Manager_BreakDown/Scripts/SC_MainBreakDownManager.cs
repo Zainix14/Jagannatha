@@ -248,7 +248,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 if (SC_WaveManager.Instance.nextWave == false)
                 {
                     SC_WaveManager.Instance.nextWave = true;
-                    SC_PhaseManager.Instance.EndWave();
+                    if (SC_WaveManager.Instance.waveEnded == true)
+                        SC_PhaseManager.Instance.EndWave();
                 }
             }
             //on répare touuuus les systemes
