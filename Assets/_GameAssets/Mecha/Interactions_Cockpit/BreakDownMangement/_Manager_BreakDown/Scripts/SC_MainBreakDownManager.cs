@@ -236,6 +236,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             //Fait clignoter le Text du bouton
             SC_main_breakdown_validation.Instance.textBlink();
+            //Désactive le timer
+            SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
         }
 
         //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
@@ -245,6 +247,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
             {
                 SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
+                //protection pour les kamikazes en fin de wave
                 if (SC_WaveManager.Instance.nextWave == false)
                 {
                     SC_WaveManager.Instance.nextWave = true;
