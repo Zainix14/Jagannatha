@@ -54,10 +54,16 @@ public class SC_PhaseManager : MonoBehaviour
     public void EndWave()
     {
         curWaveIndex++;
-        if(curWaveIndex<waves.Length)
+        if (curWaveIndex<waves.Length)
         {
-
-            SC_WaveManager.Instance.InitializeWave(waves[curWaveIndex]);
+            if (SC_WaveManager.Instance.nextWave == true)
+            {
+                SC_WaveManager.Instance.InitializeWave(waves [curWaveIndex]);
+            }
+            else
+            {
+                SC_MainBreakDownManager.Instance.CheckBreakdown();
+            }
         }
         else
         {

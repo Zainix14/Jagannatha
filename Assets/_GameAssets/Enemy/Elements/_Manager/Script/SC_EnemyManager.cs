@@ -57,8 +57,9 @@ public class SC_EnemyManager : MonoBehaviour
             SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
 
         }
+        else
+         InitNewPhase(curPhaseIndex);
 
-        InitNewPhase(curPhaseIndex);
 
     }
 

@@ -26,6 +26,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     SC_WeaponBreakdown WeaponBreakdownSC;
     [SerializeField]
     SC_MovementBreakdown MovementBreakdownSC;
+    [SerializeField]
+    SC_WaveManager WaveManagerSC;
 
     [Header("System Lifes")]
     public int nbOfBreakDownBeforeTotalBreak;
@@ -209,6 +211,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 ///////
 
                 b_BreakEngine = true;
+                SC_WaveManager.Instance.nextWave = false;
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
@@ -226,19 +229,25 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
-        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown ==0 &&  !SC_main_breakdown_validation.Instance.isValidated)
+        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown == 0 && !SC_main_breakdown_validation.Instance.isValidated)
         {
             //Fait clignoter le Text du bouton
             SC_main_breakdown_validation.Instance.textBlink();
         }
 
         //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
-        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown  ==0 && SC_main_breakdown_validation.Instance.isValidated)
+        else if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown  == 0 && SC_main_breakdown_validation.Instance.isValidated)
         {
 
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+            {
                 SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
-
+                if (SC_WaveManager.Instance.nextWave == false)
+                {
+                    SC_WaveManager.Instance.nextWave = true;
+                    SC_PhaseManager.Instance.EndWave();
+                }
+            }
             //on répare touuuus les systemes
             sc_screens_controller.RepairAll();
             SC_WeaponBreakdown.Instance.EndBreakdown();
@@ -254,6 +263,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
 
         }
+
 
         #region OldVersion
 
