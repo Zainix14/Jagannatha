@@ -157,7 +157,6 @@ public class SC_FlockManager : MonoBehaviour
             
         }
 
-
         Invoke("ActivateFlock", flockSettings.spawnTimer);
         
     }

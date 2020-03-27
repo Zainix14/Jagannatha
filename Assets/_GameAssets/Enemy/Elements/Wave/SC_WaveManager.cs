@@ -106,8 +106,12 @@ public class SC_WaveManager : MonoBehaviour
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
 
+        if(SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
+        SC_KoaSpawn.Instance.PreparationKoa(SC_PhaseManager.Instance.curWaveIndex + 1);
 
-        
+
+
+
     }
     IEnumerator SpawnInitialFlock()
     {
