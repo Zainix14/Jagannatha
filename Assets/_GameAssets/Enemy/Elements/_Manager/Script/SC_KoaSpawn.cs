@@ -14,6 +14,9 @@ public class SC_KoaSpawn : MonoBehaviour
     [SerializeField]
     GameObject koaPrefab;
 
+    [SerializeField]
+    GameObject containerPrefab;
+
     public GameObject[] koaTab;
     public int[] waveIndex;
     Coroutine[] corKoa;
@@ -46,6 +49,7 @@ public class SC_KoaSpawn : MonoBehaviour
         splineSpawn = SC_SpawnInfo.Instance.GetBezierSplines();
         int index = 0;
 
+        GameObject container = Instantiate(containerPrefab);
 
         for (int i =0; i<enemyMng.phases.Length; i++)
         {
@@ -85,6 +89,7 @@ public class SC_KoaSpawn : MonoBehaviour
                     koaTab[index] = Instantiate(koaPrefab);
                     waveIndex[index] = j;
                     DisplaceKoaOnSpawn(koaTab[index], curWave.initialSpawnPosition[k]);
+                    koaTab[index].transform.SetParent(container.transform);
                     index++;
                 }
                 for(int l =0; l<curWave.backupSpawnFlock.Length; l++)
@@ -93,6 +98,7 @@ public class SC_KoaSpawn : MonoBehaviour
                     koaTab[index] = Instantiate(koaPrefab);
                     waveIndex[index] = j;
                     DisplaceKoaOnSpawn(koaTab[index], curWave.backupSpawnPosition[l]);
+                    koaTab[index].transform.SetParent(container.transform);
                     index++;
 
                 }
@@ -154,34 +160,18 @@ public class SC_KoaSpawn : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator PreparationCoro(int index)
-    {
-        GameObject curKoa = koaTab[index];
-
-        while (curKoa.transform.localPosition.x < newPos.x)
-        {
-            curKoa.transform.localPosition = Vector3.Lerp(transform.localPosition, newPos, Time.deltaTime );
-            yield return 0;
-        }
-    }*/
-
-
     IEnumerator GoTargetPos(int index, float Duration)
     {
         GameObject curKoa = koaTab[index];
         float t = 0;
         float rate = 1 / Duration;
 
-    
-
         while (t < 1)
         {
 
             t += Time.deltaTime * rate;
-            //float Lerp = Acceleration.Evaluate(t);
 
-            curKoa.transform.Translate(Vector3.forward * Time.deltaTime*30);
+            curKoa.transform.Translate(Vector3.forward * Time.deltaTime*35);
 
             yield return 0;
 
