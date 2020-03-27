@@ -107,11 +107,11 @@ public class SC_WaveManager : MonoBehaviour
         StartCoroutine(SpawnInitialFlock());
 
         if(SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
-        SC_KoaSpawn.Instance.PreparationKoa(SC_PhaseManager.Instance.curWaveIndex + 1);
 
-
-
-
+        for(int i =0; i< _curWaveSettings.backupSpawnFlock.Length;i++)
+        {
+            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex, 1, i, _curWaveSettings.backupSpawnPosition[i]));
+        }
     }
     IEnumerator SpawnInitialFlock()
     {
@@ -121,7 +121,8 @@ public class SC_WaveManager : MonoBehaviour
         {
             SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
 
-            SC_KoaSpawn.Instance.SpawnKoa();
+
+            StartCoroutine(SC_KoaSpawn.Instance.SpawnCoro(SC_PhaseManager.Instance.curWaveIndex, 0, i, _curWaveSettings.initialSpawnPosition[i]));
 
             yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
         }
@@ -145,9 +146,20 @@ public class SC_WaveManager : MonoBehaviour
         {
             SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
 
-            SC_KoaSpawn.Instance.SpawnKoa();
+            StartCoroutine(SC_KoaSpawn.Instance.SpawnCoro(SC_PhaseManager.Instance.curWaveIndex,1,i, _curWaveSettings.backupSpawnPosition[i]));
 
             yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
+        }
+
+        WaveSettings nextWave = null;
+        if (SC_PhaseManager.Instance.curWaveIndex <= SC_PhaseManager.Instance.waves.Length)
+             nextWave = SC_PhaseManager.Instance.waves[SC_PhaseManager.Instance.curWaveIndex + 1];
+
+
+        if(nextWave != null)
+        for (int i = 0; i < nextWave.initialSpawnFlock.Length; i++)
+        {
+            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex + 1, 0, i, nextWave.initialSpawnPosition[i]));
         }
         StopCoroutine(SpawnBackupFlock());
     }

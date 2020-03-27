@@ -37,7 +37,7 @@ public class SC_PhaseManager : MonoBehaviour
 
     public void Initialize(PhaseSettings newPhaseSettigns)
     {
-
+        SC_KoaSpawn.Instance.InitNewPhase(newPhaseSettigns);
         curPhaseSettings = newPhaseSettigns;
         resetVariables();
         waves = newPhaseSettigns.waves;
@@ -54,10 +54,11 @@ public class SC_PhaseManager : MonoBehaviour
     public void EndWave()
     {
         curWaveIndex++;
-        if(curWaveIndex<waves.Length)
+        if(curWaveIndex < waves.Length)
         {
 
             SC_WaveManager.Instance.InitializeWave(waves[curWaveIndex]);
+
         }
         else
         {
