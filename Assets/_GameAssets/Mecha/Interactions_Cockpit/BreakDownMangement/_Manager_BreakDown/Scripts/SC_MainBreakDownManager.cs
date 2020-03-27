@@ -22,10 +22,13 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     [Header("References breakDown SC")]
     [SerializeField]
     SC_BreakdownDisplayManager DisplayBreakdownSC;
+    GameObject RenderSystem;
     [SerializeField]
     SC_WeaponBreakdown WeaponBreakdownSC;
+    GameObject WeaponSystem;
     [SerializeField]
     SC_MovementBreakdown MovementBreakdownSC;
+    GameObject MoveSystem;
 
     [Header("System Lifes")]
     public int nbOfBreakDownBeforeTotalBreak;
@@ -38,12 +41,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     [Header("Systems States")]
     public bool b_BreakEngine = false;
-    GameObject MoveSystem;
-    //public bool b_BreakMove = false;
-    GameObject RenderSystem;
-    //public bool b_BreakScreen = false;
-    GameObject WeaponSystem;
-    //public bool b_BreakWeapons = false;
+    /*
+    public bool b_BreakMove = false;
+    public bool b_BreakScreen = false;
+    public bool b_BreakWeapons = false;
+    */
 
     /*
     [Header("Old Var (Normally no Used)")]
@@ -90,6 +92,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (Mng_Checklist != null && RenderSystem == null)
             RenderSystem = Mng_Checklist.GetComponent<SC_CheckList_ViewAiming>().GetScreens();
 
+        //get du script qui gere l'affichage des ecrans de panne
+        if (screenController != null && sc_screens_controller == null)
+            sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
+
         if (Mng_Checklist != null && WeaponSystem == null)
             WeaponSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMngWeapons();
         /*
@@ -102,10 +108,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (Mng_Checklist != null && FlameSystem == null)
             FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
         */
-
-        //get du script qui gere l'affichage des ecrans de panne
-        if (screenController != null && sc_screens_controller == null)
-            sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
 
     }
 
@@ -197,8 +199,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             //Si on est pas encore en panne totale
             if (!b_BreakEngine)
             {
-                ///////important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
 
+                ///////important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
 
                 if (SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0)
                     SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
@@ -327,6 +329,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
             switch (attackFocus)
             {
+
                 ////////////////////////////////////////////////////////////////////////////////////////////DISPLAY
                 case FlockSettings.AttackFocus.Display:
 
