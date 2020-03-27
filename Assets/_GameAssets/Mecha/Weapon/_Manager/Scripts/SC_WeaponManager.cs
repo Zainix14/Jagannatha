@@ -22,7 +22,6 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     [Tooltip("Tableau avec toute les Armes")]
     [SerializeField]
     public GameObject[] tab_Weapons; //Tableau des Armes
-    GameObject CurWeapon;
 
     public int n_CurWeapon = 0;
 
@@ -79,30 +78,19 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
     }
 
     void CreateWeapon()
-    {
-
-        CurWeapon = Instantiate(tab_Weapons[n_CurWeapon]);
-
-        /*
+    {       
         for (int i = 0; i < tab_Weapons.Length; i++)
         {
             tab_Weapons[i] = Instantiate(tab_Weapons[i]);
-        }
-        */
-
+        }       
     }
 
     void CheckWeapon()
     {
-        CurWeapon.SetActive(true);
-
-        /*
         for (int i = 0; i < tab_Weapons.Length; i++)
         {
             tab_Weapons[i].SetActive(true);
         }
-        */
-
     }
 
     void Fire()
@@ -111,17 +99,18 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
         if (!b_OnFire)
             b_OnFire = true;
 
-        CurWeapon.GetComponent<IF_Weapon>().Trigger();
-        //tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
+        tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
 
     }
 
     void StopFire()
     {
+
         if (b_OnFire)
             b_OnFire = false;
-        //tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().ReleaseTrigger();
-        CurWeapon.GetComponent<IF_Weapon>().ReleaseTrigger();
+
+        tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().ReleaseTrigger();
+
         SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
 
     }
@@ -138,8 +127,7 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
         if (!b_InBreakdown)
         {
-
-            /*
+ 
             n_CurWeapon = n_Index;
 
             for (int i = 0; i < tab_Weapons.Length; i++)
@@ -149,9 +137,6 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
                 else
                     tab_Weapons[i].GetComponent<SC_FollowHand>().b_OnFollow = false;
             }
-            */
-
-            CurWeapon.GetComponent<SC_FollowHand>().b_OnFollow = true;
 
         }
        
