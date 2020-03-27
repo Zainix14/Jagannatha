@@ -15,6 +15,7 @@ public class SC_KoaSpawn : MonoBehaviour
     GameObject koaPrefab;
 
     public GameObject[] koaTab;
+    public int[] waveIndex;
     Coroutine[] corKoa;
     BezierSolution.BezierSpline[] splineSpawn;
 
@@ -65,7 +66,7 @@ public class SC_KoaSpawn : MonoBehaviour
             }
         }
 
-
+        waveIndex = new int[index];
         koaTab = new GameObject[index];
         
         index = 0;
@@ -82,6 +83,7 @@ public class SC_KoaSpawn : MonoBehaviour
                 {
                 
                     koaTab[index] = Instantiate(koaPrefab);
+                    waveIndex[index] = j;
                     DisplaceKoaOnSpawn(koaTab[index], curWave.initialSpawnPosition[k]);
                     index++;
                 }
@@ -89,6 +91,7 @@ public class SC_KoaSpawn : MonoBehaviour
                 {
                  
                     koaTab[index] = Instantiate(koaPrefab);
+                    waveIndex[index] = j;
                     DisplaceKoaOnSpawn(koaTab[index], curWave.backupSpawnPosition[l]);
                     index++;
 
@@ -101,13 +104,22 @@ public class SC_KoaSpawn : MonoBehaviour
     {
         int rndx = Random.Range(-200, -100);
         int rndy = Random.Range(100, 500);
-        int rndz = Random.Range(-500, 500);
+        int rndz = Random.Range(-200, 200);
+
+        for(int i = 0; i<koa.transform.childCount;i++)
+        {
+            int rndscale = Random.Range(0, 250);
+            koa.transform.GetChild(i).transform.localScale = new Vector3(1,1,rndscale);
+        }
 
         koa.transform.position = splineSpawn[spawnPoint].GetPoint(1);
-        koa.transform.LookAt(new Vector3(0,0,0));
+        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
         koa.transform.Translate(new Vector3(-500 + rndx , rndy, rndz), Space.Self);
- 
+        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+
     }
+
+
 
 
     public void SpawnKoa()
@@ -120,20 +132,65 @@ public class SC_KoaSpawn : MonoBehaviour
         GameObject curKoa = koaTab[Index];
 
         curKoa.GetComponent<TrailRenderer>().enabled = true;
+
         while (curKoa.transform.position.y > -150)
         {
-            curKoa.transform.position -= new Vector3(0, fallSpeed * Time.deltaTime, 0);
+            curKoa.transform.Translate(new Vector3(0, -fallSpeed * Time.deltaTime, 0));
             yield return 0;
-
         }
     }
 
-        // Update is called once per frame
+
+    public void PreparationKoa(int index)
+    {
+        for (int i = 0; i < waveIndex.Length; i++)
+        {
+            if (waveIndex[i] == index)
+            {
+                GameObject curKoa = koaTab[i];
+              
+                StartCoroutine(GoTargetPos(i,7.5f));
+            }
+        }
+    }
+
+    /*
+    IEnumerator PreparationCoro(int index)
+    {
+        GameObject curKoa = koaTab[index];
+
+        while (curKoa.transform.localPosition.x < newPos.x)
+        {
+            curKoa.transform.localPosition = Vector3.Lerp(transform.localPosition, newPos, Time.deltaTime );
+            yield return 0;
+        }
+    }*/
+
+
+    IEnumerator GoTargetPos(int index, float Duration)
+    {
+        GameObject curKoa = koaTab[index];
+        float t = 0;
+        float rate = 1 / Duration;
+
+    
+
+        while (t < 1)
+        {
+
+            t += Time.deltaTime * rate;
+            //float Lerp = Acceleration.Evaluate(t);
+
+            curKoa.transform.Translate(Vector3.forward * Time.deltaTime*30);
+
+            yield return 0;
+
+        }
+
+    }
+    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            SpawnKoa();
-        }
+        
     }
 }

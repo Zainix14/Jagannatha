@@ -24,6 +24,7 @@ public class SC_WaveManager : MonoBehaviour
     WaveSettings _curWaveSettings;
     public bool waveStarted;
     public bool waveEnded;
+    public bool nextWave;
     //Récupère les prefabs
     [SerializeField]
     GameObject _FlockPrefab; //Prefab du flock gérant la totalité de la nuée (guide compris)
@@ -38,6 +39,7 @@ public class SC_WaveManager : MonoBehaviour
 
     float curBackupTimer = 0;
     bool backupSend;
+    
 
 
     Vector3Int sensitivityA;
@@ -70,6 +72,7 @@ public class SC_WaveManager : MonoBehaviour
     void Start()
     {
         spawnSplines = SC_SpawnInfo.Instance.GetBezierSplines();
+        nextWave = false;
     }
 
     void Update()
@@ -98,6 +101,8 @@ public class SC_WaveManager : MonoBehaviour
     #region Initialize New Wave
     public void InitializeWave(WaveSettings newWaveSettings)
     {
+            resetVariables();
+            _curWaveSettings = newWaveSettings;
 
         resetVariables();
         _curWaveSettings = newWaveSettings;
@@ -106,8 +111,12 @@ public class SC_WaveManager : MonoBehaviour
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
 
+        if(SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
+        SC_KoaSpawn.Instance.PreparationKoa(SC_PhaseManager.Instance.curWaveIndex + 1);
 
-        
+
+
+
     }
     IEnumerator SpawnInitialFlock()
     {

@@ -130,7 +130,8 @@ public class SC_main_breakdown_validation : MonoBehaviour
         }
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         textStopBlink();
-
+        //Désactive le timer
+        SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
     }
 
 

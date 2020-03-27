@@ -58,9 +58,8 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
 
     IEnumerator Timer(float duration)
     {
-        while (true)
+        while (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown != 0 || SC_WeaponBreakdown.Instance.CurNbOfBreakdown != 0 || SC_MovementBreakdown.Instance.n_InteractibleInBreakDown != 0)
         {
-
             go_timer.SetActive(true);
             textComponent.color = Color.white;
 
@@ -154,7 +153,7 @@ public class SC_BreakdownOnBreakdownAlert : MonoBehaviour
             go_timer.SetActive(false);
 
         }
-
+        StopAllCoroutines();
     }
 
 
