@@ -111,11 +111,20 @@ public class SC_WaveManager : MonoBehaviour
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
 
-        if(SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
-
-        for(int i =0; i< _curWaveSettings.backupSpawnFlock.Length;i++)
+        if( _curWaveSettings.backup)
         {
-            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex, 1, i, _curWaveSettings.backupSpawnPosition[i]));
+            for (int i = 0; i < _curWaveSettings.backupSpawnFlock.Length; i++)
+            {
+                StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex, 1, i, _curWaveSettings.backupSpawnPosition[i], 200, 3.5f));
+            }
+        }
+        else if (SC_PhaseManager.Instance.curWaveIndex + 1 <= SC_PhaseManager.Instance.waves.Length )
+        {
+            WaveSettings nextWave = SC_PhaseManager.Instance.waves[SC_PhaseManager.Instance.curWaveIndex + 1];
+            for (int i = 0; i < nextWave.initialSpawnFlock.Length; i++)
+            {
+                StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex+1, 0, i, nextWave.initialSpawnPosition[i], 200, 3.5f));
+            }
         }
     }
     IEnumerator SpawnInitialFlock()
@@ -157,16 +166,15 @@ public class SC_WaveManager : MonoBehaviour
         }
 
         WaveSettings nextWave = null;
-        if (SC_PhaseManager.Instance.curWaveIndex <= SC_PhaseManager.Instance.waves.Length)
+        if (SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
              nextWave = SC_PhaseManager.Instance.waves[SC_PhaseManager.Instance.curWaveIndex + 1];
 
 
-        if(nextWave != null)
+        if (nextWave != null)
         for (int i = 0; i < nextWave.initialSpawnFlock.Length; i++)
         {
-            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex + 1, 0, i, nextWave.initialSpawnPosition[i]));
+            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex + 1, 0, i, nextWave.initialSpawnPosition[i], 200, 3.5f));
         }
-        StopCoroutine(SpawnBackupFlock());
     }
 
 

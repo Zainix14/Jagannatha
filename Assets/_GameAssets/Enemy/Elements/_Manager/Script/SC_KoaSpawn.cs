@@ -21,7 +21,7 @@ public class SC_KoaSpawn : MonoBehaviour
     [SerializeField]
     GameObject containerPrefab;
 
-
+    GameObject Player;
 
     GameObject[,,,] koaTab2;
 
@@ -46,6 +46,7 @@ public class SC_KoaSpawn : MonoBehaviour
     void Start()
     {
         splineSpawn = SC_SpawnInfo.Instance.GetBezierSplines();
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void InitNewPhase(PhaseSettings newPhaseSettings)
@@ -109,9 +110,9 @@ public class SC_KoaSpawn : MonoBehaviour
         }
 
         koa.transform.position = splineSpawn[spawnPoint].GetPoint(1);
-        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+        koa.transform.LookAt(Player.transform);
         koa.transform.Translate(new Vector3(-1200 + rndx , rndy, rndz), Space.Self);
-        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+        koa.transform.LookAt(Player.transform);
 
         for (int i = 0; i < koaTab2.GetLength(0); i++) 
         {
@@ -122,7 +123,7 @@ public class SC_KoaSpawn : MonoBehaviour
                     for (int l = 0; l < koaTab2.GetLength(3); l++)
                     {
                         if(koaTab2[i,j,k,l] != null)
-                        StartCoroutine(GoTargetPos(i, j, k, l));
+                        StartCoroutine(GoTargetPos(i, j, k, l,500,3.5f));
                     }
                 }
             }
@@ -145,18 +146,27 @@ public class SC_KoaSpawn : MonoBehaviour
     }
 
 
-    public IEnumerator GoTargetPos(int wi, int backup, int flockrank, int spawnPos)
+    public IEnumerator GoTargetPos(int wi, int backup, int flockrank, int spawnPos, int distance, float speed)
     {
         GameObject curKoa = koaTab2[wi, backup, flockrank, spawnPos];
+        /*
         float t = 0;
         float rate = 1 / 5f;
 
         while (t < 1)
         {
+
             t += Time.deltaTime * rate;
             curKoa.transform.Translate(Vector3.forward * Time.deltaTime*2.5f);
             yield return 0;
 
+        }*/
+
+
+        while(Vector3.Distance(curKoa.transform.position,Player.transform.position) > distance)
+        {
+            curKoa.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            yield return 0;
         }
     }
 }
