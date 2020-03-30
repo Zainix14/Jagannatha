@@ -98,8 +98,8 @@ public class SC_KoaSpawn : MonoBehaviour
     void DisplaceKoaOnSpawn(GameObject koa, int spawnPoint)
     {
         int rndx = Random.Range(-200, -150);
-        int rndy = Random.Range(100, 500);
-        int rndz = Random.Range(-150, 150);
+        int rndy = Random.Range(100, 800);
+        int rndz = Random.Range(-300,300);
 
 
 
@@ -123,7 +123,7 @@ public class SC_KoaSpawn : MonoBehaviour
                     for (int l = 0; l < koaTab2.GetLength(3); l++)
                     {
                         if(koaTab2[i,j,k,l] != null)
-                        StartCoroutine(GoTargetPos(i, j, k, l,500,3.5f));
+                        StartCoroutine(GoTargetPos(i, j, k, l,700,8f));
                     }
                 }
             }
@@ -146,27 +146,34 @@ public class SC_KoaSpawn : MonoBehaviour
     }
 
 
-    public IEnumerator GoTargetPos(int wi, int backup, int flockrank, int spawnPos, int distance, float speed)
+    public IEnumerator GoTargetPos(int wi, int backup, int flockrank, int spawnPos, int minDist, float travelTime)
     {
         GameObject curKoa = koaTab2[wi, backup, flockrank, spawnPos];
-        /*
+        float curDist = Vector3.Distance(curKoa.transform.position, Player.transform.position);
+        float distanceToTravel = curDist - minDist;
+        float distancePerSec = distanceToTravel/ travelTime;
+
         float t = 0;
-        float rate = 1 / 5f;
+        float rate = 1 / travelTime;
 
         while (t < 1)
         {
 
             t += Time.deltaTime * rate;
-            curKoa.transform.Translate(Vector3.forward * Time.deltaTime*2.5f);
+
+            if (Vector3.Distance(curKoa.transform.position, Player.transform.position) > minDist)
+                curKoa.transform.Translate(Vector3.forward * Time.deltaTime * distancePerSec);
+
+            
             yield return 0;
 
-        }*/
+        }
 
-
-        while(Vector3.Distance(curKoa.transform.position,Player.transform.position) > distance)
+        /*
+        while (Vector3.Distance(curKoa.transform.position,Player.transform.position) > minDist)
         {
             curKoa.transform.Translate(Vector3.forward * Time.deltaTime * speed);
             yield return 0;
-        }
+        }*/
     }
 }
