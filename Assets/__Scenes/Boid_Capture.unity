@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017360852, g: 0.0006963798, b: 0.0003852225, a: 1}
+  m_IndirectSpecularColor: {r: 0.00037177134, g: 0.00014912212, b: 0.00008249077,
+    a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -411,7 +412,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9080811242942902490, guid: 364effdb1be511241839715462ca19c8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 364effdb1be511241839715462ca19c8, type: 3}
 --- !u!1 &1637601632
 GameObject:
@@ -586,12 +588,6 @@ PrefabInstance:
       propertyPath: splineLine
       value: 
       objectReference: {fileID: 357549275}
-    - target: {fileID: 114994286558072070, guid: 62a569e3af16c2d49b6f7fbce36a005a,
-        type: 3}
-      propertyPath: flockDisplay
-      value: 
-      objectReference: {fileID: 11400000, guid: c711052c6eed550498982e0d4b976a92,
-        type: 2}
     - target: {fileID: 1285113734633859291, guid: 62a569e3af16c2d49b6f7fbce36a005a,
         type: 3}
       propertyPath: m_Name

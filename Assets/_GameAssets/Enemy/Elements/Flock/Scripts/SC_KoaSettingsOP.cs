@@ -17,9 +17,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     float maxKoaLife;
     float curKoaLife;
 
-
-
-
     [SerializeField]
     Material[] Tab_mat;
     [SerializeField]
@@ -56,9 +53,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         initialRadius = GetComponent<SphereCollider>().radius;
         spawn = false;
         timer = 0;
-
-
-
     }
 
     public void SetKoaType(int type)
