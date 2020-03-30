@@ -28,6 +28,13 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
 
+    [Header("FX_panne_Pannel"), SerializeField]
+    public ParticleSystem[] FX_pannel;
+
+    //etat actuel des FX de panne => 0 -> pas de fx, 1 -> fx en play ====> autres rangs pour echelonner les fx
+    private int FX_pannel_lvl = 0;
+
+
     #endregion Variables
 
     #region Init
@@ -148,6 +155,13 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
 
+        //Gestion temporaire du play/stop des fx de panne
+        if (CurNbOfBreakdown > 0)
+            Play_Stop_All_Pannel_FX(true);
+        else
+            Play_Stop_All_Pannel_FX(false);
+
+
         if (n_BreakdownValue >= n_MaxBreakInterB4MaxBD && !b_MaxBreakdown)
         {
             b_MaxBreakdown = true;
@@ -158,6 +172,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
             b_MaxBreakdown = false;
             Mng_BreakdownMain.CheckBreakdown();
+
         }
 
         //Permet de régler les demi-pannes d'écrans
@@ -165,8 +180,37 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         {
             sc_screens_controller.RepairAll();
         }
+        if (CurNbOfBreakdown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
+        }
+    }
+
+
+    #region FX
+    //Fonction jouant toutes les FX indiquant une panne sur le système,à échelonner plus tard)
+    private void Play_Stop_All_Pannel_FX(bool startStop)
+    {
+        foreach(ParticleSystem FX in FX_pannel)
+        {
+            if (startStop)
+                FX.Play();
+            else
+                FX.Stop();
+
+        }
 
     }
+
+
+
+    #endregion FX
+
+
 
     #region DebugMethod
 

@@ -32,6 +32,18 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     //[SerializeField]
     //Text optiWeapon;
+    enum KoaState
+    {
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2,
+        Death = 3,
+        Reaction = 4
+    }
+
+
+    KoaState curState;
+
 
     [SerializeField]
     Image[] barOpti = new Image[4];
@@ -111,10 +123,12 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
                 koaLife.text = fKoaLife.ToString();
 
+
                 sliderLifeKoa.value = fKoaLife;
                 lifeBarSecondary();
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
-
+                curState = (KoaState)curKoaScriptKoaSettings.getState();
+                Debug.Log("State " + curState);
                 displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
 

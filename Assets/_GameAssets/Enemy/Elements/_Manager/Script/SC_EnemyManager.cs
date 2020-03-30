@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Script gerant l'enchainement des Phases
@@ -18,7 +19,7 @@ public class SC_EnemyManager : MonoBehaviour
     #endregion
 
     public PhaseSettings[] phases;
-  
+    public Slider Progress;
     public  int curPhaseIndex;
     void Awake()
     {
@@ -36,6 +37,8 @@ public class SC_EnemyManager : MonoBehaviour
     public void Initialize()
     {
         InitNewPhase(0);
+        Progress = GameObject.FindGameObjectWithTag("ProgressBar").GetComponent<Slider>();
+        Progress.value = 0;
     }
 
     public void InitNewPhase(int phaseIndex)
@@ -55,10 +58,11 @@ public class SC_EnemyManager : MonoBehaviour
         if(curPhaseIndex >= phases.Length)
         {
             SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
-
+            Progress.value = 100f;
         }
+        else
+         InitNewPhase(curPhaseIndex);
 
-        InitNewPhase(curPhaseIndex);
 
     }
 

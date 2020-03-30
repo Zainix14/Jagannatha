@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Script gerant l'enchainement des Waves dans une phase
 ///  | Sur le prefab EnemyManager(à instantié une fois)
@@ -16,10 +17,11 @@ public class SC_PhaseManager : MonoBehaviour
 
     #endregion
     PhaseSettings curPhaseSettings;
-    WaveSettings[] waves;
+    public WaveSettings[] waves;
 
+    
 
-    int curWaveIndex;
+    public int curWaveIndex;
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,7 +39,7 @@ public class SC_PhaseManager : MonoBehaviour
 
     public void Initialize(PhaseSettings newPhaseSettigns)
     {
-
+        SC_KoaSpawn.Instance.InitNewPhase(newPhaseSettigns);
         curPhaseSettings = newPhaseSettigns;
         resetVariables();
         waves = newPhaseSettigns.waves;
@@ -54,10 +56,17 @@ public class SC_PhaseManager : MonoBehaviour
     public void EndWave()
     {
         curWaveIndex++;
-        if(curWaveIndex<waves.Length)
+        if (curWaveIndex<waves.Length)
         {
-
-            SC_WaveManager.Instance.InitializeWave(waves[curWaveIndex]);
+            if (SC_WaveManager.Instance.nextWave == true)
+            {
+                SC_WaveManager.Instance.InitializeWave(waves [curWaveIndex]);
+                //SC_EnemyManager.Instance.Progress.value = curWaveIndex * 10f;
+            }
+            else
+            {
+                SC_MainBreakDownManager.Instance.CheckBreakdown();
+            }
         }
         else
         {

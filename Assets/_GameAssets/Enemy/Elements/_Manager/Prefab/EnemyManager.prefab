@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4763096179457797522}
   - component: {fileID: 7258514576438775}
   - component: {fileID: 2127282925816916757}
+  - component: {fileID: 9080811242942902490}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Mng_Enemy
@@ -65,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9957a927d44864745abb23d7b65deead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waves: []
+  curWaveIndex: 0
 --- !u!114 &4763096179457797522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,3 +115,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compute: {fileID: 7200000, guid: c51b961c8b9d746f1a2f242fa7bf1a31, type: 3}
   basiqueSettings: {fileID: 11400000, guid: 7934150062f27ae4195cd71ff4af75f5, type: 2}
+--- !u!114 &9080811242942902490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763096179457797525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c828caa141b1b441bccc60e1dae072f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  koaPrefab: {fileID: 8534100290907575779, guid: aeb83b74a40fb834aabeb0a62e9b505d,
+    type: 3}
+  containerPrefab: {fileID: 7377854444404703792, guid: 2ad318b74fbc4644494b8fd29cccfceb,
+    type: 3}
+  koaTab: []
+  waveIndex: 

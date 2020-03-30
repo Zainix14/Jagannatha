@@ -18,7 +18,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     int n_MaxBreakdownLvl = 3;
     [SerializeField, Range(0, 3)]
-    int n_BreakDownLvl = 0;
+    public int n_BreakDownLvl = 0;
     public int n_InteractibleInBreakDown = 0;
 
     [Header("Interactibles"), SerializeField]
@@ -148,6 +148,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
+        if (n_InteractibleInBreakDown > 0)
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
+        }
+        else
+        {
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+        }
     }
 
     public void EndBreakdown()

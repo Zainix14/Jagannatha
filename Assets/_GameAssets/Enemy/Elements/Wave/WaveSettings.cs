@@ -23,8 +23,4 @@ public class WaveSettings : ScriptableObject
 
     public float timeBetweenSpawnBackup;
 
-
-
-
-
 }

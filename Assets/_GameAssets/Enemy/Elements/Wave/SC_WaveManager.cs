@@ -24,6 +24,7 @@ public class SC_WaveManager : MonoBehaviour
     WaveSettings _curWaveSettings;
     public bool waveStarted;
     public bool waveEnded;
+    public bool nextWave;
     //Récupère les prefabs
     [SerializeField]
     GameObject _FlockPrefab; //Prefab du flock gérant la totalité de la nuée (guide compris)
@@ -38,11 +39,13 @@ public class SC_WaveManager : MonoBehaviour
 
     float curBackupTimer = 0;
     bool backupSend;
+    
 
 
     Vector3Int sensitivityA;
     Vector3Int sensitivityB;
     Vector3Int sensitivityC;
+    Vector3Int sensitivityD;
 
     #endregion
     //---------------------------------------------------------------------//
@@ -69,6 +72,7 @@ public class SC_WaveManager : MonoBehaviour
     void Start()
     {
         spawnSplines = SC_SpawnInfo.Instance.GetBezierSplines();
+        nextWave = false;
     }
 
     void Update()
@@ -97,6 +101,8 @@ public class SC_WaveManager : MonoBehaviour
     #region Initialize New Wave
     public void InitializeWave(WaveSettings newWaveSettings)
     {
+            resetVariables();
+            _curWaveSettings = newWaveSettings;
 
         resetVariables();
         _curWaveSettings = newWaveSettings;
@@ -105,8 +111,21 @@ public class SC_WaveManager : MonoBehaviour
             backupSend = true;
         StartCoroutine(SpawnInitialFlock());
 
-
-        
+        if( _curWaveSettings.backup)
+        {
+            for (int i = 0; i < _curWaveSettings.backupSpawnFlock.Length; i++)
+            {
+                StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex, 1, i, _curWaveSettings.backupSpawnPosition[i], 350, 3.5f));
+            }
+        }
+        else if (SC_PhaseManager.Instance.curWaveIndex + 1 < SC_PhaseManager.Instance.waves.Length )
+        {
+            WaveSettings nextWave = SC_PhaseManager.Instance.waves[SC_PhaseManager.Instance.curWaveIndex + 1];
+            for (int i = 0; i < nextWave.initialSpawnFlock.Length; i++)
+            {
+                StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex+1, 0, i, nextWave.initialSpawnPosition[i], 350, 3.5f));
+            }
+        }
     }
     IEnumerator SpawnInitialFlock()
     {
@@ -114,9 +133,12 @@ public class SC_WaveManager : MonoBehaviour
 
         for (int i = 0; i < _curWaveSettings.initialSpawnFlock.Length; i++)
         {
-                SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
-       
-                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
+            SpawnNewFlock(_curWaveSettings.initialSpawnFlock[i], i);
+
+
+            StartCoroutine(SC_KoaSpawn.Instance.SpawnCoro(SC_PhaseManager.Instance.curWaveIndex, 0, i, _curWaveSettings.initialSpawnPosition[i]));
+
+            yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnInitial);            
         }
         StopCoroutine(SpawnInitialFlock());
         waveStarted = true;
@@ -136,11 +158,23 @@ public class SC_WaveManager : MonoBehaviour
     {
         for (int i = 0; i < _curWaveSettings.backupSpawnFlock.Length; i++)
         {
-                SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
-       
-                yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
+            SpawnNewFlock(_curWaveSettings.backupSpawnFlock[i], i, true);
+
+            StartCoroutine(SC_KoaSpawn.Instance.SpawnCoro(SC_PhaseManager.Instance.curWaveIndex,1,i, _curWaveSettings.backupSpawnPosition[i]));
+
+            yield return new WaitForSeconds(_curWaveSettings.timeBetweenSpawnBackup);
         }
-        StopCoroutine(SpawnBackupFlock());
+
+        WaveSettings nextWave = null;
+        if (SC_PhaseManager.Instance.curWaveIndex+1 <= SC_PhaseManager.Instance.waves.Length)
+             nextWave = SC_PhaseManager.Instance.waves[SC_PhaseManager.Instance.curWaveIndex + 1];
+
+
+        if (nextWave != null)
+        for (int i = 0; i < nextWave.initialSpawnFlock.Length; i++)
+        {
+            StartCoroutine(SC_KoaSpawn.Instance.GoTargetPos(SC_PhaseManager.Instance.curWaveIndex + 1, 0, i, nextWave.initialSpawnPosition[i], 200, 3.5f));
+        }
     }
 
 
@@ -186,6 +220,12 @@ public class SC_WaveManager : MonoBehaviour
             if (_FlockList[i] == flock)
             {
                 _FlockList.RemoveAt(i);
+                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+                {
+
+                    SC_EnemyManager.Instance.Progress.value += 100 * 1f / SC_KoaSpawn.Instance.nb_totalFlock;
+                }
+
             }
         }
 
@@ -211,29 +251,46 @@ public class SC_WaveManager : MonoBehaviour
     {
         Vector3Int newSensitivity = new Vector3Int(0, 0, 0);
         Vector3Int baseSensitivity = new Vector3Int(0, 0, 0);
+
         switch(flockSettings.attackType)
         {
             case FlockSettings.AttackType.none:
+
                 baseSensitivity = sensitivityA;
+
                 break;
 
 
             case FlockSettings.AttackType.Bullet:
+
                 baseSensitivity = sensitivityB;
+
                 break;
 
 
             case FlockSettings.AttackType.Laser:
+
                 baseSensitivity = sensitivityC;
+
+                break;     
+            
+            
+            case FlockSettings.AttackType.Kamikaze:
+
+                baseSensitivity = sensitivityD;
+
                 break;
         }
 
 
         int[] tabValue = new int[3];
+
         tabValue[0] = baseSensitivity.x;
         tabValue[1] = baseSensitivity.y;
         tabValue[2] = baseSensitivity.z;
+
         int remainingOffset = 2;
+
         for (int i = 0; i<3;i++)
         {
             if(remainingOffset>0)
@@ -300,6 +357,7 @@ public class SC_WaveManager : MonoBehaviour
         int x;
         int y;
         int z;
+
         x = Random.Range(0, 6);
         y = Random.Range(0, 6);
         z = Random.Range(0, 6);
@@ -314,8 +372,9 @@ public class SC_WaveManager : MonoBehaviour
 
         sensitivityC = new Vector3Int(GetRangedValue(x), GetRangedValue(y), GetRangedValue(z));
 
-
+        sensitivityD = new Vector3Int(5, 5, 5);
     }
+
     int GetRangedValue(int baseValue)
     {
         int newValue;
@@ -346,7 +405,6 @@ public class SC_WaveManager : MonoBehaviour
         int rnd = Random.Range(-1, 2);
         int newValue = baseValue + rnd;
         if (newValue < 0) newValue = 0; if (newValue > 5) newValue = 5;
-
         return newValue;
         
     }
