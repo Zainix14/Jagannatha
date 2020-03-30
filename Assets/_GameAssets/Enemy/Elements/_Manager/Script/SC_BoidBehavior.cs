@@ -116,6 +116,7 @@ public class SC_BoidBehavior : MonoBehaviour
                         _boidsTab[i].numPerceivedFlockmates = boidData[i].numFlockmates; //Stockage pour chaque boid : nombre de mate autour
 
                         _boidsTab[i].UpdateBoid(); //Update les boidss
+
                     }
 
                 }

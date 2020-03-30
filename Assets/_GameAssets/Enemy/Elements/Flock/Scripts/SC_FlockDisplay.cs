@@ -333,8 +333,6 @@ public class SC_FlockDisplay : MonoBehaviour
         isActive = true;
         _SCKoaManager.ActivateKoa();
 
-        //StartCoroutine(ChangeState());
-
     }
 
 
