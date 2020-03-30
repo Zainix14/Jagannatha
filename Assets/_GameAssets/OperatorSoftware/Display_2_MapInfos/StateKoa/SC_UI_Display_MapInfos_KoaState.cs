@@ -41,7 +41,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         Reaction = 4
     }
 
-
     KoaState curState;
 
 
@@ -51,8 +50,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     public float optiPercent;
 
-    public float fKoaLife;
-    public float curfKoaLife;
+    public float fKoaLife = 100;
+    public float curfKoaLife = 100;
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
@@ -134,8 +133,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
                 if (curfKoaLife != fKoaLife)
                 {
+                    Debug.Log("koa hit");
                     SC_UI_Display_MapInfos_KOAShake.Instance.ShakeIt(5f,0.5f);
-                    
                 }
             }
 
