@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Script gerant l'enchainement des Waves dans une phase
 ///  | Sur le prefab EnemyManager(à instantié une fois)
@@ -18,6 +19,7 @@ public class SC_PhaseManager : MonoBehaviour
     PhaseSettings curPhaseSettings;
     public WaveSettings[] waves;
 
+    
 
     public int curWaveIndex;
     // Start is called before the first frame update
@@ -59,6 +61,7 @@ public class SC_PhaseManager : MonoBehaviour
             if (SC_WaveManager.Instance.nextWave == true)
             {
                 SC_WaveManager.Instance.InitializeWave(waves [curWaveIndex]);
+                SC_EnemyManager.Instance.Progress.value += 10f;
             }
             else
             {
