@@ -9,6 +9,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
   private float MAX_VIBRATION_DISTANCE = 0.03f;
 
 
+
     private float _localX = 0;
     private float _localY = 0;
     private float _localZ = 0;
@@ -93,23 +94,23 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         //sécurité juste en y
 
-        if (transform.localPosition.y<-0.45f)
+        if (transform.localPosition.x<-0.45f)
         {
 
-            transform.localPosition = new Vector3(transform.localPosition.x, -0.45f, transform.localPosition.z);
+            transform.localPosition = new Vector3(-0.45f, transform.localPosition.y, transform.localPosition.z);
 
         }
-        else if (transform.localPosition.y > 0.45f)
+        else if (transform.localPosition.x > 0.45f)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, 0.45f, transform.localPosition.z);
+            transform.localPosition = new Vector3(0.45f, transform.localPosition.y,  transform.localPosition.z);
 
         }
      
 
-        float newX = gameObject.transform.localPosition.y;
+        float newX = gameObject.transform.localPosition.x;
 
         //on envoie la valeur à la syncvar si celle ci a changé
-        if (newX != oldX) sendToSynchVar(Mathf.Round(gameObject.transform.localPosition.y*100)/100);
+        if (newX != oldX) sendToSynchVar(Mathf.Round(gameObject.transform.localPosition.x*100)/100);
 
 
 
@@ -152,7 +153,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     {
 
         desiredValue = Random.Range(-0.4f, 0.4f);
-        while (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        while (gameObject.transform.localPosition.x >= desiredValue - precision && gameObject.transform.localPosition.x <= desiredValue + precision)
         {
             desiredValue = Random.Range(-0.4f, 0.4f);
         }
@@ -167,7 +168,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void Repair()
     {
 
-        desiredValue = gameObject.transform.localPosition.y;
+        desiredValue = gameObject.transform.localPosition.x;
 
 
         SetIsEnPanne(false);
@@ -181,7 +182,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void IsValueOk()
     {
 
-        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        if (gameObject.transform.localPosition.x >= desiredValue - precision && gameObject.transform.localPosition.x <= desiredValue + precision)
         {
 
             if (isEnPanne)
