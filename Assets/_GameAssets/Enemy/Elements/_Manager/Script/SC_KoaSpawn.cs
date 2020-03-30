@@ -25,6 +25,8 @@ public class SC_KoaSpawn : MonoBehaviour
 
     GameObject[,,,] koaTab2;
 
+    public int nb_totalFlock;
+
     BezierSolution.BezierSpline[] splineSpawn;
 
     int indexSpawn = 0;
@@ -47,6 +49,28 @@ public class SC_KoaSpawn : MonoBehaviour
     {
         splineSpawn = SC_SpawnInfo.Instance.GetBezierSplines();
         Player = GameObject.FindGameObjectWithTag("Player");
+        
+    }
+
+    public void KoaCountMaster()
+    {
+        for (int i = 0; i < koaTab2.GetLength(0); i++)
+        {
+            for (int j = 0; j < koaTab2.GetLength(1); j++)
+            {
+                for (int k = 0; k < koaTab2.GetLength(2); k++)
+                {
+                    for (int l = 0; l < koaTab2.GetLength(3); l++)
+                    {
+                        if (koaTab2 [i, j, k, l] != null)
+                        {
+                            nb_totalFlock += 1;
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
 
     public void InitNewPhase(PhaseSettings newPhaseSettings)
@@ -90,6 +114,7 @@ public class SC_KoaSpawn : MonoBehaviour
                 koaTab2[i, 1, k, curWave.backupSpawnPosition[k]].transform.SetParent(container.transform);
             }
         }
+        KoaCountMaster();
     }
 
  
