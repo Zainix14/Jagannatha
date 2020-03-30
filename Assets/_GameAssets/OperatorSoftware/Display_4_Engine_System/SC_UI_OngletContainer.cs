@@ -21,6 +21,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
     GameObject[] onglet;
     [SerializeField]
     Vector3[] hubInOngletPos;
+    [SerializeField]
+    Vector3[] offsetInHub;
     public Transform particleFB;
     //public RectTransform particleRect;
     bool toPlace = false;
@@ -30,6 +32,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
 
     [SerializeField]
     float speedAnimOnglet;
+    [SerializeField]
+    float delayOfAnim;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -65,16 +69,20 @@ public class SC_UI_OngletContainer : MonoBehaviour
         //}
         if (!hubOn)
         {
-            child[curIndex].transform.localPosition = Vector3.Lerp(child[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
-            child[curIndex].transform.localScale = Vector3.Lerp(child[curIndex].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
-            child[0].transform.localPosition = hubInOngletPos[curIndex - 1];
-            child[0].transform.localScale = Vector3.zero;
+            Debug.Log("Update NO HUB");
             
+            //child[0].transform.localPosition = hubInOngletPos[curIndex - 1];
         }
         else
         {
-            child[0].transform.localPosition = Vector3.Lerp(child[0].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
-            child[0].transform.localScale = Vector3.Lerp(child[0].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
+            Debug.Log("UPDATE HUB");
+            
+            if(child[0].transform.localScale.x < 1)
+            {
+                child[0].transform.localPosition = Vector3.Lerp(child[0].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
+                child[0].transform.localScale = Vector3.Lerp(child[0].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
+            }
+                   
         }
          
     }
@@ -85,6 +93,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         {
             hubOn = true;
             Debug.Log("Hub");
+
             for (int i = 0; i < onglet.Length; i++)
             {
                 //child[i].transform.position = onglet[i+1].transform.localPosition;
@@ -95,6 +104,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         else
         {
             hubOn = false;
+            StartCoroutine(startAnim());
             for (int i = 0; i < child.Length; i++)
             {
 
@@ -108,22 +118,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         }
         
     }
-    //Only for the start
-    void preshotPos()
-    {
-        
-        for (int i = 0; i < child.Length; i++)
-        {
-            if (i == curIndex)
-            {
-               child[i].transform.localPosition = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                child[i].transform.localPosition = new Vector3(0, 0, 400);
-            }
-        }
-    }
+
 
     public void playDisplayTabAlert(bool state)
     {
@@ -138,4 +133,30 @@ public class SC_UI_OngletContainer : MonoBehaviour
     {
         onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
     }
+
+    IEnumerator startAnim()
+    {
+        float t = 0;
+        while(t < delayOfAnim+2)
+        {
+            t += Time.deltaTime;
+            child[0].transform.localPosition = Vector3.Lerp(child[0].transform.localPosition, offsetInHub[curIndex], Time.deltaTime * 1 / delayOfAnim);
+            //child[0].transform.localScale = Vector3.zero;
+            child[0].transform.localScale = Vector3.Lerp(child[0].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnim);
+
+            //child[0].transform.localPosition = new Vector3(0,0,50);
+            child[curIndex].transform.localPosition = Vector3.Lerp(child[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnim);
+            child[curIndex].transform.localScale = Vector3.Lerp(child[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnim);
+            
+            Debug.Log("In coroutine");
+            yield return 0;
+        }
+        child[0].transform.localScale = Vector3.zero;
+        child[0].transform.localPosition = offsetInHub[curIndex];
+        Debug.Log("Out of1");
+        StopCoroutine(startAnim());
+        Debug.Log("Out of2");
+
+    }
+
 }
