@@ -32,7 +32,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     //[SerializeField]
     //Text optiWeapon;
-<<<<<<< HEAD
+
     enum KoaState
     {
         Spawn = 0,
@@ -44,8 +44,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     KoaState curState;
 
-=======
->>>>>>> parent of f05674f5... Merge branch 'Romain-II' into Boid-Settings
 
     [SerializeField]
     Image[] barOpti = new Image[4];
