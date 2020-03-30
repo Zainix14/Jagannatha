@@ -11,12 +11,20 @@ public class SC_KoaSpawn : MonoBehaviour
 
     #endregion
 
+
+
+
+
     [SerializeField]
     GameObject koaPrefab;
 
-    public GameObject[] koaTab;
-    public int[] waveIndex;
-    Coroutine[] corKoa;
+    [SerializeField]
+    GameObject containerPrefab;
+
+    GameObject Player;
+
+    GameObject[,,,] koaTab2;
+
     BezierSolution.BezierSpline[] splineSpawn;
 
     int indexSpawn = 0;
@@ -37,100 +45,96 @@ public class SC_KoaSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitAllKoa();
-    }
-
-    void InitAllKoa()
-    {
-        SC_EnemyManager enemyMng = SC_EnemyManager.Instance;
         splineSpawn = SC_SpawnInfo.Instance.GetBezierSplines();
-        int index = 0;
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
 
+    public void InitNewPhase(PhaseSettings newPhaseSettings)
+    {
+        int nbMaxFlock = 0;
+        int nbSpawn = 8;
+        int nbWaves = newPhaseSettings.waves.Length;
 
-        for (int i =0; i<enemyMng.phases.Length; i++)
+        GameObject container = Instantiate(containerPrefab);
+
+        for (int i = 0; i < nbWaves; i++)
         {
-            PhaseSettings curPhase = enemyMng.phases[i];
+            int nbFlock = newPhaseSettings.waves[i].initialSpawnFlock.Length;
+            if (nbFlock < newPhaseSettings.waves[i].backupSpawnFlock.Length) nbFlock = newPhaseSettings.waves[i].backupSpawnFlock.Length;
 
-            for (int j = 0; j< curPhase.waves.Length; j++)
+
+            if (nbFlock > nbMaxFlock)
             {
-                WaveSettings curWave = curPhase.waves[j];
-
-                for (int k = 0; k < curWave.initialSpawnFlock.Length; k++)
-                {
-                    index++;
-                }
-                for(int l =0; l<curWave.backupSpawnFlock.Length; l++)
-                {
-                    index++;
-                }
+                nbMaxFlock = nbFlock;
             }
         }
 
-        waveIndex = new int[index];
-        koaTab = new GameObject[index];
-        
-        index = 0;
+        koaTab2 = new GameObject[nbWaves, 2, nbMaxFlock, nbSpawn];
 
-        for (int i =0; i<enemyMng.phases.Length; i++)
+        for (int i = 0; i < nbWaves; i++)
         {
-            PhaseSettings curPhase = enemyMng.phases[i];
 
-            for (int j = 0; j< curPhase.waves.Length; j++)
+            WaveSettings curWave = newPhaseSettings.waves[i];
+
+            for (int j = 0; j < curWave.initialSpawnFlock.Length; j++)
             {
-                WaveSettings curWave = curPhase.waves[j];
-
-                for (int k = 0; k < curWave.initialSpawnFlock.Length; k++)
-                {
-                
-                    koaTab[index] = Instantiate(koaPrefab);
-                    waveIndex[index] = j;
-                    DisplaceKoaOnSpawn(koaTab[index], curWave.initialSpawnPosition[k]);
-                    index++;
-                }
-                for(int l =0; l<curWave.backupSpawnFlock.Length; l++)
-                {
-                 
-                    koaTab[index] = Instantiate(koaPrefab);
-                    waveIndex[index] = j;
-                    DisplaceKoaOnSpawn(koaTab[index], curWave.backupSpawnPosition[l]);
-                    index++;
-
-                }
+                koaTab2[i,0,j, curWave.initialSpawnPosition[j]] = Instantiate(koaPrefab);
+                DisplaceKoaOnSpawn(koaTab2[i, 0, j, curWave.initialSpawnPosition[j]], curWave.initialSpawnPosition[j]);
+                koaTab2[i, 0, j, curWave.initialSpawnPosition[j]].transform.SetParent(container.transform);
+          
+            }
+            for (int k = 0; k < curWave.backupSpawnFlock.Length; k++)
+            {
+                koaTab2[i, 1, k, curWave.backupSpawnPosition[k]] = Instantiate(koaPrefab);
+                DisplaceKoaOnSpawn(koaTab2[i, 1, k, curWave.backupSpawnPosition[k]], curWave.backupSpawnPosition[k]);
+                koaTab2[i, 1, k, curWave.backupSpawnPosition[k]].transform.SetParent(container.transform);
             }
         }
     }
+
+ 
+
 
     void DisplaceKoaOnSpawn(GameObject koa, int spawnPoint)
     {
-        int rndx = Random.Range(-200, -100);
-        int rndy = Random.Range(100, 500);
-        int rndz = Random.Range(-200, 200);
+        int rndx = Random.Range(-200, -150);
+        int rndy = Random.Range(100, 800);
+        int rndz = Random.Range(-300,300);
 
-        for(int i = 0; i<koa.transform.childCount;i++)
+
+
+        int rndscale = Random.Range(0, 250);
+        for (int i = 0; i<koa.transform.childCount;i++)
         {
-            int rndscale = Random.Range(0, 250);
             koa.transform.GetChild(i).transform.localScale = new Vector3(1,1,rndscale);
         }
 
         koa.transform.position = splineSpawn[spawnPoint].GetPoint(1);
-        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
-        koa.transform.Translate(new Vector3(-500 + rndx , rndy, rndz), Space.Self);
-        koa.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+        koa.transform.LookAt(Player.transform);
+        koa.transform.Translate(new Vector3(-1200 + rndx , rndy, rndz), Space.Self);
+        koa.transform.LookAt(Player.transform);
+
+        for (int i = 0; i < koaTab2.GetLength(0); i++) 
+        {
+            for (int j = 0; j < koaTab2.GetLength(1); j++)
+            {
+                for (int k = 0; k < koaTab2.GetLength(2); k++)
+                {
+                    for (int l = 0; l < koaTab2.GetLength(3); l++)
+                    {
+                        if(koaTab2[i,j,k,l] != null)
+                        StartCoroutine(GoTargetPos(i, j, k, l,700,8f));
+                    }
+                }
+            }
+        }
 
     }
 
-
-
-
-    public void SpawnKoa()
+    public IEnumerator SpawnCoro(int wi, int backup, int flockrank, int spawnPos )
     {
-        StartCoroutine(SpawnCoro(indexSpawn));
-        indexSpawn++;
-    }
-    IEnumerator SpawnCoro(int Index)
-    {
-        GameObject curKoa = koaTab[Index];
-
+        
+        GameObject curKoa = koaTab2[wi,backup,flockrank,spawnPos];
         curKoa.GetComponent<TrailRenderer>().enabled = true;
 
         while (curKoa.transform.position.y > -150)
@@ -138,59 +142,38 @@ public class SC_KoaSpawn : MonoBehaviour
             curKoa.transform.Translate(new Vector3(0, -fallSpeed * Time.deltaTime, 0));
             yield return 0;
         }
+        yield return 0;
     }
 
 
-    public void PreparationKoa(int index)
+    public IEnumerator GoTargetPos(int wi, int backup, int flockrank, int spawnPos, int minDist, float travelTime)
     {
-        for (int i = 0; i < waveIndex.Length; i++)
-        {
-            if (waveIndex[i] == index)
-            {
-                GameObject curKoa = koaTab[i];
-              
-                StartCoroutine(GoTargetPos(i,7.5f));
-            }
-        }
-    }
+        GameObject curKoa = koaTab2[wi, backup, flockrank, spawnPos];
+        float curDist = Vector3.Distance(curKoa.transform.position, Player.transform.position);
+        float distanceToTravel = curDist - minDist;
+        float distancePerSec = distanceToTravel/ travelTime;
 
-    /*
-    IEnumerator PreparationCoro(int index)
-    {
-        GameObject curKoa = koaTab[index];
-
-        while (curKoa.transform.localPosition.x < newPos.x)
-        {
-            curKoa.transform.localPosition = Vector3.Lerp(transform.localPosition, newPos, Time.deltaTime );
-            yield return 0;
-        }
-    }*/
-
-
-    IEnumerator GoTargetPos(int index, float Duration)
-    {
-        GameObject curKoa = koaTab[index];
         float t = 0;
-        float rate = 1 / Duration;
-
-    
+        float rate = 1 / travelTime;
 
         while (t < 1)
         {
 
             t += Time.deltaTime * rate;
-            //float Lerp = Acceleration.Evaluate(t);
 
-            curKoa.transform.Translate(Vector3.forward * Time.deltaTime*30);
+            if (Vector3.Distance(curKoa.transform.position, Player.transform.position) > minDist)
+                curKoa.transform.Translate(Vector3.forward * Time.deltaTime * distancePerSec);
 
+            
             yield return 0;
 
         }
 
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        /*
+        while (Vector3.Distance(curKoa.transform.position,Player.transform.position) > minDist)
+        {
+            curKoa.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            yield return 0;
+        }*/
     }
 }
