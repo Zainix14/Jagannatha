@@ -44,10 +44,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     }
 
     public koaState currentState;
-    public void setState(int curState)
-    {
-
-    }
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -92,7 +88,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     }
     public void SetKoaState(int curState)
     {
-        this.currentState = (koaState) curState;
+        this.currentState = (koaState)curState;
     }
 
     public void SetKoamaxLife(int maxLife)
@@ -126,7 +122,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
 
     public int getState()
     {
-        return (int) currentState;
+        return (int)currentState;
     }
 
     void Update()

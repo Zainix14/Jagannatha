@@ -128,7 +128,7 @@ public class SC_KoaSpawn : MonoBehaviour
                 }
             }
         }
-
+        //POURQUOI C'EST DE LA MERDE CA ICI
     }
 
     public IEnumerator SpawnCoro(int wi, int backup, int flockrank, int spawnPos )

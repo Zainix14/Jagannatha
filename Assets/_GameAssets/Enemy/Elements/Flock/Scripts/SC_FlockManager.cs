@@ -333,6 +333,7 @@ public class SC_FlockManager : MonoBehaviour
 
     void StartNewPath(PathType pathType)
     {
+        _SCKoaManager.ChangeKoaState((int)pathType);
         curtype = pathType;
         switch (pathType)
         {
