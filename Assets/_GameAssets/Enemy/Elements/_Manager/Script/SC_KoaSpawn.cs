@@ -102,16 +102,22 @@ public class SC_KoaSpawn : MonoBehaviour
 
             for (int j = 0; j < curWave.initialSpawnFlock.Length; j++)
             {
+                GameObject curKoa;
                 koaTab2[i,0,j, curWave.initialSpawnPosition[j]] = Instantiate(koaPrefab);
-                DisplaceKoaOnSpawn(koaTab2[i, 0, j, curWave.initialSpawnPosition[j]], curWave.initialSpawnPosition[j]);
-                koaTab2[i, 0, j, curWave.initialSpawnPosition[j]].transform.SetParent(container.transform);
-          
+                curKoa = koaTab2[i, 0, j, curWave.initialSpawnPosition[j]];
+                DisplaceKoaOnSpawn(curKoa, curWave.initialSpawnPosition[j]);
+                StartCoroutine(GoTargetPos(i, 0, j, curWave.initialSpawnPosition[j], 700, 8f));
+                curKoa.transform.SetParent(container.transform);
+
             }
             for (int k = 0; k < curWave.backupSpawnFlock.Length; k++)
             {
+                GameObject curKoa;
                 koaTab2[i, 1, k, curWave.backupSpawnPosition[k]] = Instantiate(koaPrefab);
-                DisplaceKoaOnSpawn(koaTab2[i, 1, k, curWave.backupSpawnPosition[k]], curWave.backupSpawnPosition[k]);
-                koaTab2[i, 1, k, curWave.backupSpawnPosition[k]].transform.SetParent(container.transform);
+                curKoa = koaTab2[i, 1, k, curWave.backupSpawnPosition[k]];
+                DisplaceKoaOnSpawn(curKoa, curWave.backupSpawnPosition[k]);
+                StartCoroutine(GoTargetPos(i, 1, k, curWave.backupSpawnPosition[k], 700, 8f));
+                curKoa.transform.SetParent(container.transform);
             }
         }
         KoaCountMaster();
@@ -124,7 +130,7 @@ public class SC_KoaSpawn : MonoBehaviour
     {
         int rndx = Random.Range(-200, -150);
         int rndy = Random.Range(100, 800);
-        int rndz = Random.Range(-300,300);
+        int rndz = Random.Range(-400,400);
 
 
 
@@ -139,21 +145,7 @@ public class SC_KoaSpawn : MonoBehaviour
         koa.transform.Translate(new Vector3(-1200 + rndx , rndy, rndz), Space.Self);
         koa.transform.LookAt(Player.transform);
 
-        for (int i = 0; i < koaTab2.GetLength(0); i++) 
-        {
-            for (int j = 0; j < koaTab2.GetLength(1); j++)
-            {
-                for (int k = 0; k < koaTab2.GetLength(2); k++)
-                {
-                    for (int l = 0; l < koaTab2.GetLength(3); l++)
-                    {
-                        if(koaTab2[i,j,k,l] != null)
-                        StartCoroutine(GoTargetPos(i, j, k, l,700,8f));
-                    }
-                }
-            }
-        }
-        //POURQUOI C'EST DE LA MERDE CA ICI
+     
     }
 
     public IEnumerator SpawnCoro(int wi, int backup, int flockrank, int spawnPos )
@@ -193,12 +185,5 @@ public class SC_KoaSpawn : MonoBehaviour
             yield return 0;
 
         }
-
-        /*
-        while (Vector3.Distance(curKoa.transform.position,Player.transform.position) > minDist)
-        {
-            curKoa.transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            yield return 0;
-        }*/
     }
 }
