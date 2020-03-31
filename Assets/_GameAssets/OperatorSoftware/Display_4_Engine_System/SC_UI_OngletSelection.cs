@@ -14,6 +14,9 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
     Animator warningNotif;
     [SerializeField]
     Image img_warningNotif;
+
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,19 +31,23 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 
     public void Action()
     {
-        for (int i = 0; i < ongletContainer.child.Length; i++)
+        SC_UI_OngletContainer.Window newWindow = (SC_UI_OngletContainer.Window)index;
+
+        ongletContainer.ChangeWindow(newWindow);
+        /*
+        for (int i = 0; i < 4; i++)
         {
             if (i == index)
             {
                 ongletContainer.curIndex = i;
                 ongletContainer.checkActive();
-                ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 0);
+                //ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 0);
             }
             else
             {
-                ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 400);
+                //ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 400);
             }
-        }   
+        }   */
     }
 
     public void isBreakdownSystem(bool state)
