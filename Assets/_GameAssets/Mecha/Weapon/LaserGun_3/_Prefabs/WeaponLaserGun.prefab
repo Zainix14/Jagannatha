@@ -190,13 +190,14 @@ MonoBehaviour:
     type: 3}
   helper_startPos: {fileID: 7460222069811358692}
   Target: {fileID: 0}
-  frequency: 8
+  LaserFB: {fileID: 2676181716841152618}
   b_DebugLaser: 0
   _bulletContainer: {fileID: 1889412421170276024, guid: 44fe3d63bb414144891d610ab41e1279,
     type: 3}
   CurColor: {r: 0, g: 0, b: 0, a: 0}
+  b_InBreakdown: 0
+  frequency: 8
   n_BulletMagazine: 1
-  LaserFB: {fileID: 2676181716841152618}
 --- !u!114 &2676181716841152618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +216,7 @@ MonoBehaviour:
   Laser: {fileID: 9061922979539864453}
   EnergyBall: {fileID: 9061922979266380669}
   ChargeSpark: {fileID: 9061922980439107130}
+  Fioriture: {fileID: 3483605811274956347}
   WeapMainSC: {fileID: 0}
 --- !u!1 &7460222069811358692
 GameObject:
@@ -277,6 +279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0.5176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846088927798596, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: prewarm
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7669846089232195956, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
@@ -353,6 +360,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9fff76eb68ad4c44b87be9e2ca168a80, type: 2}
+    - target: {fileID: 7669846089967534085, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846089967534085, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount
+      value: 145
+      objectReference: {fileID: 0}
     - target: {fileID: 7669846089967534086, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
       propertyPath: m_IsActive
@@ -375,6 +392,12 @@ Transform:
 --- !u!1 &9061922979539864453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7669846088652090809, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3483605811274956347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2876374743243364359, guid: c10e83375715eeb4e95f77f947c50cc5,
     type: 3}
   m_PrefabInstance: {fileID: 1707619149161342524}
   m_PrefabAsset: {fileID: 0}
