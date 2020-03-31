@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 {
+
     #region Singleton
 
     private static SC_MovementBreakdown _instance;
