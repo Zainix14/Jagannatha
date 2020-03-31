@@ -132,7 +132,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
                 if (curfKoaLife != fKoaLife)
                 {
-                    Debug.Log("koa hit");
+
                     SC_UI_Display_MapInfos_KOAShake.Instance.ShakeIt(5f,0.5f);
                 }
             }

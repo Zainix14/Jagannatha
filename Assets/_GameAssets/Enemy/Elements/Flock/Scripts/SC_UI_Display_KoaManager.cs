@@ -36,7 +36,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
     /// </summary>
     public void Initialize(Transform newGuide, int spawnCount,BoidSettings newSettings)
     {
-        Debug.Log("init boid");
         this.spawnCount = spawnCount;
         flockManager = SC_UI_Display_Flock.Instance;
 
@@ -204,8 +203,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
     /// <param name="KoaTargetWeight"></param>
     public void SetBehavior(BoidSettings newSettings)
     {
-        Debug.Log("set behavior ");
-
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(newSettings);

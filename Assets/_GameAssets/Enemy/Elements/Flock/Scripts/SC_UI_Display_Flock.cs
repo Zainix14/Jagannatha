@@ -71,8 +71,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        Debug.Log("start flock display");
         _curBoidSetting = baseBoidSettings;
         InitializePoolAndComputeShader();
         InitializeFlock();
@@ -88,8 +86,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void InitializePoolAndComputeShader()
     {
-
-        Debug.Log("InitializePoolAndComputeShader");
 
         _boidsTab = new Boid[nbBoid];
         GameObject boidContainer = Instantiate(_boidContainer);
@@ -110,8 +106,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void InitializeFlock()
     {
-        Debug.Log("InitializeFlock");
-
 
         flockInitialRot = transform.rotation;
         _mainGuide = gameObject.transform;
@@ -132,8 +126,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void ActivateFlock()
     {
-        Debug.Log("ActivateFlock");
-
         isActive = true;
         _SCKoaManager.ActivateKoa();
 
@@ -302,7 +294,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
         //Sécurité
         if (_boidsTab != null)
         {
-
             while (true)
             {
 
@@ -322,6 +313,8 @@ public class SC_UI_Display_Flock : MonoBehaviour
                         boidData[i].active = 1;
                         boidData[i].position = _boidsTab[i].position; //Chaque élément déjà positionné est stocké
                         boidData[i].direction = _boidsTab[i].forward; //Stockage direction
+    
+
                     }
                 }
 
@@ -359,7 +352,10 @@ public class SC_UI_Display_Flock : MonoBehaviour
                         _boidsTab[i].numPerceivedFlockmates = boidData[i].numFlockmates; //Stockage pour chaque boid : nombre de mate autour
 
                         _boidsTab[i].UpdateBoid(); //Update les boidss
-                   
+
+
+
+
                     }
 
                 }
