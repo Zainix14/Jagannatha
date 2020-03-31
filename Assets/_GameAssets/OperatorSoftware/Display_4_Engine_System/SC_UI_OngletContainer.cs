@@ -16,30 +16,44 @@ public class SC_UI_OngletContainer : MonoBehaviour
     //[SerializeField]
     public GameObject[] system;
 
+    public enum Window
+    {
+        Hub = 3,
+        Display = 0,
+        Weapon = 1,
+        Movement = 2
+    }
+
+    Window curWindow;
 
     [SerializeField]
     GameObject[] onglet;
+
     [SerializeField]
-    Vector3[] hubInOngletPos;
+    Vector3[] positionHubTransition;
     [SerializeField]
-    Vector3[] offsetInHub;
+    Vector3[] scaleHubTransition;
+
+
     [SerializeField]
-    Vector3[] offsetInOnglet;
+    Vector3[] positionWindowTranstion;
+    [SerializeField]
+    Vector3[] scaleWindowTransition;
+
+
     public Transform particleFB;
-    //public RectTransform particleRect;
-    bool toPlace = false;
-    bool hubOn = true;
-    // Start is called before the first frame update
-    public int curIndex;
+
 
     [SerializeField]
     float speedAnimOnglet;
     [SerializeField]
-    float delayOfAnimHub;
+    float ZoomInHubDuration_1;
     [SerializeField]
-    float delayOfAnimOnglet;
+    float ZoomInHubDuration_2;
     [SerializeField]
-    float delayOfAnimOngletOut;
+    float ZoomInWindowDuration_1;
+    [SerializeField]
+    float ZoomInWindowDuration_2;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -56,73 +70,52 @@ public class SC_UI_OngletContainer : MonoBehaviour
     void Start()
     {
         particleFB = particleFB.GetComponent<RectTransform>();
-        curIndex = 0;
-        checkActive();
-        //preshotPos();
+
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeWindow(Window newWindow)
     {
-        //if (toPlace)
-        //{
-        //    particleFB.localPosition = Vector3.Lerp(ongletActifPos, particleFB.localPosition, Time.deltaTime*50f);
-        //    if (particleFB.transform.localPosition == ongletActifPos && ongletActifPos != Vector3.zero)
-        //    {
-        //        toPlace = false;
-        //    }
-
-        //}
-        if (!hubOn)
+        if(newWindow == Window.Hub)
         {
-            Debug.Log("Update NO HUB");
-            
-            //child[0].transform.localPosition = hubInOngletPos[curIndex - 1];
+            StartCoroutine(ZoomInWindow_1(curWindow));
         }
         else
         {
-            Debug.Log("UPDATE HUB");
-            
-            //if(system[0].transform.localScale.x < 1)
-            //{
-            //    system[0].transform.localPosition = Vector3.Lerp(system[0].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
-            //    system[0].transform.localScale = Vector3.Lerp(system[0].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
-            //}
-                   
+            StartCoroutine(ZoomInHub_1(newWindow));
         }
-         
-    }
+        curWindow = newWindow;
 
-    public void checkActive()
-    {
-        if (curIndex == 0)
-        {
-            hubOn = true;
-            Debug.Log("Hub");
-            StartCoroutine(startAnimOngletOut());
-            for (int i = 0; i < onglet.Length; i++)
-            {
-                //child[i].transform.position = onglet[i+1].transform.localPosition;
-                system[i + 1].transform.localPosition = onglet[i].transform.localPosition;
-                system[i + 1].transform.localScale = Vector3.zero;
-            }
-        }
-        else
-        {
-            hubOn = false;
-            StartCoroutine(startAnimHub());
-            for (int i = 0; i < system.Length; i++)
-            {
 
-                if (i == curIndex)
-                {
-                    //ongletActifPos = onglet[i - 1].transform.localPosition;
-                    
-                    toPlace = true;
-                }
-            }
-        }
+        /*
+        switch (newWindow)
+        {
+            case Window.Hub:
+
+                break;
+
+            case Window.Display:
+
+
+                StartCoroutine(ZoomInHub_1(curWindow));
+
+                break;
+            case Window.Movement:
+
+
+                StartCoroutine(ZoomInHub_1(curWindow));
+
+                break;
+
+            case Window.Weapon:
+
+
+                StartCoroutine(ZoomInHub_1(curWindow));
+
+                break;
+        }*/
         
+
     }
 
 
@@ -140,56 +133,129 @@ public class SC_UI_OngletContainer : MonoBehaviour
         onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
     }
 
-    IEnumerator startAnimHub()
+
+    #region ZoomFromHub
+
+    IEnumerator ZoomInHub_1(Window newWindow)
     {
+        int hubIndex = (int)Window.Hub;
+        int WindowIndex = (int)newWindow;
+
+        Vector3 initPos = system[hubIndex].transform.localPosition;
+        Vector3 endPos = positionHubTransition[WindowIndex];
+        Vector3 dPosPerSec = (endPos - initPos) / ZoomInHubDuration_1;
+
+        Vector3 initScale = system[hubIndex].transform.localScale;
+        Vector3 endScale = scaleHubTransition[WindowIndex];
+        Vector3 dScalePerSec = (endScale - initScale) / ZoomInHubDuration_1;
+
+
         float t = 0;
-        while(t < delayOfAnimHub)
+        while(t < ZoomInHubDuration_1)
         {
             t += Time.deltaTime;
-            system[0].transform.localPosition = Vector3.Lerp(system[0].transform.localPosition, offsetInHub[curIndex-1], Time.deltaTime * 1 / delayOfAnimHub);
-            system[0].transform.localScale = Vector3.Lerp(system[0].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnimHub);
 
-            //child[0].transform.localPosition = new Vector3(0,0,50);
-            //system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnim);
-            //system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnim);
-            
-            Debug.Log("In coroutine");
+            system[hubIndex].transform.localPosition += (dPosPerSec *Time.deltaTime);
+            system[hubIndex].transform.localScale += (dScalePerSec * Time.deltaTime);
+
+       
             yield return 0;
         }
-        system[0].transform.localScale = Vector3.zero;
-        system[0].transform.localPosition = offsetInHub[curIndex-1];
-        StopCoroutine(startAnimHub());
-        StartCoroutine(startAnimOnglet());
+
+        StopAllCoroutines();
+        system[hubIndex].transform.localScale = Vector3.zero;
+        system[hubIndex].transform.localPosition = Vector3.zero;
+        system[WindowIndex].transform.localScale = Vector3.zero;
+        system[WindowIndex].transform.localPosition = Vector3.zero;
+        StartCoroutine(ZoomInHub_2(newWindow));
         
     }
 
-    IEnumerator startAnimOnglet()
+    IEnumerator ZoomInHub_2(Window newWindow)
     {
+        int WindowIndex = (int)newWindow;
+
+        Vector3 initScale = Vector3.zero;
+        Vector3 endScale = Vector3.one;
+        Vector3 dScalePerSec = (endScale - initScale) / ZoomInHubDuration_2;
+
         float t = 0;
-        while (t < delayOfAnimOnglet)
+        while (t < ZoomInHubDuration_2)
         {
             t += Time.deltaTime;
-            system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnimOnglet);
-            system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnimOnglet);
+            system[WindowIndex].transform.localScale += (dScalePerSec * Time.deltaTime);
 
             yield return 0;
         }
-        system[0].transform.localPosition = offsetInHub[curIndex-1];
-        StopCoroutine(startAnimOnglet());
+
+        system[WindowIndex].transform.localScale = endScale;
+        StopAllCoroutines();
+        //system[(int)Window.Hub].transform.localPosition = positionHubTransition[WindowIndex];
+
     }
 
-    IEnumerator startAnimOngletOut()
+    #endregion
+
+    #region ZoomFromWindow
+
+    IEnumerator ZoomInWindow_1(Window curWindow)
     {
+        int hubIndex = (int)Window.Hub;
+        int curWindowIndex = (int)curWindow;
+
+        Vector3 initPos = system[curWindowIndex].transform.localPosition;
+        Vector3 endPos = positionWindowTranstion[curWindowIndex];
+        Vector3 dPosPerSec = (endPos - initPos) / ZoomInWindowDuration_1;
+
+        Vector3 initScale = system[curWindowIndex].transform.localScale;
+        Vector3 endScale = scaleWindowTransition[curWindowIndex];
+        Vector3 dScalePerSec = (endScale - initScale) / ZoomInWindowDuration_1;
+
+
         float t = 0;
-        while (t < delayOfAnimOngletOut)
+        while (t < ZoomInHubDuration_1)
         {
             t += Time.deltaTime;
-            system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, offsetInOnglet[curIndex+1] , Time.deltaTime * 1 / delayOfAnimOnglet);
-            system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnimOnglet);
+
+            system[curWindowIndex].transform.localPosition += (dPosPerSec * Time.deltaTime);
+            system[curWindowIndex].transform.localScale += (dScalePerSec * Time.deltaTime);
+
+
             yield return 0;
         }
-        system[0].transform.localPosition = offsetInHub[curIndex];
-        StopCoroutine(startAnimOngletOut());
+
+        StopAllCoroutines();
+        system[hubIndex].transform.localScale = Vector3.zero;
+        system[hubIndex].transform.localPosition = Vector3.zero;
+        system[curWindowIndex].transform.localScale = Vector3.zero;
+        system[curWindowIndex].transform.localPosition = Vector3.zero;
+        StartCoroutine(ZoomInWindow_2());
+
     }
 
+    IEnumerator ZoomInWindow_2()
+    {
+        int hubIndex = (int)Window.Hub;
+
+        Vector3 initScale = Vector3.zero;
+        Vector3 endScale = Vector3.one;
+        Vector3 dScalePerSec = (endScale - initScale) / ZoomInHubDuration_2;
+
+        float t = 0;
+        while (t < ZoomInHubDuration_2)
+        {
+            t += Time.deltaTime;
+            system[hubIndex].transform.localScale += (dScalePerSec * Time.deltaTime);
+
+            yield return 0;
+        }
+
+
+        system[hubIndex].transform.localScale = endScale;
+        StopAllCoroutines();
+        //system[(int)Window.Hub].transform.localPosition = positionHubTransition[WindowIndex];
+
+    }
+
+    #endregion
 }

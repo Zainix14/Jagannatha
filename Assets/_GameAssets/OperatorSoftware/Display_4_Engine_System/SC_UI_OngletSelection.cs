@@ -31,6 +31,10 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
 
     public void Action()
     {
+        SC_UI_OngletContainer.Window newWindow = (SC_UI_OngletContainer.Window)index;
+
+        ongletContainer.ChangeWindow(newWindow);
+        /*
         for (int i = 0; i < 4; i++)
         {
             if (i == index)
@@ -43,7 +47,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
             {
                 //ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 400);
             }
-        }   
+        }   */
     }
 
     public void isBreakdownSystem(bool state)

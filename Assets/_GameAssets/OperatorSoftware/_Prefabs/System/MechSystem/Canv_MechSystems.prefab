@@ -888,32 +888,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   system:
-  - {fileID: 6892914330345354213}
   - {fileID: 7534594990621651753}
   - {fileID: 7534594989199811663}
   - {fileID: 7534594990323443022}
+  - {fileID: 6892914330345354213}
   onglet:
   - {fileID: 8493325689212383835}
   - {fileID: 8348791093728445680}
   - {fileID: 8362834520160829762}
-  hubInOngletPos:
-  - {x: 0, y: -448, z: 0}
-  - {x: 447, y: 364, z: 0}
-  - {x: -486, y: 246, z: 0}
-  offsetInHub:
-  - {x: 0, y: -570, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  offsetInOnglet:
-  - {x: 0, y: 1394, z: 0}
-  - {x: 1384, y: -1000, z: 0}
-  - {x: 1466, y: -747, z: 0}
+  positionHubTransition:
+  - {x: 0, y: -2200, z: 0}
+  - {x: 2200, y: 1080, z: 0}
+  - {x: -2200, y: 1080, z: 0}
+  scaleHubTransition:
+  - {x: 11, y: 11, z: 1}
+  - {x: 11, y: 11, z: 1}
+  - {x: 11, y: 11, z: 1}
+  positionWindowTranstion:
+  - {x: 0, y: 4940, z: 0}
+  - {x: -4900, y: -4000, z: 0}
+  - {x: 5350, y: -2712, z: 0}
+  scaleWindowTransition:
+  - {x: 11, y: 11, z: 1}
+  - {x: 11, y: 11, z: 1}
+  - {x: 11, y: 11, z: 0}
   particleFB: {fileID: 6896665828945494966}
-  curIndex: 0
   speedAnimOnglet: 5
-  delayOfAnimHub: 0.5
-  delayOfAnimOnglet: 0.5
-  delayOfAnimOngletOut: 0.5
+  ZoomInHubDuration_1: 3
+  ZoomInHubDuration_2: 3
+  ZoomInWindowDuration_1: 3
+  ZoomInWindowDuration_2: 3
 --- !u!82 &5283548059076886130
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11830,7 +11834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8db33df7bf1b442a0cf1ce1c59d288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 2
+  index: 1
   ongletContainer: {fileID: 3801815549123785550}
   warningNotif: {fileID: 8890395489586546758}
   img_warningNotif: {fileID: 2984717085257348674}
@@ -11935,7 +11939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8db33df7bf1b442a0cf1ce1c59d288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 3
+  index: 2
   ongletContainer: {fileID: 3801815549123785550}
   warningNotif: {fileID: 4698088282524634069}
   img_warningNotif: {fileID: 9129689641131300721}
@@ -12040,7 +12044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8db33df7bf1b442a0cf1ce1c59d288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 1
+  index: 0
   ongletContainer: {fileID: 3801815549123785550}
   warningNotif: {fileID: 8389992004744986160}
   img_warningNotif: {fileID: 1305502120921098757}
@@ -12505,6 +12509,11 @@ PrefabInstance:
       propertyPath: ongletContainer
       value: 
       objectReference: {fileID: 3801815549123785550}
+    - target: {fileID: 2157742961263108315, guid: a0e47d0d631f926469202ef2f02a6d69,
+        type: 3}
+      propertyPath: index
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2282951193326180949, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
       propertyPath: warning
@@ -12683,7 +12692,7 @@ PrefabInstance:
     - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2076
+      value: -1980
       objectReference: {fileID: 0}
     - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
@@ -12729,6 +12738,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7070655555890904675, guid: a0e47d0d631f926469202ef2f02a6d69,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7070655556928683015, guid: a0e47d0d631f926469202ef2f02a6d69,
         type: 3}
