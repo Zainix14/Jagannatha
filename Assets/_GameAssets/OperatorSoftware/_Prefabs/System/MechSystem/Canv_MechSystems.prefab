@@ -887,7 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51fe21ee4e4ac548bf1fb974e368652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  child:
+  system:
   - {fileID: 6892914330345354213}
   - {fileID: 7534594990621651753}
   - {fileID: 7534594989199811663}
@@ -904,10 +904,16 @@ MonoBehaviour:
   - {x: 0, y: -570, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  offsetInOnglet:
+  - {x: 0, y: 1394, z: 0}
+  - {x: 1384, y: -1000, z: 0}
+  - {x: 1466, y: -747, z: 0}
   particleFB: {fileID: 6896665828945494966}
   curIndex: 0
   speedAnimOnglet: 5
-  delayOfAnim: 5
+  delayOfAnimHub: 0.5
+  delayOfAnimOnglet: 0.5
+  delayOfAnimOngletOut: 0.5
 --- !u!82 &5283548059076886130
 AudioSource:
   m_ObjectHideFlags: 0

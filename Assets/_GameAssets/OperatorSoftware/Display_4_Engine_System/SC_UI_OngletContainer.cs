@@ -14,7 +14,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
     #endregion
 
     //[SerializeField]
-    public GameObject[] child;
+    public GameObject[] system;
 
 
     [SerializeField]
@@ -23,6 +23,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
     Vector3[] hubInOngletPos;
     [SerializeField]
     Vector3[] offsetInHub;
+    [SerializeField]
+    Vector3[] offsetInOnglet;
     public Transform particleFB;
     //public RectTransform particleRect;
     bool toPlace = false;
@@ -33,7 +35,11 @@ public class SC_UI_OngletContainer : MonoBehaviour
     [SerializeField]
     float speedAnimOnglet;
     [SerializeField]
-    float delayOfAnim;
+    float delayOfAnimHub;
+    [SerializeField]
+    float delayOfAnimOnglet;
+    [SerializeField]
+    float delayOfAnimOngletOut;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -77,11 +83,11 @@ public class SC_UI_OngletContainer : MonoBehaviour
         {
             Debug.Log("UPDATE HUB");
             
-            if(child[0].transform.localScale.x < 1)
-            {
-                child[0].transform.localPosition = Vector3.Lerp(child[0].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
-                child[0].transform.localScale = Vector3.Lerp(child[0].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
-            }
+            //if(system[0].transform.localScale.x < 1)
+            //{
+            //    system[0].transform.localPosition = Vector3.Lerp(system[0].transform.localPosition, Vector3.zero, Time.deltaTime * speedAnimOnglet);
+            //    system[0].transform.localScale = Vector3.Lerp(system[0].transform.localScale, Vector3.one, Time.deltaTime * speedAnimOnglet);
+            //}
                    
         }
          
@@ -93,19 +99,19 @@ public class SC_UI_OngletContainer : MonoBehaviour
         {
             hubOn = true;
             Debug.Log("Hub");
-
+            StartCoroutine(startAnimOngletOut());
             for (int i = 0; i < onglet.Length; i++)
             {
                 //child[i].transform.position = onglet[i+1].transform.localPosition;
-                child[i+1].transform.localPosition = onglet[i].transform.localPosition;
-                child[i + 1].transform.localScale = Vector3.zero;
+                system[i + 1].transform.localPosition = onglet[i].transform.localPosition;
+                system[i + 1].transform.localScale = Vector3.zero;
             }
         }
         else
         {
             hubOn = false;
-            StartCoroutine(startAnim());
-            for (int i = 0; i < child.Length; i++)
+            StartCoroutine(startAnimHub());
+            for (int i = 0; i < system.Length; i++)
             {
 
                 if (i == curIndex)
@@ -134,29 +140,56 @@ public class SC_UI_OngletContainer : MonoBehaviour
         onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
     }
 
-    IEnumerator startAnim()
+    IEnumerator startAnimHub()
     {
         float t = 0;
-        while(t < delayOfAnim+2)
+        while(t < delayOfAnimHub)
         {
             t += Time.deltaTime;
-            child[0].transform.localPosition = Vector3.Lerp(child[0].transform.localPosition, offsetInHub[curIndex], Time.deltaTime * 1 / delayOfAnim);
-            //child[0].transform.localScale = Vector3.zero;
-            child[0].transform.localScale = Vector3.Lerp(child[0].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnim);
+            system[0].transform.localPosition = Vector3.Lerp(system[0].transform.localPosition, offsetInHub[curIndex-1], Time.deltaTime * 1 / delayOfAnimHub);
+            system[0].transform.localScale = Vector3.Lerp(system[0].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnimHub);
 
             //child[0].transform.localPosition = new Vector3(0,0,50);
-            child[curIndex].transform.localPosition = Vector3.Lerp(child[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnim);
-            child[curIndex].transform.localScale = Vector3.Lerp(child[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnim);
+            //system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnim);
+            //system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnim);
             
             Debug.Log("In coroutine");
             yield return 0;
         }
-        child[0].transform.localScale = Vector3.zero;
-        child[0].transform.localPosition = offsetInHub[curIndex];
-        Debug.Log("Out of1");
-        StopCoroutine(startAnim());
-        Debug.Log("Out of2");
+        system[0].transform.localScale = Vector3.zero;
+        system[0].transform.localPosition = offsetInHub[curIndex-1];
+        StopCoroutine(startAnimHub());
+        StartCoroutine(startAnimOnglet());
+        
+    }
 
+    IEnumerator startAnimOnglet()
+    {
+        float t = 0;
+        while (t < delayOfAnimOnglet)
+        {
+            t += Time.deltaTime;
+            system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, Vector3.zero, Time.deltaTime * 1 / delayOfAnimOnglet);
+            system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, Vector3.one, Time.deltaTime * 1 / delayOfAnimOnglet);
+
+            yield return 0;
+        }
+        system[0].transform.localPosition = offsetInHub[curIndex-1];
+        StopCoroutine(startAnimOnglet());
+    }
+
+    IEnumerator startAnimOngletOut()
+    {
+        float t = 0;
+        while (t < delayOfAnimOngletOut)
+        {
+            t += Time.deltaTime;
+            system[curIndex].transform.localPosition = Vector3.Lerp(system[curIndex].transform.localPosition, offsetInOnglet[curIndex+1] , Time.deltaTime * 1 / delayOfAnimOnglet);
+            system[curIndex].transform.localScale = Vector3.Lerp(system[curIndex].transform.localScale, new Vector3(3, 3, 3), Time.deltaTime * 1 / delayOfAnimOnglet);
+            yield return 0;
+        }
+        system[0].transform.localPosition = offsetInHub[curIndex];
+        StopCoroutine(startAnimOngletOut());
     }
 
 }
