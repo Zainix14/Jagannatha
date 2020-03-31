@@ -136,6 +136,22 @@ public class SC_UI_Display_Flock : MonoBehaviour
         return _boidsTab;
     }
 
+    public void activateRender()
+    {
+        for (int i = 0; i < _boidsTab.Length; i++)
+        {
+            _boidsTab[i].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+        }
+
+    }
+
+    public void desactivateRender()
+    {
+        for (int i = 0; i < _boidsTab.Length; i++)
+        {
+            _boidsTab[i].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
     #region Flock
     void SplitDivision(int splitNumber)
     {
