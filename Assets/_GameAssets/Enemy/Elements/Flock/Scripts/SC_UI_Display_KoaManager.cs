@@ -12,7 +12,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
     /// Current BoidSettings
     /// </summary>
     BoidSettings curBoidSettings; //Paramètres dans le scriptableObject Settings
-    FlockSettings curFlockSettings;
     SC_UI_Display_Flock flockManager;
     /// <summary>
     /// Contient toute la liste des guides actuels 
@@ -29,7 +28,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
     int spawnCount;
     public bool isActive;
-
 
     /// <summary>
     /// Avant le start, instanciation
@@ -56,14 +54,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
         Invoke("InitBoids", 1f);
 
     }
-
-    public void NewFlock(FlockSettings curflock)
-    {
-        curFlockSettings = curflock;
-    }
-
-
-
 
     void InitBoids()
     {
@@ -97,6 +87,9 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
     void KoaBehavior()
     {
+        _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
+
+        /*
         switch (curBoidSettings.koaBehavior)
         {
             case (BoidSettings.KoaBehavior.Boid):
@@ -108,7 +101,7 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
             case (BoidSettings.KoaBehavior.Center):
 
-                _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
+             
 
                 break;
 
@@ -146,7 +139,7 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
                 break;
 
-        }
+        }*/
     }
 
 
@@ -209,27 +202,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
             curBoidSettings = newSettings; ;
         }
 
-    }
-
-    public void GenerateNewBoid()
-    {
-
-        for (int i = 0; i < curFlockSettings.maxBoid; i++)
-        {
-            if (!_boidsTab[i].isActive)
-            {
-                _boidsTab[i].transform.position = _koa.transform.position; //Déplacement à la position
-                _boidsTab[i].transform.forward = Random.insideUnitSphere; //Rotation random
-                int rnd = 0;
-                if (_guideList.Count > 1)
-                {
-                    rnd = Random.Range(1, _guideList.Count);
-                }
-                SC_KoaManager s = null;
-                _boidsTab[i].Initialize(curBoidSettings, _guideList[rnd], new Vector3Int(100,100,100), s, (int)curFlockSettings.attackType);
-                return;
-            }
-        }
     }
 
 

@@ -152,6 +152,8 @@ public class SC_UI_Display_Flock : MonoBehaviour
             _boidsTab[i].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         }
     }
+
+
     #region Flock
     void SplitDivision(int splitNumber)
     {

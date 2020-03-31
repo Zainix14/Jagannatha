@@ -64,6 +64,13 @@ public class SC_MoveKoaSync : NetworkBehaviour
         if (!isServer) 
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
     }
+    
+    [ClientRpc]
+    public void RpcSendIntBehaviorIndex(GameObject Target, int boidSettingsIndex)
+    {
+        if (!isServer) 
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetBoidSettings(boidSettingsIndex);
+    }
 
     [ClientRpc]
     public void RpcSendIntCurState(GameObject Target, int curState)
@@ -84,6 +91,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
             sc_KoaSettings.SetKoaLife(curLife);
             sc_KoaSettings.SetKoamaxLife(maxLife);
             sc_KoaSettings.SetKoaType(type);
+            
 
         }
     }
@@ -105,5 +113,10 @@ public class SC_MoveKoaSync : NetworkBehaviour
     public void SetCurState(int curState)
     {
         RpcSendIntCurState(gameObject, curState);
+    }
+
+    public void SetNewBehavior(int boidSettingsIndex)
+    {
+        RpcSendIntBehaviorIndex(gameObject, boidSettingsIndex);
     }
 }
