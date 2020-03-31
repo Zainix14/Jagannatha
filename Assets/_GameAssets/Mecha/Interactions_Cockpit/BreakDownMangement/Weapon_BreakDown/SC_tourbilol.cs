@@ -68,7 +68,7 @@ public class SC_tourbilol : MonoBehaviour, IInteractible
 
         oldRot = curRot;
 
-    }
+    }//0.06859592 // 0.1714907 // 0.1611188
 
     public void IsValueOk()
     {
