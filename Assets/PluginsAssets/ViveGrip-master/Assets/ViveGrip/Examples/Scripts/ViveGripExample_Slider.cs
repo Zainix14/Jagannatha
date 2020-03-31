@@ -17,16 +17,19 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public bool _freezeAlongY = false;
     public bool _freezeAlongZ = true;
 
+    public float limit = 6;
+
     /// <summary>
     /// Index du slider pour sa structList
     /// </summary>
     /// 
 
+
     public int index;
 
     public float desiredValue = 0;
     public bool isEnPanne = false;
-    public float precision = 0.05f;
+    public float precision = 0;
 
     private GameObject Mng_SyncVar;
     private Rigidbody sliderRigidbody;
@@ -37,6 +40,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
     [Range(0, 1)]
     public float probability = 1;
+
+    public float precisionPercent = 10;
 
     /*
     [SerializeField]
@@ -56,6 +61,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         oldX = transform.position.x;
         sliderRigidbody = gameObject.GetComponent<Rigidbody>();
         GetReferences();
+        precision = (limit *0.45f* 2 / 100) * precisionPercent;
     }
 
     void GetReferences()
@@ -94,15 +100,15 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         //sécurité juste en y
 
-        if (transform.localPosition.x<-0.45f)
+        if (transform.localPosition.x<-limit)
         {
 
-            transform.localPosition = new Vector3(-0.45f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-limit, transform.localPosition.y, transform.localPosition.z);
 
         }
-        else if (transform.localPosition.x > 0.45f)
+        else if (transform.localPosition.x > limit)
         {
-            transform.localPosition = new Vector3(0.45f, transform.localPosition.y,  transform.localPosition.z);
+            transform.localPosition = new Vector3(limit, transform.localPosition.y,  transform.localPosition.z);
 
         }
      
@@ -110,7 +116,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         float newX = gameObject.transform.localPosition.x;
 
         //on envoie la valeur à la syncvar si celle ci a changé
-        if (newX != oldX) sendToSynchVar(Mathf.Round(gameObject.transform.localPosition.x*100)/100);
+        if (newX != oldX) sendToSynchVar(-Mathf.Round(Ratio(gameObject.transform.localPosition.x,limit,0.45f,-limit,-0.45f)*100)/100);
 
 
 
@@ -248,5 +254,14 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
             return false;
 
 
+    }
+
+
+
+    float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
     }
 }
