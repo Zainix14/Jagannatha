@@ -17,9 +17,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     float maxKoaLife;
     float curKoaLife;
 
-
-
-
     [SerializeField]
     Material[] Tab_mat;
     [SerializeField]
@@ -29,12 +26,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
 
     public bool bSelected;
 
+    int curBoidSettingsIndex;
+
     [SerializeField]
     GameObject VFX_koadeath;
-
-    [SerializeField]
-    TrailRenderer trail;
-
+ 
     public enum koaState
     {
         spawn, 
@@ -56,9 +52,6 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         initialRadius = GetComponent<SphereCollider>().radius;
         spawn = false;
         timer = 0;
-
-
-
     }
 
     public void SetKoaType(int type)
@@ -96,6 +89,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         this.maxKoaLife = maxLife;
     }
 
+    public void SetBoidSettings(int boidSettingsIndex)
+    {
+        curBoidSettingsIndex = boidSettingsIndex;
+    }
+
     public string GetKoaID()
     {
         return koaID;
@@ -115,14 +113,10 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         return sensibility;
     }
 
-    public float GetTimeBeforeSpawn()
-    {
-        return timeBeforeSpawn;
-    }
 
-    public int getState()
+    public int GetBoidSettingsIndex()
     {
-        return (int)currentState;
+        return curBoidSettingsIndex;
     }
 
     void Update()

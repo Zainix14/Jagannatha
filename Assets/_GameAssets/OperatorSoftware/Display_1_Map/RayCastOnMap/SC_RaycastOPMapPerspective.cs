@@ -33,7 +33,7 @@ public class SC_RaycastOPMapPerspective : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -64,13 +64,16 @@ public class SC_RaycastOPMapPerspective : MonoBehaviour
                         var OldSelect = OldObjectClic.GetComponent<SC_KoaSettingsOP>();
                         OldSelect.bSelected = false;
                         OldSelect.SetColor();
+                        
                     }
                         
                     SC_UI_Display_MapInfos_KoaState.Instance.SetNewKoaSettings(hit.collider.GetComponent<SC_KoaSettingsOP>());
+                    
                     objectOnclic = hit.collider.gameObject;
                     var script = objectOnclic.GetComponent<SC_KoaSettingsOP>();
                     script.bSelected = true;
                     script.SetColor();
+                   
                 }
          
 
@@ -96,6 +99,8 @@ public class SC_RaycastOPMapPerspective : MonoBehaviour
                 //objectOnclic = null;
                 //SC_UI_Display_MapInfos_KoaState.Instance.activated = false;
             }
+            
         }
+        SC_UI_Display_MapInfos_StateManager.Instance.checkState();
     }
 }

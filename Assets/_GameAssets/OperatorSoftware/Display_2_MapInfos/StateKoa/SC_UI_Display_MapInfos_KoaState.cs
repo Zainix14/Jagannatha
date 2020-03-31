@@ -14,10 +14,11 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     SC_KoaSettingsOP curKoaScriptKoaSettings;
 
-
     GameObject Mng_SyncVar = null;
     SC_SyncVar_calibr sc_syncvar;
 
+
+    BoidSettings boidSettings;
 
     public bool activated;
 
@@ -32,6 +33,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     //[SerializeField]
     //Text optiWeapon;
+
     enum KoaState
     {
         Spawn = 0,
@@ -40,7 +42,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         Death = 3,
         Reaction = 4
     }
-
 
     KoaState curState;
 
@@ -51,8 +52,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     public float optiPercent;
 
-    public float fKoaLife;
-    public float curfKoaLife;
+    public float fKoaLife = 100;
+    public float curfKoaLife = 100;
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
@@ -87,9 +88,11 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     {
         curKoaScriptKoaSettings = newSettings;
         koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
-  
+        boidSettings = SC_FixedData.Instance.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+        SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
         activated = true;
     }
+
     void GetReferences()
     {
         if (Mng_SyncVar == null)
@@ -123,19 +126,25 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
                 koaLife.text = fKoaLife.ToString();
 
-
                 sliderLifeKoa.value = fKoaLife;
                 lifeBarSecondary();
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
-                curState = (KoaState)curKoaScriptKoaSettings.getState();
-                Debug.Log("State " + curState);
+
                 displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
 
                 if (curfKoaLife != fKoaLife)
                 {
+
                     SC_UI_Display_MapInfos_KOAShake.Instance.ShakeIt(5f,0.5f);
-                    
+                    SC_UI_Display_MapInfos_StateManager.Instance.checkState();
+                }
+
+                BoidSettings newBoidsettings = SC_FixedData.Instance.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+                if (boidSettings != newBoidsettings)
+                {
+                    boidSettings = newBoidsettings;
+                    SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
                 }
             }
 
