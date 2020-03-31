@@ -11,14 +11,17 @@ GameObject:
   - component: {fileID: 1191190038714318852}
   - component: {fileID: 538367924452280997}
   - component: {fileID: 114099304646520164}
-  - component: {fileID: 4368857588347926662}
   - component: {fileID: 1368075933537142398}
   - component: {fileID: 8548583962632855439}
-  - component: {fileID: 5748100819708757458}
-  - component: {fileID: 53643191084022802}
   - component: {fileID: 7755470197080493254}
-  - component: {fileID: 114264464940656700}
   - component: {fileID: 114663460475482450}
+  - component: {fileID: 114264464940656700}
+  - component: {fileID: 4368857588347926662}
+  - component: {fileID: 6537008293451797170}
+  - component: {fileID: 5748100819708757458}
+  - component: {fileID: 6402389925693676307}
+  - component: {fileID: 53643191084022802}
+  - component: {fileID: 3909304021811589144}
   m_Layer: 0
   m_Name: Mng_SyncVar
   m_TagString: Mng_SyncVar
@@ -85,20 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1c07a6449b0ca439ee6fac5f6f7d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4368857588347926662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438552421462837456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21043578dd6b3aa47999c5b80f006565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slidersNb: 6
-  switchesNb: 5
 --- !u!114 &1368075933537142398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,32 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nbDisplay: 13
---- !u!114 &5748100819708757458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438552421462837456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8ee60c764a12a42859a03df5e7fa31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tourbilolNb: 2
---- !u!114 &53643191084022802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438552421462837456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: defa29bdb50651c4ab9bb8b0b4af0420, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  switchesNb: 3
 --- !u!114 &7755470197080493254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,19 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nbOfIntButtons: 3
---- !u!114 &114264464940656700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438552421462837456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7810674fc1e46244a87c27d8228cd5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mustReboot: 0
 --- !u!114 &114663460475482450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,3 +139,103 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotCasque: 0
+--- !u!114 &114264464940656700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7810674fc1e46244a87c27d8228cd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mustReboot: 0
+  displayIsEnPanne: 0
+  weaponIsEnPanne: 0
+  movementIsEnPanne: 0
+--- !u!114 &4368857588347926662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21043578dd6b3aa47999c5b80f006565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slidersNb: 6
+  switchesNb: 5
+--- !u!114 &6537008293451797170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067710579c60ca64a9911f4f83d18661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurState: 0
+--- !u!114 &5748100819708757458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b8ee60c764a12a42859a03df5e7fa31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tourbilolNb: 2
+--- !u!114 &6402389925693676307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431693c13b7658b488b937c419030cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurState: 0
+--- !u!114 &53643191084022802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defa29bdb50651c4ab9bb8b0b4af0420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switchesNb: 3
+--- !u!114 &3909304021811589144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438552421462837456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10959e7d148cd24ba4edc4eabd2a79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurState: 0
+  n_MovementLife: 0
+  n_BreakDownLvl: 0
+  b_MaxBreakdown: 0
+  CurDir: 0
+  CurBrokenDir: 1
