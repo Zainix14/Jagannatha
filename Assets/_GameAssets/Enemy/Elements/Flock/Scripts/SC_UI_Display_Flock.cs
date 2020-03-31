@@ -72,6 +72,7 @@ public class SC_UI_Display_Flock : MonoBehaviour
     void Start()
     {
 
+        Debug.Log("start flock display");
         _curBoidSetting = baseBoidSettings;
         InitializePoolAndComputeShader();
         InitializeFlock();
@@ -87,6 +88,9 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void InitializePoolAndComputeShader()
     {
+
+        Debug.Log("InitializePoolAndComputeShader");
+
         _boidsTab = new Boid[nbBoid];
         GameObject boidContainer = Instantiate(_boidContainer);
         for (int i = 0; i<_boidsTab.Length;i++)
@@ -106,6 +110,9 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void InitializeFlock()
     {
+        Debug.Log("InitializeFlock");
+
+
         flockInitialRot = transform.rotation;
         _mainGuide = gameObject.transform;
         _GuideList = new List<Transform>();//Instanciation de la guide list
@@ -125,6 +132,7 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     void ActivateFlock()
     {
+        Debug.Log("ActivateFlock");
 
         isActive = true;
         _SCKoaManager.ActivateKoa();

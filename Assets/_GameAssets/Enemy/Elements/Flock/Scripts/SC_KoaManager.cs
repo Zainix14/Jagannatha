@@ -69,6 +69,7 @@ public class SC_KoaManager : MonoBehaviour
     /// </summary>
     public void Initialize(Transform newGuide, int newSpawnCount, BoidSettings newSettings, FlockSettings flockSettings, Vector3Int newSensitivity)
     {
+        Debug.Log("init koa debug log pilote");
         GetReferences();
         regeneration = true;
         curRecoveryTimer = 0;
