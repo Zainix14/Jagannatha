@@ -227,16 +227,7 @@ public class SC_KoaManager : MonoBehaviour
                 {
                     if (_boidsTab[i].isActive)
                     {
-                        /*
-                        Vector3 offset = _boidsTab[i].transform.position - flockManager.transform.position;
-                        float sqrLen = offset.sqrMagnitude;
-                        if (sqrLen < 100 * 100)
-                        {
-                            nbActive++;
-                            x += _boidsTab[i].transform.position.x;
-                            y += _boidsTab[i].transform.position.y;
-                            z += _boidsTab[i].transform.position.z;
-                        }*/
+                        
 
                         if (Vector3.Distance(_boidsTab[i].transform.position, flockManager.transform.position)<150)
                         {
@@ -470,5 +461,8 @@ public class SC_KoaManager : MonoBehaviour
         }
     }
 
-
+    public void ChangeKoaState(int state)
+    {
+        syncVarKoa.SetCurState(state);
+    }
 }
