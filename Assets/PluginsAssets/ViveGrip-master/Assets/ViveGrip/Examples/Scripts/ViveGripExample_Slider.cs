@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using System.Collections;
 
 public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
@@ -43,6 +44,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
     public float precisionPercent = 10;
 
+    public TMP_Text text_value_display;
     /*
     [SerializeField]
     button bouton;
@@ -118,6 +120,11 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         //on envoie la valeur à la syncvar si celle ci a changé
         if (newX != oldX) sendToSynchVar(-Mathf.Round(Ratio(gameObject.transform.localPosition.x,limit,0.45f,-limit,-0.45f)*100)/100);
 
+        if(text_value_display != null)
+        {
+            text_value_display.text = Mathf.RoundToInt(Ratio(-Mathf.Round(Ratio(gameObject.transform.localPosition.x, limit, 0.45f, -limit, -0.45f) * 100) / 100, 0.4f, 10, -0.4f, 0)).ToString();
+
+        }
 
 
         if (controller != null) {
