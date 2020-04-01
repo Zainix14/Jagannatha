@@ -27,6 +27,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
 
     public int index;
+    public int curValue;
 
     public float desiredValue = 0;
     public bool isEnPanne = false;
@@ -122,10 +123,10 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         if(text_value_display != null)
         {
-            text_value_display.text = Mathf.RoundToInt(Ratio(-Mathf.Round(Ratio(gameObject.transform.localPosition.x, limit, 0.45f, -limit, -0.45f) * 100) / 100, 0.4f, 10, -0.4f, 0)).ToString();
+            curValue = Mathf.RoundToInt(Ratio(-Mathf.Round(Ratio(gameObject.transform.localPosition.x, limit, 0.45f, -limit, -0.45f) * 100) / 100, 0.4f, 10, -0.4f, 0));
+            text_value_display.text = curValue.ToString();
 
         }
-
 
         if (controller != null) {
           float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
@@ -165,10 +166,10 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void ChangeDesired()
     {
 
-        desiredValue = Random.Range(-0.4f, 0.4f);
+        desiredValue = Random.Range(-limit, limit);
         while (gameObject.transform.localPosition.x >= desiredValue - precision && gameObject.transform.localPosition.x <= desiredValue + precision)
         {
-            desiredValue = Random.Range(-0.4f, 0.4f);
+            desiredValue = Random.Range(-limit, limit);
         }
 
         SetIsEnPanne(true);
