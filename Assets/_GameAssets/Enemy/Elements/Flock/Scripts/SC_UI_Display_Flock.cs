@@ -304,7 +304,7 @@ public class SC_UI_Display_Flock : MonoBehaviour
     }
     public void StartNewBehavior(BoidSettings newSettings)
     {
-        Debug.Log(newSettings);
+
         transform.rotation = flockInitialRot;
         _curBoidSetting = newSettings;
         Reassemble();
