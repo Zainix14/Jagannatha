@@ -41,20 +41,20 @@ public class SC_UI_SystmShield : MonoBehaviour
 
     void displayBar()
     {
-        fRatioValue = Mathf.Lerp(fRatioValue, ratio(simpleValue, 1, 20, 0, 0), Time.deltaTime * speedBar);
+        fRatioValue = Mathf.Lerp(fRatioValue, ratio(simpleValue, 1, nbImage - 1, 0, 0), Time.deltaTime * speedBar);
         int ratioValue = Mathf.RoundToInt(fRatioValue);
         if (ratioValue != 0)
         {
             for (int i = ratioValue; i >= 0; i--)
             {
-                tabImage[i].GetComponent<Image>().enabled = true;
+                tabImage[i].enabled = true;
             }
         }
         if (ratioValue != nbImage-1)
         {
             for (int i = nbImage - 1; i >= ratioValue; i--)
             {
-                tabImage[i].GetComponent<Image>().enabled = false;
+                tabImage[i].enabled = false;
             }
         } 
     }
