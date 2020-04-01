@@ -372,7 +372,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                break;
+                    SyncSystemsLifes();
+
+                    break;
 
                 ////////////////////////////////////////////////////////////////////////////////////////////MOVEMENT
                 case FlockSettings.AttackFocus.Movement:
@@ -391,7 +393,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                break;
+                    SyncSystemsLifes();
+
+                    break;
 
                 ////////////////////////////////////////////////////////////////////////////////////////////WEAPON
                 case FlockSettings.AttackFocus.Weapon:
@@ -410,14 +414,24 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         WeaponLife = 10;
 
                     }
-  
-                break;
+
+                    SyncSystemsLifes();
+
+
+                    break;
 
             }
         }
 
         CheckBreakdown();
 
+    }
+
+    void SyncSystemsLifes()
+    {
+        SC_SyncVar_DisplaySystem.Instance.n_Displaylife = Displaylife;
+        SC_SyncVar_MovementSystem.Instance.n_MovementLife = MovementLife;
+        SC_SyncVar_WeaponSystem.Instance.n_WeaponLife = WeaponLife;
     }
 
 }
