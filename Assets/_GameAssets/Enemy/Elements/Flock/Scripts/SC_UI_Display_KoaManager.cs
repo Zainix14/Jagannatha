@@ -87,9 +87,9 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
     void KoaBehavior()
     {
-        _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
 
-        /*
+
+      
         switch (curBoidSettings.koaBehavior)
         {
             case (BoidSettings.KoaBehavior.Boid):
@@ -101,7 +101,7 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
             case (BoidSettings.KoaBehavior.Center):
 
-             
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, flockManager.transform.position, curBoidSettings.maxSpeed * Time.deltaTime);
 
                 break;
 
@@ -139,7 +139,7 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
 
                 break;
 
-        }*/
+        }
     }
 
 
