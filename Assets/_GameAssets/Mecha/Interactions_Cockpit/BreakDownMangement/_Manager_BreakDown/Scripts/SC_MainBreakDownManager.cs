@@ -429,9 +429,16 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     void SyncSystemsLifes()
     {
-        SC_SyncVar_DisplaySystem.Instance.n_Displaylife = Displaylife;
-        SC_SyncVar_MovementSystem.Instance.n_MovementLife = MovementLife;
-        SC_SyncVar_WeaponSystem.Instance.n_WeaponLife = WeaponLife;
+        SC_SyncVar_DisplaySystem.Instance.f_Displaylife = Ratio(Displaylife, 10, 1);
+        SC_SyncVar_MovementSystem.Instance.f_MovementLife = Ratio(MovementLife, 10, 1);
+        SC_SyncVar_WeaponSystem.Instance.f_WeaponLife = Ratio(WeaponLife, 10, 1);
+    }
+
+    float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
     }
 
 }
