@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
+  m_Name: Hard_1_4DodgeCantTouchThis
+  m_EditorClassIdentifier: 
+  minSpeed: 200
+  maxSpeed: 300
+  perceptionRadius: 50
+  avoidanceRadius: 100
+  maxSteerForce: 500
+  alignWeight: 10
+  cohesionWeight: 0
+  seperateWeight: 200
+  targetWeight: 20
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 67108864
+  boundsRadius: 0.1
+  avoidCollisionWeight: 20
+  collisionAvoidDst: 10
+  koaBehavior: 1
+  coverDistance: 0
+  axisRotationSpeed: {x: 10, y: 10, z: 10}
+  split: 1
+  splitNumber: 100
+  curveX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.1347901
+      outSlope: -0.1347901
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5791667
+      value: 0.92193407
+      inSlope: 0.025356568
+      outSlope: 0.025356568
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.18550323
+      outSlope: 0.18550323
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.0700832
+      outSlope: -0.0700832
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5141797
+      value: 0.96396464
+      inSlope: -40.175262
+      outSlope: -40.175262
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.0006993254
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.074174255
+      outSlope: 0.074174255
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.0077324
+      value: 0.9899292
+      inSlope: -4.347857
+      outSlope: -4.347857
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.13441348
+      value: -3.9759579
+      inSlope: -2.9284902
+      outSlope: -2.9284902
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7888399
+      outWeight: 0.88857204
+    - serializedVersion: 3
+      time: 0.5515814
+      value: 5.739049
+      inSlope: -1.8186252
+      outSlope: -1.8186252
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.6232758
+      value: 0.9892578
+      inSlope: -4.432039
+      outSlope: -4.432039
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  amplitude: {x: 4, y: 2, z: 4}
+  frequence: {x: 5, y: 1, z: 5}
+  invert: 1
+  invertAxis: {x: 0.12, y: 0.56, z: 1.41}
+  speedOnSpline: 80
+  settingDuration: 3

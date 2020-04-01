@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89286e30a111f14cbdde113f04bc4aa, type: 3}
+  m_Name: FlockTestSettings
+  m_EditorClassIdentifier: 
+  attackType: 2
+  attackFocus: 3
+  damageOnSystem: 0
+  timeBetweenAttacks: 0
+  fireRate: 5
+  nbBulletToShoot: 50
+  chargingAttackTime: 1
+  activeDuration: 1
+  speedToTarget: 0
+  reactionDuration: 3
+  maxReactionSensibilityPerCent: 50
+  spawnSettings:
+  - {fileID: 11400000, guid: a4b11c1104243ec49a2b9be25c09ae2b, type: 2}
+  - {fileID: 11400000, guid: e296a302f05e8a343841bc22be4c0709, type: 2}
+  - {fileID: 11400000, guid: cfc9ffb08522f0143ac4ad8178903588, type: 2}
+  roamSettings:
+  - {fileID: 11400000, guid: 790db41fbac060d41964033b3867d415, type: 2}
+  attackSettings:
+  - {fileID: 11400000, guid: 63c4b9401330bc046bb9b51573c9a394, type: 2}
+  - {fileID: 11400000, guid: 92fa29393aafc504b94e48142541942b, type: 2}
+  - {fileID: 11400000, guid: 7b15b8a0b9e9bf943be5e15e655266a5, type: 2}
+  destructionSettings:
+  - {fileID: 11400000, guid: d3c572fec02531c44b912e8a21604db6, type: 2}
+  - {fileID: 11400000, guid: a544aac7cc2dcf2419bbf0ba6fbad032, type: 2}
+  - {fileID: 11400000, guid: 62b4e09d19efe5b449cf908138a9bddc, type: 2}
+  reactionSettings:
+  - {fileID: 11400000, guid: d81b9143f2cd6c6408308f9bf5f61e3e, type: 2}
+  - {fileID: 11400000, guid: 7934150062f27ae4195cd71ff4af75f5, type: 2}
+  - {fileID: 11400000, guid: ee712d4740f201d4da7d91c136b5b6f8, type: 2}
+  - {fileID: 11400000, guid: 7934150062f27ae4195cd71ff4af75f5, type: 2}
+  splines: []
+  spawnTimer: 1
+  boidSpawn: 50
+  maxBoid: 100
+  regenerationRate: 800

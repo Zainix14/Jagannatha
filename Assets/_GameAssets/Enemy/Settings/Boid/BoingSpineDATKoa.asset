@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6194ee95dedb4d71a8fe738abba0f47, type: 3}
+  m_Name: BoingSpineDATKoa
+  m_EditorClassIdentifier: 
+  minSpeed: 150
+  maxSpeed: 300
+  perceptionRadius: 1
+  avoidanceRadius: 10
+  maxSteerForce: 35
+  alignWeight: 20
+  cohesionWeight: 40
+  seperateWeight: 20
+  targetWeight: 40
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 67108864
+  boundsRadius: 1
+  avoidCollisionWeight: 0
+  collisionAvoidDst: 0
+  koaBehavior: 3
+  coverDistance: 0
+  axisRotationSpeed: {x: 20, y: 10, z: 1}
+  split: 1
+  splitNumber: 1
+  curveX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.30641305
+      outSlope: 0.30641305
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.27476883
+      value: 1.0841928
+      inSlope: 0.029523619
+      outSlope: 0.029523619
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0147734
+      value: 0.9011409
+      inSlope: 0.20809466
+      outSlope: 0.20809466
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.1637573
+      value: 1
+      inSlope: 0.66355515
+      outSlope: 0.66355515
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0002441
+      inSlope: -0.00054775586
+      outSlope: -0.00054775586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.45833334
+    - serializedVersion: 3
+      time: 0.4833374
+      value: 1.0731213
+      inSlope: 0.004862696
+      outSlope: 0.004862696
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.0002441
+      inSlope: -0.00054009113
+      outSlope: -0.00054009113
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4083333
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0007019
+      inSlope: -0.005033108
+      outSlope: -0.005033108
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.46846846
+    - serializedVersion: 3
+      time: 0.46995318
+      value: 0.9997612
+      inSlope: -0.00011346763
+      outSlope: -0.00011346763
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.0007019
+      inSlope: -0.0008755368
+      outSlope: -0.0008755368
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.35364944
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  amplitude: {x: 0, y: 50, z: 1}
+  frequence: {x: 10, y: 20, z: 10}
+  invert: 0
+  invertAxis: {x: 0, y: 0, z: 0}
+  speedOnSpline: 25
+  settingDuration: 10

@@ -338,12 +338,15 @@ public class SC_KoaManager : MonoBehaviour
     /// <param name="KoaTargetWeight"></param>
     public void SetBehavior(BoidSettings newSettings)
     {
+
         curBoidSettings = newSettings; ;
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(curBoidSettings);
 
         }
+        if(SC_FixedData.Instance.GetBoidIndex(newSettings) != 14)
+        syncVarKoa.SetNewBehavior(SC_FixedData.Instance.GetBoidIndex(newSettings));
 
     }
 
