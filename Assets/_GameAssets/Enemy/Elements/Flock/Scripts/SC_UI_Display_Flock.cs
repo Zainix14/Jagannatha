@@ -97,6 +97,10 @@ public class SC_UI_Display_Flock : MonoBehaviour
             _boidsTab[i] = curBoid;
         }
 
+        for (int i = 0; i < _boidsTab.Length; i++)
+        {
+            _boidsTab[i].transform.GetChild(0).localScale *= 2;
+        }
 
         boidData = new BoidData[_boidsTab.Length];
         boidBuffer = new ComputeBuffer(_boidsTab.Length, BoidData.Size);
