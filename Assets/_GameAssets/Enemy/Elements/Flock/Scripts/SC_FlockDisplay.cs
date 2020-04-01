@@ -174,7 +174,7 @@ public class SC_FlockDisplay : MonoBehaviour
             MultiGuideMovement();
 
         //Si le flock n'est pas fusionné, déplace le main guide selon la spline actuel       
-        bezierWalkerSpeed.Execute(Time.deltaTime);
+        //bezierWalkerSpeed.Execute(Time.deltaTime);
 
         if(isActive && _curBoidSetting != null)
         transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));

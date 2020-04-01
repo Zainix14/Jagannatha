@@ -12,6 +12,7 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
 
     #endregion
 
+
     enum StateOfCanvas
     {
         neutral,
@@ -87,7 +88,8 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
     }
     void desactivateChild(Transform child)
     {
-        child.transform.localPosition = new Vector3(0,0,1000);
+        child.transform.localPosition = new Vector3(0,0,200);
+        
     }
 
 }

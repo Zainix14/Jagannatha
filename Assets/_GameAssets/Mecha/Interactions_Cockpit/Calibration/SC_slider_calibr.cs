@@ -133,6 +133,7 @@ public class SC_slider_calibr : MonoBehaviour
         if (SliderNewRatio != SliderOldRatio)
         {
             SendToSynchVar(SliderNewRatio);
+            SyncWeapSystemCalib(Ratio(SliderCurPos, SliderLenght, 1.0f, 0.0f, 0.0f));
 
             curIntValue = (int)((SliderNewRatio + 0.4f) * 6.25f);
 
@@ -146,14 +147,9 @@ public class SC_slider_calibr : MonoBehaviour
 
             }
 
-
-
             oldIntValue = curIntValue;
 
-        }
-            
-
-            
+        }                
 
         //Vibration
         if (controller != null)
@@ -170,6 +166,7 @@ public class SC_slider_calibr : MonoBehaviour
     //Met aussi à jour l'affichage de la valeur sur le slider
     void SendToSynchVar (float value)
     {    
+
         if (sc_syncvar_calibr == null)
         {
             GetReferences();
@@ -181,7 +178,6 @@ public class SC_slider_calibr : MonoBehaviour
 
             int intvalue = (int)value;
 
-
             sc_syncvar_calibr.CalibrInts[index] = intvalue;
 
             int curWeaponIndex = SC_WeaponManager.Instance.n_CurWeapon;
@@ -191,6 +187,21 @@ public class SC_slider_calibr : MonoBehaviour
             curWeapon.GetComponent<IF_Weapon>().SetSensitivity(index, intvalue);
        
         }
+
+    }
+
+    void SyncWeapSystemCalib(float Value)
+    {
+
+        if (index == 0)
+            SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib = Value;
+
+        if (index == 1)
+            SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib = Value;
+
+        if (index == 2)
+            SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib = Value;
+
     }
 
     /// <summary>

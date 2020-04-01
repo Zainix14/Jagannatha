@@ -70,7 +70,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         if(!b_MaxBreakdown)
         {
-            n_BreakDownLvl += nbBreakdown;
+            int n_BreakDownLvlTemp = n_BreakDownLvl + nbBreakdown;
+            SetBreakdownLvl(n_BreakDownLvlTemp);
             SetInteractibleInBreakdown(n_BreakDownLvl);
             CheckBreakdown();
         }
@@ -136,7 +137,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         n_InteractibleInBreakDown = CurNbInteractBreak();
 
         if(n_InteractibleInBreakDown == interactible.Length)
-            b_MaxBreakdown = true;   
+            SetMaxBreakdown(true);
 
         //Resolution du System (MaxBreakDown)
         else if (n_InteractibleInBreakDown == 0 && b_MaxBreakdown)
@@ -161,17 +162,18 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     public void EndBreakdown()
     {
-        b_MaxBreakdown = false;
-        n_BreakDownLvl = 0;
+
+        SetMaxBreakdown(false);
+        SetBreakdownLvl(0);
 
         int rnd = Random.Range(0, 1);
         if(rnd == 0)
         {
-            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Left;
+            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Left);
         }
         else
         {
-            SC_JoystickMove.Instance.CurBrokenDir = SC_JoystickMove.Dir.Right;
+            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
         }
         
     }
@@ -190,6 +192,18 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         return n_InBreakdown;
 
+    }
+
+    void SetMaxBreakdown(bool TargetState)
+    {
+        b_MaxBreakdown = TargetState;
+        SC_SyncVar_MovementSystem.Instance.b_MaxBreakdown = TargetState;
+    }
+
+    void SetBreakdownLvl(int TargetLvl)
+    {
+        n_BreakDownLvl = TargetLvl;
+        SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl = TargetLvl;
     }
 
     #region DebugMethod

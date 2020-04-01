@@ -20,6 +20,8 @@ namespace BezierSolution
         public float rotationLerpModifier = 10f;//Fidélité de la rotation sur la spline
         bool isGoingForward = true; //Sens de déplacement sur la spline (Forward ou Backward)
 
+        GameObject TargetSlineExtraData;
+
         [SerializeField]
 		[Range( 0f, 1f )]
 		private float m_normalizedT = 0f; //Position actuel du flock sur la curSpline
@@ -41,6 +43,13 @@ namespace BezierSolution
 		public UnityEvent onPathCompleted = new UnityEvent();
 		private bool onPathCompletedCalledAt1 = false;
 		private bool onPathCompletedCalledAt0 = false;
+
+
+
+        void Start()
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
 
         /// <summary>
         /// Change la sline de déplacement actuel | Param : BezierSolution.BezierSpline nouvelle spline a suivre (peut etre null)
@@ -91,7 +100,6 @@ namespace BezierSolution
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationLerpModifier * deltaTime);
                 }
                 else if (lookAt == LookAtMode.SplineExtraData)
-                    target  = GameObject.FindGameObjectWithTag("Player");
                 target.transform.rotation = Quaternion.Lerp(target.transform.rotation, target.transform.rotation, rotationLerpModifier * deltaTime);
 
                 if (movingForward)
