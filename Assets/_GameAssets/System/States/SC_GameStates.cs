@@ -40,7 +40,7 @@ public class SC_GameStates : NetworkBehaviour
         if (isServer)
         {
             RpcSetState(TargetState);
-
+            SyncSystemState(TargetState);
         }
 
     }
@@ -58,24 +58,24 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.Tutorial:
-
-                    
+                 
                 break;
 
             case GameState.Tutorial2:
+
                 if (!isServer)
                 {
 
                     SC_instruct_op_manager.Instance.Deactivate(1);
                     SC_instruct_op_manager.Instance.Activate(0);
                     SC_instruct_op_manager.Instance.Deactivate(6);
+
                 }
-                break;
 
-
-               
+                break;     
 
             case GameState.Game:
+
                 if (!isServer)
                 {
                     SC_instruct_op_manager.Instance.Deactivate(2);
@@ -85,15 +85,24 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.GameEnd:
+
                 if (!isServer)
                     SC_EndGameOP.Instance.EndGameDisplay();
 
                 if(isServer)
                     SC_breakdown_displays_screens.Instance.EndScreenDisplay();
+
                 break;
 
         }
 
+    }
+
+    void SyncSystemState(GameState TargetState)
+    {
+        SC_SyncVar_DisplaySystem.Instance.CurState = TargetState;
+        SC_SyncVar_MovementSystem.Instance.CurState = TargetState;
+        SC_SyncVar_WeaponSystem.Instance.CurState = TargetState;
     }
 
 }
