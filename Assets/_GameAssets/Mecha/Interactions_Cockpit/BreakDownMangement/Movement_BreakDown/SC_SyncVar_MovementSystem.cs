@@ -22,6 +22,8 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_MovementLife = 0;
+    [SyncVar]
+    public bool b_BreakEngine = false;
 
     //SC_MovementBreakDown
     [Header("Var SC_MovementBreakDown")]
