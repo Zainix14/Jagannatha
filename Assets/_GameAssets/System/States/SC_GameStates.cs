@@ -35,7 +35,7 @@ public class SC_GameStates : NetworkBehaviour
             RpcSetState(GameState.Lobby);
     }
 
-    public void RpcIfServer (GameState TargetState)
+    public void ChangeGameState (GameState TargetState)
     {
         if (isServer)
         {

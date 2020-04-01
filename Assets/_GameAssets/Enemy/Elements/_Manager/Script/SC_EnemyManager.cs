@@ -47,7 +47,7 @@ public class SC_EnemyManager : MonoBehaviour
 
         if (phaseIndex == 1)
         {
-            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Game);
+            SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Game);
         }
     }
 
@@ -57,7 +57,7 @@ public class SC_EnemyManager : MonoBehaviour
         curPhaseIndex++;
         if(curPhaseIndex >= phases.Length)
         {
-            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
+            SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.GameEnd);
             Progress.value = 100f;
         }
         else

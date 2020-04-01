@@ -21,7 +21,7 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
-    public int n_Displaylife = 0;
+    public float f_Displaylife = 0;
 
     void Awake()
     {
