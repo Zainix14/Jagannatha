@@ -22,6 +22,8 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_WeaponLife = 0;
+    [SyncVar]
+    public bool b_BreakEngine = false;
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]

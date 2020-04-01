@@ -427,8 +427,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     void SyncSystemsLifes()
     {
         SC_SyncVar_DisplaySystem.Instance.f_Displaylife = Ratio(Displaylife, 10, 1);
+        SC_SyncVar_DisplaySystem.Instance.b_BreakEngine = b_BreakEngine;
         SC_SyncVar_MovementSystem.Instance.f_MovementLife = Ratio(MovementLife, 10, 1);
+        SC_SyncVar_MovementSystem.Instance.b_BreakEngine = b_BreakEngine;
         SC_SyncVar_WeaponSystem.Instance.f_WeaponLife = Ratio(WeaponLife, 10, 1);
+        SC_SyncVar_WeaponSystem.Instance.b_BreakEngine = b_BreakEngine;
     }
 
     float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
