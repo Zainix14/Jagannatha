@@ -106,6 +106,7 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
                 break;
 
             case (BoidSettings.KoaBehavior.Average):
+
                 float x = 0;
                 float y = 0;
                 float z = 0;
@@ -115,22 +116,35 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
                 {
                     if (_boidsTab[i].isActive)
                     {
-                        nbActive++;
-                        x += _boidsTab[i].transform.position.x;
-                        y += _boidsTab[i].transform.position.x;
-                        z += _boidsTab[i].transform.position.x;
+
+
+                        if (Vector3.Distance(_boidsTab[i].transform.position, flockManager.transform.position) < 150)
+                        {
+                            nbActive++;
+                            x += _boidsTab[i].transform.position.x;
+                            y += _boidsTab[i].transform.position.y;
+                            z += _boidsTab[i].transform.position.z;
+                        }
+
+                        else
+                        {
+                            _boidsTab[i].DestroyBoid(Boid.DestructionType.Solo);
+                        }
+
+
                     }
                 }
+
 
                 x /= nbActive;
                 y /= nbActive;
                 z /= nbActive;
 
-                x += flockManager.transform.position.x;
-                y += flockManager.transform.position.y;
-                z += flockManager.transform.position.z;
 
-                _koa.transform.position = new Vector3(x, y, z);
+
+                _koa.transform.position = Vector3.Lerp(_koa.transform.position, new Vector3(x, y, z), 5 * Time.deltaTime);
+
+
 
                 break;
 
