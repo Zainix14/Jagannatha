@@ -3099,7 +3099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5583930423701734144}
   m_LocalRotation: {x: -0, y: -0.70710677, z: 0.000000033527606, w: 0.7071067}
-  m_LocalPosition: {x: 0.06400002, y: 0.057000034, z: -0.2230001}
+  m_LocalPosition: {x: 0.0598, y: 0.0104, z: -0.2035}
   m_LocalScale: {x: 0.042208124, y: 0.04220812, z: 0.042208124}
   m_Children: []
   m_Father: {fileID: 1188799942639114850}
@@ -4632,13 +4632,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7607824150739923158}
-  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.843, y: -0.206, z: -0.442}
-  m_LocalScale: {x: 0.04495275, y: 0.04495275, z: 0.04495275}
+  m_LocalScale: {x: 0.015950091, y: 0.015950091, z: 0.015950091}
   m_Children: []
   m_Father: {fileID: 3263941424973083654}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 0}
 --- !u!33 &7607824150736825558
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4646,7 +4646,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7607824150739923158}
-  m_Mesh: {fileID: 4300000, guid: d90242a66f0936f489f4d31471b999b4, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 50a19184d3d1eb749afbe695ae791b0b, type: 3}
 --- !u!23 &7607824150737923606
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6242,12 +6242,12 @@ PrefabInstance:
     - target: {fileID: 5179937257756364859, guid: 656ea0a7e21608544a7f8141eea6fa1c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.17699999
+      value: -0.177
       objectReference: {fileID: 0}
     - target: {fileID: 5179937257756364859, guid: 656ea0a7e21608544a7f8141eea6fa1c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.04000001
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 5179937257756364859, guid: 656ea0a7e21608544a7f8141eea6fa1c,
         type: 3}
@@ -6263,6 +6263,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.075301625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179937257756364859, guid: 656ea0a7e21608544a7f8141eea6fa1c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.072
       objectReference: {fileID: 0}
     - target: {fileID: 6838156174438646046, guid: 656ea0a7e21608544a7f8141eea6fa1c,
         type: 3}

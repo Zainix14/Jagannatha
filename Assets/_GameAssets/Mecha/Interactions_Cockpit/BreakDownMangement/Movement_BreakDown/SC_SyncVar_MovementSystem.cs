@@ -15,27 +15,27 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
 
     //SC_GameStates
     [Header("Var SC_GameStates")]
-    [SerializeField, SyncVar]
-    SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+    [SyncVar]
+    public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
 
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
-    [SerializeField, SyncVar]
-    int n_MovementLife = 0;
+    [SyncVar]
+    public int n_MovementLife = 0;
 
     //SC_MovementBreakDown
     [Header("Var SC_MovementBreakDown")]
-    [SerializeField, SyncVar]
-    int n_BreakDownLvl = 0;
-    [SerializeField, SyncVar]
-    bool b_MaxBreakdown = false;
+    [SyncVar]
+    public int n_BreakDownLvl = 0;
+    [SyncVar]
+    public bool b_MaxBreakdown = false;
 
     //SC_JoystickMove
     [Header("Var SC_JoystickMove")]
-    [SerializeField, SyncVar]
-    SC_JoystickMove.Dir CurDir = SC_JoystickMove.Dir.None;
-    [SerializeField, SyncVar]
-    SC_JoystickMove.Dir CurBrokenDir = SC_JoystickMove.Dir.Left;
+    [SyncVar]
+    public SC_JoystickMove.Dir CurDir = SC_JoystickMove.Dir.None;
+    [SyncVar]
+    public SC_JoystickMove.Dir CurBrokenDir = SC_JoystickMove.Dir.Left;
 
     void Awake()
     {
