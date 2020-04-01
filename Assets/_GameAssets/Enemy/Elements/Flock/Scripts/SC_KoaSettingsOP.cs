@@ -39,7 +39,7 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         reaction
     }
 
-    public koaState currentState;
+    koaState currentState;
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -117,6 +117,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     public int GetBoidSettingsIndex()
     {
         return curBoidSettingsIndex;
+    }
+
+    public koaState GetKoaState()
+    {
+        return currentState;
     }
 
     void Update()

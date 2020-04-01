@@ -16,7 +16,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     GameObject Mng_SyncVar = null;
     SC_SyncVar_calibr sc_syncvar;
-
+    SC_FixedData fixedData;
 
     BoidSettings boidSettings;
 
@@ -78,7 +78,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        fixedData = SC_FixedData.Instance;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         activated = false;
@@ -88,7 +88,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     {
         curKoaScriptKoaSettings = newSettings;
         koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
-        boidSettings = SC_FixedData.Instance.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+        boidSettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
         SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
         activated = true;
     }
@@ -140,12 +140,13 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                     SC_UI_Display_MapInfos_StateManager.Instance.checkState();
                 }
 
-                BoidSettings newBoidsettings = SC_FixedData.Instance.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+                BoidSettings newBoidsettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
                 if (boidSettings != newBoidsettings)
                 {
                     boidSettings = newBoidsettings;
                     SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
                 }
+                
             }
 
         }
