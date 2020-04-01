@@ -55,6 +55,11 @@ public class SC_UI_Display_Flock : MonoBehaviour
     GameObject _KoaManager;
     SC_UI_Display_KoaManager _SCKoaManager;
 
+    [SerializeField]
+    BezierSolution.BezierSpline splineLine;
+    BezierSolution.BezierWalkerWithSpeed bezierWalkerSpeed;
+
+
     bool isActive = false;
 
     void Awake()
@@ -97,10 +102,6 @@ public class SC_UI_Display_Flock : MonoBehaviour
             _boidsTab[i] = curBoid;
         }
 
-        for (int i = 0; i < _boidsTab.Length; i++)
-        {
-            _boidsTab[i].transform.GetChild(0).localScale *= 2;
-        }
 
         boidData = new BoidData[_boidsTab.Length];
         boidBuffer = new ComputeBuffer(_boidsTab.Length, BoidData.Size);
@@ -122,7 +123,10 @@ public class SC_UI_Display_Flock : MonoBehaviour
         _SCKoaManager = _KoaManager.GetComponent<SC_UI_Display_KoaManager>(); //Récupère le Koa manager du koa instancié
 
         _SCKoaManager.Initialize(_mainGuide,nbBoid, baseBoidSettings);//Initialise le Koa | paramètre : Guide a suivre <> Nombre de Boids a spawn <> Comportement des boids voulu
-     
+
+  
+        bezierWalkerSpeed = GetComponent<BezierSolution.BezierWalkerWithSpeed>();
+        bezierWalkerSpeed.SetNewSpline(splineLine);
 
         ActivateFlock();
 
@@ -270,12 +274,13 @@ public class SC_UI_Display_Flock : MonoBehaviour
             valueY = _curBoidSetting.curveY.Evaluate(_curCurveDistanceList[i].y) * _curBoidSetting.amplitude.y;
             valueZ = _curBoidSetting.curveZ.Evaluate(_curCurveDistanceList[i].z) * _curBoidSetting.amplitude.z;
 
+
             if (_curBoidSetting.invert && i % 2 == 1)
             {
                 valueX -= (valueX * 2) * _curBoidSetting.invertAxis.x;
                 valueY -= (valueY * 2) * _curBoidSetting.invertAxis.y;
                 valueZ -= (valueZ * 2) * _curBoidSetting.invertAxis.z;
-
+             
             }
 
             //Add the offset value
@@ -289,21 +294,28 @@ public class SC_UI_Display_Flock : MonoBehaviour
     {
         if (isActive && _curBoidSetting != null)
         {
-            transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
             if (_splited)
                 MultiGuideMovement();
+
+            bezierWalkerSpeed.Execute(Time.deltaTime);
+
+            transform.Rotate(new Vector3(_curBoidSetting.axisRotationSpeed.x, _curBoidSetting.axisRotationSpeed.y, _curBoidSetting.axisRotationSpeed.z));
         }
     }
     public void StartNewBehavior(BoidSettings newSettings)
     {
+        Debug.Log(newSettings);
         transform.rotation = flockInitialRot;
         _curBoidSetting = newSettings;
         Reassemble();
+
         if (_curBoidSetting.split)
         {
             SplitDivision(_curBoidSetting.splitNumber);
         }
+
         _SCKoaManager.SetBehavior(_curBoidSetting);
+        bezierWalkerSpeed.speed = _curBoidSetting.speedOnSpline;
     }
 
     #endregion
