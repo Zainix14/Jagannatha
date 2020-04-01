@@ -33,13 +33,14 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
  
     public enum koaState
     {
-        spawn, 
-        roam,
-        atttack,
-        reaction
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2,
+        Death = 3,
+        Reaction = 4
     }
 
-    public koaState currentState;
+    koaState currentState;
 
     public void SetSensibility(Vector3 sensibility)
     {
@@ -117,6 +118,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
     public int GetBoidSettingsIndex()
     {
         return curBoidSettingsIndex;
+    }
+
+    public int GetKoaState()
+    {
+        return (int) currentState;
     }
 
     void Update()
