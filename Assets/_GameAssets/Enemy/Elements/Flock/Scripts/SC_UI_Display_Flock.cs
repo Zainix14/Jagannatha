@@ -59,6 +59,8 @@ public class SC_UI_Display_Flock : MonoBehaviour
     BezierSolution.BezierSpline splineLine;
     BezierSolution.BezierWalkerWithSpeed bezierWalkerSpeed;
 
+    bool windowActive = false;
+
 
     bool isActive = false;
 
@@ -146,6 +148,7 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     public void activateRender()
     {
+        windowActive = true;
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
@@ -155,6 +158,7 @@ public class SC_UI_Display_Flock : MonoBehaviour
 
     public void desactivateRender()
     {
+        windowActive = false;
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
@@ -385,11 +389,8 @@ public class SC_UI_Display_Flock : MonoBehaviour
                         _boidsTab[i].avgAvoidanceHeading = boidData[i].avoidanceHeading; //Stockage pour chaque boid : moyenne des éléments à éviter
                         _boidsTab[i].numPerceivedFlockmates = boidData[i].numFlockmates; //Stockage pour chaque boid : nombre de mate autour
 
+                        if(windowActive)
                         _boidsTab[i].UpdateBoid(); //Update les boidss
-
-
-
-
                     }
 
                 }
