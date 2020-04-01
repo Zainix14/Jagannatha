@@ -18,7 +18,7 @@ public class SC_change_state_tuto : MonoBehaviour
 
     void callRPC_changeState()
     {
-        SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial);
+        SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial);
 
     }
 }
