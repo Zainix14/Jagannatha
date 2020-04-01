@@ -32,6 +32,10 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [SyncVar]
     public float f_PhaseCalib = 0;
 
+    //CuurentTarget
+    //Status
+    //WeaNrjLevel
+
     void Awake()
     {
 

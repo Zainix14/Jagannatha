@@ -143,8 +143,6 @@ public class SC_slider_calibr : MonoBehaviour
             {
                 if (controller != null)
                     controller.Vibrate(50, 0.3f);
-
-
             }
 
             oldIntValue = curIntValue;
