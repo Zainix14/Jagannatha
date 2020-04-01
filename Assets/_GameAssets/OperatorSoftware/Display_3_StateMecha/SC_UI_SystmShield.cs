@@ -7,7 +7,7 @@ public class SC_UI_SystmShield : MonoBehaviour
 {
     [Range(0, 1)]
     [SerializeField]
-    float simpleValue;
+    public float simpleValue;
     float fRatioValue;
     [SerializeField]
     float speedBar;
