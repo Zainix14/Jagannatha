@@ -33,10 +33,11 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
  
     public enum koaState
     {
-        spawn, 
-        roam,
-        atttack,
-        reaction
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2,
+        Death = 3,
+        Reaction = 4
     }
 
     koaState currentState;
@@ -119,9 +120,9 @@ public class SC_KoaSettingsOP : MonoBehaviour, IF_KoaForOperator
         return curBoidSettingsIndex;
     }
 
-    public koaState GetKoaState()
+    public int GetKoaState()
     {
-        return currentState;
+        return (int) currentState;
     }
 
     void Update()

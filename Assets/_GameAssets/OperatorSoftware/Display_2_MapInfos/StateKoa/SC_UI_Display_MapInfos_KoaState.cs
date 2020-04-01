@@ -31,6 +31,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     [SerializeField]
     Text koaLife;
 
+    [SerializeField]
+    Text koaStateTxt;
     //[SerializeField]
     //Text optiWeapon;
 
@@ -132,6 +134,8 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
                 displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
+                curState = (KoaState) curKoaScriptKoaSettings.GetKoaState();
+                koaStateTxt.text = "Statut : " + curState.ToString();
 
                 if (curfKoaLife != fKoaLife)
                 {
