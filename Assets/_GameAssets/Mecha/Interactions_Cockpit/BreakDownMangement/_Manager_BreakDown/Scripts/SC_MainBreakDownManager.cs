@@ -268,7 +268,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             //changement de state du tuto
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
+                SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial2);
 
         }
 
