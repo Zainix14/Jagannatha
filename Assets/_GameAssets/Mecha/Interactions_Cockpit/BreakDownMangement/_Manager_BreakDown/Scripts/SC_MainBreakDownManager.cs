@@ -121,6 +121,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     void DebugInput()
     {
+
         if (Input.GetKeyDown(KeyCode.Y))
         {
             SC_BreakdownDisplayManager.Instance.CheckBreakdown();
@@ -272,6 +273,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
+        SyncSystemsLifes();
 
         #region OldVersion
 
@@ -341,6 +343,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         
         if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown) < nbOfBreakDownBeforeTotalBreak && !b_BreakEngine)
         {
+
             switch (attackFocus)
             {
 
@@ -372,8 +375,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                    SyncSystemsLifes();
-
                     break;
 
                 ////////////////////////////////////////////////////////////////////////////////////////////MOVEMENT
@@ -392,8 +393,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         MovementLife = 10;
 
                     }
-
-                    SyncSystemsLifes();
 
                     break;
 
@@ -415,12 +414,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                    SyncSystemsLifes();
-
-
                     break;
 
             }
+
         }
 
         CheckBreakdown();
