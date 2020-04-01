@@ -15,8 +15,22 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     //SC_GameStates
     [Header("Var SC_GameStates")]
-    [SerializeField, SyncVar]
-    SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+    [SyncVar]
+    public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+
+    //SC_MainBreakDownManager
+    [Header("Var SC_MainBreakDownManager")]
+    [SyncVar]
+    public float f_WeaponLife = 0;
+
+    //SC_slider_calibr
+    [Header("Var SC_slider_calibr")]
+    [SyncVar]
+    public float f_AmplitudeCalib = 0;
+    [SyncVar]
+    public float f_FrequenceCalib = 0;
+    [SyncVar]
+    public float f_PhaseCalib = 0;
 
     void Awake()
     {

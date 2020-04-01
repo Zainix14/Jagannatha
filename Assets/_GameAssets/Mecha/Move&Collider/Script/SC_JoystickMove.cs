@@ -277,12 +277,24 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         }
 
-        CurDir = ToDir;
+        SetCurDir(ToDir);
         CoroDir = Dir.Off;
 
     }
 
     #endregion
+
+    public void SetCurDir(Dir TargetDir)
+    {
+        CurDir = TargetDir;
+        SC_SyncVar_MovementSystem.Instance.CurDir = TargetDir;
+    }
+
+    public void SetBrokenDir(Dir TargetDir)
+    {
+        CurBrokenDir = TargetDir;
+        SC_SyncVar_MovementSystem.Instance.CurBrokenDir = TargetDir;
+    }
 
     #region BreakDown
 

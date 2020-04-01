@@ -51,7 +51,6 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
         _koa = Instantiate(_koaPrefab);
         _koa.transform.position = transform.position;
 
-        Invoke("InitBoids", 1f);
 
     }
 
@@ -213,8 +212,10 @@ public class SC_UI_Display_KoaManager : MonoBehaviour
         for (int i = 0; i < _boidsTab.Length; i++)
         {
             _boidsTab[i].SetNewSettings(newSettings);
-            curBoidSettings = newSettings; ;
+            curBoidSettings = newSettings; 
         }
+
+
 
     }
 

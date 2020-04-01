@@ -15,8 +15,13 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
 
     //SC_GameStates
     [Header("Var SC_GameStates")]
-    [SerializeField, SyncVar]
-    SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+    [SyncVar]
+    public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+
+    //SC_MainBreakDownManager
+    [Header("Var SC_MainBreakDownManager")]
+    [SyncVar]
+    public float f_Displaylife = 0;
 
     void Awake()
     {

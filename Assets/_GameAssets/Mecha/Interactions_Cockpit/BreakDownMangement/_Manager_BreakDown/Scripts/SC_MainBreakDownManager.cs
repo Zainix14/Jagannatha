@@ -268,7 +268,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             //changement de state du tuto
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-                SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
+                SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial2);
 
         }
 
@@ -372,7 +372,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                break;
+                    SyncSystemsLifes();
+
+                    break;
 
                 ////////////////////////////////////////////////////////////////////////////////////////////MOVEMENT
                 case FlockSettings.AttackFocus.Movement:
@@ -391,7 +393,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     }
 
-                break;
+                    SyncSystemsLifes();
+
+                    break;
 
                 ////////////////////////////////////////////////////////////////////////////////////////////WEAPON
                 case FlockSettings.AttackFocus.Weapon:
@@ -410,14 +414,31 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         WeaponLife = 10;
 
                     }
-  
-                break;
+
+                    SyncSystemsLifes();
+
+
+                    break;
 
             }
         }
 
         CheckBreakdown();
 
+    }
+
+    void SyncSystemsLifes()
+    {
+        SC_SyncVar_DisplaySystem.Instance.f_Displaylife = Ratio(Displaylife, 10, 1);
+        SC_SyncVar_MovementSystem.Instance.f_MovementLife = Ratio(MovementLife, 10, 1);
+        SC_SyncVar_WeaponSystem.Instance.f_WeaponLife = Ratio(WeaponLife, 10, 1);
+    }
+
+    float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
     }
 
 }
