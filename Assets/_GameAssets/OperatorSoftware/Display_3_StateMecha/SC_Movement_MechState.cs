@@ -71,7 +71,6 @@ public class SC_Movement_MechState : MonoBehaviour
     void UpdateValue()
     {
         _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
-        
     }
 
     public void UpdateVar()
@@ -79,6 +78,8 @@ public class SC_Movement_MechState : MonoBehaviour
         //_SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
         //CheckState();
     }
+
+    #region States
 
     void CheckState()
     {
@@ -149,6 +150,10 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
+    #endregion States
+
+    #region Direction
+
     void updateDirection()
     {
         if (SC_SyncVar_MovementSystem.Instance.CurDir != SC_JoystickMove.Dir.None)
@@ -215,4 +220,7 @@ public class SC_Movement_MechState : MonoBehaviour
         }
 
     }
+
+    #endregion Direction
+
 }

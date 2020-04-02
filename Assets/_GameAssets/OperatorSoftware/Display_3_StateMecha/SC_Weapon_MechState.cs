@@ -82,6 +82,8 @@ public class SC_Weapon_MechState : MonoBehaviour
         //CheckState();
     }
 
+    #region States
+
     void CheckState()
     {
 
@@ -150,5 +152,7 @@ public class SC_Weapon_MechState : MonoBehaviour
         }
 
     }
+
+    #endregion States
 
 }
