@@ -26,6 +26,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     float onTime;
     bool bCanFire;
 
+    public float f_EnergyValue;
+
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
 
@@ -247,6 +249,32 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         else
             bCanFire = true;
 
+        /////////////////----Energy Value-----//////////////////////
+
+        float intervale = 1.5f;
+        float t = intervale;
+
+        if (!bCanFire)
+        {
+            f_EnergyValue = 0;
+        }
+        else
+        {
+            if (offPercentage == 0)
+            {
+                f_EnergyValue = 1;
+            }
+            else
+            {
+                t += Time.deltaTime;
+                if (t >= intervale)
+                {
+
+                    f_EnergyValue = Random.Range(0.3f, 0.8f);
+                    t = 0;
+                }
+            }
+        }
     }
 
     public bool CanFire()

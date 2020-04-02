@@ -14,6 +14,8 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
+    [SerializeField]
+    SC_UI_SystmShield _WeaponEnergyLevel;
 
     [SerializeField]
     Image _Amplitude;
@@ -52,6 +54,7 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     void updateValue()
     {
+        _WeaponEnergyLevel.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel;
         _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
         _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
