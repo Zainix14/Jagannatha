@@ -20,6 +20,8 @@ public class SC_CurTargetCheck : MonoBehaviour
         if (other.gameObject.layer == 10 && !b_OnKoa)
         {
             b_OnKoa = true;
+            string koaID = other.GetComponent<SC_MoveKoaSync>().KoaID;
+            SC_SyncVar_WeaponSystem.Instance.s_KoaID = koaID;
             AimIndicatorSC.SetTarget(other);
             AimIndicatorSC.b_TargetKoa = true;
             CrossHairSC.SnapTarget = SC_CrossHairMove.Target.Koa;
@@ -29,7 +31,11 @@ public class SC_CurTargetCheck : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 10 && b_OnKoa)
+        {
+            SC_SyncVar_WeaponSystem.Instance.s_KoaID = "NONE";
             Reset();
+        }
+       
     }
 
     public void Reset()
