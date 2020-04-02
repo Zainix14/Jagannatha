@@ -54,10 +54,46 @@ public class SC_Display_MechState : MonoBehaviour
     public void UpdateVar()
     {
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
-        CheckState();
+        CheckStateII();
+    }
+    
+    void CheckState()
+    {
+        /*
+        if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        else
+        {
+
+            CurState = SystemState.Connected;
+
+
+            if(SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial)
+            {
+                CurState = SystemState.Initialize;
+            }
+
+            else if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial2 || SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Game)
+            {
+                
+                if(!SC_SyncVar_DisplaySystem.Instance.b_BreakEngine)
+                    CurState = SystemState.Launched;
+
+                else
+                    CurState = SystemState.Initialize;
+
+            }
+
+        }
+
+        ApplyState();
+        */
     }
 
-    void CheckState()
+    void CheckStateII()
     {
 
         if (SC_passwordLock.Instance.b_IsConnected)
