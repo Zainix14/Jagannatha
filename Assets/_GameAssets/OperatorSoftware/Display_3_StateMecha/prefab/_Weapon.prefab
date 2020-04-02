@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7087200546399196757}
   - component: {fileID: 4555243876744325037}
   m_Layer: 5
-  m_Name: img_amplitude
+  m_Name: img_Frequence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7073597741236732243}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 8199293746624126815}
   - component: {fileID: 1340130916519515850}
   m_Layer: 5
-  m_Name: img_frequency
+  m_Name: img_Amplitude
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,7 +1115,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7073597741236732243}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 4430174353689111701}
   - component: {fileID: 2700794459849516861}
   m_Layer: 5
-  m_Name: img_phase
+  m_Name: img_Phase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1260,8 +1260,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2269727947364059108}
   - {fileID: 8023312840343085783}
+  - {fileID: 2269727947364059108}
   - {fileID: 6966838611048596842}
   m_Father: {fileID: 6369080214603496041}
   m_RootOrder: 0
@@ -3079,6 +3079,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SystmShield: {fileID: 8626817885933487517}
+  _Amplitude: {fileID: 1340130916519515850}
+  _Frequence: {fileID: 4555243876744325037}
+  _Phase: {fileID: 2700794459849516861}
 --- !u!1 &6713441519660590559
 GameObject:
   m_ObjectHideFlags: 0

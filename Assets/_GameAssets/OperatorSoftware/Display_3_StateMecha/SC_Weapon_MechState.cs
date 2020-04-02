@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_Weapon_MechState : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class SC_Weapon_MechState : MonoBehaviour
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
 
+    [SerializeField]
+    Image _Amplitude;
+    [SerializeField]
+    Image _Frequence;
+    [SerializeField]
+    Image _Phase;
     void Awake()
     {
 
@@ -43,5 +50,8 @@ public class SC_Weapon_MechState : MonoBehaviour
     void updateValue()
     {
         _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
+        _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
+        _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
+        _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
     }
 }
