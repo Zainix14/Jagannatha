@@ -20,7 +20,7 @@ public class SC_CurTargetCheck : MonoBehaviour
         if (other.gameObject.layer == 10 && !b_OnKoa)
         {
             b_OnKoa = true;
-            string koaID = other.GetComponent<SC_MoveKoaSync>().KoaID;
+            string koaID = other.transform.GetComponentInParent<SC_MoveKoaSync>().KoaID;
             SC_SyncVar_WeaponSystem.Instance.s_KoaID = koaID;
             AimIndicatorSC.SetTarget(other);
             AimIndicatorSC.b_TargetKoa = true;

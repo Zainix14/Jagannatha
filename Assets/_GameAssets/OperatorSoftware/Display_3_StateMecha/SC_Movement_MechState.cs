@@ -14,6 +14,9 @@ public class SC_Movement_MechState : MonoBehaviour
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
 
+    public enum SystemState { Disconnected, Connected, Initialize, Launched }
+    public SystemState CurState;
+
     void Awake()
     {
 
@@ -39,6 +42,32 @@ public class SC_Movement_MechState : MonoBehaviour
     void UpdateValue()
     {
         _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
+    }
+
+    void CheckState()
+    {
+
+        if(SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Lobby)
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        else
+        {
+
+            CurState = SystemState.Connected;
+
+            if (SC_SyncVar_MovementSystem.Instance.CurState != SC_GameStates.GameState.Tutorial)
+            {
+                CurState = SystemState.Initialize;
+
+                if (SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Game && !SC_SyncVar_MovementSystem.Instance.b_BreakEngine)
+                    CurState = SystemState.Launched;
+
+            }   
+
+        }  
+
     }
 
 }
