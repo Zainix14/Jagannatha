@@ -11,13 +11,14 @@ public class SC_Display_MechState : MonoBehaviour
 
     #endregion
 
-    SC_SyncVar_DisplaySystem sc_syncvar_DisplaySystem;
-    SC_SyncVar_StateMecha_Display sc_syncvar_StateMecha_Display;
-
-    GameObject Mng_SyncVar = null;
-
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
+    [SerializeField]
+    GameObject OffState;
+
+
+    public enum SystemState { Disconnected, Connected, Initialize, Launched }
+    public SystemState CurState;
 
     void Awake()
     {
@@ -50,4 +51,36 @@ public class SC_Display_MechState : MonoBehaviour
     {
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
     }
+
+    void CheckState()
+    {
+
+        if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        else
+        {
+
+            CurState = SystemState.Connected;
+
+            if (SC_SyncVar_DisplaySystem.Instance.CurState != SC_GameStates.GameState.Tutorial)
+            {
+                CurState = SystemState.Initialize;
+
+                if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Game && !SC_SyncVar_DisplaySystem.Instance.b_BreakEngine)
+                    CurState = SystemState.Launched;
+
+            }
+
+        }
+
+    }
+
+    void ApplyState()
+    {
+
+    }
+
 }
