@@ -82,10 +82,45 @@ public class SC_Display_MechState : MonoBehaviour
 
         }
 
+        ApplyState();
+
     }
 
     void ApplyState()
     {
+
+        switch (CurState)
+        {
+
+            case SystemState.Disconnected:
+                GeneralOffState.SetActive(true);
+                ConnectedOffState.SetActive(true);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                break;
+
+            case SystemState.Connected:
+                GeneralOffState.SetActive(true);
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                break;
+
+            case SystemState.Initialize:
+                GeneralOffState.SetActive(true);
+                ConnectedOffState.SetActive(true);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                break;
+
+            case SystemState.Launched:
+                GeneralOffState.SetActive(false);
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                break;
+
+        }
 
     }
 
