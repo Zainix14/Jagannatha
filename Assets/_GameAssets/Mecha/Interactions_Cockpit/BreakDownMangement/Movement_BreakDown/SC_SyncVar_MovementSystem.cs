@@ -26,7 +26,7 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_MovementLife = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
 
     //SC_MovementBreakDown
@@ -55,6 +55,13 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
             _instance = this;
         }
 
+    }
+
+    void OnLaunch(bool TargetBool)
+    {
+        b_IsLaunch = TargetBool;
+        if (!isServer)
+            UpdateOnClient();
     }
 
     void OnChangeBreakEngine(bool Breakdown)
