@@ -120,6 +120,7 @@ public class SC_main_breakdown_validation : MonoBehaviour
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
         {
             isValidated = true;
+            SyncVariables();
             SFX_Validate = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_voice_rebooting_system", false, 1f);
             SFX_ValidateSound = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_reboot_button_validate", false, 0.1f);
         }
@@ -134,5 +135,11 @@ public class SC_main_breakdown_validation : MonoBehaviour
         SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
     }
 
+    void SyncVariables()
+    {
+        SC_SyncVar_DisplaySystem.Instance.b_IsLaunch = isValidated;
+        SC_SyncVar_MovementSystem.Instance.b_IsLaunch = isValidated;
+        SC_SyncVar_WeaponSystem.Instance.b_IsLaunch = isValidated;
+    }
 
 }

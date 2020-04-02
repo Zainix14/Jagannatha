@@ -18,12 +18,24 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [SyncVar]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
 
+    /*
+    [Header("Var SC_main_breakdown_validation")]
+    [SyncVar(hook = "OnLaunch")]
+    public bool b_IsLaunch = false;
+    */
+
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_WeaponLife = 0;
     [SyncVar]
     public bool b_BreakEngine = false;
+
+    /*
+    [Header("Var SC_BreakdownWeaponManager")]
+    [SyncVar(hook = "OnChangeNbOfBd")]
+    public float f_CurNbOfBd = 0;
+    */
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
@@ -33,7 +45,6 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     public float f_FrequenceCalib = 0;
     [SyncVar]
     public float f_PhaseCalib = 0;
-
 
     //CuurentTarget
     [SyncVar]

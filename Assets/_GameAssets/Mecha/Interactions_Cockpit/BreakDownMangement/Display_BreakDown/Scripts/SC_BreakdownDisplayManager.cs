@@ -154,6 +154,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
+        SC_SyncVar_DisplaySystem.Instance.f_CurNbOfBd = CurNbOfBreakdown;
 
         //Gestion temporaire du play/stop des fx de panne
         if (CurNbOfBreakdown > 0)

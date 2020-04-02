@@ -18,6 +18,10 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     [SyncVar]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
 
+    [Header("Var SC_main_breakdown_validation")]
+    [SyncVar(hook = "OnLaunch")]
+    public bool b_IsLaunch = false;
+
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]

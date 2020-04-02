@@ -23,7 +23,6 @@ public class SC_Display_MechState : MonoBehaviour
     [SerializeField]
     GameObject LaunchedOffState;
 
-
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
 
@@ -98,6 +97,35 @@ public class SC_Display_MechState : MonoBehaviour
         }
 
         ApplyState();
+
+    }
+
+    void CheckStateII()
+    {
+
+        if (SC_passwordLock.Instance.unlock)
+        {
+
+            CurState = SystemState.Connected;
+
+            if(SC_SyncVar_DisplaySystem.Instance.f_CurNbOfBd == 0)
+            {
+
+                CurState = SystemState.Initialize;
+
+                if (SC_SyncVar_DisplaySystem.Instance.b_IsLaunch)
+                {
+                    CurState = SystemState.Launched;
+                }
+
+            }
+
+        }
+
+        else
+        {
+            CurState = SystemState.Disconnected;
+        }
 
     }
 

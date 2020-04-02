@@ -7,6 +7,14 @@ using UnityEngine.UI;
 
 public class SC_passwordLock : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_passwordLock _instance;
+    public static SC_passwordLock Instance { get { return _instance; } }
+
+    #endregion
+
     [SerializeField]
     GameObject objectPassword; //Contient le texte du inputField
 
@@ -20,7 +28,7 @@ public class SC_passwordLock : MonoBehaviour
 
 
     float countTime = 0; //Compteur 
-    bool unlock = false; //Sécurité
+    public bool unlock = false; //Sécurité
 
     [SerializeField]
     SC_electricPlug plugObject; //récupération de l'objet prise electrique
@@ -30,6 +38,20 @@ public class SC_passwordLock : MonoBehaviour
 
  
     public bool cheatCode = true;
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+    }
 
     void Start()
     {
