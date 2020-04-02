@@ -61,12 +61,13 @@ public class SC_Display_MechState : MonoBehaviour
     public void UpdateVar()
     {
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
-        CheckState();
+        CheckStateII();
     }
 
+    
     void CheckState()
     {
-
+        /*
         if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
         {
             CurState = SystemState.Disconnected;
@@ -97,8 +98,9 @@ public class SC_Display_MechState : MonoBehaviour
         }
 
         ApplyState();
-
+        */
     }
+    
 
     void CheckStateII()
     {
@@ -126,6 +128,8 @@ public class SC_Display_MechState : MonoBehaviour
         {
             CurState = SystemState.Disconnected;
         }
+
+        ApplyState();
 
     }
 

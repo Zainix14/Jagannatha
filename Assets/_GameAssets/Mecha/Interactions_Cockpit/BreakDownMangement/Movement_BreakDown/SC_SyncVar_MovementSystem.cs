@@ -57,4 +57,16 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
 
     }
 
+    void OnChangeBreakEngine(bool Breakdown)
+    {
+        b_BreakEngine = Breakdown;
+        if (!isServer)
+            UpdateOnClient();
+    }
+
+    void UpdateOnClient()
+    {
+        //SC_Movement_MechState.Instance.UpdateVar();
+    }
+
 }
