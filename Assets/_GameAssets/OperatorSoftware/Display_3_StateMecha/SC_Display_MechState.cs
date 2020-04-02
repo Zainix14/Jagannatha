@@ -11,13 +11,21 @@ public class SC_Display_MechState : MonoBehaviour
 
     #endregion
 
-    SC_SyncVar_DisplaySystem sc_syncvar_DisplaySystem;
-    SC_SyncVar_StateMecha_Display sc_syncvar_StateMecha_Display;
-
-    GameObject Mng_SyncVar = null;
-
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
+
+    [SerializeField]
+    GameObject GeneralOffState;
+    [SerializeField]
+    GameObject ConnectedOffState;
+    [SerializeField]
+    GameObject InitializeOffState;
+    [SerializeField]
+    GameObject LaunchedOffState;
+
+
+    public enum SystemState { Disconnected, Connected, Initialize, Launched }
+    public SystemState CurState;
 
     void Awake()
     {
@@ -37,28 +45,98 @@ public class SC_Display_MechState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-        GetReferences();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sc_syncvar_StateMecha_Display == null || sc_syncvar_DisplaySystem == null || Mng_SyncVar == null)
-            GetReferences();
-
-        if (sc_syncvar_StateMecha_Display != null && sc_syncvar_DisplaySystem != null)
-        {
-            _SystmShield.simpleValue = sc_syncvar_DisplaySystem.f_Displaylife;
-        }
+        UpdateValue();
     }
 
-    void GetReferences()
+    void UpdateValue()
     {
-        if (Mng_SyncVar == null)
-            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-        if (Mng_SyncVar != null && sc_syncvar_DisplaySystem == null && sc_syncvar_StateMecha_Display == null)
-            sc_syncvar_DisplaySystem = Mng_SyncVar.GetComponent<SC_SyncVar_DisplaySystem>();
-            sc_syncvar_StateMecha_Display = Mng_SyncVar.GetComponent<SC_SyncVar_StateMecha_Display>();
+        _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
     }
+
+    public void UpdateVar()
+    {
+        _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
+        CheckState();
+    }
+
+    void CheckState()
+    {
+
+        if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        else
+        {
+
+            CurState = SystemState.Connected;
+
+
+            if(SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial)
+            {
+                CurState = SystemState.Initialize;
+            }
+
+            else if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial2 || SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Game)
+            {
+                
+                if(!SC_SyncVar_DisplaySystem.Instance.b_BreakEngine)
+                    CurState = SystemState.Launched;
+
+                else
+                    CurState = SystemState.Initialize;
+
+            }
+
+        }
+
+        ApplyState();
+
+    }
+
+    void ApplyState()
+    {
+
+        switch (CurState)
+        {
+
+            case SystemState.Disconnected:              
+                ConnectedOffState.SetActive(true);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Connected:               
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Initialize:               
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Launched:               
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                GeneralOffState.SetActive(false);
+                break;
+
+        }
+
+    }
+
 }

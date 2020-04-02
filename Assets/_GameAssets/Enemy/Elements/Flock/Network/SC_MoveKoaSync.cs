@@ -14,6 +14,8 @@ public class SC_MoveKoaSync : NetworkBehaviour
     [SyncVar]
     public int MaxboidNumber = 0;
 
+    public string KoaID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +84,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
     [ClientRpc]
     public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife,int type)
     {
+        this.KoaID = KoaID;
         if (!isServer)
         {
             SC_KoaSettingsOP sc_KoaSettings = Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>();
@@ -119,4 +122,6 @@ public class SC_MoveKoaSync : NetworkBehaviour
     {
         RpcSendIntBehaviorIndex(gameObject, boidSettingsIndex);
     }
+
+
 }

@@ -142,18 +142,24 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     public void Trigger()
     {
-        if(SC_WeaponBreakdown.Instance.CanFire())
+
+        SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel = SC_WeaponBreakdown.Instance.f_EnergyValue;
+        if (SC_WeaponBreakdown.Instance.CanFire())
         {
             Fire();
+           
         }
         else
         {
+
             LaserFB.DiseableLaser();
         }
     }
 
     public void ReleaseTrigger()
     {
+
+        SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel = 0;
         Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
         AimHit.b_OnFire = false;
         LaserFB.DiseableLaser();
@@ -209,6 +215,8 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     }
 
     #endregion
+
+
 
     #region Breakdown
 

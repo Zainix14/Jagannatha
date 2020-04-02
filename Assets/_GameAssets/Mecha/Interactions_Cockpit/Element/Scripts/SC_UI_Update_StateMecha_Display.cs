@@ -9,10 +9,10 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
     GameObject Mng_SyncVar = null;
 
 
-    [SerializeField]
-    GameObject warning;
-    [SerializeField]
-    GameObject sparkle;
+    //[SerializeField]
+    //GameObject warning;
+    //[SerializeField]
+    //GameObject sparkle;
 
     int goodDisplay = 0;
     int badDisplay = 0;
@@ -49,12 +49,12 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
         {
             goodDisplay = 0;
 
-            for (int i = 0; i < sc_syncvar.nbDisplay; i++)
+            for (int i = 0; i < sc_syncvar.nbDisplay-1; i++)
             {
                 if (sc_syncvar.displayAll[i] == true)
                 {
-                    warning.SetActive(true);
-                    sparkle.SetActive(false);
+                    //warning.SetActive(true);
+                    //sparkle.SetActive(false);
                     goodDisplay = 0;
                     displays[i].GetComponent<SC_UI_StateMecha_CheckDisplay>().changeColorOnDisplayBreakdown();
                 }
@@ -66,8 +66,8 @@ public class SC_UI_Update_StateMecha_Display : MonoBehaviour
             }
             if (goodDisplay >= sc_syncvar.nbDisplay)
             {
-                warning.SetActive(false);
-                sparkle.SetActive(true);
+                //warning.SetActive(false);
+                //sparkle.SetActive(true);
             }
         }
     }
