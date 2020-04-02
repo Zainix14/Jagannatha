@@ -627,6 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfd3fe8b0fb63d4db4c5bfa2f2f9bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _SystmShield: {fileID: 1415549358683108764}
 --- !u!1 &2700460066727658427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2296,6 +2297,7 @@ GameObject:
   - component: {fileID: 576159679820262238}
   - component: {fileID: 4643551711589235855}
   - component: {fileID: 958352207885443506}
+  - component: {fileID: 1415549358683108764}
   m_Layer: 5
   m_Name: Canvas_SystemShield
   m_TagString: Untagged
@@ -2424,6 +2426,20 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &1415549358683108764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7522312805389949312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecc44641ed411e4597170487aa177ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleValue: 0
+  speedBar: 1
 --- !u!1 &7845693265015166698
 GameObject:
   m_ObjectHideFlags: 0
