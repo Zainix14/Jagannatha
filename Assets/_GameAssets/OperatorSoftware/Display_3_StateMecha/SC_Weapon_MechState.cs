@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class SC_Weapon_MechState : MonoBehaviour
 {
+    #region Singleton
+
+    private static SC_Weapon_MechState _instance;
+    public static SC_Weapon_MechState Instance { get { return _instance; } }
+
+    #endregion
+
+    [SerializeField]
+    SC_UI_SystmShield _SystmShield;
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +37,11 @@ public class SC_Weapon_MechState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        updateValue();
+    }
+
+    void updateValue()
+    {
+        _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
     }
 }
