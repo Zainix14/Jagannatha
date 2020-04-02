@@ -13,6 +13,7 @@ public class SC_Display_MechState : MonoBehaviour
 
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
+
     [SerializeField]
     GameObject GeneralOffState;
     [SerializeField]
@@ -50,15 +51,21 @@ public class SC_Display_MechState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateValue();
+        UpdateValue();
     }
 
-    void updateValue()
+    void UpdateValue()
     {
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
     }
 
-    public void CheckState()
+    public void UpdateVar()
+    {
+        _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
+        CheckState();
+    }
+
+    void CheckState()
     {
 
         if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
@@ -71,12 +78,20 @@ public class SC_Display_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_DisplaySystem.Instance.CurState != SC_GameStates.GameState.Tutorial)
+
+            if(SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial)
             {
                 CurState = SystemState.Initialize;
+            }
 
-                if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Game && !SC_SyncVar_DisplaySystem.Instance.b_BreakEngine)
+            else if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Tutorial2 || SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Game)
+            {
+                
+                if(!SC_SyncVar_DisplaySystem.Instance.b_BreakEngine)
                     CurState = SystemState.Launched;
+
+                else
+                    CurState = SystemState.Initialize;
 
             }
 
@@ -92,32 +107,32 @@ public class SC_Display_MechState : MonoBehaviour
         switch (CurState)
         {
 
-            case SystemState.Disconnected:
-                GeneralOffState.SetActive(true);
+            case SystemState.Disconnected:              
                 ConnectedOffState.SetActive(true);
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
                 break;
 
-            case SystemState.Connected:
+            case SystemState.Connected:               
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Initialize:               
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Launched:               
                 ConnectedOffState.SetActive(false);
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
-                break;
-
-            case SystemState.Initialize:
-                GeneralOffState.SetActive(true);
-                ConnectedOffState.SetActive(true);
-                InitializeOffState.SetActive(false);
-                LaunchedOffState.SetActive(false);
-                break;
-
-            case SystemState.Launched:
                 GeneralOffState.SetActive(false);
-                ConnectedOffState.SetActive(false);
-                InitializeOffState.SetActive(false);
-                LaunchedOffState.SetActive(false);
                 break;
 
         }

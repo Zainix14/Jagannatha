@@ -15,7 +15,7 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
 
     //SC_GameStates
     [Header("Var SC_GameStates")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeGameState")]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
 
     //SC_MainBreakDownManager
@@ -43,19 +43,19 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     {
         CurState = _CurState;
         if (!isServer)
-            CheckOnClient();
+            UpdateOnClient();
     }
 
     void OnChangeBreakEngine(bool Breakdown)
     {
         b_BreakEngine = Breakdown;
         if (!isServer)
-            CheckOnClient();
+            UpdateOnClient();
     }
 
-    void CheckOnClient()
+    void UpdateOnClient()
     {
-        SC_Display_MechState.Instance.CheckState();
+        SC_Display_MechState.Instance.UpdateVar();
     }
 
 }
