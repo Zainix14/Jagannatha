@@ -84,13 +84,13 @@ public class SC_MoveKoaSync : NetworkBehaviour
     [ClientRpc]
     public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife,int type)
     {
+        this.KoaID = KoaID;
         if (!isServer)
         {
             SC_KoaSettingsOP sc_KoaSettings = Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>();
             sc_KoaSettings.SetSensibility(vt3_Sensibility);
             sc_KoaSettings.SetTimeBeforeSpawn(timeBeforeSpawn);
             sc_KoaSettings.SetKoaID(KoaID);
-            this.KoaID = KoaID;
             sc_KoaSettings.SetKoaLife(curLife);
             sc_KoaSettings.SetKoamaxLife(maxLife);
             sc_KoaSettings.SetKoaType(type);
