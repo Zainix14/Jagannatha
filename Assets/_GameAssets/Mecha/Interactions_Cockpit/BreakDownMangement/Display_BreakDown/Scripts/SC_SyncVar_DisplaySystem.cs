@@ -15,15 +15,31 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
 
     //SC_GameStates
     [Header("Var SC_GameStates")]
+
     [SyncVar(hook = "OnChangeGameState")]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
 
+
+    [Header("Var SC_main_breakdown_validation")]
+
+    [SyncVar(hook = "OnLaunch")]
+    public bool b_IsLaunch = false;
+
+
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
-    [SyncVar]
+
+    [SyncVar(hook = "OnChangeSystemLife")]
     public float f_Displaylife = 0;
+
     [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
+
+
+    [Header("Var SC_BreakdownDisplayManager")]
+
+    [SyncVar(hook = "OnChangeNbOfBd")]
+    public float f_CurNbOfBd = 0;
 
     void Awake()
     {
@@ -38,6 +54,20 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
         }
 
     }
+    
+    void OnLaunch(bool TargetBool)
+    {
+        b_IsLaunch = TargetBool;
+        if (!isServer)
+            UpdateOnClient();
+    }
+
+    void OnChangeSystemLife(float newLife)
+    {
+        f_Displaylife = newLife;
+        if (!isServer)
+            UpdateOnClient();
+    }
 
     void OnChangeGameState(SC_GameStates.GameState _CurState)
     {
@@ -49,6 +79,12 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     void OnChangeBreakEngine(bool Breakdown)
     {
         b_BreakEngine = Breakdown;
+        if (!isServer)
+            UpdateOnClient();
+    }
+    void OnChangeNbOfBd(float Target)
+    {
+        f_CurNbOfBd = Target;
         if (!isServer)
             UpdateOnClient();
     }

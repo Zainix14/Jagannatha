@@ -17,13 +17,23 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [Header("Var SC_GameStates")]
     [SyncVar]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+   
+    [Header("Var SC_main_breakdown_validation")]
+    [SyncVar(hook = "OnLaunch")]
+    public bool b_IsLaunch = false;
 
     //SC_MainBreakDownManager
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_WeaponLife = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
+
+    /*
+    [Header("Var SC_BreakdownWeaponManager")]
+    [SyncVar(hook = "OnChangeNbOfBd")]
+    public float f_CurNbOfBd = 0;
+    */
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
@@ -34,11 +44,9 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [SyncVar]
     public float f_PhaseCalib = 0;
 
-
     //CuurentTarget
     [SyncVar]
     public string s_KoaID = "";
-
 
     //Status
     //WeaNrjLevel
@@ -60,5 +68,23 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     }
 
+    void OnLaunch(bool TargetBool)
+    {
+        b_IsLaunch = TargetBool;
+        if (!isServer)
+            UpdateOnClient();
+    }
+
+    void OnChangeBreakEngine(bool Breakdown)
+    {
+        b_BreakEngine = Breakdown;
+        if (!isServer)
+            UpdateOnClient();
+    }
+
+    void UpdateOnClient()
+    {
+        //SC_Weapon_MechState.Instance.UpdateVar();
+    }
 
 }
