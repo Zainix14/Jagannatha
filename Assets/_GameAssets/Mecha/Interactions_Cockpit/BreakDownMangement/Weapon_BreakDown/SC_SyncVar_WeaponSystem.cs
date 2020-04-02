@@ -34,7 +34,12 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [SyncVar]
     public float f_PhaseCalib = 0;
 
+
     //CuurentTarget
+    [SyncVar]
+    public string s_KoaID = "";
+
+
     //Status
     //WeaNrjLevel
 
