@@ -21,6 +21,9 @@ public class SC_Weapon_MechState : MonoBehaviour
     Image _Frequence;
     [SerializeField]
     Image _Phase;
+
+    [SerializeField]
+    Text _curTarget;
     void Awake()
     {
 
@@ -53,5 +56,6 @@ public class SC_Weapon_MechState : MonoBehaviour
         _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
+        _curTarget.text = SC_SyncVar_WeaponSystem.Instance.s_KoaID;
     }
 }
