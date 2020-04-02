@@ -29,11 +29,9 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
 
-    /*
     [Header("Var SC_BreakdownWeaponManager")]
     [SyncVar(hook = "OnChangeNbOfBd")]
     public float f_CurNbOfBd = 0;
-    */
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
@@ -82,9 +80,16 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
             UpdateOnClient();
     }
 
+    void OnChangeNbOfBd(float Target)
+    {
+        f_CurNbOfBd = Target;
+        if (!isServer)
+            UpdateOnClient();
+    }
+
     void UpdateOnClient()
     {
-        //SC_Weapon_MechState.Instance.UpdateVar();
+        SC_Weapon_MechState.Instance.UpdateVar();
     }
 
 }

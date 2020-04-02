@@ -73,7 +73,7 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
 
     void UpdateOnClient()
     {
-        //SC_Movement_MechState.Instance.UpdateVar();
+        SC_Movement_MechState.Instance.UpdateVar();
     }
 
 }

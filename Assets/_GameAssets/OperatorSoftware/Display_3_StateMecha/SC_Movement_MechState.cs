@@ -29,6 +29,14 @@ public class SC_Movement_MechState : MonoBehaviour
     [SerializeField]
     Color32 breakdownColor;
 
+    [SerializeField]
+    GameObject GeneralOffState;
+    [SerializeField]
+    GameObject ConnectedOffState;
+    [SerializeField]
+    GameObject InitializeOffState;
+    [SerializeField]
+    GameObject LaunchedOffState;
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
@@ -66,32 +74,81 @@ public class SC_Movement_MechState : MonoBehaviour
         
     }
 
+    public void UpdateVar()
+    {
+        //_SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
+        //CheckState();
+    }
+
     void CheckState()
     {
 
-        if(SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Lobby)
-        {
-            CurState = SystemState.Disconnected;
-        }
-
-        else
+        if (SC_passwordLock.Instance.b_IsConnected)
         {
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_MovementSystem.Instance.CurState != SC_GameStates.GameState.Tutorial)
+            if (SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl == 0)
             {
+
                 CurState = SystemState.Initialize;
 
-                if (SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Game && !SC_SyncVar_MovementSystem.Instance.b_BreakEngine)
+                if (SC_SyncVar_MovementSystem.Instance.b_IsLaunch)
+                {
                     CurState = SystemState.Launched;
+                }
 
-            }   
+            }
 
-        }  
+        }
+
+        else
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        ApplyState();
 
     }
-    
+
+    void ApplyState()
+    {
+
+        switch (CurState)
+        {
+
+            case SystemState.Disconnected:
+                ConnectedOffState.SetActive(true);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Connected:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Initialize:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Launched:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                GeneralOffState.SetActive(false);
+                break;
+
+        }
+
+    }
+
     void updateDirection()
     {
         if (SC_SyncVar_MovementSystem.Instance.CurDir != SC_JoystickMove.Dir.None)

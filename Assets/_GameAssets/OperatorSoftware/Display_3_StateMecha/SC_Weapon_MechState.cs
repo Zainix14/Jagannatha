@@ -26,6 +26,21 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     [SerializeField]
     Text _curTarget;
+
+    [SerializeField]
+    GameObject GeneralOffState;
+    [SerializeField]
+    GameObject ConnectedOffState;
+    [SerializeField]
+    GameObject InitializeOffState;
+    [SerializeField]
+    GameObject LaunchedOffState;
+
+    public enum SystemState { Disconnected, Connected, Initialize, Launched }
+    public SystemState CurState;
+
+
+
     void Awake()
     {
 
@@ -61,4 +76,79 @@ public class SC_Weapon_MechState : MonoBehaviour
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
         _curTarget.text = SC_SyncVar_WeaponSystem.Instance.s_KoaID;
     }
+
+    public void UpdateVar()
+    {
+        //CheckState();
+    }
+
+    void CheckState()
+    {
+
+        if (SC_passwordLock.Instance.b_IsConnected)
+        {
+
+            CurState = SystemState.Connected;
+
+            if (SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd == 0)
+            {
+
+                CurState = SystemState.Initialize;
+
+                if (SC_SyncVar_WeaponSystem.Instance.b_IsLaunch)
+                {
+                    CurState = SystemState.Launched;
+                }
+
+            }
+
+        }
+
+        else
+        {
+            CurState = SystemState.Disconnected;
+        }
+
+        ApplyState();
+
+    }
+
+    void ApplyState()
+    {
+
+        switch (CurState)
+        {
+
+            case SystemState.Disconnected:
+                ConnectedOffState.SetActive(true);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Connected:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(true);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Initialize:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(true);
+                GeneralOffState.SetActive(true);
+                break;
+
+            case SystemState.Launched:
+                ConnectedOffState.SetActive(false);
+                InitializeOffState.SetActive(false);
+                LaunchedOffState.SetActive(false);
+                GeneralOffState.SetActive(false);
+                break;
+
+        }
+
+    }
+
 }
