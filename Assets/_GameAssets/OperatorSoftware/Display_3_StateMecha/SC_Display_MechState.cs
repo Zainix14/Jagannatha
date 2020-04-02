@@ -96,7 +96,7 @@ public class SC_Display_MechState : MonoBehaviour
     void CheckStateII()
     {
 
-        if (SC_passwordLock.Instance.unlock)
+        if (SC_passwordLock.Instance.b_IsConnected)
         {
 
             CurState = SystemState.Connected;
