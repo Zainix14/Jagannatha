@@ -46,10 +46,28 @@ public class SC_Movement_MechState : MonoBehaviour
 
     void CheckState()
     {
+
         if(SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Lobby)
         {
-
+            CurState = SystemState.Disconnected;
         }
+
+        else
+        {
+
+            CurState = SystemState.Connected;
+
+            if (SC_SyncVar_MovementSystem.Instance.CurState != SC_GameStates.GameState.Tutorial)
+            {
+                CurState = SystemState.Initialize;
+
+                if (SC_SyncVar_MovementSystem.Instance.CurState == SC_GameStates.GameState.Game && !SC_SyncVar_MovementSystem.Instance.b_BreakEngine)
+                    CurState = SystemState.Launched;
+
+            }   
+
+        }  
+
     }
 
 }
