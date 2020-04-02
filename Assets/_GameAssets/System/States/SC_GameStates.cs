@@ -58,7 +58,13 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case GameState.Tutorial:
-                 
+                 //Descendre le Bouton Reboot au tuto
+                if(isServer)
+                {
+                    SC_main_breakdown_validation.Instance.isValidated = false;
+                    SC_main_breakdown_validation.Instance.textStopBlink();
+                    SC_main_breakdown_validation.Instance.bringDown();
+                }
                 break;
 
             case GameState.Tutorial2:
