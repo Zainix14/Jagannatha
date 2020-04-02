@@ -42,6 +42,9 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     //Status
     //WeaNrjLevel
+    [SyncVar]
+    public float f_curEnergyLevel;
+
 
     void Awake()
     {
@@ -56,5 +59,6 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
         }
 
     }
+
 
 }

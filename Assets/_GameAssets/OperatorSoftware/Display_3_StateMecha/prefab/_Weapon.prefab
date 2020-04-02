@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 2949390426771202084}
   - component: {fileID: 5161294823812353343}
   - component: {fileID: 5220413841287914749}
+  - component: {fileID: 4865770307201610963}
   m_Layer: 5
   m_Name: Canvas_WeapEnergLvl
   m_TagString: Untagged
@@ -824,7 +825,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273130857879621922}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -852,7 +853,7 @@ RectTransform:
   - {fileID: 8231892350544297225}
   m_Father: {fileID: 1696341396753662145}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 682.1, y: 218}
@@ -941,6 +942,20 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &4865770307201610963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273130857879621922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecc44641ed411e4597170487aa177ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleValue: 1
+  speedBar: 5
 --- !u!1 &1890031984009319350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,6 +3094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SystmShield: {fileID: 8626817885933487517}
+  _WeaponEnergyLevel: {fileID: 4865770307201610963}
   _Amplitude: {fileID: 1340130916519515850}
   _Frequence: {fileID: 4555243876744325037}
   _Phase: {fileID: 2700794459849516861}
