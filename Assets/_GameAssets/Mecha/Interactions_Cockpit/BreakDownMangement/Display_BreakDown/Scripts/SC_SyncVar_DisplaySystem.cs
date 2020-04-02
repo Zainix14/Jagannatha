@@ -22,7 +22,7 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     [Header("Var SC_MainBreakDownManager")]
     [SyncVar]
     public float f_Displaylife = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
 
     void Awake()
@@ -37,6 +37,25 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
             _instance = this;
         }
 
+    }
+
+    void OnChangeGameState(SC_GameStates.GameState _CurState)
+    {
+        CurState = _CurState;
+        if (!isServer)
+            CheckOnClient();
+    }
+
+    void OnChangeBreakEngine(bool Breakdown)
+    {
+        b_BreakEngine = Breakdown;
+        if (!isServer)
+            CheckOnClient();
+    }
+
+    void CheckOnClient()
+    {
+        SC_Display_MechState.Instance.CheckState();
     }
 
 }

@@ -58,7 +58,7 @@ public class SC_Display_MechState : MonoBehaviour
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
     }
 
-    void CheckState()
+    public void CheckState()
     {
 
         if (SC_SyncVar_DisplaySystem.Instance.CurState == SC_GameStates.GameState.Lobby)
