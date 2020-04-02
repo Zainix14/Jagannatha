@@ -95,17 +95,14 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
     void Fire()
     {
-
         if (!b_OnFire)
             b_OnFire = true;
 
         tab_Weapons[n_CurWeapon].GetComponent<IF_Weapon>().Trigger();
-
     }
 
     void StopFire()
     {
-
         if (b_OnFire)
             b_OnFire = false;
 

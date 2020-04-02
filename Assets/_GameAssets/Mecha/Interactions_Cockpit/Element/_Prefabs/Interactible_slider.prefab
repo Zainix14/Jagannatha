@@ -178,17 +178,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5363f18d94c8cd041ad208a76db6aff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitUp: {fileID: 0}
-  limitDown: {fileID: 0}
   _freezeAlongX: 1
   _freezeAlongY: 0
   _freezeAlongZ: 1
+  limit: 6
   index: 0
+  curValue: 0
   desiredValue: 0
   isEnPanne: 0
   precision: 0.08
   LocalBreakdownMng: {fileID: 0}
   probability: 1
+  precisionPercent: 10
+  text_value_display: {fileID: 0}
 --- !u!114 &376930883222669003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,17 +481,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5363f18d94c8cd041ad208a76db6aff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitUp: {fileID: 1795339270231398395}
-  limitDown: {fileID: 1795339269765263225}
   _freezeAlongX: 1
   _freezeAlongY: 0
   _freezeAlongZ: 1
+  limit: 6
   index: 0
+  curValue: 0
   desiredValue: 0
   isEnPanne: 0
   precision: 0.08
   LocalBreakdownMng: {fileID: 0}
   probability: 1
+  precisionPercent: 10
+  text_value_display: {fileID: 0}
 --- !u!114 &8667573124441522386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +548,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 70283f3b56401be4b9af3a81129c87e1, type: 3}
       propertyPath: m_Name
       value: BAKE_MSH_slider_Base_LP 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 70283f3b56401be4b9af3a81129c87e1, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 70283f3b56401be4b9af3a81129c87e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -623,6 +631,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ec7e8aee35ae241448f173425dbf659e, type: 3}
       propertyPath: m_Name
       value: MSH_slider_Handle
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ec7e8aee35ae241448f173425dbf659e, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec7e8aee35ae241448f173425dbf659e, type: 3}
       propertyPath: m_LocalPosition.x
