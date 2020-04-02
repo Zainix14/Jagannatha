@@ -14,6 +14,8 @@ public class SC_MoveKoaSync : NetworkBehaviour
     [SyncVar]
     public int MaxboidNumber = 0;
 
+    public string KoaID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +90,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
             sc_KoaSettings.SetSensibility(vt3_Sensibility);
             sc_KoaSettings.SetTimeBeforeSpawn(timeBeforeSpawn);
             sc_KoaSettings.SetKoaID(KoaID);
+            this.KoaID = KoaID;
             sc_KoaSettings.SetKoaLife(curLife);
             sc_KoaSettings.SetKoamaxLife(maxLife);
             sc_KoaSettings.SetKoaType(type);
@@ -119,4 +122,6 @@ public class SC_MoveKoaSync : NetworkBehaviour
     {
         RpcSendIntBehaviorIndex(gameObject, boidSettingsIndex);
     }
+
+
 }
