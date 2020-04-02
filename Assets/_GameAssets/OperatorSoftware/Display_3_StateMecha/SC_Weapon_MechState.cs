@@ -11,9 +11,6 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     #endregion
 
-    SC_SyncVar_WeaponSystem sc_syncvar;
-    GameObject Mng_SyncVar = null;
-
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
 
@@ -34,26 +31,17 @@ public class SC_Weapon_MechState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-        GetReferences();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sc_syncvar == null || Mng_SyncVar == null)
-            GetReferences();
-
-        if (sc_syncvar != null)
-        {
-            _SystmShield.simpleValue = sc_syncvar.f_WeaponLife;
-        }
+        updateValue();
     }
-    void GetReferences()
+
+    void updateValue()
     {
-        if (Mng_SyncVar == null)
-            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-        if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_WeaponSystem>();
+        _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
     }
 }
