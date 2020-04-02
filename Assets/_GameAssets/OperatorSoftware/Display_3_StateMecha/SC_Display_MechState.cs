@@ -14,7 +14,13 @@ public class SC_Display_MechState : MonoBehaviour
     [SerializeField]
     SC_UI_SystmShield _SystmShield;
     [SerializeField]
-    GameObject OffState;
+    GameObject GeneralOffState;
+    [SerializeField]
+    GameObject ConnectedOffState;
+    [SerializeField]
+    GameObject InitializeOffState;
+    [SerializeField]
+    GameObject LaunchedOffState;
 
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
