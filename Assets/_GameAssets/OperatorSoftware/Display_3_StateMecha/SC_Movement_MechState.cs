@@ -37,6 +37,10 @@ public class SC_Movement_MechState : MonoBehaviour
     GameObject InitializeOffState;
     [SerializeField]
     GameObject LaunchedOffState;
+    [SerializeField]
+    GameObject LeftOffState;
+    [SerializeField]
+    GameObject RightOffState;
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
@@ -110,6 +114,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Connected:
@@ -117,6 +123,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Initialize:
@@ -124,6 +132,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Launched:
@@ -131,6 +141,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
                 GeneralOffState.SetActive(false);
+                RightOffState.SetActive(false);
+                LeftOffState.SetActive(false);
                 break;
 
         }
