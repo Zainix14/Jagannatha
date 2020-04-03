@@ -4925,6 +4925,8 @@ MonoBehaviour:
   ChargeSpark: {fileID: 9061922980439107130}
   Fioriture: {fileID: 3483605811274956347}
   Ondes: {fileID: 5321897897454312640}
+  Elice: {fileID: 9061922981140049850}
+  EliceDark: {fileID: 9061922979335405752}
   WeapMainSC: {fileID: 0}
 --- !u!1 &7460222069811358692
 GameObject:
@@ -4972,6 +4974,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846088858609291, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846088858609291, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846088858609291, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7669846088927798593, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
@@ -5083,6 +5100,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7669846090290006405, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846090290006405, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669846090290006405, guid: c10e83375715eeb4e95f77f947c50cc5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7669846090290006406, guid: c10e83375715eeb4e95f77f947c50cc5,
         type: 3}
       propertyPath: m_IsActive
@@ -5115,6 +5147,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1707619149161342524}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9061922979335405752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7669846088858609284, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9061922980439107130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7669846089967534086, guid: c10e83375715eeb4e95f77f947c50cc5,
@@ -5124,6 +5162,12 @@ GameObject:
 --- !u!1 &9061922979266380669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7669846088927798593, guid: c10e83375715eeb4e95f77f947c50cc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707619149161342524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9061922981140049850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7669846090290006406, guid: c10e83375715eeb4e95f77f947c50cc5,
     type: 3}
   m_PrefabInstance: {fileID: 1707619149161342524}
   m_PrefabAsset: {fileID: 0}
