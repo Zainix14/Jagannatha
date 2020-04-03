@@ -45,8 +45,6 @@ public class SC_UI_OngletContainer : MonoBehaviour
 
 
     [SerializeField]
-    float speedAnimOnglet;
-    [SerializeField]
     float ZoomInHubDuration_1;
     [SerializeField]
     float ZoomInHubDuration_2;
@@ -54,6 +52,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
     float ZoomInWindowDuration_1;
     [SerializeField]
     float ZoomInWindowDuration_2;
+
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -86,35 +86,6 @@ public class SC_UI_OngletContainer : MonoBehaviour
         }
         curWindow = newWindow;
 
-
-        /*
-        switch (newWindow)
-        {
-            case Window.Hub:
-
-                break;
-
-            case Window.Display:
-
-
-                StartCoroutine(ZoomInHub_1(curWindow));
-
-                break;
-            case Window.Movement:
-
-
-                StartCoroutine(ZoomInHub_1(curWindow));
-
-                break;
-
-            case Window.Weapon:
-
-
-                StartCoroutine(ZoomInHub_1(curWindow));
-
-                break;
-        }*/
-        
 
     }
 
@@ -213,7 +184,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
 
 
         float t = 0;
-        while (t < ZoomInHubDuration_1)
+        while (t < ZoomInWindowDuration_1)
         {
             t += Time.deltaTime;
 
@@ -242,7 +213,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         Vector3 dScalePerSec = (endScale - initScale) / ZoomInHubDuration_2;
 
         float t = 0;
-        while (t < ZoomInHubDuration_2)
+        while (t < ZoomInWindowDuration_2)
         {
             t += Time.deltaTime;
             system[hubIndex].transform.localScale += (dScalePerSec * Time.deltaTime);

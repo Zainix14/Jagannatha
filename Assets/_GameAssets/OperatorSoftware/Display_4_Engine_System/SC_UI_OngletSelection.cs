@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
+public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 {
     public int index;
     public SC_UI_OngletContainer ongletContainer;
@@ -15,18 +15,28 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
     [SerializeField]
     Image img_warningNotif;
 
+    [SerializeField]
+    GameObject animated;
+    Animator animator;
 
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //img_warningNotif.enabled = true;
+        ongletContainer = SC_UI_OngletContainer.Instance;
+        if(animated != null)
+        animator = animated.GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (animator != null)
+        {
+            animator.SetBool("Hover", false);
+        }
     }
 
     public void Action()
@@ -34,20 +44,12 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
         SC_UI_OngletContainer.Window newWindow = (SC_UI_OngletContainer.Window)index;
 
         ongletContainer.ChangeWindow(newWindow);
-        /*
-        for (int i = 0; i < 4; i++)
-        {
-            if (i == index)
-            {
-                ongletContainer.curIndex = i;
-                ongletContainer.checkActive();
-                //ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                //ongletContainer.child[i].transform.localPosition = new Vector3(0, 0, 400);
-            }
-        }   */
+        OnClicAnimation();
+    }
+
+    public void HoverAction()
+    {
+        IsHover();
     }
 
     public void isBreakdownSystem(bool state)
@@ -63,4 +65,21 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction
         }
     }
 
+
+    void IsHover()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Hover", true);
+        }
+
+    }
+
+    void OnClicAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Clic", true);
+        }
+    }
 }
