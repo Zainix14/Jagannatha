@@ -82,7 +82,7 @@ public class SC_Weapon_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd == 0)
+            if ((SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial && SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd == 0) || (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && !SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown))
             {
 
                 CurState = SystemState.Initialize;
