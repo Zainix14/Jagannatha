@@ -88,10 +88,12 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     #region Var SC_JoystickMove
 
     [Header("Var SC_JoystickMove")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeDir")]
     public SC_JoystickMove.Dir CurDir = SC_JoystickMove.Dir.None;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeBrokenDir")]
     public SC_JoystickMove.Dir CurBrokenDir = SC_JoystickMove.Dir.Left;
+    [SyncVar]
+    public SC_JoystickMove.Dir CoroDir = SC_JoystickMove.Dir.None;
 
     void OnChangeDir(SC_JoystickMove.Dir TargetDir)
     {
