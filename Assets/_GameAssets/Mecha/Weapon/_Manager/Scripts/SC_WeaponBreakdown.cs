@@ -171,6 +171,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
+        SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd = n_BreakdownValue;
 
         if (n_BreakdownValue == 1)
         {
