@@ -85,23 +85,57 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     #endregion SC_BreakdownWeaponManager
 
+    #region SC_slider_calibr
+
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
-    [SyncVar]
+    [SyncVar(hook = "OnChanheAmp")]
     public float f_AmplitudeCalib = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChanheFre")]
     public float f_FrequenceCalib = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChanhePha")]
     public float f_PhaseCalib = 0;
 
+    void OnChanheAmp(float TargetValue)
+    {
+        f_AmplitudeCalib = TargetValue;
+        UpdateOnClient();
+    }
+
+    void OnChanheFre(float TargetValue)
+    {
+        f_FrequenceCalib = TargetValue;
+        UpdateOnClient();
+    }
+
+    void OnChanhePha(float TargetValue)
+    {
+        f_PhaseCalib = TargetValue;
+        UpdateOnClient();
+    }
+
+    #endregion SC_slider_calibr
+
     //CuurentTarget
-    [SyncVar]
+    [SyncVar(hook = "OnChangeID")]
     public string s_KoaID = "";
+
+    void OnChangeID(string NewID)
+    {
+        s_KoaID = NewID;
+        UpdateOnClient();
+    }
 
     //Status
     //WeaNrjLevel
-    [SyncVar]
+    [SyncVar(hook = "ChangeEnergyLvl")]
     public float f_curEnergyLevel;
+
+    void ChangeEnergyLvl(float TargetValue)
+    {
+        f_curEnergyLevel = TargetValue;
+        UpdateOnClient();
+    }
 
 
     void Awake()

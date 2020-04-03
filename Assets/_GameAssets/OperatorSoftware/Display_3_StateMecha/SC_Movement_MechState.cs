@@ -55,23 +55,13 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        updateDirection();
-        updateBrokenDirection();
-    }
-
     public void UpdateVar()
     {
 
         _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
 
+        updateDirection();
+        updateBrokenDirection();
         //CheckState();
 
     }
@@ -149,7 +139,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
     #endregion States
 
-    #region Direction
+    #region Directions
 
     void updateDirection()
     {
@@ -218,6 +208,6 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
-    #endregion Direction
+    #endregion Directions
 
 }

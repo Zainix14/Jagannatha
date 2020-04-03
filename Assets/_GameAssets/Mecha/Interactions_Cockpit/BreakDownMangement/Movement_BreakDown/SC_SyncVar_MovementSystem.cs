@@ -93,6 +93,18 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     [SyncVar]
     public SC_JoystickMove.Dir CurBrokenDir = SC_JoystickMove.Dir.Left;
 
+    void OnChangeDir(SC_JoystickMove.Dir TargetDir)
+    {
+        CurDir = TargetDir;
+        UpdateOnClient();
+    }
+
+    void OnChangeBrokenDir(SC_JoystickMove.Dir TargetDir)
+    {
+        CurBrokenDir = TargetDir;
+        UpdateOnClient();
+    }
+
     #endregion Var SC_JoystickMove
 
     void Awake()
