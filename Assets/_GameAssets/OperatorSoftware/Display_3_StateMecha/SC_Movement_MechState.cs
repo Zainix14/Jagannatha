@@ -37,6 +37,10 @@ public class SC_Movement_MechState : MonoBehaviour
     GameObject InitializeOffState;
     [SerializeField]
     GameObject LaunchedOffState;
+    [SerializeField]
+    GameObject LeftOffState;
+    [SerializeField]
+    GameObject RightOffState;
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
@@ -55,24 +59,14 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        updateDirection();
-        updateBrokenDirection();
-    }
-
     public void UpdateVar()
     {
 
         _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
 
-        //CheckState();
+        updateDirection();
+        updateBrokenDirection();
+        CheckState();
 
     }
 
@@ -86,7 +80,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl == 0)
+            if ((SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial && SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl == 0) || (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && !SC_SyncVar_MovementSystem.Instance.b_MaxBreakdown))
             {
 
                 CurState = SystemState.Initialize;
@@ -120,6 +114,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Connected:
@@ -127,6 +123,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Initialize:
@@ -134,6 +132,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Launched:
@@ -141,6 +141,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
                 GeneralOffState.SetActive(false);
+                RightOffState.SetActive(false);
+                LeftOffState.SetActive(false);
                 break;
 
         }
@@ -149,7 +151,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
     #endregion States
 
-    #region Direction
+    #region Directions
 
     void updateDirection()
     {
@@ -218,6 +220,6 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
-    #endregion Direction
+    #endregion Directions
 
 }

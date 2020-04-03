@@ -59,7 +59,7 @@ public class SC_Display_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if(SC_SyncVar_DisplaySystem.Instance.f_CurNbOfBd == 0)
+            if((SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial && SC_SyncVar_DisplaySystem.Instance.f_CurNbOfBd == 0) || (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && !SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown))
             {
 
                 CurState = SystemState.Initialize;

@@ -55,33 +55,20 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        updateValue();
-    }
-
-    void updateValue()
-    {
-        _WeaponEnergyLevel.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel;      
-        _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
-        _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
-        _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
-        _curTarget.text = SC_SyncVar_WeaponSystem.Instance.s_KoaID;
-    }
-
     public void UpdateVar()
     {
 
         _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
 
-        //CheckState();
+        _WeaponEnergyLevel.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel;
+
+        _curTarget.text = SC_SyncVar_WeaponSystem.Instance.s_KoaID;
+
+        _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
+        _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
+        _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
+
+        CheckState();
 
     }
 
@@ -95,7 +82,7 @@ public class SC_Weapon_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd == 0)
+            if ((SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial && SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd == 0) || (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && !SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown))
             {
 
                 CurState = SystemState.Initialize;

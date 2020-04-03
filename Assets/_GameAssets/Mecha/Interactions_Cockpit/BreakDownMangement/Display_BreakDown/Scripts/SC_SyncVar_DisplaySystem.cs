@@ -68,10 +68,18 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     [Header("Var SC_BreakdownDisplayManager")]
     [SyncVar(hook = "OnChangeNbOfBd")]
     public float f_CurNbOfBd = 0;
-   
+    [SyncVar(hook = "OnChangeMaxBd")]
+    public bool b_MaxBreakdown = false;
+
     void OnChangeNbOfBd(float Target)
     {
         f_CurNbOfBd = Target;
+        UpdateOnClient();
+    }
+
+    void OnChangeMaxBd(bool Target)
+    {
+        b_MaxBreakdown = Target;
         UpdateOnClient();
     }
 
