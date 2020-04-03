@@ -61,7 +61,7 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
         UpdateOnClient();
     }
 
-    #region SC_MainBreakDownManager
+    #endregion SC_MainBreakDownManager
 
     #region SC_BreakdownWeaponManager
 
@@ -75,7 +75,7 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
         UpdateOnClient();
     }
 
-    #region SC_BreakdownWeaponManager
+    #endregion SC_BreakdownWeaponManager
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
