@@ -22,12 +22,14 @@ public class Sc_LaserFeedBack : MonoBehaviour
     public GameObject EnergyBall;
     public GameObject ChargeSpark;
     public GameObject Fioriture;
+    public GameObject Ondes;
     [SerializeField]
     SC_WeaponLaserGun WeapMainSC;
     public ParticleSystem.MainModule LaserPS;
     public ParticleSystem.MainModule EnergyBallPS;
     public ParticleSystem.MainModule ChargeSparkPS;
     public ParticleSystem.MainModule FioriturePS;
+    public ParticleSystem.MainModule OndesPS;
 
     void Awake()
     {
@@ -90,11 +92,13 @@ public class Sc_LaserFeedBack : MonoBehaviour
             ChargeSparkPS = ChargeSpark.GetComponent<ParticleSystem>().main;
             EnergyBallPS = EnergyBall.GetComponent<ParticleSystem>().main;
             FioriturePS = Fioriture.GetComponent<ParticleSystem>().main;
+            OndesPS = Ondes.GetComponent<ParticleSystem>().main;
 
             LaserPS.startColor = gradiend;
             ChargeSparkPS.startColor = gradiend;
             EnergyBallPS.startColor = gradiend;
             FioriturePS.startColor = gradiend;
+            OndesPS.startColor = gradiend;
 
         }
 
