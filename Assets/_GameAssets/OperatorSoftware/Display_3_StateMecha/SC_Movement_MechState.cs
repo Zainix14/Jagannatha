@@ -63,20 +63,17 @@ public class SC_Movement_MechState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateValue();
         updateDirection();
         updateBrokenDirection();
     }
 
-    void UpdateValue()
-    {
-        _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
-    }
-
     public void UpdateVar()
     {
-        //_SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
+
+        _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
+
         //CheckState();
+
     }
 
     #region States

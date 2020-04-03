@@ -40,22 +40,16 @@ public class SC_Display_MechState : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //UpdateValue();
-    }
-
-    void UpdateValue()
-    {
-        _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
-    }
-
     public void UpdateVar()
     {
+
         _SystmShield.simpleValue = SC_SyncVar_DisplaySystem.Instance.f_Displaylife;
+
         CheckState();
+
     }
+
+    #region States
 
     void CheckState()
     {
@@ -125,5 +119,7 @@ public class SC_Display_MechState : MonoBehaviour
         }
 
     }
+
+    #endregion States
 
 }

@@ -13,25 +13,69 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     #endregion
 
-    //SC_GameStates
+    #region SC_GameStates
+
     [Header("Var SC_GameStates")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeGameState")]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
-   
+
+    void OnChangeGameState(SC_GameStates.GameState _CurState)
+    {
+        CurState = _CurState;
+        UpdateOnClient();
+    }
+
+    #endregion SC_GameStates
+
+    #region SC_main_breakdown_validation
+
     [Header("Var SC_main_breakdown_validation")]
     [SyncVar(hook = "OnLaunch")]
     public bool b_IsLaunch = false;
 
-    //SC_MainBreakDownManager
+    void OnLaunch(bool TargetBool)
+    {
+        b_IsLaunch = TargetBool;
+        UpdateOnClient();
+    }
+
+    #endregion SC_main_breakdown_validation
+
+    #region SC_MainBreakDownManager
+
     [Header("Var SC_MainBreakDownManager")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeSystemLife")]
     public float f_WeaponLife = 0;
     [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
 
+    void OnChangeSystemLife(float newLife)
+    {
+        f_WeaponLife = newLife;
+        UpdateOnClient();
+    }
+
+    void OnChangeBreakEngine(bool Breakdown)
+    {
+        b_BreakEngine = Breakdown;
+        UpdateOnClient();
+    }
+
+    #region SC_MainBreakDownManager
+
+    #region SC_BreakdownWeaponManager
+
     [Header("Var SC_BreakdownWeaponManager")]
     [SyncVar(hook = "OnChangeNbOfBd")]
     public float f_CurNbOfBd = 0;
+
+    void OnChangeNbOfBd(float Target)
+    {
+        f_CurNbOfBd = Target;
+        UpdateOnClient();
+    }
+
+    #region SC_BreakdownWeaponManager
 
     //SC_slider_calibr
     [Header("Var SC_slider_calibr")]
@@ -66,30 +110,10 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
 
     }
 
-    void OnLaunch(bool TargetBool)
-    {
-        b_IsLaunch = TargetBool;
-        if (!isServer)
-            UpdateOnClient();
-    }
-
-    void OnChangeBreakEngine(bool Breakdown)
-    {
-        b_BreakEngine = Breakdown;
-        if (!isServer)
-            UpdateOnClient();
-    }
-
-    void OnChangeNbOfBd(float Target)
-    {
-        f_CurNbOfBd = Target;
-        if (!isServer)
-            UpdateOnClient();
-    }
-
     void UpdateOnClient()
     {
-        SC_Weapon_MechState.Instance.UpdateVar();
+        if (!isServer)
+            SC_Weapon_MechState.Instance.UpdateVar();
     }
 
 }
