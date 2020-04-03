@@ -1459,6 +1459,7 @@ GameObject:
   - component: {fileID: 5161294823812353343}
   - component: {fileID: 5220413841287914749}
   - component: {fileID: 4865770307201610963}
+  - component: {fileID: 1962313918297966196}
   m_Layer: 5
   m_Name: Canvas_WeapEnergLvl
   m_TagString: Untagged
@@ -1604,6 +1605,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleValue: 1
   speedBar: 5
+--- !u!114 &1962313918297966196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273130857879621922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ec2d4486d1655478a68e66d6910ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor:
+    serializedVersion: 2
+    rgba: 4278190335
+  endColor:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!1 &1346888904252731671
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,6 +5722,7 @@ GameObject:
   - component: {fileID: 94685076865524425}
   - component: {fileID: 3964567444826095406}
   - component: {fileID: 8626817885933487517}
+  - component: {fileID: 6087273505263369139}
   m_Layer: 5
   m_Name: Canvas_SystemShield
   m_TagString: Untagged
@@ -5847,6 +5867,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleValue: 0
   speedBar: 2
+--- !u!114 &6087273505263369139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6498064409919916034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ec2d4486d1655478a68e66d6910ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor:
+    serializedVersion: 2
+    rgba: 4278190335
+  endColor:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!1 &6537665671585876567
 GameObject:
   m_ObjectHideFlags: 0
