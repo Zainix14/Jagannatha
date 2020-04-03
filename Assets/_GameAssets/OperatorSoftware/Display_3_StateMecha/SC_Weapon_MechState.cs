@@ -69,8 +69,7 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     void updateValue()
     {
-        _WeaponEnergyLevel.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel;
-        _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
+        _WeaponEnergyLevel.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel;      
         _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
@@ -79,7 +78,11 @@ public class SC_Weapon_MechState : MonoBehaviour
 
     public void UpdateVar()
     {
+
+        _SystmShield.simpleValue = SC_SyncVar_WeaponSystem.Instance.f_WeaponLife;
+
         //CheckState();
+
     }
 
     #region States

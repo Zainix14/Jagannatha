@@ -49,6 +49,8 @@ public class SC_Display_MechState : MonoBehaviour
 
     }
 
+    #region States
+
     void CheckState()
     {
 
@@ -117,5 +119,7 @@ public class SC_Display_MechState : MonoBehaviour
         }
 
     }
+
+    #endregion States
 
 }

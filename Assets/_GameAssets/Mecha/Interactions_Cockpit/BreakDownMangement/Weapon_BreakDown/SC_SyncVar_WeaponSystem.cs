@@ -16,8 +16,14 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     #region SC_GameStates
 
     [Header("Var SC_GameStates")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeGameState")]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
+
+    void OnChangeGameState(SC_GameStates.GameState _CurState)
+    {
+        CurState = _CurState;
+        UpdateOnClient();
+    }
 
     #endregion SC_GameStates
 
@@ -38,10 +44,16 @@ public class SC_SyncVar_WeaponSystem : NetworkBehaviour
     #region SC_MainBreakDownManager
 
     [Header("Var SC_MainBreakDownManager")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeSystemLife")]
     public float f_WeaponLife = 0;
     [SyncVar(hook = "OnChangeBreakEngine")]
     public bool b_BreakEngine = false;
+
+    void OnChangeSystemLife(float newLife)
+    {
+        f_WeaponLife = newLife;
+        UpdateOnClient();
+    }
 
     void OnChangeBreakEngine(bool Breakdown)
     {
