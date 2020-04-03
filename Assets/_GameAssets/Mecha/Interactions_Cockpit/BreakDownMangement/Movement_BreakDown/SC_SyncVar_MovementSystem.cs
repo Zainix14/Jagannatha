@@ -68,7 +68,7 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     [Header("Var SC_MovementBreakDown")]
     [SyncVar(hook = "OnChangeBdLvl")]
     public int n_BreakDownLvl = 0;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeMaxBd")]
     public bool b_MaxBreakdown = false;
 
     void OnChangeBdLvl(int Target)
@@ -77,15 +77,35 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
         UpdateOnClient();
     }
 
+    void OnChangeMaxBd(bool Target)
+    {
+        b_MaxBreakdown = Target;
+        UpdateOnClient();
+    }
+
     #endregion Var SC_MovementBreakDown
 
     #region Var SC_JoystickMove
 
     [Header("Var SC_JoystickMove")]
-    [SyncVar]
+    [SyncVar(hook = "OnChangeDir")]
     public SC_JoystickMove.Dir CurDir = SC_JoystickMove.Dir.None;
-    [SyncVar]
+    [SyncVar(hook = "OnChangeBrokenDir")]
     public SC_JoystickMove.Dir CurBrokenDir = SC_JoystickMove.Dir.Left;
+    [SyncVar]
+    public SC_JoystickMove.Dir CoroDir = SC_JoystickMove.Dir.None;
+
+    void OnChangeDir(SC_JoystickMove.Dir TargetDir)
+    {
+        CurDir = TargetDir;
+        UpdateOnClient();
+    }
+
+    void OnChangeBrokenDir(SC_JoystickMove.Dir TargetDir)
+    {
+        CurBrokenDir = TargetDir;
+        UpdateOnClient();
+    }
 
     #endregion Var SC_JoystickMove
 

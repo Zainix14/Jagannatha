@@ -166,12 +166,14 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         if (n_BreakdownValue >= n_MaxBreakInterB4MaxBD && !b_MaxBreakdown)
         {
             b_MaxBreakdown = true;
+            SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = true;
             Mng_BreakdownMain.CheckBreakdown();
         }   
         
         else if (n_BreakdownValue ==0 && b_MaxBreakdown)
         {
             b_MaxBreakdown = false;
+            SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = false;
             Mng_BreakdownMain.CheckBreakdown();
 
         }

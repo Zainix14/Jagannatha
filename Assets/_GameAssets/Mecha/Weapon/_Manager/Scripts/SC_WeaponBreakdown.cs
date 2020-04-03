@@ -171,6 +171,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
+        SC_SyncVar_WeaponSystem.Instance.f_CurNbOfBd = n_BreakdownValue;
 
         if (n_BreakdownValue == 1)
         {
@@ -186,6 +187,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             offPercentage = 25 * CurNbOfBreakdown;
 
             b_MaxBreakdown = true;
+            SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = true;
 
         }
 
@@ -194,6 +196,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
             EndBreakdown();
             b_MaxBreakdown = false;
+            SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = false;
 
         }
 

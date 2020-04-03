@@ -259,6 +259,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     {
 
         CoroDir = ToDir;
+        SC_SyncVar_MovementSystem.Instance.CoroDir = CoroDir;
 
         float t = 0;
         float rate = 1 / Duration;
@@ -279,6 +280,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
         SetCurDir(ToDir);
         CoroDir = Dir.Off;
+        SC_SyncVar_MovementSystem.Instance.CoroDir = CoroDir;
 
     }
 

@@ -37,6 +37,10 @@ public class SC_Movement_MechState : MonoBehaviour
     GameObject InitializeOffState;
     [SerializeField]
     GameObject LaunchedOffState;
+    [SerializeField]
+    GameObject LeftOffState;
+    [SerializeField]
+    GameObject RightOffState;
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
@@ -55,24 +59,14 @@ public class SC_Movement_MechState : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        updateDirection();
-        updateBrokenDirection();
-    }
-
     public void UpdateVar()
     {
 
         _SystmShield.simpleValue = SC_SyncVar_MovementSystem.Instance.f_MovementLife;
 
-        //CheckState();
+        updateDirection();
+        updateBrokenDirection();
+        CheckState();
 
     }
 
@@ -86,7 +80,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
             CurState = SystemState.Connected;
 
-            if (SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl == 0)
+            if ((SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial && SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl == 0) || (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && !SC_SyncVar_MovementSystem.Instance.b_MaxBreakdown))
             {
 
                 CurState = SystemState.Initialize;
@@ -120,6 +114,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Connected:
@@ -127,6 +123,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Initialize:
@@ -134,6 +132,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                RightOffState.SetActive(true);
+                LeftOffState.SetActive(true);
                 break;
 
             case SystemState.Launched:
@@ -141,6 +141,8 @@ public class SC_Movement_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
                 GeneralOffState.SetActive(false);
+                RightOffState.SetActive(false);
+                LeftOffState.SetActive(false);
                 break;
 
         }
@@ -149,7 +151,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
     #endregion States
 
-    #region Direction
+    #region Directions
 
     void updateDirection()
     {
@@ -157,27 +159,39 @@ public class SC_Movement_MechState : MonoBehaviour
         {
             if (SC_SyncVar_MovementSystem.Instance.CurDir == SC_JoystickMove.Dir.Right)
             {
-                dirRight.speedRotateBase = dirRight.speedRotateUsed;
-                dirLeft.speedRotateBase = dirLeft.speedRotateInit;
+                dirLeft.b_InUse = false;
+                dirRight.b_InUse = true;
+                dirRight.CurRotationSpeed = dirRight.speedRotateUsed;
+                dirLeft.CurRotationSpeed = dirLeft.speedRotateInit;
             }
             else if (SC_SyncVar_MovementSystem.Instance.CurDir == SC_JoystickMove.Dir.Left)
             {
-                dirLeft.speedRotateBase = dirLeft.speedRotateUsed;
-                dirRight.speedRotateBase = dirRight.speedRotateInit;
+                dirLeft.b_InUse = true;
+                dirRight.b_InUse = false;
+                dirLeft.CurRotationSpeed = dirLeft.speedRotateUsed;
+                dirRight.CurRotationSpeed = dirRight.speedRotateInit;
             }
         }
         else
         {
-            dirRight.speedRotateBase = dirRight.speedRotateInit;
-            dirLeft.speedRotateBase = dirLeft.speedRotateInit;
+            dirLeft.b_InUse = false;
+            dirRight.b_InUse = false;
+            dirRight.CurRotationSpeed = dirRight.speedRotateInit;
+            dirLeft.CurRotationSpeed = dirLeft.speedRotateInit;
         }
     }
 
     void updateBrokenDirection()
     {
+
         if(SC_SyncVar_MovementSystem.Instance.CurBrokenDir == SC_JoystickMove.Dir.Left)
         {
+
+            dirLeft.b_IsBreak = true;
+            dirRight.b_IsBreak = false;
+
             int nbBreakdown = SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl;
+
             if(nbBreakdown !=0)
             {
                 for (int i = 0; i < nbBreakdown; i++)
@@ -185,6 +199,7 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcL[i].color = breakdownColor;
                 }
             }
+
             else
             {
                 for (int i = 0; i < arcL.Length; i++)
@@ -192,11 +207,17 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcL[i].color = validColor;
                 }
             }
-            
+
         }
+
         else if (SC_SyncVar_MovementSystem.Instance.CurBrokenDir == SC_JoystickMove.Dir.Right)
         {
+
+            dirLeft.b_IsBreak = false;
+            dirRight.b_IsBreak = true;
+
             int nbBreakdown = SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl;
+
             if (nbBreakdown != 0)
             {
                 Debug.Log("Panne");
@@ -205,6 +226,7 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcR[i].color = breakdownColor;
                 }
             }
+
             else
             {
                 
@@ -214,10 +236,13 @@ public class SC_Movement_MechState : MonoBehaviour
                 }
             }
 
+            dirLeft.b_IsBreak = true;
+            dirRight.b_IsBreak = false;
+
         }
 
     }
 
-    #endregion Direction
+    #endregion Directions
 
 }
