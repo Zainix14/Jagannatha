@@ -159,27 +159,39 @@ public class SC_Movement_MechState : MonoBehaviour
         {
             if (SC_SyncVar_MovementSystem.Instance.CurDir == SC_JoystickMove.Dir.Right)
             {
-                dirRight.speedRotateBase = dirRight.speedRotateUsed;
-                dirLeft.speedRotateBase = dirLeft.speedRotateInit;
+                dirLeft.b_InUse = false;
+                dirRight.b_InUse = true;
+                dirRight.CurRotationSpeed = dirRight.speedRotateUsed;
+                dirLeft.CurRotationSpeed = dirLeft.speedRotateInit;
             }
             else if (SC_SyncVar_MovementSystem.Instance.CurDir == SC_JoystickMove.Dir.Left)
             {
-                dirLeft.speedRotateBase = dirLeft.speedRotateUsed;
-                dirRight.speedRotateBase = dirRight.speedRotateInit;
+                dirLeft.b_InUse = true;
+                dirRight.b_InUse = false;
+                dirLeft.CurRotationSpeed = dirLeft.speedRotateUsed;
+                dirRight.CurRotationSpeed = dirRight.speedRotateInit;
             }
         }
         else
         {
-            dirRight.speedRotateBase = dirRight.speedRotateInit;
-            dirLeft.speedRotateBase = dirLeft.speedRotateInit;
+            dirLeft.b_InUse = false;
+            dirRight.b_InUse = false;
+            dirRight.CurRotationSpeed = dirRight.speedRotateInit;
+            dirLeft.CurRotationSpeed = dirLeft.speedRotateInit;
         }
     }
 
     void updateBrokenDirection()
     {
+
         if(SC_SyncVar_MovementSystem.Instance.CurBrokenDir == SC_JoystickMove.Dir.Left)
         {
+
+            dirLeft.b_IsBreak = true;
+            dirRight.b_IsBreak = false;
+
             int nbBreakdown = SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl;
+
             if(nbBreakdown !=0)
             {
                 for (int i = 0; i < nbBreakdown; i++)
@@ -187,6 +199,7 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcL[i].color = breakdownColor;
                 }
             }
+
             else
             {
                 for (int i = 0; i < arcL.Length; i++)
@@ -194,11 +207,17 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcL[i].color = validColor;
                 }
             }
-            
+
         }
+
         else if (SC_SyncVar_MovementSystem.Instance.CurBrokenDir == SC_JoystickMove.Dir.Right)
         {
+
+            dirLeft.b_IsBreak = false;
+            dirRight.b_IsBreak = true;
+
             int nbBreakdown = SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl;
+
             if (nbBreakdown != 0)
             {
                 Debug.Log("Panne");
@@ -207,6 +226,7 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcR[i].color = breakdownColor;
                 }
             }
+
             else
             {
                 
@@ -215,6 +235,9 @@ public class SC_Movement_MechState : MonoBehaviour
                     arcR[i].color = validColor;
                 }
             }
+
+            dirLeft.b_IsBreak = true;
+            dirRight.b_IsBreak = false;
 
         }
 
