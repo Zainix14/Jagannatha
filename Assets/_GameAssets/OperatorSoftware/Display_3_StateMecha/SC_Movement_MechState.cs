@@ -62,7 +62,7 @@ public class SC_Movement_MechState : MonoBehaviour
 
         updateDirection();
         updateBrokenDirection();
-        //CheckState();
+        CheckState();
 
     }
 
