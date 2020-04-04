@@ -36,6 +36,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if (animator != null)
         {
             animator.SetBool("Hover", false);
+            animator.SetBool("Clic", false);
         }
     }
 
