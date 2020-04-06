@@ -193,7 +193,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-
     #region FX
     //Fonction jouant toutes les FX indiquant une panne sur le système,à échelonner plus tard)
     private void Play_Stop_All_Pannel_FX(bool startStop)
@@ -212,8 +211,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
 
     #endregion FX
-
-
 
     #region DebugMethod
 

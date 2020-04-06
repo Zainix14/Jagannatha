@@ -112,6 +112,8 @@ public class SC_UI_OngletContainer : MonoBehaviour
         int hubIndex = (int)Window.Hub;
         int WindowIndex = (int)newWindow;
 
+        bool zoom2Started = false;
+
         Vector3 initPos = system[hubIndex].transform.localPosition;
         Vector3 endPos = positionHubTransition[WindowIndex];
         Vector3 dPosPerSec = (endPos - initPos) / ZoomInHubDuration_1;
@@ -129,17 +131,23 @@ public class SC_UI_OngletContainer : MonoBehaviour
             system[hubIndex].transform.localPosition += (dPosPerSec *Time.deltaTime);
             system[hubIndex].transform.localScale += (dScalePerSec * Time.deltaTime);
 
-       
+            if(t > ZoomInHubDuration_1-0.5f && !zoom2Started)
+            {
+                system[WindowIndex].transform.localScale = Vector3.zero;
+                system[WindowIndex].transform.localPosition = Vector3.zero;
+                StartCoroutine(ZoomInHub_2(newWindow));
+
+                zoom2Started = true;
+            }
             yield return 0;
         }
 
-        StopAllCoroutines();
+        
         system[hubIndex].transform.localScale = Vector3.zero;
         system[hubIndex].transform.localPosition = Vector3.zero;
-        system[WindowIndex].transform.localScale = Vector3.zero;
-        system[WindowIndex].transform.localPosition = Vector3.zero;
-        StartCoroutine(ZoomInHub_2(newWindow));
-        
+      
+
+
     }
 
     IEnumerator ZoomInHub_2(Window newWindow)

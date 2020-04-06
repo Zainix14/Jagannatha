@@ -135,7 +135,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         }
         oldX = newX;
 
- 
+        
+
         IsValueOk();
 
     }
@@ -174,8 +175,9 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         SetIsEnPanne(true);
 
-        sc_syncvar.SliderChangeValueWanted(index, desiredValue);
+        sc_syncvar.SliderChangeValueWanted(index, -Mathf.Round(Ratio(desiredValue, limit, 0.45f, -limit, -0.45f) * 100) / 100);
         sc_syncvar.SliderChangeIsPanne(index, true);
+        
 
     }
 
