@@ -69,8 +69,10 @@ public class SC_UI_Update_Slider : MonoBehaviour
 
             if (sc_syncvar.SL_sliders[index].isEnPanne)
             {
+            
                 barrettePanne.enabled = true;
-                float posY = sc_syncvar.SL_sliders[index].valueWanted * offSetMultiplier;
+                float posY = sc_syncvar.SL_sliders[index].valueWanted* offSetMultiplier;
+
                 warning.SetActive(true);
                 sparkle.SetActive(false);
                 barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
