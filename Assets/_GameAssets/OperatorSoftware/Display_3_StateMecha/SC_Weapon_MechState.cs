@@ -13,6 +13,9 @@ public class SC_Weapon_MechState : MonoBehaviour
     #endregion
 
     [SerializeField]
+    SC_WeaponLineState SC_WeaponLineState;
+
+    [SerializeField]
     SC_UI_SystmShield _SystmShield;
     [SerializeField]
     SC_UI_SystmShield _WeaponEnergyLevel;
@@ -67,6 +70,8 @@ public class SC_Weapon_MechState : MonoBehaviour
         _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
+
+        //SC_WeaponLineState.UpdateLine();
 
         CheckState();
 
