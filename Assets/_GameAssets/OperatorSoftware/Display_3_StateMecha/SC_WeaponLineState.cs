@@ -61,7 +61,7 @@ public class SC_WeaponLineState : MonoBehaviour
         {
             float x = (i * (f_MaxX / line.positionCount));
             float y = CurCurve.Evaluate(x) * f_MaxY;
-            line.SetPosition(i, new Vector3(y, 0f, x));
+            line.SetPosition(i, new Vector3(x, y, 0f));
         }
 
     }
