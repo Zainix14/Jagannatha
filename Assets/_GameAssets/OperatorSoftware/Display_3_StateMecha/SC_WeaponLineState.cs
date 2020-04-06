@@ -91,8 +91,6 @@ public class SC_WeaponLineState : MonoBehaviour
     IEnumerator DrawLineTime(float Duration)
     {
 
-        Debug.Log("StartCoro");
-
         if (line.positionCount != n_CurveSize)
             line.positionCount = n_CurveSize; //Configuration du nombre 
 
@@ -123,8 +121,6 @@ public class SC_WeaponLineState : MonoBehaviour
             }
 
         }
-
-        Debug.Log("EndCoro");
 
     }
 
