@@ -19,6 +19,8 @@ public class SC_WeaponLineState : MonoBehaviour
     AnimationCurve BreakdownStateLvl02;
     [SerializeField]
     int n_CurveSize = 300;
+    [SerializeField]
+    float DrawTime = 1;
     float f_MaxX = 376;
     float f_MaxY = 170;
     Color32 curColor;
@@ -64,54 +66,65 @@ public class SC_WeaponLineState : MonoBehaviour
         if (CurCoro != null)
             StopCoroutine(CurCoro);
 
-        //CurCoro = StartCoroutine(DrawLine());
-        CurCoro = StartCoroutine(DrawLineII(1));
+        //DrawLine();
+        CurCoro = StartCoroutine(DrawLineTime(DrawTime));
 
     }
 
-    IEnumerator DrawLine()
+    void DrawLine()
     {
 
         if (line.positionCount != n_CurveSize)
             line.positionCount = n_CurveSize; //Configuration du nombre 
 
-        for (int i = 0; i < n_CurveSize; i++)
-        {
-            float x = (i * (f_MaxX / n_CurveSize));
-            float y = CurCurve.Evaluate((1 / n_CurveSize) * i) * f_MaxY;
-            line.SetPosition(i, new Vector3(x, y, 0f));
-            yield return 0;
+        float f_Size = n_CurveSize;
+        for (int i = 0; i < f_Size; i++)
+        {         
+            float x = (i * (f_MaxX / f_Size));
+            float y = CurCurve.Evaluate((1 / f_Size) * i) * f_MaxY;
+            Debug.Log((1 / f_Size) * i);
+            line.SetPosition(i, new Vector3(x, y, 0f));           
         }
 
     }
 
-    IEnumerator DrawLineII(float Duration)
+    IEnumerator DrawLineTime(float Duration)
     {
 
-        float time = 0;
-        float rate = 1 / Duration;
-        float f_TimePerUnit = Duration / n_CurveSize;
+        Debug.Log("StartCoro");
 
         if (line.positionCount != n_CurveSize)
             line.positionCount = n_CurveSize; //Configuration du nombre 
 
-        for (int i = 0; i < n_CurveSize; i++)
+        float f_Size = n_CurveSize;
+
+        float time = 0;
+        float rate = 1 / Duration;
+        
+        for (int i = 0; i < f_Size; i++)
         {
 
-            if(time < f_TimePerUnit*i)
+            float f_TargetI = Mathf.Round(time * f_Size);
+
+            if (i < f_TargetI)
             {
-                time += Time.deltaTime * rate;
-                float x = (i * (f_MaxX / n_CurveSize));
-                float y = CurCurve.Evaluate((1 / n_CurveSize) * i) * f_MaxY;
+                float x = (i * (f_MaxX / f_Size));
+                float y = CurCurve.Evaluate((1 / f_Size) * i) * f_MaxY;
                 line.SetPosition(i, new Vector3(x, y, 0f));
             }
 
             else
             {
+                time += Time.deltaTime * rate;
+                float x = (i * (f_MaxX / f_Size));
+                float y = CurCurve.Evaluate((1 / f_Size) * i) * f_MaxY;
+                line.SetPosition(i, new Vector3(x, y, 0f));
                 yield return 0;
             }
 
         }
+
+        Debug.Log("EndCoro");
 
     }
 
