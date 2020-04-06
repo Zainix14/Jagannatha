@@ -18,6 +18,7 @@ public class SC_WeaponLineState : MonoBehaviour
     [SerializeField]
     AnimationCurve BreakdownStateLvl02;
 
+    [SerializeField]
     AnimationCurve CurCurve;
 
     LineRenderer line;
@@ -56,12 +57,15 @@ public class SC_WeaponLineState : MonoBehaviour
 
         }
 
-        line.positionCount = 300; //Configuration du nombre 
-        for (int i = 0; i < line.positionCount; i++)
+        line.positionCount = n_CurveSize; //Configuration du nombre 
+        float n_TempCount = line.positionCount;
+
+        for (int i = 0; i < n_TempCount; i++)
         {
-            float x = (i * (f_MaxX / line.positionCount));
-            float y = CurCurve.Evaluate(x) * f_MaxY;
-            line.SetPosition(i, new Vector3(y, 0f, x));
+            float x = (i * (f_MaxX / n_TempCount));
+            float y = CurCurve.Evaluate((1 / n_TempCount) * i) * f_MaxY;
+            //float y = CurCurve.Evaluate(x);
+            line.SetPosition(i, new Vector3(x, y, 0f));
         }
 
     }

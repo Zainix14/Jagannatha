@@ -71,9 +71,9 @@ public class SC_Weapon_MechState : MonoBehaviour
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
 
-        //SC_WeaponLineState.UpdateLine();
-
         CheckState();
+
+        SC_WeaponLineState.UpdateLine();
 
     }
 
