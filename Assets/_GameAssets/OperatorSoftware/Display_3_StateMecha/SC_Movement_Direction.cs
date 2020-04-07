@@ -22,7 +22,7 @@ public class SC_Movement_Direction : MonoBehaviour
     void Rotate()
     {
 
-        if (!SC_SyncVar_MovementSystem.Instance.b_BreakEngine && (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial || SC_GameStates.Instance.CurState != SC_GameStates.GameState.Lobby))
+        if (!SC_SyncVar_MovementSystem.Instance.b_BreakEngine && (SC_GameStates.Instance.CurState != SC_GameStates.GameState.Tutorial && SC_GameStates.Instance.CurState != SC_GameStates.GameState.Lobby))
         {
 
             if (!b_IsBreak)
