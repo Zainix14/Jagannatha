@@ -39,7 +39,7 @@ public class SC_Debug_Mng : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Comma))
         {
-
+            //https://www.youtube.com/watch?v=Sg14jNbBb-8
             if (b_weapon_Cheatcode)
             {
                 b_weapon_Cheatcode = false;
