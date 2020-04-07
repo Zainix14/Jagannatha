@@ -7,8 +7,17 @@ using UnityEngine;
 /// Quand les mng sont Start il donne leur réferences a ce script | 
 /// Permet ensuite recupere une reference depuis n'importe ou.
 /// </summary>
+///    
+
+
 public class SC_CheckList : MonoBehaviour
 {
+    #region Singleton
+
+    private static SC_CheckList _instance;
+    public static SC_CheckList Instance { get { return _instance; } }
+
+    #endregion
 
     public GameObject Mng_Network = null;
     public GameObject NetworkPlayerPilot = null;
@@ -22,6 +31,18 @@ public class SC_CheckList : MonoBehaviour
     public Camera Cam_Mecha = null;
     public Camera Cam_VR = null;
     public Camera Cam_FPS = null;
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     public GameObject GetNetworkManager()
     {

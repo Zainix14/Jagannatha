@@ -57,20 +57,21 @@ public class SC_passwordLock : MonoBehaviour
     void Start()
     {
         //if (cheatCode)
-        
+
 #if UNITY_EDITOR
 
-        for (int i = 0; i < 4; i++)
-        {
-            canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
-        }
-        canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
-        gameObject.SetActive(false);
-        objectElectricPlug.SetActive(false);
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
+        //}
+        //canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
+        //gameObject.SetActive(false);
+        //objectElectricPlug.SetActive(false);
 
-        b_IsConnected = true;
-        unlock = false;
-        countTime = 0;
+        //b_IsConnected = true;
+        //unlock = false;
+        //countTime = 0;
+        //SC_CheckList.Instance.NetworkPlayerOperator.GetComponent<SC_Net_Player_TutoState>().CmdChangeTutoState(SC_GameStates.TutorialState.Tutorial1_2);
 
 #else
 
@@ -97,7 +98,9 @@ public class SC_passwordLock : MonoBehaviour
 
                 plugObject.GetComponent<SC_electricPlug>().plugConnected(); //Animation PLay
 
-                SC_instruct_op_manager.Instance.Activate(1);
+               // SC_instruct_op_manager.Instance.Activate(1);
+                if(SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_1)
+                    SC_CheckList.Instance.NetworkPlayerOperator.GetComponent<SC_Net_Player_TutoState>().CmdChangeTutoState(SC_GameStates.TutorialState.Tutorial1_2);
             }
 
             if (countTime > 4f) //Fin de compteur
@@ -107,6 +110,7 @@ public class SC_passwordLock : MonoBehaviour
                 objectElectricPlug.SetActive(false);
                 unlock = false; //Sécurité
                 countTime = 0; //RaZ compteur
+                SC_instruct_op_manager.Instance.Deactivate(6);
             }
 
         }
