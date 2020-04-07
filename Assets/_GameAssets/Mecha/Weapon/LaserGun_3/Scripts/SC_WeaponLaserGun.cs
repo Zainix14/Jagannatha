@@ -187,7 +187,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void Hit()
     {
-
+        
         if (LaserHit.collider.gameObject.layer == 26)
         {
             if (f_LaserTimer > (1 / frequency))
@@ -204,6 +204,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
                 f_LaserTimer = 0;
 
                 LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
+                
             }
             f_LaserTimer += Time.deltaTime;
         }

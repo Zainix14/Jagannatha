@@ -385,6 +385,11 @@ public class SC_KoaManager : MonoBehaviour
 
             if (power < 0) power = 0;
             float powerPerCent = (power / 6) * 100;
+            
+            if(SC_Debug_Mng.Instance.b_weapon_Cheatcode)
+            {
+                powerPerCent = SC_Debug_Mng.Instance.powerPerCent;
+            }
 
             if (powerPerCent > 0)
             {
@@ -457,6 +462,10 @@ public class SC_KoaManager : MonoBehaviour
 
         if (power < 0) power = 0;
         float powerPerCent = (power / 6) * 100;
+        if (SC_Debug_Mng.Instance.b_weapon_Cheatcode)
+        {
+            powerPerCent = SC_Debug_Mng.Instance.powerPerCent;
+        }
 
         if (powerPerCent < curFlockSettings.maxReactionSensibilityPerCent)
         {
