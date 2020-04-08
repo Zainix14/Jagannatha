@@ -23,5 +23,10 @@ public class SC_Net_Player_TutoState : NetworkBehaviour
         SC_GameStates.Instance.ChangeTutoGameState(TargetState);
     }
 
-
+    public IEnumerator Delay (float time, SC_GameStates.TutorialState Target)
+    {
+        yield return new WaitForSeconds(time);
+        CmdChangeTutoState(Target);
+        StopAllCoroutines();
+    }
 }

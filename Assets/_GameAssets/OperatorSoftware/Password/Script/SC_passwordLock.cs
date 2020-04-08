@@ -85,7 +85,21 @@ public class SC_passwordLock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                canvasMng.GetComponent<SC_CanvasManager>().activateChildInGame(i);
+            }
+            canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
+            gameObject.SetActive(false);
+            objectElectricPlug.SetActive(false);
 
+            b_IsConnected = true;
+            unlock = false;
+            countTime = 0;
+            SC_CheckList.Instance.NetworkPlayerOperator.GetComponent<SC_Net_Player_TutoState>().CmdChangeTutoState(SC_GameStates.TutorialState.Tutorial2_4);
+        }
         if (string.Equals(objectPassword.GetComponent<Text>().text, s_password, System.StringComparison.CurrentCultureIgnoreCase) /*objectPassword.GetComponent<Text>().text == s_password*/) //Check du mot de passe
         {
 

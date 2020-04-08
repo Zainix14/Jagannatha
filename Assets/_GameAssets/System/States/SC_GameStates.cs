@@ -114,7 +114,13 @@ public class SC_GameStates : NetworkBehaviour
         {
             case TutorialState.Tutorial1_1:
                 if(!isServer)
-                  SC_instruct_op_manager.Instance.Activate(6);
+                {
+                    SC_instruct_op_manager.Instance.Activate(6);
+                    SC_instruct_op_manager.Instance.Deactivate(0);
+                    SC_instruct_op_manager.Instance.Deactivate(2);
+                }
+                 
+
                 break;
 
             case TutorialState.Tutorial1_2:
@@ -236,8 +242,31 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case TutorialState.Tutorial2_4:
-
-
+                if (!isServer)
+                {
+                    SC_instruct_op_manager.Instance.Deactivate(0);
+                    SC_instruct_op_manager.Instance.Deactivate(1);
+                    SC_instruct_op_manager.Instance.Deactivate(2);
+                    SC_instruct_op_manager.Instance.Deactivate(3);
+                    SC_instruct_op_manager.Instance.Deactivate(4);
+                    SC_instruct_op_manager.Instance.Deactivate(5);
+                    SC_instruct_op_manager.Instance.Deactivate(6);
+                    SC_instruct_op_manager.Instance.Deactivate(7);
+                    SC_instruct_op_manager.Instance.Deactivate(8);
+                    SC_instruct_op_manager.Instance.Deactivate(9);
+                    SC_instruct_op_manager.Instance.Deactivate(10);
+                    SC_instruct_op_manager.Instance.Deactivate(11);
+                    SC_instruct_op_manager.Instance.Deactivate(12);
+                    SC_instruct_op_manager.Instance.Deactivate(13);
+                    SC_instruct_op_manager.Instance.Deactivate(14);
+                }
+                if (isServer)
+                {
+                    SC_main_breakdown_validation.Instance.isValidated = false;
+                    SC_main_breakdown_validation.Instance.textStopBlink();
+                    SC_main_breakdown_validation.Instance.bringDown();
+                }
+                StartCoroutine(Swichtuto(1f, TutorialState.TutorialEnd));
                 break;
 
             case TutorialState.TutorialEnd:
@@ -249,6 +278,7 @@ public class SC_GameStates : NetworkBehaviour
         }
 
     }
+   
 
     void SyncSystemState(GameState TargetState)
     {
