@@ -114,7 +114,13 @@ public class SC_GameStates : NetworkBehaviour
         {
             case TutorialState.Tutorial1_1:
                 if(!isServer)
-                  SC_instruct_op_manager.Instance.Activate(6);
+                {
+                    SC_instruct_op_manager.Instance.Activate(6);
+                    SC_instruct_op_manager.Instance.Deactivate(0);
+                    SC_instruct_op_manager.Instance.Deactivate(2);
+                }
+                 
+
                 break;
 
             case TutorialState.Tutorial1_2:
