@@ -226,9 +226,13 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 sc_screens_controller.PanneAll();
 
                 //descendre le bouton de validation
-                SC_main_breakdown_validation.Instance.isValidated = false;
-                SC_main_breakdown_validation.Instance.textStopBlink();
-                SC_main_breakdown_validation.Instance.bringDown();
+                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+                {
+                    SC_main_breakdown_validation.Instance.isValidated = false;
+                    SC_main_breakdown_validation.Instance.textStopBlink();
+                    SC_main_breakdown_validation.Instance.bringDown();
+                }
+
 
             }
 
@@ -240,6 +244,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_main_breakdown_validation.Instance.textBlink();
             //Désactive le timer
             SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
+            if(SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_8)
+                SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_9);
+
         }
 
         //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
@@ -271,6 +278,18 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
                 SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial2);
 
+        }
+        if(SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_4 && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
+        }
+        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_5 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
+        }
+        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_6 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
         }
 
         SyncSystemsLifes();
