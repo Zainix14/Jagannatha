@@ -19,15 +19,18 @@ public class SC_CheckList : MonoBehaviour
 
     #endregion
 
+    [Header("Network References")]
     public GameObject Mng_Network = null;
     public GameObject NetworkPlayerPilot = null;
     public GameObject NetworkPlayerOperator = null;
 
+    [Header("Managers")]
     public GameObject Mng_Device = null;
     public GameObject Mng_Scene = null;   
     public GameObject Mng_SyncVar = null;
     public GameObject Mng_Audio = null;
 
+    [Header("Cameras")]
     public Camera Cam_Mecha = null;
     public Camera Cam_VR = null;
     public Camera Cam_FPS = null;

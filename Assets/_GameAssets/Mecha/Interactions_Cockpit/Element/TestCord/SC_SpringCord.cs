@@ -18,6 +18,10 @@ public class SC_SpringCord : MonoBehaviour
     [Header("Parameters")]
     [SerializeField, Range(0, 1)]
     float ConstraintRange = 0.7f;
+    [SerializeField, Range(0, 0.5f)]
+    float DeadZone = 0.15f;
+    [SerializeField, Range(0, 0.5f)]
+    float AddMaxRange = 0.3f;
 
     [Header("Infos")]
     [SerializeField]
@@ -93,14 +97,14 @@ public class SC_SpringCord : MonoBehaviour
         if (f_CurDistance < ConstraintRange)
             b_InRange = true;
 
-        if (f_CurDistance > ConstraintRange + 0.15f && b_InRange)
+        if (f_CurDistance > ConstraintRange + DeadZone && b_InRange)
         {
             b_Enable = !b_Enable;
             b_InRange = false;
             SetMaterial();
         }
 
-        if (f_CurDistance > ConstraintRange + 0.3f)
+        if (f_CurDistance > ConstraintRange + AddMaxRange)
             ReleaseObject();
 
     }
