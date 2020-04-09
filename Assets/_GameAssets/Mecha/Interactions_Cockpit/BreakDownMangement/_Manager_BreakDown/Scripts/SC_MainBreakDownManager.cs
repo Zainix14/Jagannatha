@@ -22,13 +22,13 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     [Header("References breakDown SC")]
     [SerializeField]
-    SC_BreakdownDisplayManager DisplayBreakdownSC;
+    public SC_BreakdownDisplayManager DisplayBreakdownSC;
     GameObject RenderSystem;
     [SerializeField]
-    SC_WeaponBreakdown WeaponBreakdownSC;
+    public SC_WeaponBreakdown WeaponBreakdownSC;
     GameObject WeaponSystem;
     [SerializeField]
-    SC_MovementBreakdown MovementBreakdownSC;
+    public SC_MovementBreakdown MovementBreakdownSC;
     GameObject MoveSystem;
 
     [Header("System Lifes")]
