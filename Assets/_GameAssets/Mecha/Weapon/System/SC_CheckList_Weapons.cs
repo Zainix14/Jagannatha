@@ -39,39 +39,4 @@ public class SC_CheckList_Weapons : MonoBehaviour
         }
     }
 
-    public GameObject GetMngWeapons()
-    {
-        return Mng_Weapons;
-    }
-
-    public GameObject GetTargetHand()
-    {
-        return TargetHand;
-    }
-
-    public GameObject GetAimIndicator()
-    {
-        return AimIndicator;
-    }
-
-    public GameObject GetMiniGun()
-    {
-        return MiniGun;
-    }
-
-    public GameObject GetShrapnel()
-    {
-        return Shrapnel;
-    }
-
-    public GameObject GetFlameThrower()
-    {
-        return FlameThrower;
-    }
-
-    public GameObject GetLaserGun()
-    {
-        return LaserGun;
-    }
-
 }

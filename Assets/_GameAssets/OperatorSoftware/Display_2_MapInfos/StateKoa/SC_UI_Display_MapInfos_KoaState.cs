@@ -170,7 +170,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
                 curState = (KoaState) curKoaScriptKoaSettings.GetKoaState();
-                koaStateTxt.text = "Statut : " + curState.ToString();
+                koaStateTxt.text = curState.ToString().ToUpper();
 
                 if (curfKoaLife != fKoaLife)
                 {
@@ -250,26 +250,4 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         }
     }
 
-    //void lifeBarSecondary()
-    //{
-    //    if(sliderLifeKoa.value != sliderLifeKoaSecondary.value)
-    //    {
-    //        StartCoroutine(secondBarDown());
-    //    }
-    //    else
-    //    {
-    //        secondaryBarChecker = false;
-    //    }
-    //    if(secondaryBarChecker)
-    //    {
-    //        sliderLifeKoaSecondary.value = Mathf.MoveTowards(sliderLifeKoaSecondary.value, sliderLifeKoa.value, 10* Time.deltaTime);
-    //    }
-
-    //}
-
-    IEnumerator secondBarDown()
-    {
-        yield return new WaitForSeconds(1);
-        secondaryBarChecker = true;
-    }
 }

@@ -65,7 +65,6 @@ public class SC_WeaponManager : MonoBehaviour, IF_BreakdownSystem
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
