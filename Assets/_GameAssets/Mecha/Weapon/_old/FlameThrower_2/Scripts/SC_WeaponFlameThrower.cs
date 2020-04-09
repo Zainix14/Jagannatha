@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Script du Gun |
-/// Gère le type de Tir |
-/// By Cycy modif par Leni |
-/// </summary>
-public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
+public class SC_WeaponFlameThrower : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 {
 
     bool b_InBreakdown = false;
@@ -15,16 +10,14 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public GameObject prefab_bullet;
     public GameObject helper_startPos;
 
+    [SerializeField]
+    GameObject _bulletContainer;
+
     public float frequency;
     public int n_fireForce;
     public float scattering;
 
-
-    [SerializeField]
-    GameObject _bulletContainer;
-
     Vector3Int sensitivity;
-
 
     float timer = 0;
 
@@ -42,7 +35,6 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void CreateBulletPull()
     {
-
 
         GameObject bulletContainer = Instantiate(_bulletContainer);
 
@@ -73,16 +65,14 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         if (timer > (1 / frequency))
         {
             timer = 0;
-            if (!b_InBreakdown)
+            if(!b_InBreakdown)
                 Fire();
         }
 
         timer += Time.deltaTime;
-
     }
 
     public void ReleaseTrigger() { }
-
     void Fire()
     {
 
@@ -91,33 +81,30 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         t_Bullet[n_CurBullet].transform.rotation = helper_startPos.transform.rotation;
         t_MrBullet[n_CurBullet].enabled = true;
         t_RbBullet[n_CurBullet].isKinematic = false;
-        t_Bullet[n_CurBullet].GetComponent<SC_BulletMiniGun>().sensitivity = sensitivity;
 
         //noise
-        Vector3 dir = new Vector3(transform.forward.x+Random.Range(-scattering,+scattering), transform.forward.y + Random.Range(-scattering, +scattering), transform.forward.z + Random.Range(-scattering, +scattering));
+        Vector3 dir = new Vector3(transform.forward.x + Random.Range(-scattering, +scattering), transform.forward.y + Random.Range(-scattering, +scattering), transform.forward.z + Random.Range(-scattering, +scattering));
 
-        t_RbBullet[n_CurBullet].AddForce(dir*n_fireForce);
+        t_RbBullet[n_CurBullet].AddForce(dir * n_fireForce);
 
         n_CurBullet++;
 
-        if (n_CurBullet>=n_BulletMagazine)
+        if (n_CurBullet >= n_BulletMagazine)
             n_CurBullet = 0;
 
-        CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_shoot_gun_1", false, 0.1f);
-
-    } 
+    }
 
     public void SetBreakdownState(bool State)
     {
         b_InBreakdown = State;
     }
 
-    public void SetEngineBreakdownState(bool State) { }
+    public void SetEngineBreakdownState(bool State){}
 
-    public Vector3Int GetWeaponSensitivity() { return sensitivity; }
+
+    public Vector3Int GetWeaponSensitivity(){return sensitivity;}
     public void SetSensitivity(int index, int value)
     {
-
         switch (index)
         {
             case 0:
@@ -134,7 +121,5 @@ public class SC_WeaponMiniGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
                 break;
         }
-
-
     }
 }
