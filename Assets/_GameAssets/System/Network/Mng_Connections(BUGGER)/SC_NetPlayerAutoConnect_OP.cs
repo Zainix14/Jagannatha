@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 /// </summary>
 public class SC_NetPlayerAutoConnect_OP : NetworkBehaviour
 {
-    GameObject Mng_CheckList;
+
     GameObject Mng_Network;
 
     [SyncVar]
@@ -17,22 +17,15 @@ public class SC_NetPlayerAutoConnect_OP : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetChecklist();
-    }
-
-    void GetChecklist()
-    {
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
+        GetReferences();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mng_CheckList == null)
-            GetChecklist();
 
-        if (Mng_CheckList != null && Mng_Network == null)
-            Mng_Network = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkManager();
+        if (Mng_Network == null)
+            GetReferences();
 
         //Mng_Network.GetComponent<NetworkManager>().connectionConfig
 
@@ -57,6 +50,12 @@ public class SC_NetPlayerAutoConnect_OP : NetworkBehaviour
         */
     }
 
+    void GetReferences()
+    {
+        if (Mng_Network == null)
+            Mng_Network = SC_CheckList.Instance.Mng_Network;
+    }
+
     void Connect()
     {
         if (!isServer && isLocalPlayer)
@@ -64,15 +63,7 @@ public class SC_NetPlayerAutoConnect_OP : NetworkBehaviour
             Mng_Network.GetComponent<NetworkManager>().networkAddress = "192.168.151.72";
             Mng_Network.GetComponent<NetworkManager>().StartClient();
         }
-
-        
-
     }
-    /*
-    void OnDisconnectedFromServer(NetworkDisconnection info)
-    {
-
-    }*/
 
     void OnDisconnectedFromServer()
     {

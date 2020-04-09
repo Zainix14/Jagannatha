@@ -10,7 +10,6 @@ public class SC_FlockWeaponManager : MonoBehaviour
     ///
     /////////////////////-- NETWORK --//////////////////////
 
-    GameObject Mng_CheckList;
     GameObject NetPlayerP;
     SC_NetPlayer_Flock_P NetPFloackSC;
 
@@ -22,6 +21,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     bool isFiring;
 
     ///////////////////////-- LASER --//////////////////////
+    [Header("Laser Refrences")]
     [SerializeField]                                      
     GameObject laserPrefab;
     [SerializeField]
@@ -35,6 +35,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     bool startLaser;
 
     ///////////////////////-- BULLET --//////////////////////
+    [Header("Bullet Refrences")]
     [SerializeField]
     GameObject bulletPrefab;
     [SerializeField]
@@ -75,10 +76,8 @@ public class SC_FlockWeaponManager : MonoBehaviour
 
     void GetReferences()
     {
-        if (Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        if (Mng_CheckList != null && NetPlayerP == null)
-            NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
+        if (NetPlayerP == null)
+            NetPlayerP = SC_CheckList.Instance.NetworkPlayerPilot;
         if (NetPlayerP != null && NetPFloackSC == null)
             NetPFloackSC = NetPlayerP.GetComponent<SC_NetPlayer_Flock_P>();
     }
@@ -93,10 +92,11 @@ public class SC_FlockWeaponManager : MonoBehaviour
     void Update()
     {
 
-        FireUpdate();
-
-        if (Mng_CheckList == null || NetPlayerP == null || NetPFloackSC == null)
+        if (NetPlayerP == null || NetPFloackSC == null)
             GetReferences();
+
+        FireUpdate();
+    
     }
 
     void FireUpdate()
