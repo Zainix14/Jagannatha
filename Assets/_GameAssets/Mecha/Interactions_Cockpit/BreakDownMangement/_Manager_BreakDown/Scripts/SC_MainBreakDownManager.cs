@@ -84,32 +84,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     void GetReferences()
     {
 
-        if (Mng_Checklist == null)
-            Mng_Checklist = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_Checklist != null && MoveSystem == null)
-            MoveSystem = Mng_Checklist.GetComponent<SC_CheckList_Mecha>().GetMechCollider();
-
-        if (Mng_Checklist != null && RenderSystem == null)
-            RenderSystem = Mng_Checklist.GetComponent<SC_CheckList_ViewAiming>().GetScreens();
-
         //get du script qui gere l'affichage des ecrans de panne
         if (screenController != null && sc_screens_controller == null)
             sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
-
-        if (Mng_Checklist != null && WeaponSystem == null)
-            WeaponSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMngWeapons();
-        /*
-        if (Mng_Checklist != null && MiniGunSystem == null)
-            MiniGunSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetMiniGun();
-
-        if (Mng_Checklist != null && ShrapnelSystem == null)
-            ShrapnelSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetShrapnel();
-
-        if (Mng_Checklist != null && FlameSystem == null)
-            FlameSystem = Mng_Checklist.GetComponent<SC_CheckList_Weapons>().GetFlameThrower();
-        */
-
+        
     }
 
     #endregion Init
@@ -159,9 +137,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
-        if( MoveSystem == null || RenderSystem == null || WeaponSystem == null)
+        
+        if(sc_screens_controller == null)
             GetReferences();
-
+        
         #region Verif si chaque system est en panne
 
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown > 0)
@@ -294,62 +273,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         SyncSystemsLifes();
 
-        #region OldVersion
-
-        /*
-        Ancien code qui donne envie de se foutre une balle
-
-        if (b_BreakEngine != Mng_BreakDownTest.b_BreakdownTest)
-        {
-
-           b_BreakEngine = Mng_BreakDownTest.b_BreakdownTest;
-
-            if (Mng_BreakDownTest.b_BreakdownTest || SC_main_breakdown_validation.Instance.isValidated == false)
-                b_BreakEngine = true;
-
-            if (b_BreakEngine)
-            {
-
-                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
-                    SC_BreakDownAlert.LaunchGlobalAlert();
-
-                sc_screens_controller.PanneAll();
-
-                //descendre le bouton de validation
-                SC_main_breakdown_validation.Instance.isValidated = false;
-                SC_main_breakdown_validation.Instance.bringDown();
-
-            }
-
-            else if (!Mng_BreakDownTest.b_BreakdownTest && SC_main_breakdown_validation.Instance.isValidated)
-            {
-
-                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
-                    SC_BreakDownAlert.StopGlobalAlert();
-
-                sc_screens_controller.RepairAll();
-
-                //remonter le bouton de validation
-                SC_main_breakdown_validation.Instance.bringUp(); 
-
-                //changement de state du tuto
-                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-                    SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Tutorial2);
-
-            }
-
-            if (MoveSystem != null && RenderSystem != null && WeaponSystem != null)
-            {
-                    MoveSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-                    RenderSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-                    WeaponSystem.GetComponent<IF_BreakdownSystem>().SetEngineBreakdownState(b_BreakEngine);
-            }
-
-        }
-        */
-
-        #endregion
-
     }
 
     public void CauseDamageOnSystem(FlockSettings.AttackFocus attackFocus, int DmgValue)
@@ -387,11 +310,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     if (Displaylife <= 0)
                     {
-
                         SC_BreakdownDisplayManager.Instance.StartNewBreakdown(2);
-
                         Displaylife = 10;
-
                     }
 
                     break;
@@ -406,11 +326,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     if (MovementLife <= 0)
                     {
-
                         SC_MovementBreakdown.Instance.StartNewBreakdown(1);
-
                         MovementLife = 10;
-
                     }
 
                     break;
@@ -423,14 +340,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                     else
                         CauseDamageOnSystem(FlockSettings.AttackFocus.Display, DmgValue);
 
-
                     if (WeaponLife <= 0)
                     {
-
                         SC_WeaponBreakdown.Instance.StartNewBreakdown(1);
-
                         WeaponLife = 10;
-
                     }
 
                     break;

@@ -85,6 +85,8 @@ public class SC_passwordLock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
+            SC_instruct_op_manager.Instance.Deactivate(6);
         if (Input.GetKeyDown(KeyCode.W))
         {
             for (int i = 0; i < 4; i++)
@@ -94,7 +96,7 @@ public class SC_passwordLock : MonoBehaviour
             canvasMng.GetComponent<SC_CanvasManager>().checkTaskBeforeGo();
             gameObject.SetActive(false);
             objectElectricPlug.SetActive(false);
-
+            SC_instruct_op_manager.Instance.Deactivate(6);
             b_IsConnected = true;
             unlock = false;
             countTime = 0;

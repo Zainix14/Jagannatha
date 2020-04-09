@@ -36,6 +36,9 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     Text koaLife;
 
     [SerializeField]
+    SC_UI_SystmShield life;
+
+    [SerializeField]
     Text koaStateTxt;
     //[SerializeField]
     //Text optiWeapon;
@@ -63,11 +66,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
-    [SerializeField]
-    Slider sliderLifeKoa;
-
-    [SerializeField]
-    Slider sliderLifeKoaSecondary;
     bool secondaryBarChecker = false;
     void Awake()
     {
@@ -125,6 +123,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
             if (activated)
             {
                 curfKoaLife = fKoaLife;
+                
                 for (int i = 0; i < 6; i++)
                 {
 
@@ -162,10 +161,10 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
 
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
-                koaLife.text = fKoaLife.ToString();
 
-                sliderLifeKoa.value = fKoaLife;
-                lifeBarSecondary();
+                koaLife.text = fKoaLife.ToString();
+                life.simpleValue = fKoaLife/100;
+
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
 
                 displayOptiBar();
@@ -251,22 +250,22 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         }
     }
 
-    void lifeBarSecondary()
-    {
-        if(sliderLifeKoa.value != sliderLifeKoaSecondary.value)
-        {
-            StartCoroutine(secondBarDown());
-        }
-        else
-        {
-            secondaryBarChecker = false;
-        }
-        if(secondaryBarChecker)
-        {
-            sliderLifeKoaSecondary.value = Mathf.MoveTowards(sliderLifeKoaSecondary.value, sliderLifeKoa.value, 10* Time.deltaTime);
-        }
+    //void lifeBarSecondary()
+    //{
+    //    if(sliderLifeKoa.value != sliderLifeKoaSecondary.value)
+    //    {
+    //        StartCoroutine(secondBarDown());
+    //    }
+    //    else
+    //    {
+    //        secondaryBarChecker = false;
+    //    }
+    //    if(secondaryBarChecker)
+    //    {
+    //        sliderLifeKoaSecondary.value = Mathf.MoveTowards(sliderLifeKoaSecondary.value, sliderLifeKoa.value, 10* Time.deltaTime);
+    //    }
 
-    }
+    //}
 
     IEnumerator secondBarDown()
     {
