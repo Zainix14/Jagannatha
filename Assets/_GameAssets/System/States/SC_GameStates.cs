@@ -14,7 +14,7 @@ public class SC_GameStates : NetworkBehaviour
     #endregion
 
     public enum GameState {Lobby, Tutorial, Tutorial2, Game, GameEnd }
-    public enum TutorialState { Tutorial1_1, Tutorial1_2, Tutorial1_3, Tutorial1_4, Tutorial1_5, Tutorial1_6, Tutorial1_7, Tutorial1_8, Tutorial1_9, Tutorial1_10, Tutorial1_11, Tutorial2_1, Tutorial2_2, Tutorial2_3, Tutorial2_4, TutorialEnd}
+    public enum TutorialState { Tutorial1_1, Tutorial1_2, Tutorial1_3, Tutorial1_4, Tutorial1_5, Tutorial1_6, Tutorial1_7, Tutorial1_8, Tutorial1_9, Tutorial1_10, Tutorial1_11, Tutorial2_1, Tutorial2_2, Tutorial2_3, Tutorial2_4, Tutorial2_5, TutorialEnd}
     public GameState CurState;
     public TutorialState CurTutoState;
 
@@ -37,6 +37,14 @@ public class SC_GameStates : NetworkBehaviour
             RpcSetState(GameState.Lobby);
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            SkipTuto();
+        }
+    }
+
     public void ChangeGameState (GameState TargetState)
     {
         if (isServer)
@@ -54,6 +62,11 @@ public class SC_GameStates : NetworkBehaviour
             SyncSystemTutoState(TargetTutoState);
         }
 
+    }
+
+    public void SkipTuto()
+    {
+        ChangeTutoGameState(TutorialState.Tutorial2_4);
     }
 
     [ClientRpc]
@@ -243,8 +256,25 @@ public class SC_GameStates : NetworkBehaviour
                 break;
 
             case TutorialState.Tutorial2_4:
+                if (isServer)
+                {
+                    SC_MainBreakDownManager.Instance.DisplayBreakdownSC.RepairBreakdownDebug();
+                    SC_MainBreakDownManager.Instance.WeaponBreakdownSC.RepairBreakdownDebug();
+                    SC_MainBreakDownManager.Instance.MovementBreakdownSC.RepairBreakdownDebug();
+                    SC_main_breakdown_validation.Instance.Validate();
+
+                }
                 if (!isServer)
                 {
+                    SC_passwordLock.Instance.cheatCode = true;
+                }
+                    StartCoroutine(Swichtuto(0.5f, TutorialState.Tutorial2_5));
+                break;
+
+            case TutorialState.Tutorial2_5:
+                if (!isServer)
+                {
+                   
                     SC_instruct_op_manager.Instance.Deactivate(0);
                     SC_instruct_op_manager.Instance.Deactivate(1);
                     SC_instruct_op_manager.Instance.Deactivate(2);
@@ -260,14 +290,9 @@ public class SC_GameStates : NetworkBehaviour
                     SC_instruct_op_manager.Instance.Deactivate(12);
                     SC_instruct_op_manager.Instance.Deactivate(13);
                     SC_instruct_op_manager.Instance.Deactivate(14);
+
                 }
-                if (isServer)
-                {
-                    SC_main_breakdown_validation.Instance.isValidated = false;
-                    SC_main_breakdown_validation.Instance.textStopBlink();
-                    SC_main_breakdown_validation.Instance.bringDown();
-                }
-                StartCoroutine(Swichtuto(1f, TutorialState.TutorialEnd));
+                StartCoroutine(Swichtuto(0.5f, TutorialState.TutorialEnd));
                 break;
 
             case TutorialState.TutorialEnd:

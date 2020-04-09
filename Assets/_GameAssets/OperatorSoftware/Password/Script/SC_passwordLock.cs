@@ -87,7 +87,7 @@ public class SC_passwordLock : MonoBehaviour
     {
         if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
             SC_instruct_op_manager.Instance.Deactivate(6);
-        if (Input.GetKeyDown(KeyCode.W))
+        if (cheatCode)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -100,7 +100,7 @@ public class SC_passwordLock : MonoBehaviour
             b_IsConnected = true;
             unlock = false;
             countTime = 0;
-            SC_CheckList.Instance.NetworkPlayerOperator.GetComponent<SC_Net_Player_TutoState>().CmdChangeTutoState(SC_GameStates.TutorialState.Tutorial2_4);
+            SC_CheckList.Instance.NetworkPlayerOperator.GetComponent<SC_Net_Player_TutoState>().CmdChangeTutoState(SC_GameStates.TutorialState.Tutorial1_2);
         }
         if (string.Equals(objectPassword.GetComponent<Text>().text, s_password, System.StringComparison.CurrentCultureIgnoreCase) /*objectPassword.GetComponent<Text>().text == s_password*/) //Check du mot de passe
         {
