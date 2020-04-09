@@ -83,7 +83,7 @@ public class SC_KoaManager : MonoBehaviour
         GetReferences();
         regeneration = true;
         curRecoveryTimer = 0;
-        //recoveryDuration = 1.5f;
+        recoveryDuration = 1.5f;
         flockManager = newGuide.GetComponent<SC_FlockManager>();
         curFlockSettings = flockSettings;
         spawnCount = newSpawnCount;
