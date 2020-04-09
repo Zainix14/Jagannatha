@@ -21,10 +21,8 @@ public class ExampleClass : MonoBehaviour
     void GetRefs()
     {
 
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_CheckList != null)
-            Mng_Network = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkManager();
+        if (Mng_Network == null)
+            Mng_Network = SC_CheckList.Instance.Mng_Network;
 
         if (Mng_Network != null)
             NetManager = Mng_Network.GetComponent<NetworkManager>();
@@ -34,7 +32,7 @@ public class ExampleClass : MonoBehaviour
     void Update()
     {
 
-        if (Mng_CheckList == null || Mng_Network == null || Mng_Network == null)
+        if (Mng_Network == null || Mng_Network == null)
             GetRefs();
 
         if (NetManager != null)

@@ -8,28 +8,38 @@ using UnityEngine;
 ///  | Auteur : Zainix
 /// </summary>
 public class SC_KoaManager : MonoBehaviour
-{
+{ 
 
-    GameObject Mng_CheckList;
-    GameObject NetPlayerP;
-    SC_NetPSpawnKoa_P NetPSpawnKoa;
-    SC_MoveKoaSync syncVarKoa;
-
-    Vector3Int sensitivity;
-
+    [Header("References")]
     [SerializeField]
     GameObject _koaPrefab; //Prefab du Koa
 
+    [Header("Get References")]
+    [SerializeField]
+    GameObject NetPlayerP;
+    [SerializeField]
+    SC_NetPSpawnKoa_P NetPSpawnKoa;
+    [SerializeField]
+    SC_MoveKoaSync syncVarKoa;
+
+    [Header("Parameters")]
+    [SerializeField]
     int maxLife = 10;
+    [SerializeField]
     int KoaLife = 10;
+    [SerializeField]
+    float recoveryDuration = 1.5f;
+
+    [Header("Infos")]
+    [SerializeField]
+    Vector3Int sensitivity;
 
     string koaCharID;
     int koaNumID;
     string koaID;
     int type;
 
-    bool regeneration = false;
-    float recoveryDuration;
+    bool regeneration = false;   
     float curRecoveryTimer;
 
     GameObject _koa; //Koa du 
@@ -42,10 +52,12 @@ public class SC_KoaManager : MonoBehaviour
 
     //public ComputeShader compute; //Shader
     SC_FlockManager flockManager;
+
     /// <summary>
     /// Contient toute la liste des guides actuels 
     /// </summary>
     List<Transform> _guideList;
+
     /// <summary>
     /// Guide actuel du Koa
     /// </summary>
@@ -62,7 +74,6 @@ public class SC_KoaManager : MonoBehaviour
 
     ParticleSystem vfx_Hit;
     GameObject SFX_Explosion;
-
 
     /// <summary>
     /// Avant le start, instanciation
@@ -269,20 +280,11 @@ public class SC_KoaManager : MonoBehaviour
     void GetReferences()
     {
 
-        if (Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        else
-            Debug.LogWarning("SC_KoaManager - Cant Find Mng_CheckList");
-
-        if (Mng_CheckList != null && NetPlayerP == null)
-            NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
-        else
-            Debug.LogWarning("SC_KoaManager - Cant Find NetPlayerP");
+        if (NetPlayerP == null)
+            NetPlayerP = SC_CheckList.Instance.NetworkPlayerPilot;
 
         if (NetPlayerP != null && NetPSpawnKoa == null)
             NetPSpawnKoa = NetPlayerP.GetComponent<SC_NetPSpawnKoa_P>();
-        else
-            Debug.LogWarning("SC_KoaManager - Cant Find SC_NetPSpawnKoa_P");
 
     }
 
@@ -385,6 +387,11 @@ public class SC_KoaManager : MonoBehaviour
 
             if (power < 0) power = 0;
             float powerPerCent = (power / 6) * 100;
+            
+            if(SC_Debug_Mng.Instance.b_weapon_Cheatcode)
+            {
+                powerPerCent = SC_Debug_Mng.Instance.powerPerCent;
+            }
 
             if (powerPerCent > 0)
             {
@@ -457,6 +464,10 @@ public class SC_KoaManager : MonoBehaviour
 
         if (power < 0) power = 0;
         float powerPerCent = (power / 6) * 100;
+        if (SC_Debug_Mng.Instance.b_weapon_Cheatcode)
+        {
+            powerPerCent = SC_Debug_Mng.Instance.powerPerCent;
+        }
 
         if (powerPerCent < curFlockSettings.maxReactionSensibilityPerCent)
         {

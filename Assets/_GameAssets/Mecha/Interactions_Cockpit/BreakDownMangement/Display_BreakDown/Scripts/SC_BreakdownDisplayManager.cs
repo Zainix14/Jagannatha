@@ -154,6 +154,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         //on update le nombre de pannes
         CurNbOfBreakdown = n_BreakdownValue;
+        SC_SyncVar_DisplaySystem.Instance.f_CurNbOfBd = CurNbOfBreakdown;
 
         //Gestion temporaire du play/stop des fx de panne
         if (CurNbOfBreakdown > 0)
@@ -165,12 +166,14 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         if (n_BreakdownValue >= n_MaxBreakInterB4MaxBD && !b_MaxBreakdown)
         {
             b_MaxBreakdown = true;
+            SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = true;
             Mng_BreakdownMain.CheckBreakdown();
         }   
         
         else if (n_BreakdownValue ==0 && b_MaxBreakdown)
         {
             b_MaxBreakdown = false;
+            SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = false;
             Mng_BreakdownMain.CheckBreakdown();
 
         }
@@ -190,7 +193,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-
     #region FX
     //Fonction jouant toutes les FX indiquant une panne sur le système,à échelonner plus tard)
     private void Play_Stop_All_Pannel_FX(bool startStop)
@@ -209,8 +211,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
 
     #endregion FX
-
-
 
     #region DebugMethod
 

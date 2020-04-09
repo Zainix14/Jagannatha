@@ -22,6 +22,10 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     public bool activated;
 
+    public GameObject Amplitude;
+    public GameObject Frequence;
+    public GameObject Phase;
+
     [SerializeField]
     Text[] sensi = new Text[3];
 
@@ -30,6 +34,9 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     [SerializeField]
     Text koaLife;
+
+    [SerializeField]
+    SC_UI_SystmShield life;
 
     [SerializeField]
     Text koaStateTxt;
@@ -59,11 +66,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
-    [SerializeField]
-    Slider sliderLifeKoa;
-
-    [SerializeField]
-    Slider sliderLifeKoaSecondary;
     bool secondaryBarChecker = false;
     void Awake()
     {
@@ -121,22 +123,54 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
             if (activated)
             {
                 curfKoaLife = fKoaLife;
-                sensi[0].text = (koaSensibility.x + 1).ToString();
+                
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.x)
+                    {
+                        Amplitude.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Amplitude.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.y)
+                    {
+                        Frequence.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Frequence.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.z)
+                    {
+                        Phase.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Phase.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+
+                sensi [0].text = (koaSensibility.x + 1).ToString();
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
 
 
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
-                koaLife.text = fKoaLife.ToString();
 
-                sliderLifeKoa.value = fKoaLife;
-                lifeBarSecondary();
+                koaLife.text = fKoaLife.ToString();
+                life.simpleValue = fKoaLife/100;
+
                 gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
 
                 displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
                 curState = (KoaState) curKoaScriptKoaSettings.GetKoaState();
-                koaStateTxt.text = "Statut : " + curState.ToString();
+                koaStateTxt.text = curState.ToString().ToUpper();
 
                 if (curfKoaLife != fKoaLife)
                 {
@@ -216,26 +250,4 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         }
     }
 
-    void lifeBarSecondary()
-    {
-        if(sliderLifeKoa.value != sliderLifeKoaSecondary.value)
-        {
-            StartCoroutine(secondBarDown());
-        }
-        else
-        {
-            secondaryBarChecker = false;
-        }
-        if(secondaryBarChecker)
-        {
-            sliderLifeKoaSecondary.value = Mathf.MoveTowards(sliderLifeKoaSecondary.value, sliderLifeKoa.value, 10* Time.deltaTime);
-        }
-
-    }
-
-    IEnumerator secondBarDown()
-    {
-        yield return new WaitForSeconds(1);
-        secondaryBarChecker = true;
-    }
 }

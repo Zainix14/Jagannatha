@@ -22,6 +22,9 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownDisplay sc_syncvar;
 
+    [SerializeField]
+    GameObject Bar;
+
     public int index;
     // Start is called before the first frame update
     void Start()
@@ -51,8 +54,8 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
             if (sc_syncvar.SL_sliders[index].isEnPanne)
             {
                 textWanted.enabled = true;
-                warning.SetActive(true);
-                sparkle.SetActive(false);
+                //warning.SetActive(true);
+                //sparkle.SetActive(false);
                 //Debug.Log(sc_syncvar.SL_sliders[index].valueWanted);
                 textWanted.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].valueWanted,0.4f,10,-0.4f,0)).ToString();
                 
@@ -60,8 +63,8 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
             //NO PANNE
             else
             {
-                warning.SetActive(false);
-                sparkle.SetActive(true);
+                //warning.SetActive(false);
+                //sparkle.SetActive(true);
                 textWanted.enabled = false;
             }
             
@@ -72,9 +75,7 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     {
 
         textValue.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].value, 0.4f, 10, -0.4f, 0)).ToString();
-        float rotZ = sc_syncvar.SL_sliders[index].value * 100;
-
-        disquePotar.gameObject.transform.eulerAngles = new Vector3(270, rotZ, 0);
+        Bar.GetComponent<SC_UI_SystmShield>().simpleValue = ratio(sc_syncvar.SL_sliders[index].value, 0.4f, 1, -0.4f, 0);
         
     }
 

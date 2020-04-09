@@ -16,6 +16,7 @@ public class SC_UI_DisplayUp_Raycast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = curCam.ScreenPointToRay(Input.mousePosition);
@@ -27,6 +28,6 @@ public class SC_UI_DisplayUp_Raycast : MonoBehaviour
 
                 }
             }
-        }
+        }*/
     }
 }

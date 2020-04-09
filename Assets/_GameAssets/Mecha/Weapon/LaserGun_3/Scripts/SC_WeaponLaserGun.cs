@@ -20,7 +20,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public GameObject Target;
     GameObject Mng_CheckList;
     GameObject NetPlayerP;
-    SC_AimHit AimHit;
+    SC_AimHit SC_AimHit;
     public Sc_LaserFeedBack LaserFB;
 
     [Header("Laser Parameters")]
@@ -74,23 +74,27 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void GetReferences()
     {
-        if (Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        if (Target == null && Mng_CheckList != null)
-            Target = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
-        if (Target != null && AimHit == null)
-            AimHit = Target.GetComponent<SC_AimHit>();
-        if (Mng_CheckList != null && NetPlayerP == null)
-            NetPlayerP = Mng_CheckList.GetComponent<SC_CheckList>().GetNetworkPlayerPilot();
+
+        if (Target == null)
+            Target = SC_CheckList_Weapons.Instance.AimIndicator;
+        if (Target != null && SC_AimHit == null)
+            SC_AimHit = Target.GetComponent<SC_AimHit>();
+
+        if (NetPlayerP == null)
+            NetPlayerP = SC_CheckList.Instance.NetworkPlayerPilot;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mng_CheckList == null || Target == null)
+
+        if (Target == null)
             GetReferences();
+
         if (Input.GetKeyDown(KeyCode.L))
             b_DebugLaser = !b_DebugLaser;
+
     }
 
     #region BulletCreation
@@ -125,7 +129,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
         GameObject bulletContainer = Instantiate(_bulletContainer);
 
-        //Bullet = Instantiate(prefab_bullet, new Vector3(1000, 1000, 1000), Quaternion.identity);
         Bullet = NetPlayerP.GetComponent<SC_NetPlayerWeaponsMng>().SpawnLaser(prefab_bullet);
 
         Bullet.transform.SetParent(bulletContainer.transform);
@@ -134,6 +137,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
         BulletSC = Bullet.GetComponent<SC_BulletLaserGun>();
 
         BulletSC.frequency = frequency;
+
     }
 
     #endregion
@@ -144,24 +148,24 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     {
 
         SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel = SC_WeaponBreakdown.Instance.f_EnergyValue;
+
         if (SC_WeaponBreakdown.Instance.CanFire())
         {
-            Fire();
-           
+            Fire();          
         }
+
         else
         {
-
             LaserFB.DiseableLaser();
         }
+
     }
 
     public void ReleaseTrigger()
     {
-
         SC_SyncVar_WeaponSystem.Instance.f_curEnergyLevel = 0;
         Bullet.GetComponent<SC_BulletLaserGun>().ResetPos();
-        AimHit.b_OnFire = false;
+        SC_AimHit.b_OnFire = false;
         LaserFB.DiseableLaser();
     }
 
@@ -187,26 +191,33 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
 
     void Hit()
     {
-
+        
         if (LaserHit.collider.gameObject.layer == 26)
         {
+
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
                 LaserHit.collider.GetComponent<Boid>().HitBoid(sensitivity);
             }
+
             f_LaserTimer += Time.deltaTime;
+
         }
+
         else if (LaserHit.collider.gameObject.layer == 25)
         {
+
             if (f_LaserTimer > (1 / frequency))
             {
                 f_LaserTimer = 0;
-
-                LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);
+                LaserHit.collider.GetComponentInParent<SC_KoaCollider>().GetHit(sensitivity);           
             }
+
             f_LaserTimer += Time.deltaTime;
+
         }
+
         else
         {
             SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.none);
@@ -215,8 +226,6 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     }
 
     #endregion
-
-
 
     #region Breakdown
 
@@ -234,8 +243,7 @@ public class SC_WeaponLaserGun : MonoBehaviour, IF_Weapon, IF_BreakdownSystem
     public Vector3Int GetWeaponSensitivity() { return sensitivity; }
 
     public void SetSensitivity(int index, int value)
-    {
-        
+    {      
         switch (index)
         {
             case 0:

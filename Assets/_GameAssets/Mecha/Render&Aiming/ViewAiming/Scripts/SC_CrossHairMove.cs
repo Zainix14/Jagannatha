@@ -12,7 +12,7 @@ public class SC_CrossHairMove : MonoBehaviour
     GameObject AimIndicator;
     [SerializeField]
     GameObject ViewIndicator;
-    GameObject Mng_CheckList = null;
+
     Camera Cam_Mech = null;
     Camera Cam_Cockpit = null;
     bool b_IsVR = false;
@@ -66,13 +66,12 @@ public class SC_CrossHairMove : MonoBehaviour
 
     void GetReferences()
     {
-        if(Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        if (Mng_CheckList != null && (!b_IsVR && !b_IsFPS))
+
+        if (!b_IsVR && !b_IsFPS)
             GetDeviceState();
-        if (Mng_CheckList != null && Cam_Cockpit == null && (b_IsFPS || b_IsVR))
+        if (Cam_Cockpit == null && (b_IsFPS || b_IsVR))
             GetCockpitCam();
-        if (Mng_CheckList != null && Cam_Mech == null)
+        if (Cam_Mech == null)
             GetMechCam();
         if (Cam_Cockpit != null && Cam_Mech != null)
             b_RefsGet = true;
@@ -81,11 +80,11 @@ public class SC_CrossHairMove : MonoBehaviour
     void GetDeviceState()
     {
 
-        if (Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR != null)
-            b_IsVR = Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR;
+        if (SC_CheckList.Instance.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR != null)
+            b_IsVR = SC_CheckList.Instance.Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR;
 
-        if (Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS != null)
-            b_IsFPS = Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS;
+        if (SC_CheckList.Instance.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS != null)
+            b_IsFPS = SC_CheckList.Instance.Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS;
 
     }
 
@@ -93,16 +92,16 @@ public class SC_CrossHairMove : MonoBehaviour
     {
 
         if (b_IsFPS && Cam_Cockpit == null)
-            Cam_Cockpit = Mng_CheckList.GetComponent<SC_CheckList>().GetCamFPS();
+            Cam_Cockpit = SC_CheckList.Instance.Cam_FPS;
 
         if (b_IsVR && Cam_Cockpit == null)
-            Cam_Cockpit = Mng_CheckList.GetComponent<SC_CheckList>().GetCamVR();
+            Cam_Cockpit = SC_CheckList.Instance.Cam_VR;
 
     }
 
     void GetMechCam()
     {
-        Cam_Mech = Mng_CheckList.GetComponent<SC_CheckList>().GetCamMecha();
+        Cam_Mech = SC_CheckList.Instance.Cam_Mecha;
     }
 
     #endregion

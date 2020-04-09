@@ -5,56 +5,44 @@ using UnityEngine;
 public class SC_FollowHand : MonoBehaviour
 {
 
+    [Header("References")]
+    [SerializeField]
+    GameObject TargetHand;
+    [SerializeField]
+    GameObject AimIndicator;   
+
+    [Header("Parameters")]
+    [SerializeField]
+    float f_PosOffsetZ = 0;
+    public enum RotationType { LookAt, SyncRot, Lerp }  
+    public RotationType RotationMode;
+
+    [Header("Infos")]
     bool b_AlreadyCheck = false;
     public bool b_OnFollow = false;
 
-    public enum RotationType { LookAt, SyncRot, Lerp }
-
-    [Header("Configuration des écrans")]
-    public RotationType RotationMode;
-
-    GameObject Mng_CheckList = null;
-    public GameObject TargetHand;
-    public float f_PosOffsetZ = 0;
-    public GameObject AimIndicator;
-
     void GetReferences()
     {
-        if (Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        if (AimIndicator == null && Mng_CheckList != null)
-            AimIndicator = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().GetAimIndicator();
+
+        if (AimIndicator == null)
+            AimIndicator = SC_CheckList_Weapons.Instance.AimIndicator;
+
+        if (TargetHand == null)
+            TargetHand = SC_CheckList_Weapons.Instance.TargetHand;
+
     }
 
     void Update()
     {
 
-        if (Mng_CheckList == null || AimIndicator == null)
+        if (TargetHand == null || AimIndicator == null)
             GetReferences();
 
-        if (Mng_CheckList != null && TargetHand == null)
-            GetTargetHand();
-
-        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.SyncRot)
+        if (b_OnFollow && TargetHand != null)
             SetPos();
-
-        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.LookAt)
-            SetPosII();
-
-        if (b_OnFollow && TargetHand != null && RotationMode == RotationType.Lerp)
-            SetPosIII();
 
         if (!b_OnFollow && this.transform.position.y >= 0)
             ResetPos();
-
-    }
-
-    void GetTargetHand()
-    {
-        TargetHand = Mng_CheckList.GetComponent<SC_CheckList_Weapons>().TargetHand;
-
-        if (TargetHand == null)
-            Debug.LogWarning("SC_FollowHand - Can't Find TargetLimb");
 
     }
 
@@ -66,42 +54,42 @@ public class SC_FollowHand : MonoBehaviour
     void SetPos()
     {
 
-        this.gameObject.transform.position = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
-        this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
+        switch (RotationMode)
+        {
 
-        var rotation = TargetHand.transform.rotation;
-        rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
-        this.gameObject.transform.rotation = rotation;
+            case RotationType.SyncRot:
 
-    }
+                this.gameObject.transform.position = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+                this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
 
-    void SetPosII()
-    {
-     
-        Vector3 TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
-        this.gameObject.transform.position = Vector3.Lerp(transform.position, TargetPos, 1f);
-        this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
+                var rotation = TargetHand.transform.rotation;
+                rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
+                this.gameObject.transform.rotation = rotation;
 
-        /*
-        var rotation = TargetHand.transform.rotation;
-        rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
-        this.gameObject.transform.rotation = rotation;
-        */
+                break;
 
-        transform.LookAt(AimIndicator.transform);
+            case RotationType.LookAt:
 
-    }
+                Vector3 TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+                this.gameObject.transform.position = Vector3.Lerp(transform.position, TargetPos, 1f);
+                this.gameObject.transform.position += transform.TransformDirection(0, 0, f_PosOffsetZ);
 
-    void SetPosIII()
-    {
+                transform.LookAt(AimIndicator.transform);
 
-        var TargetPos = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
-        TargetPos += transform.TransformDirection(0, 0, f_PosOffsetZ);
-        this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, TargetPos, 0.1f);
+                break;
 
-        var rotation = TargetHand.transform.rotation;
-        rotation *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
-        this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, rotation, 0.1f); ;
+            case RotationType.Lerp:
+
+                var TargetPosLerp = new Vector3(TargetHand.transform.position.x, TargetHand.transform.position.y, TargetHand.transform.position.z);
+                TargetPosLerp += transform.TransformDirection(0, 0, f_PosOffsetZ);
+                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, TargetPosLerp, 0.1f);
+
+                var RotationLerp = TargetHand.transform.rotation;
+                RotationLerp *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
+                this.gameObject.transform.rotation = Quaternion.Lerp(this.gameObject.transform.rotation, RotationLerp, 0.1f);
+
+                break;
+        }
 
     }
 
