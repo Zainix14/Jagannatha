@@ -69,7 +69,7 @@ public class SC_EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.F12))
         {
             SC_breakdown_displays_screens.Instance.EndScreenDisplay();
         }
