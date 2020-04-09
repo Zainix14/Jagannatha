@@ -5,11 +5,13 @@ using UnityEngine;
 public class SC_SnapCollider : MonoBehaviour
 {
 
-    GameObject Mng_CheckList;
     Camera MechCam;
 
+    [Header("Refrences")]
     [SerializeField]
     CapsuleCollider Collider;
+
+    [Header("Infos")]
     [SerializeField]
     float DistFromMech;
 
@@ -43,7 +45,7 @@ public class SC_SnapCollider : MonoBehaviour
     void Update()
     {
 
-        if (Mng_CheckList == null || MechCam == null)
+        if (MechCam == null)
             GetReferences();
 
         if (MechCam != null)
@@ -56,10 +58,8 @@ public class SC_SnapCollider : MonoBehaviour
 
     void GetReferences()
     {
-        if (Mng_CheckList == null)
-            Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-        if(Mng_CheckList != null && MechCam == null)
-            MechCam = Mng_CheckList.GetComponent<SC_CheckList>().GetCamMecha();
+        if(MechCam == null)
+            MechCam = SC_CheckList.Instance.Cam_Mecha;
     }
 
     void LookAtMech()
