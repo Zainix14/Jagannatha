@@ -130,7 +130,8 @@ public class SC_GameStates : NetworkBehaviour
                     SC_main_breakdown_validation.Instance.textStopBlink();
                     SC_main_breakdown_validation.Instance.bringDown();
                 }
-                
+                if(!isServer)
+                    SC_instruct_op_manager.Instance.Deactivate(6);
                 StartCoroutine(Swichtuto(0.4f, TutorialState.Tutorial1_3));
 
                 break;
