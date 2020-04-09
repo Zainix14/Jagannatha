@@ -24,9 +24,9 @@ public class SC_AttackPathInfo : MonoBehaviour
 
     void Start()
     {
-        checklist = GameObject.FindGameObjectWithTag("Mng_CheckList").GetComponent<SC_CheckList_Mecha>();
-        if(checklist != null)
-        Player = checklist.GetMechCollider().transform;
+
+        Player = SC_CheckList_Mecha.Instance.MechCollider.transform;
+
     }
 
     //Get des index par PathBehavior
