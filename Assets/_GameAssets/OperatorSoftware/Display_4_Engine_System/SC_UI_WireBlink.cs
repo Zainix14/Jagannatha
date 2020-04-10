@@ -13,46 +13,49 @@ public class SC_UI_WireBlink : MonoBehaviour
     [SerializeField]
     Material wireBreakdown;
 
+    bool[] IndexToActivate;
+
 
     bool isActive;
 
     // Start is called before the first frame update
     void Start()
     {
+
+
+
         wireSafe = new Material[img_ToBreakDown.Length];
+        IndexToActivate = new bool[img_ToBreakDown.Length];
 
         for (int i = 0; i < wireSafe.Length; i++)
         {
             wireSafe[i] = img_ToBreakDown[i].material;
         }
 
+        StartCoroutine(RedWireCoro());
     }
 
 
-    public void SetBreakDown(bool b)
+    public void SetBreakDown(int index, bool activate)
     {
-        if(b && !isActive)
+        if(activate && !IndexToActivate[index])
         {
-            StartCoroutine(RedWireCoro());
-            isActive = true;
+            img_ToBreakDown[index].material = wireBreakdown;            
         }
-        else if(!b)
+        if (!activate && IndexToActivate[index])
         {
-            isActive = false;
-            EndCoroutine();
+            EndCoroutine(index);
         }
+
+        IndexToActivate[index] = activate;
+
     }
 
 
-    void EndCoroutine()
+    void EndCoroutine(int index)
     {
-        StopAllCoroutines();
-        for (int i = 0; i < img_ToBreakDown.Length; i++)
-        {
-            img_ToBreakDown[i].material = wireSafe[i];
-            img_ToBreakDown[i].color = Color.white;
-        }
-
+        img_ToBreakDown[index].material = wireSafe[index];
+        img_ToBreakDown[index].color = Color.white;
     }
 
 
@@ -65,11 +68,6 @@ public class SC_UI_WireBlink : MonoBehaviour
         float curOpacity;
         bool Add = true;
         float t = 0;
-
-        for (int i = 0; i < img_ToBreakDown.Length; i++)
-        {
-            img_ToBreakDown[i].material = wireBreakdown;
-        }
 
         Vector4 ColorTampon = Color.white;
         curOpacity = minOpacity;
@@ -95,6 +93,7 @@ public class SC_UI_WireBlink : MonoBehaviour
 
                 for (int i = 0; i < img_ToBreakDown.Length; i++)
                 {
+                    if(IndexToActivate[i])
                     img_ToBreakDown[i].color = new Vector4(ColorTampon.x, ColorTampon.y, ColorTampon.z, curOpacity);
                 }
 

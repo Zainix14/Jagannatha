@@ -26,16 +26,15 @@ public class SC_UI_Update_Slider : MonoBehaviour
 
     bool isBreakdown;
 
-    SC_UI_WireBlink wireBlink;
-
     [SerializeField]
     SC_UI_WireBlink wireBlinkMaster;
+
+    [SerializeField]
+    int[] wireIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        wireBlink = GetComponent<SC_UI_WireBlink>();
-       
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
     }
@@ -98,8 +97,11 @@ public class SC_UI_Update_Slider : MonoBehaviour
             sparkle.SetActive(true);
 
         }
-        wireBlinkMaster.SetBreakDown(breakdown);
-        wireBlink.SetBreakDown(breakdown);
+
+        for(int i = 0; i < wireIndex.Length;i++)
+        {
+            wireBlinkMaster.SetBreakDown(wireIndex[i],breakdown);
+        }
         isBreakdown = breakdown;
     }
 

@@ -25,6 +25,9 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
 
     SC_UI_WireBlink wireBlink;
 
+    [SerializeField]
+    int[] wireIndex;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,7 +83,11 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
             textWanted.enabled = false;
 
         }
-        wireBlink.SetBreakDown(breakdown);
+
+        for (int i = 0; i < wireIndex.Length; i++)
+        {
+            wireBlink.SetBreakDown(wireIndex[i], breakdown);
+        }
         isBreakdown = breakdown;
     }
 

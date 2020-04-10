@@ -24,6 +24,10 @@ public class SC_UI_Update_SwitchDisplay : MonoBehaviour
     GameObject sparkle;
     public int index;
 
+
+    [SerializeField]
+    int[] wireIndex;
+
     bool isBreakdown;
     SC_UI_WireBlink wireBlink;
 
@@ -75,7 +79,11 @@ public class SC_UI_Update_SwitchDisplay : MonoBehaviour
             warning.SetActive(false);
             sparkle.SetActive(true);
         }
-        wireBlink.SetBreakDown(breakdown);
+
+        for (int i = 0; i < wireIndex.Length; i++)
+        {
+            wireBlink.SetBreakDown(wireIndex[i], breakdown);
+        }
         isBreakdown = breakdown;
     }
 
