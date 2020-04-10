@@ -54,6 +54,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
     float ZoomInWindowDuration_2;
 
 
+    SC_UI_WireBlink wireBlink;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -64,12 +65,15 @@ public class SC_UI_OngletContainer : MonoBehaviour
         {
             _instance = this;
         }
+
+        wireBlink = GetComponent<SC_UI_WireBlink>();
     }
 
 
     void Start()
     {
         particleFB = particleFB.GetComponent<RectTransform>();
+
 
 
     }
@@ -93,17 +97,39 @@ public class SC_UI_OngletContainer : MonoBehaviour
     public void playDisplayTabAlert(bool state)
     {
         onglet[0].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+        CheckBreakdownOnglet();
     }
 
     public void playWeaponTabAlert(bool state)
     {
         onglet[1].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+        CheckBreakdownOnglet();
+
     }
     public void playMovementTabAlert(bool state)
     {
         onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+        CheckBreakdownOnglet();
+
     }
 
+
+    public void CheckBreakdownOnglet()
+    {
+        int nbOngletBD = 0;
+        for(int i = 0; i <onglet.Length;i++)
+        {
+            if(onglet[i].GetComponent<SC_UI_OngletSelection>().isBreakdown)
+            {
+                nbOngletBD++;
+            }
+        }
+        if (nbOngletBD == onglet.Length)
+        {
+            wireBlink.SetBreakDown(true);
+        }
+        else wireBlink.SetBreakDown(false);
+    }
 
     #region ZoomFromHub
 

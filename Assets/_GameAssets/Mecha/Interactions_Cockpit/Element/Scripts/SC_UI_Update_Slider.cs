@@ -8,17 +8,7 @@ public class SC_UI_Update_Slider : MonoBehaviour
 
     SC_SyncVar_BreakdownDisplay sc_syncvar;
     GameObject Mng_SyncVar = null;
-    /*
-    [SerializeField]
-    button bouton;
-
-    enum button
-    {
-        slider1,
-        slider2,
-        slider3
-    }
-    */
+   
 
     //index du slider
     public int index;
@@ -34,10 +24,18 @@ public class SC_UI_Update_Slider : MonoBehaviour
     //va te te faire
     float offSetMultiplier = 254;
 
+    bool isBreakdown;
+
+    SC_UI_WireBlink wireBlink;
+
+    [SerializeField]
+    SC_UI_WireBlink wireBlinkMaster;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        wireBlink = GetComponent<SC_UI_WireBlink>();
+       
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
     }
@@ -67,26 +65,42 @@ public class SC_UI_Update_Slider : MonoBehaviour
                 //Debug.Log(sc_syncvar.SL_sliders[0].isEnPanne);
             }
 
-            if (sc_syncvar.SL_sliders[index].isEnPanne)
+            if (sc_syncvar.SL_sliders[index].isEnPanne && !isBreakdown)
             {
-            
-                barrettePanne.enabled = true;
-                float posY = sc_syncvar.SL_sliders[index].valueWanted* offSetMultiplier;
-
-                warning.SetActive(true);
-                sparkle.SetActive(false);
-                barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
+                ChangeState(true);
             }
-            else
+            else if(!sc_syncvar.SL_sliders[index].isEnPanne && isBreakdown)
             {
-                barrettePanne.enabled = false;
-                warning.SetActive(false);
-                sparkle.SetActive(true);
+                ChangeState(false);
             }
                 
             
         }
 
+    }
+
+    void ChangeState(bool breakdown)
+    {
+        if (breakdown)
+        {
+            barrettePanne.enabled = true;
+            float posY = sc_syncvar.SL_sliders[index].valueWanted * offSetMultiplier;
+
+            warning.SetActive(true);
+            sparkle.SetActive(false);
+            barrettePanne.gameObject.transform.localPosition = new Vector3(barrettePanne.gameObject.transform.localPosition.x, posY, barrettePanne.gameObject.transform.localPosition.z);
+
+        }
+        else
+        {
+            barrettePanne.enabled = false;
+            warning.SetActive(false);
+            sparkle.SetActive(true);
+
+        }
+        wireBlinkMaster.SetBreakDown(breakdown);
+        wireBlink.SetBreakDown(breakdown);
+        isBreakdown = breakdown;
     }
 
     void updateRenderSlider()
