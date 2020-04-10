@@ -21,19 +21,14 @@ public class SC_SwitchChangeColor : MonoBehaviour
     }
     public void LightOnOFF()
     {
-        if (b_light == false)
-        {
-            gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-            Debug.Log("LightOn");
-            b_light = true;
-        }
-        else
-        {
-            gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-            Debug.Log("LightOff");
-            b_light = false;
-        }
+        StartCoroutine(SwichBlink(0.3f));
     }
-
+    IEnumerator SwichBlink(float duration)
+    {
+        gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+        yield return new WaitForSeconds(duration);
+        gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+        StopAllCoroutines();
+    }
 
 }
