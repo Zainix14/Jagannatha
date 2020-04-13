@@ -5,17 +5,38 @@ using UnityEngine;
 public class SC_CheckList_Weapons : MonoBehaviour
 {
 
-    public GameObject Mng_Weapons = null;
+    #region Singleton
+
+    private static SC_CheckList_Weapons _instance;
+    public static SC_CheckList_Weapons Instance { get { return _instance; } }
+
+    #endregion
+
+    [Header("Aim References")]
     public GameObject TargetHand = null;
+    public GameObject AimIndicator = null;
 
-    public GameObject GetMngWeapons()
-    {
-        return Mng_Weapons;
-    }
+    [Header("Managers")]
+    public GameObject Mng_Weapons = null;
 
-    public GameObject GetTargetHand()
+    [Header("Weapons")]
+    public GameObject LaserGun = null;
+
+    [Header("Weapons (No More Used)")]
+    public GameObject MiniGun = null;
+    public GameObject FlameThrower = null;
+    public GameObject Shrapnel = null;  
+
+    void Awake()
     {
-        return TargetHand;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
     }
 
 }

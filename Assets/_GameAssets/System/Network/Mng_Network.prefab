@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1954607033240164660}
   - component: {fileID: 1954607033240164661}
   - component: {fileID: 8481943516417985638}
+  - component: {fileID: 7554869786097178397}
   m_Layer: 0
   m_Name: Mng_Network
   m_TagString: Untagged
@@ -62,6 +63,12 @@ MonoBehaviour:
   m_OnlineScene: 
   m_SpawnPrefabs:
   - {fileID: 3438552421462837456, guid: 94145fa9e41a58946aa4fe6e599febcb, type: 3}
+  - {fileID: 4603050232290845533, guid: aa62d86cd4c82e544b7be4daf1d99e9e, type: 3}
+  - {fileID: 248730177783554223, guid: 4e70025bb9670db4395a8903d7695907, type: 3}
+  - {fileID: 3183032299404279866, guid: fdbdb38ec48796c4881d9509545b4854, type: 3}
+  - {fileID: 8201456161138738478, guid: 2b61f9a92562a4342922a1364ed1bfc6, type: 3}
+  - {fileID: 6422795900896979926, guid: 59d83a65fa1321f45b9290a3038260c8, type: 3}
+  - {fileID: 1107940701737066, guid: 0a0191a953741d940be3195a87c4d91f, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -145,3 +152,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acaec12d0bd35584cb2a213a742db1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7554869786097178397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954607033240164663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7ba4102bfcf71438eced4bc9310cdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NetworkManager: {fileID: 1954607033240164660}
+  isLocalHostBuild: 0
+  isLocalHostEditor: 1

@@ -8,6 +8,24 @@ public class Boid : MonoBehaviour {
     bool isKoa = false;
     bool koaTargetWeight = false;
     public bool isActive = false;
+    bool DestructionAnim = false;
+    float destructionTimer;
+    float curTimer;
+    int TotalFlick =1;
+    int curFlick;
+
+
+    SC_KoaManager koaManager;
+
+    Vector3 initScale;
+
+    [SerializeField]
+    Material[] M_tabHit;
+    MeshRenderer meshRenderer;
+
+    Vector3 deathPos;
+    int life = 2;
+    Vector3Int sensitivity;
     // State
     [HideInInspector]
     public Vector3 position;
@@ -26,6 +44,15 @@ public class Boid : MonoBehaviour {
     [HideInInspector]
     public int numPerceivedFlockmates; //Nombre de mate dans le radius de détection
      
+
+    public enum DestructionType
+    {
+        Solo,
+        Massive,
+        none
+    }
+
+    DestructionType destructionType;
     // Cached
 
     Transform cachedTransform; //To define
@@ -33,6 +60,8 @@ public class Boid : MonoBehaviour {
 
     void Awake () {
         cachedTransform = transform; //Position tampon
+        initScale = transform.localScale;
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
     public void SetNewSettings(BoidSettings newSettings, bool koaTargetWeight = false)
     {
@@ -44,18 +73,22 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="target"></param>
-    public void Initialize (BoidSettings settings, Transform target, bool isKoa=false)
+    public void Initialize (BoidSettings settings, Transform target,Vector3Int sensitivity, SC_KoaManager koaManager, int type)
     {
-        this.isKoa = isKoa;
+        this.koaManager = koaManager;
+        destructionType = DestructionType.none;
+        curFlick = 0;
+        transform.localScale = initScale;
         this.target = target; //Peut être null
         this.settings = settings; //Scriptable object
-
+        this.sensitivity = sensitivity;
         position = cachedTransform.position; //Déplacement à la position tampon
         forward = cachedTransform.forward; //Direction selon axe X
-
+        
         float startSpeed = (settings.minSpeed + settings.maxSpeed) / 2; //Vitesse d'initialisation
         velocity = transform.forward * startSpeed; //Stockage de la vélocité selon la vitesse de départ
-
+        destructionTimer = 1f;
+        curTimer = 0;
         isActive = true;
     }
     /// <summary>
@@ -64,16 +97,27 @@ public class Boid : MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     /// 
+    private void OnTriggerEnter(Collider other)
+    {
+        //JE TOUCHE LE PLAYER 
+        if (other.gameObject.layer == 20)
+        {
+            Sc_ScreenShake.Instance.ShakeIt(0.010f, 0.1f);
+            SC_CockpitShake.Instance.ShakeIt(0.0075f, 0.1f);
+            SC_HitDisplay.Instance.Hit(transform.position);
+
+            DestroyBoid(DestructionType.Solo);
+        }
+    }
 
 
+        /// <summary>
+        /// Update fait maison |
+        /// Appelé à chaque frame dans l'update du BoidManager
+        /// </summary>
+        public void UpdateBoid () {
 
-    /// <summary>
-    /// Update fait maison |
-    /// Appelé à chaque frame dans l'update du BoidManager
-    /// </summary>
-    public void UpdateBoid () {
-
-        if(isActive)
+        if(isActive && (!DestructionAnim || destructionType == DestructionType.Massive))
         {
             Vector3 acceleration = Vector3.zero; //RaZ de l'accélération
 
@@ -130,6 +174,26 @@ public class Boid : MonoBehaviour {
                 forward = dir; //Orientation du boid MaJ selon direction Tampon
             }
         }
+        if(DestructionAnim)
+        {
+            curTimer += Time.deltaTime;
+
+            if(destructionType == DestructionType.Solo) transform.position = new Vector3(deathPos.x, transform.position.y- 75 * Time.deltaTime, deathPos.z);
+
+            float scale = (cachedTransform.localScale.x /destructionTimer);
+            scale *= Time.deltaTime;
+            transform.localScale -= new Vector3(scale, scale, scale);
+
+
+            if (curTimer > destructionTimer)
+            {
+                transform.position = new Vector3(0, -2000, 0);
+                destructionType = DestructionType.none;
+                isActive = false;
+                DestructionAnim = false;
+       
+            }
+        }
       
     }
 
@@ -141,9 +205,16 @@ public class Boid : MonoBehaviour {
     /// <returns></returns>
     bool IsHeadingForCollision () {
         RaycastHit hit;
+
+        /*
         if (Physics.SphereCast (position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
             return true;
-        } else { }
+        }*/
+        if (Physics.Raycast (position, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask)) {
+            return true;
+        }
+
+        else { }
         return false;
     }
 
@@ -161,7 +232,13 @@ public class Boid : MonoBehaviour {
             Vector3 dir = cachedTransform.TransformDirection (rayDirections[i]); 
             //
             Ray ray = new Ray (position, dir);
+
+            /*
             if (!Physics.SphereCast (ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask)) {
+                return dir;
+            }*/
+            
+            if (!Physics.Raycast (ray, settings.collisionAvoidDst, settings.obstacleMask)) {
                 return dir;
             }
         }
@@ -181,10 +258,92 @@ public class Boid : MonoBehaviour {
     }
 
     
-    public void DestroyBoid()
+    public void HitBoid(Vector3Int gunSensitivity)
     {
-        isActive = false;
-    }
-  
+        float x = Mathf.Abs((int)gunSensitivity.x - (int)sensitivity.x);
+        float y = Mathf.Abs((int)gunSensitivity.y - (int)sensitivity.y);
+        float z = Mathf.Abs((int)gunSensitivity.z - (int)sensitivity.z);
 
+
+        float power = 18 - (x + y + z);
+
+        float powerPerCent = (power / 18) * 100;
+
+        int rnd = Random.Range(0, 101);
+        if(rnd <= powerPerCent)
+        {
+            DestroyBoid(DestructionType.Solo);
+        }
+
+
+
+        if(powerPerCent > 90)
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Critical);
+            koaManager.StopRegeneration();
+            
+        }
+        else
+        {
+            SC_HitMarker.Instance.HitMark(SC_HitMarker.HitType.Normal);
+        }
+        koaManager.BoidHit(gunSensitivity);
+
+
+    }
+
+    public void DestroyBoid(DestructionType destructionType)
+    {
+        this.destructionType = destructionType;
+        switch (destructionType)
+        {
+            case DestructionType.Solo:
+
+                StartCoroutine(ImpactFrame());
+                deathPos = transform.position;
+                DestructionAnim = true;
+
+                break;
+
+
+            case DestructionType.Massive:
+
+                StartCoroutine(ImpactFrame());
+                deathPos = transform.position;
+                DestructionAnim = true;
+
+                break;
+        }
+
+
+    }
+
+
+    IEnumerator ImpactFrame()
+    {
+        while(true)
+        {
+            if (curFlick % 2 == 0)
+            {
+                meshRenderer.material = M_tabHit[1];
+            }
+            else
+            {
+
+                meshRenderer.material = M_tabHit[0];
+            }
+
+
+            if (curFlick == TotalFlick)
+            {
+                
+                StopCoroutine(ImpactFrame());
+                break;
+            }
+
+
+            curFlick++;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }

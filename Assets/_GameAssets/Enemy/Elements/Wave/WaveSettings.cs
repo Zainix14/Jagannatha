@@ -7,46 +7,20 @@ public class WaveSettings : ScriptableObject
 {
 
     [Header("Inital Spawn")]
-    public FlockSettings[] initialSpawnFlockType;
-    public int[] initialSpawnFlockQuantity;
-
-
-    public float getInitialFlockNumber()
-    {
-        int curNumber = 0;
-        for(int i =0; i<initialSpawnFlockType.Length; i++)
-        {
-            for(int j =0; j<initialSpawnFlockQuantity[i]; j++)
-            {
-                curNumber++;
-            }
-        }
-        return curNumber;
-    }
-
+    public FlockSettings[] initialSpawnFlock;
+    public int[] initialSpawnPosition;
+    public float timeBetweenSpawnInitial;
 
     [Header("Backup")]
     public bool backup;
-    public FlockSettings[] backupSpawnFlockType;
-    public int[] backupSpawnFlockQuantity;
+    public FlockSettings[] backupSpawnFlock;
+    public int[] backupSpawnPosition;
+
     [Tooltip("-1 if no timer condition wanted")]
     public float timeBeforeBackup;
     [Tooltip("-1 if no dead condition wanted")]
     public float flockLeftBeforeBackup;
 
-    public float getBackupFlockNumber()
-    {
-        int curNumber = 0;
-        for (int i = 0; i < backupSpawnFlockType.Length; i++)
-        {
-            for (int j = 0; j < backupSpawnFlockQuantity[i]; j++)
-            {
-                curNumber++;
-            }
-        }
-        return curNumber;
-    }
-
-
+    public float timeBetweenSpawnBackup;
 
 }

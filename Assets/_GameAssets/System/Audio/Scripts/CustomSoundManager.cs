@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CustomSoundManager : MonoBehaviour
 {
+    #region Singleton
 
+    private static CustomSoundManager _instance;
+    public static CustomSoundManager Instance { get { return _instance; } }
+
+    #endregion
     GameObject Mng_CheckList = null;
 
     [SerializeField] AudioClip[] tSounds = new AudioClip[0];
@@ -30,8 +35,6 @@ public class CustomSoundManager : MonoBehaviour
 
 
 
-    private static CustomSoundManager _instance;
-    public static CustomSoundManager Instance { get { return _instance; } }
     private void Awake()
     {
 
@@ -113,14 +116,14 @@ public class CustomSoundManager : MonoBehaviour
         }
 
         #endregion
-
+        /*
         // --- Joue un son d'environnement tout les "fTimerBeforeNextSound"
         fCurrentTimerSound += Time.deltaTime;
         if (fCurrentTimerSound > fTimerBeforeNextSound) environmentSound();
 
-
+    */
     }
-
+    /*
     void environmentSound()
     {
         if (tSoundsAmbient.Length != 0)
@@ -129,9 +132,9 @@ public class CustomSoundManager : MonoBehaviour
             fTimerBeforeNextSound = Random.Range(vRandomTimeBetweenAmbianceSound.x, vRandomTimeBetweenAmbianceSound.y);
             PlaySound(GameObject.Find("Main Camera"), tSoundsAmbient[Random.Range(0, tSoundsAmbient.Length)], false, fVolumeAmbiance, vRandomAndFixedPitchAmbiance.x, vRandomAndFixedPitchAmbiance.y);
         }
-    }
+    }*/
 
-    public GameObject PlaySound(GameObject hSource, string sSoundName, bool bLoop, float fVolume, float fPitchRandom = 0, float fPitchConstantModifier = 0)
+    public GameObject PlaySound(GameObject hSource, string sSoundName, bool bLoop, float fVolume, bool parent = true, float fPitchRandom = 0, float fPitchConstantModifier = 0)
     {
         int IndexSound = -1;
         for (int i = 0; i < tSounds.Length; i++)
@@ -144,9 +147,10 @@ public class CustomSoundManager : MonoBehaviour
         }
         for (int i = 0; i < hAudioSources.Length; i++)
         {
-            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying)
+            if (!hAudioSources[i].GetComponent<AudioSource>().isPlaying && hAudioSources[i] != null)
             {
-                hAudioSources[i].transform.SetParent(hSource.transform);
+                if(parent == true) hAudioSources[i].transform.SetParent(hSource.transform);
+
                 hAudioSources[i].transform.position = hSource.transform.position;
                 hAudioSources[i].GetComponent<AudioSource>().clip = tSounds[IndexSound];
                 hAudioSources[i].GetComponent<AudioSource>().loop = bLoop;

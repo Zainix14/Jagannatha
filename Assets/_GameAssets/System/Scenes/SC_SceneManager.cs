@@ -27,7 +27,7 @@ public class SC_SceneManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby")
+        if (SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 1)
             LobbyUpdate();
     }
 
@@ -42,7 +42,7 @@ public class SC_SceneManager : NetworkBehaviour
         {
 
             //si pas Server on load la scène opérateur
-            if (!isServer && SceneManager.GetActiveScene().name == "Lobby")
+            if (!isServer)
                 LoadTutoOperator();
 
             //si server on invoke le chargement de la scène pilote (la scène opérateur necessitant de se lancer en première)
@@ -58,27 +58,34 @@ public class SC_SceneManager : NetworkBehaviour
 
     void LoadTutoLobby()
     {
-        SceneManager.LoadScene(0);
-    }
-
-    void LoadTutoPilot()
-    {
         SceneManager.LoadScene(1);
     }
-
-    void LoadTutoOperator()
+    void LoadTutoLobbyOpe()
     {
         SceneManager.LoadScene(2);
     }
 
-    void LoadGamePilot()
+    void LoadTutoPilot()
     {
+
         SceneManager.LoadScene(3);
+       
+
     }
 
-    void LoadGameOperator()
+    void LoadTutoOperator()
     {
         SceneManager.LoadScene(4);
     }
+
+    //void LoadGamePilot()
+    //{
+    //    SceneManager.LoadScene(4);
+    //}
+
+    //void LoadGameOperator()
+    //{
+    //    SceneManager.LoadScene(5);
+    //}
 
 }
