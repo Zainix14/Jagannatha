@@ -6,11 +6,11 @@ public class SC_debug_switch_hotkeys : MonoBehaviour
 {
 
 
-    public ViveGripExample_Switch Button1;
-    public ViveGripExample_Switch Button2;
-    public ViveGripExample_Switch Button3;
-    public ViveGripExample_Switch Button4;
-    public ViveGripExample_Switch Button5;
+    public SC_SwitchChangeColor Button1;
+    public SC_SwitchChangeColor Button2;
+    public SC_SwitchChangeColor Button3;
+    public SC_SwitchChangeColor Button4;
+    public SC_SwitchChangeColor Button5;
 
 
     // Start is called before the first frame update
@@ -25,23 +25,23 @@ public class SC_debug_switch_hotkeys : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Button1.Flip();
+            Button1.LightOnOFF();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Button2.Flip();
+            Button2.LightOnOFF();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Button3.Flip();
+            Button3.LightOnOFF();
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Button4.Flip();
+            Button4.LightOnOFF();
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            Button5.Flip();
+            Button5.LightOnOFF();
         }
 
     }

@@ -7,17 +7,15 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 {
     public int index;
     public SC_UI_OngletContainer ongletContainer;
+    SC_UI_WireBlink wireBlink;
 
-    bool isBreakdown;
-
-    [SerializeField]
-    Animator warningNotif;
-    [SerializeField]
-    Image img_warningNotif;
 
     [SerializeField]
     GameObject animated;
     Animator animator;
+
+    [SerializeField]
+    int[] wireIndex;
 
 
 
@@ -27,6 +25,8 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         ongletContainer = SC_UI_OngletContainer.Instance;
         if(animated != null)
         animator = animated.GetComponent<Animator>();
+        wireBlink = GetComponentInParent<SC_UI_WireBlink>();
+
 
     }
 
@@ -70,15 +70,12 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     public void isBreakdownSystem(bool state)
     {
-        if(state)
+        
+        for (int i = 0; i < wireIndex.Length; i++)
         {
-            this.warningNotif.SetBool("b_OnNotif", true);
-            
+            wireBlink.SetBreakDown(wireIndex[i], state);
         }
-        else
-        {
-            this.warningNotif.SetBool("b_OnNotif", false);
-        }
+
     }
 
 
