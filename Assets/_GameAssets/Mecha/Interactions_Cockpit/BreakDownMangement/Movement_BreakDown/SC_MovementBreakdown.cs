@@ -22,6 +22,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public int n_BreakDownLvl = 0;
     public int n_InteractibleInBreakDown = 0;
 
+    [Header("Sequences Infos")]
+    [SerializeField]
+    int[] tab_BreakdownSequence;
+    [SerializeField]
+    int[] tab_PilotSequence;
+    [SerializeField]
+    int CurPilotSeqLenght = 0;
+
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
 
@@ -67,13 +75,72 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     public void StartNewBreakdown(int nbBreakdown)
     {
-
-        if(!b_MaxBreakdown)
+        if (!b_MaxBreakdown)
         {
+
             int n_BreakDownLvlTemp = n_BreakDownLvl + nbBreakdown;
             SetBreakdownLvl(n_BreakDownLvlTemp);
+
+            //Button
             SetInteractibleInBreakdown(n_BreakDownLvl);
             CheckBreakdown();
+
+            //Sequences
+            //SetSequences(n_BreakDownLvl);
+
+        }
+    }
+
+    void SetSequences(int BreakdownLvl)
+    {
+        tab_BreakdownSequence = new int[BreakdownLvl];
+        tab_PilotSequence = new int[BreakdownLvl];
+        CurPilotSeqLenght = 0;
+
+        for (int i = 0; i < tab_BreakdownSequence.Length; i++)
+        {
+            int rnd = Random.Range(0, interactible.Length);
+            tab_BreakdownSequence[i] = rnd;
+        }
+
+        //Call les Cords
+
+    }
+
+    public void AddToPilotSeq(int CordIndex)
+    {
+        if (CurPilotSeqLenght < tab_BreakdownSequence.Length)
+        {
+            tab_PilotSequence[CurPilotSeqLenght] = CordIndex;
+            CurPilotSeqLenght++;
+            CheckSequences(CurPilotSeqLenght);
+        }
+    }
+
+    void CheckSequences(int CheckLenght)
+    {
+
+        bool b_isCorrect = true;
+
+        for (int i = 0; i < CheckLenght; i++)
+        {
+            if (tab_BreakdownSequence[i] != tab_PilotSequence[i])
+                b_isCorrect = false;
+        }
+
+        if (b_isCorrect)
+        {
+            if (CheckLenght - 1 == tab_BreakdownSequence.Length)
+            {
+                CurPilotSeqLenght = 0;
+                EndBreakdown();
+                //Ranger les Cords
+            }
+        }
+        else
+        {
+            //Ranger les Cords
+            SetSequences(n_BreakDownLvl);
         }
 
     }
