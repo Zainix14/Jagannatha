@@ -8,11 +8,13 @@ public class SC_MoveKoaSync : NetworkBehaviour
 
     public GameObject mr_P;
     public GameObject mr_OP;
-
+    Transform guide;
     [SyncVar]
     public int curboidNumber = 0;
     [SyncVar]
     public int MaxboidNumber = 0;
+
+    public string KoaID;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
         if (isServer)
         {
             mr_OP.GetComponent<SphereCollider>().enabled = false;
+            mr_OP.GetComponent<MeshRenderer>().enabled = false;
             mr_OP.SetActive(false);
             mr_P.GetComponent<MeshRenderer>().enabled = false;
             mr_P.GetComponent<SphereCollider>().enabled = false;
@@ -44,7 +47,7 @@ public class SC_MoveKoaSync : NetworkBehaviour
     void Update()
     {
         if (isServer)
-            RpcSendVt3Position(gameObject, transform.position);
+            RpcSendVt3Position(gameObject, guide.position);
     }
 
     /// <summary>
@@ -63,30 +66,62 @@ public class SC_MoveKoaSync : NetworkBehaviour
         if (!isServer) 
             Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
     }
-
+    
+    [ClientRpc]
+    public void RpcSendIntBehaviorIndex(GameObject Target, int boidSettingsIndex)
+    {
+        if (!isServer) 
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetBoidSettings(boidSettingsIndex);
+    }
 
     [ClientRpc]
-    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife)
+    public void RpcSendIntCurState(GameObject Target, int curState)
     {
         if (!isServer)
+            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaState(curState);
+    }
+
+    [ClientRpc]
+    public void RpcSendStartInfo(GameObject Target, Vector3 vt3_Sensibility, int timeBeforeSpawn,string KoaID,int curLife, int maxLife,int type)
+    {
+        this.KoaID = KoaID;
+        if (!isServer)
         {
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetSensibility(vt3_Sensibility);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetTimeBeforeSpawn(timeBeforeSpawn);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaID(KoaID);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoaLife(curLife);
-            Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>().SetKoamaxLife(maxLife);
+            SC_KoaSettingsOP sc_KoaSettings = Target.transform.GetChild(1).GetComponent<SC_KoaSettingsOP>();
+            sc_KoaSettings.SetSensibility(vt3_Sensibility);
+            sc_KoaSettings.SetTimeBeforeSpawn(timeBeforeSpawn);
+            sc_KoaSettings.SetKoaID(KoaID);
+            sc_KoaSettings.SetKoaLife(curLife);
+            sc_KoaSettings.SetKoamaxLife(maxLife);
+            sc_KoaSettings.SetKoaType(type);
+            
+
         }
     }
 
-    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID,int curLife, int maxLife)
+    public void InitOPKoaSettings(Vector3 sensibility, int timeBeforeSpawn, string KoaID,int curLife, int maxLife, int type, Transform guide)
     {
         if (isServer)
-            RpcSendStartInfo(gameObject, sensibility,timeBeforeSpawn, KoaID,curLife, maxLife);
+        {
+            RpcSendStartInfo(gameObject, sensibility, timeBeforeSpawn, KoaID, curLife, maxLife, type);
+            this.guide = guide;
+        }
     }
 
     public void SetCurLife(int curLife)
     {
         RpcSendIntCurLife(gameObject, curLife);
     }
+
+    public void SetCurState(int curState)
+    {
+        RpcSendIntCurState(gameObject, curState);
+    }
+
+    public void SetNewBehavior(int boidSettingsIndex)
+    {
+        RpcSendIntBehaviorIndex(gameObject, boidSettingsIndex);
+    }
+
 
 }

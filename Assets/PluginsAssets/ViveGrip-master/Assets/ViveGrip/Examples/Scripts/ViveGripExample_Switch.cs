@@ -10,26 +10,19 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     private bool desiredValue = false;
 
-
-
+    [Range(0,1)]
+    public float probability = 1;
 
     private GameObject Mng_SyncVar;
-    private SC_SyncVar_BreakdownTest sc_syncvar;
+    private IF_SyncVar_Sliders sc_syncvar;
     public GameObject LocalBreakdownMng;
 
     public int index;
-    /*
-    [SerializeField]
-    button bouton;
 
-    enum button
-    {
-        inter1,
-        inter2,
-        inter3
 
-    }
-    */
+    public enum TargetSystem { Display, Movement }
+    public TargetSystem MovementState = TargetSystem.Display;
+
 
     void Start() {
 
@@ -47,7 +40,13 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+        {
+            if (MovementState == TargetSystem.Display)
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
+            else if (MovementState == TargetSystem.Movement)
+                sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownMovement>();
+        }
+            
 
        
     }
@@ -57,15 +56,12 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         
        
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Flip();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.P))
         {
             /*
-            SC_SyncVar_BreakdownTest.Pow babar = sc_syncvar.m_pows[index] ;
+            SC_SyncVar_BreakdownDisplay.Pow babar = sc_syncvar.m_pows[index] ;
             babar.setPower(3);
             Debug.Log("Valeur de babar  : " + babar.power);
             Debug.Log("wesh : " + sc_syncvar.m_pows[index].power);
@@ -200,6 +196,19 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         isEnPanne = value;
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
 
+    }
+
+   
+   public bool testAgainstOdds()
+    {
+        float rand = Random.Range(0f, 1f);
+
+        if (rand < probability)
+            return true;
+        else
+            return false;
+
+        
     }
 
 }

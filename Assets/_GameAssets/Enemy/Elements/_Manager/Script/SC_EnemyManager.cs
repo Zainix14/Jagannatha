@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Script gerant l'enchainement des Phases
@@ -18,7 +19,7 @@ public class SC_EnemyManager : MonoBehaviour
     #endregion
 
     public PhaseSettings[] phases;
-  
+    public Slider Progress;
     public  int curPhaseIndex;
     void Awake()
     {
@@ -36,6 +37,8 @@ public class SC_EnemyManager : MonoBehaviour
     public void Initialize()
     {
         InitNewPhase(0);
+        Progress = GameObject.FindGameObjectWithTag("ProgressBar").GetComponent<Slider>();
+        Progress.value = 0;
     }
 
     public void InitNewPhase(int phaseIndex)
@@ -44,7 +47,7 @@ public class SC_EnemyManager : MonoBehaviour
 
         if (phaseIndex == 1)
         {
-            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.Game);
+            SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Game);
         }
     }
 
@@ -54,18 +57,19 @@ public class SC_EnemyManager : MonoBehaviour
         curPhaseIndex++;
         if(curPhaseIndex >= phases.Length)
         {
-            SC_GameStates.Instance.RpcSetState(SC_GameStates.GameState.GameEnd);
-
+            SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.GameEnd);
+            Progress.value = 100f;
         }
+        else
+         InitNewPhase(curPhaseIndex);
 
-        InitNewPhase(curPhaseIndex);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.F12))
         {
             SC_breakdown_displays_screens.Instance.EndScreenDisplay();
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using System.Collections;
 
 public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
@@ -9,6 +10,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
   private float MAX_VIBRATION_DISTANCE = 0.03f;
 
 
+
     private float _localX = 0;
     private float _localY = 0;
     private float _localZ = 0;
@@ -16,22 +18,34 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public bool _freezeAlongY = false;
     public bool _freezeAlongZ = true;
 
+    public float limit = 6;
+
     /// <summary>
     /// Index du slider pour sa structList
     /// </summary>
     /// 
 
+
     public int index;
+    public int curValue;
 
     public float desiredValue = 0;
     public bool isEnPanne = false;
-    public float precision = 0.05f;
+    public float precision = 0;
 
     private GameObject Mng_SyncVar;
     private Rigidbody sliderRigidbody;
     public GameObject LocalBreakdownMng;
 
-    private SC_SyncVar_BreakdownTest sc_syncvar;
+    private SC_SyncVar_BreakdownDisplay sc_syncvar;
+
+
+    [Range(0, 1)]
+    public float probability = 1;
+
+    public float precisionPercent = 10;
+
+    public TMP_Text text_value_display;
     /*
     [SerializeField]
     button bouton;
@@ -50,6 +64,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         oldX = transform.position.x;
         sliderRigidbody = gameObject.GetComponent<Rigidbody>();
         GetReferences();
+        precision = (limit *0.45f* 2 / 100) * precisionPercent;
     }
 
     void GetReferences()
@@ -59,7 +74,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         if (Mng_SyncVar == null)
             Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownTest>();
+            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_BreakdownDisplay>();
     }
 
     void ViveGripGrabStart(ViveGrip_GripPoint gripPoint)
@@ -88,25 +103,30 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
 
         //sécurité juste en y
 
-        if (transform.localPosition.y<-0.45f)
+        if (transform.localPosition.x<-limit)
         {
 
-            transform.localPosition = new Vector3(transform.localPosition.x, -0.45f, transform.localPosition.z);
+            transform.localPosition = new Vector3(-limit, transform.localPosition.y, transform.localPosition.z);
 
         }
-        else if (transform.localPosition.y > 0.45f)
+        else if (transform.localPosition.x > limit)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, 0.45f, transform.localPosition.z);
+            transform.localPosition = new Vector3(limit, transform.localPosition.y,  transform.localPosition.z);
 
         }
      
 
-        float newX = gameObject.transform.localPosition.y;
+        float newX = gameObject.transform.localPosition.x;
 
         //on envoie la valeur à la syncvar si celle ci a changé
-        if (newX != oldX) sendToSynchVar(Mathf.Round(gameObject.transform.localPosition.y*100)/100);
+        if (newX != oldX) sendToSynchVar(-Mathf.Round(Ratio(gameObject.transform.localPosition.x,limit,0.45f,-limit,-0.45f)*100)/100);
 
+        if(text_value_display != null)
+        {
+            curValue = Mathf.RoundToInt(Ratio(-Mathf.Round(Ratio(gameObject.transform.localPosition.x, limit, 0.45f, -limit, -0.45f) * 100) / 100, 0.4f, 10, -0.4f, 0));
+            text_value_display.text = curValue.ToString();
 
+        }
 
         if (controller != null) {
           float distance = Mathf.Min(Mathf.Abs(newX - oldX), MAX_VIBRATION_DISTANCE);
@@ -115,7 +135,8 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         }
         oldX = newX;
 
- 
+        
+
         IsValueOk();
 
     }
@@ -146,23 +167,24 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void ChangeDesired()
     {
 
-        desiredValue = Random.Range(-0.4f, 0.4f);
-        while (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        desiredValue = Random.Range(-limit, limit);
+        while (gameObject.transform.localPosition.x >= desiredValue - precision && gameObject.transform.localPosition.x <= desiredValue + precision)
         {
-            desiredValue = Random.Range(-0.4f, 0.4f);
+            desiredValue = Random.Range(-limit, limit);
         }
 
         SetIsEnPanne(true);
 
-        sc_syncvar.SliderChangeValueWanted(index, desiredValue);
+        sc_syncvar.SliderChangeValueWanted(index, -Mathf.Round(Ratio(desiredValue, limit, 0.45f, -limit, -0.45f) * 100) / 100);
         sc_syncvar.SliderChangeIsPanne(index, true);
+        
 
     }
 
     public void Repair()
     {
 
-        desiredValue = gameObject.transform.localPosition.y;
+        desiredValue = gameObject.transform.localPosition.x;
 
 
         SetIsEnPanne(false);
@@ -176,7 +198,7 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
     public void IsValueOk()
     {
 
-        if (gameObject.transform.localPosition.y >= desiredValue - precision && gameObject.transform.localPosition.y <= desiredValue + precision)
+        if (gameObject.transform.localPosition.x >= desiredValue - precision && gameObject.transform.localPosition.x <= desiredValue + precision)
         {
 
             if (isEnPanne)
@@ -231,4 +253,25 @@ public class ViveGripExample_Slider : MonoBehaviour, IInteractible {
         LocalBreakdownMng.GetComponent<IF_BreakdownManager>().CheckBreakdown();
     }
 
+
+    public bool testAgainstOdds()
+    {
+        float rand = Random.Range(0f, 1f);
+
+        if (rand < probability)
+            return true;
+        else
+            return false;
+
+
+    }
+
+
+
+    float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
+    {
+        float product = (inputValue - inputMin) / (inputMax - inputMin);
+        float output = ((outputMax - outputMin) * product) + outputMin;
+        return output;
+    }
 }

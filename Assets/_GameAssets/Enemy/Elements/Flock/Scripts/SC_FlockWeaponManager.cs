@@ -7,6 +7,11 @@ public class SC_FlockWeaponManager : MonoBehaviour
 
     ////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////
+    ///
+    /////////////////////-- NETWORK --//////////////////////
+
+    GameObject NetPlayerP;
+    SC_NetPlayer_Flock_P NetPFloackSC;
 
     ///////////////////////-- BOTH --//////////////////////
     FlockSettings flockSettings;
@@ -16,6 +21,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
     bool isFiring;
 
     ///////////////////////-- LASER --//////////////////////
+    [Header("Laser Refrences")]
     [SerializeField]                                      
     GameObject laserPrefab;
     [SerializeField]
@@ -23,11 +29,13 @@ public class SC_FlockWeaponManager : MonoBehaviour
 
     GameObject laserFx;
     GameObject laser;
+    SC_LaserFlock laserSC;
     bool laserFire;
     float laserTimer;
     bool startLaser;
 
     ///////////////////////-- BULLET --//////////////////////
+    [Header("Bullet Refrences")]
     [SerializeField]
     GameObject bulletPrefab;
     [SerializeField]
@@ -39,29 +47,40 @@ public class SC_FlockWeaponManager : MonoBehaviour
     ////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////
 
+    void Awake()
+    {
+        GetReferences();
+    }
+
     void Start()
     {
+        
         Reset();
+        
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
     public void Initialize(FlockSettings curFlockSettings)
     {
         flockSettings = curFlockSettings;
-        switch ((int)flockSettings.attackType)
+        switch (flockSettings.attackType)
         {
-            case 0: //Bullet
+            case FlockSettings.AttackType.Bullet: //Bullet
                 InitBulletPool();
                 break;
 
-            case 1: //Laser
+            case FlockSettings.AttackType.Laser: //Laser
                 InitLaser();
                 break;
-
-
         }
     }
 
-
+    void GetReferences()
+    {
+        if (NetPlayerP == null)
+            NetPlayerP = SC_CheckList.Instance.NetworkPlayerPilot;
+        if (NetPlayerP != null && NetPFloackSC == null)
+            NetPFloackSC = NetPlayerP.GetComponent<SC_NetPlayer_Flock_P>();
+    }
 
     public void StartFire()
     {
@@ -72,7 +91,12 @@ public class SC_FlockWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (NetPlayerP == null || NetPFloackSC == null)
+            GetReferences();
+
         FireUpdate();
+    
     }
 
     void FireUpdate()
@@ -80,9 +104,9 @@ public class SC_FlockWeaponManager : MonoBehaviour
         if(isFiring)
         {
             timer += Time.deltaTime;
-            switch ((int)flockSettings.attackType)
+            switch (flockSettings.attackType)
             {
-                case 0: //Bullet
+                case FlockSettings.AttackType.Bullet: //Bullet
                     if(timer >= 1/flockSettings.fireRate )
                     {
                         FireBullet();
@@ -94,7 +118,7 @@ public class SC_FlockWeaponManager : MonoBehaviour
                     }
                     break;
 
-                case 1: //Laser
+                case FlockSettings.AttackType.Laser: //Laser
 
                     if(!laserFire)
                     {
@@ -111,6 +135,20 @@ public class SC_FlockWeaponManager : MonoBehaviour
                     //https://www.youtube.com/watch?v=y1_SCfLxLFA
                     break;
 
+                case FlockSettings.AttackType.Kamikaze:
+
+                    transform.position = Vector3.Lerp(transform.position, target.position, flockSettings.speedToTarget*Time.deltaTime);
+                    if(Vector3.Distance(transform.position,target.position) < 20)
+                    {
+                        isFiring = false;
+                        this.GetComponent<SC_FlockManager>()._SCKoaManager.GetHit(new Vector3(100,100,100));
+                        Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
+                        SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
+                        SC_MainBreakDownManager.Instance.CauseDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
+                        //https://www.youtube.com/watch?v=kXYiU_JCYtU
+
+                    }
+                    break;
 
             }
         }
@@ -119,12 +157,15 @@ public class SC_FlockWeaponManager : MonoBehaviour
     #region Bullet
     void InitBulletPool()
     {
+
         GameObject _bulletContainer = Instantiate(bulletContainer);
 
         bulletPool = new GameObject[20];
         for (int i = 0; i < 20; i++)
         {
-            GameObject curBullet = Instantiate(bulletPrefab);
+            
+            //GameObject curBullet = Instantiate(bulletPrefab);
+            GameObject curBullet = NetPFloackSC.SpawnBulletF();
             bulletPool[i] = curBullet;
             curBullet.transform.SetParent(_bulletContainer.transform); 
         }
@@ -143,6 +184,9 @@ public class SC_FlockWeaponManager : MonoBehaviour
         //noise
         Vector3 dir = new Vector3(transform.forward.x , transform.forward.y , transform.forward.z );
 
+        bulletPool[n_CurBullet].GetComponent<SC_BulletFlock>().b_IsFire = true;
+        bulletPool[n_CurBullet].GetComponent<SC_BulletFlock>().flockSettings = flockSettings;
+
         rb.AddForce(dir * 24000);
 
         n_CurBullet++;
@@ -158,8 +202,10 @@ public class SC_FlockWeaponManager : MonoBehaviour
     #region Laser
     void InitLaser()
     {
-        laser = Instantiate(laserPrefab);
+        //laser = Instantiate(laserPrefab);
+        laser = NetPFloackSC.SpawnLaserF();
         laserFx = Instantiate(laserFxPrefab);
+        laserSC = laser.GetComponent<SC_LaserFlock>();
     }
 
 
@@ -170,7 +216,9 @@ public class SC_FlockWeaponManager : MonoBehaviour
         {
             Sc_ScreenShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
             SC_CockpitShake.Instance.ShakeIt(0.025f, flockSettings.activeDuration);
-            SC_MainBreakDownManager.Instance.causeDamageOnSystem(20);
+            SC_HitDisplay.Instance.Hit(transform.position);
+            SC_MainBreakDownManager.Instance.CauseDamageOnSystem(flockSettings.attackFocus, flockSettings.damageOnSystem);
+
             startLaser = false;
         }
 
@@ -186,6 +234,9 @@ public class SC_FlockWeaponManager : MonoBehaviour
         laser.transform.localScale = new Vector3(laser.transform.localScale.x +scale,
                                 laser.transform.localScale.y + scale,
                                 Vector3.Distance(transform.position, target.transform.position));
+
+        laserSC.DisplayFlockLaser();
+
         if (laserTimer >= flockSettings.activeDuration)
         {
             DestroyFx();
@@ -202,16 +253,17 @@ public class SC_FlockWeaponManager : MonoBehaviour
         isFiring = false;
         if(laser != null)
         {
-
             laser.transform.localScale = new Vector3(0, 0, 0);
             laser.transform.position = new Vector3(0, -2000, 0);
-        }
-        if(laserFx != null)
-        {
+            laserSC.DisplayFlockLaser();
 
+        }
+        if (laserFx != null)
+        {
             laserFx.transform.localScale = new Vector3(0, 0, 0);
             laserFx.transform.position = new Vector3(0, -2000, 0);
         }
+        
     }
 
 

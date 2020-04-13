@@ -5,65 +5,86 @@ using UnityEngine;
 public class SC_CrossHairMove : MonoBehaviour
 {
 
-    bool b_AlreadyCheck = false;
+    [Header("References")]
+    [SerializeField]
+    bool b_RefsGet = false;   
+    [SerializeField]
+    GameObject AimIndicator;
+    [SerializeField]
+    GameObject ViewIndicator;
 
-    public GameObject Mng_CheckList = null;
+    Camera Cam_Mech = null;
+    Camera Cam_Cockpit = null;
+    bool b_IsVR = false;
+    bool b_IsFPS = false;
 
-    public Camera Cam_Mech = null;
-    public Camera Cam_Cockpit = null;
+    [Header("CrossHair Parameters")]
+    public float f_CrossHairDist = 5f;
 
-    public bool b_IsVR = false;
-    public bool b_IsFPS = false;
+    [Header("Snap Infos")]
+    [SerializeField]
+    bool b_Snapping = true;
+    [SerializeField]
+    public bool b_TargetKoa = false;
+    [SerializeField]
+    bool b_OnKoa = false;
 
-    public float f_CrossHairDist = 2f;
+    [Header("Snap Coroutine Infos")]
+    [Range(0, 2)]
+    public float f_Duration = 1.0f;
+    [SerializeField]
+    bool b_GoToKoaRun = false; 
+    [SerializeField]
+    bool b_GoToViewRun = false; 
+    [SerializeField]
+    AnimationCurve SnapCurve;
+
+    public enum Target { None, View, Koa }
+    public Target SnapTarget = Target.None;
+    public Target CrossHairTarget = Target.None;
+    public Target CoroTarget = Target.None;
 
     // Start is called before the first frame update
     void Start()
     {
-        GetCheckListManager();
+        GetReferences();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Mng_CheckList == null)
-            GetCheckListManager();
-
-        if (Mng_CheckList != null && !b_IsFPS && !b_IsVR)
-            GetDeviceState();
-
-        if (Cam_Cockpit == null)
-            GetCockpitCam();
-
-        if (Mng_CheckList != null && Cam_Mech == null)
-            GetMechCam();
+        
+        if (!b_RefsGet)
+            GetReferences();
 
         if (Cam_Cockpit != null && Cam_Mech != null)
             UpdatePos();
 
     }
 
-    void GetCheckListManager()
+    #region GetReferences
+
+    void GetReferences()
     {
 
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-
-        if (Mng_CheckList == null && !b_AlreadyCheck)
-            Debug.LogWarning("SC_CrossHairMove - Can't Find Mng_CheckList");
-        if(!b_AlreadyCheck)
-            b_AlreadyCheck = true;
-
+        if (!b_IsVR && !b_IsFPS)
+            GetDeviceState();
+        if (Cam_Cockpit == null && (b_IsFPS || b_IsVR))
+            GetCockpitCam();
+        if (Cam_Mech == null)
+            GetMechCam();
+        if (Cam_Cockpit != null && Cam_Mech != null)
+            b_RefsGet = true;
     }
 
     void GetDeviceState()
     {
 
-        if (Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR != null)
-            b_IsVR = Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR;
+        if (SC_CheckList.Instance.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR != null)
+            b_IsVR = SC_CheckList.Instance.Mng_Device.GetComponent<SC_DeviceManager>().b_IsVR;
 
-        if (Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS != null)
-            b_IsFPS = Mng_CheckList.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS;
+        if (SC_CheckList.Instance.GetComponent<SC_CheckList>().Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS != null)
+            b_IsFPS = SC_CheckList.Instance.Mng_Device.GetComponent<SC_DeviceManager>().b_IsFPS;
 
     }
 
@@ -71,37 +92,99 @@ public class SC_CrossHairMove : MonoBehaviour
     {
 
         if (b_IsFPS && Cam_Cockpit == null)
-            Cam_Cockpit = Mng_CheckList.GetComponent<SC_CheckList>().GetCamFPS();
+            Cam_Cockpit = SC_CheckList.Instance.Cam_FPS;
 
         if (b_IsVR && Cam_Cockpit == null)
-            Cam_Cockpit = Mng_CheckList.GetComponent<SC_CheckList>().GetCamVR();
+            Cam_Cockpit = SC_CheckList.Instance.Cam_VR;
 
     }
 
     void GetMechCam()
     {
-        Cam_Mech = Mng_CheckList.GetComponent<SC_CheckList>().GetCamMecha();
+        Cam_Mech = SC_CheckList.Instance.Cam_Mecha;
     }
+
+    #endregion
 
     void UpdatePos()
     {
-
-        //Debug.Log("SC_CrossHairMove - UpdatePos - Enter");
 
         Vector3 hitCockpit = Cam_Cockpit.GetComponent<SC_raycast>().getRayVector3();
 
         if (hitCockpit != null)
         {
 
-            //Debug.Log("SC_CrossHairMove - UpdatePos - Hit");
+            if (b_Snapping && CrossHairTarget == SnapTarget)
+            {
 
-            hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
-
-            transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                //Snap
+                if (SnapTarget == Target.Koa)
+                {
+                    hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+                //Manual
+                else
+                {                  
+                    hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                    transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+                }
+            }
+            else if (b_Snapping && CrossHairTarget != SnapTarget)
+            {
+                CheckTarget();
+            }
+            //DefaultCase = Manual
+            else
+            {  
+                hitCockpit = Cam_Mech.transform.rotation * hitCockpit;
+                transform.position = Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist;
+            }
 
             transform.LookAt(Cam_Mech.transform);
 
         }
+
+    }
+
+    void CheckTarget()
+    {
+        if(CrossHairTarget != SnapTarget && CoroTarget != SnapTarget)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Snapping(SnapTarget));
+        }
+    }
+
+    IEnumerator Snapping(Target SnapTarget)
+    {
+
+        CoroTarget = SnapTarget;
+
+        float t = 0.0f;
+        float rate = 1.0f / f_Duration;
+
+        while (t < 1.0)
+        {
+
+            t += Time.deltaTime * rate;
+            float Lerp = SnapCurve.Evaluate(t);
+
+            Vector3 hitCockpit = new Vector3();
+
+            if (SnapTarget == Target.Koa)
+                hitCockpit = AimIndicator.transform.position - Cam_Mech.transform.position;
+            else
+                hitCockpit = ViewIndicator.transform.position - Cam_Mech.transform.position;
+
+            transform.position = Vector3.Lerp(transform.position, Cam_Mech.transform.position + hitCockpit.normalized * f_CrossHairDist, Lerp);
+
+            yield return 0;
+
+        }
+    
+        CrossHairTarget = SnapTarget;
+        CoroTarget = Target.None;
 
     }
 

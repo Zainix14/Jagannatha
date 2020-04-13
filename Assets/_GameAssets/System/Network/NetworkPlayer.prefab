@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: 435577876431828775}
   - component: {fileID: 86356345726307561}
   - component: {fileID: 4829962867414837835}
+  - component: {fileID: 8587024730155883385}
   - component: {fileID: 9029850876185771557}
+  - component: {fileID: 114527038320127134}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: NetPlayer
@@ -136,6 +138,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MechDummy: {fileID: 4603050232290845533, guid: aa62d86cd4c82e544b7be4daf1d99e9e,
     type: 3}
+--- !u!114 &8587024730155883385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050195657067471805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f60b991b3abea46a2550b08ac0d305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9029850876185771557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Koa: {fileID: 248730177783554223, guid: 4e70025bb9670db4395a8903d7695907, type: 3}
+--- !u!114 &114527038320127134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050195657067471805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974aa456f07ab234f87ff82213313c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FBullet: {fileID: 6422795900896979926, guid: 59d83a65fa1321f45b9290a3038260c8, type: 3}
+  FLaser: {fileID: 1107940701737066, guid: 0a0191a953741d940be3195a87c4d91f, type: 3}

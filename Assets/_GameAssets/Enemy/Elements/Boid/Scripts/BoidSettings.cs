@@ -24,6 +24,19 @@ public class BoidSettings : ScriptableObject {
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
 
+    [Header("Koa Settings")]
+
+    public KoaBehavior koaBehavior;
+
+    public enum KoaBehavior
+    {
+        Center,
+        Average,
+        Cover,
+        Boid
+
+    }
+    public Vector3 axisRotationSpeed = new Vector3(0,0,0);
 
     [Header("Split Settings")]
 
@@ -42,7 +55,7 @@ public class BoidSettings : ScriptableObject {
     [Tooltip("Axe d'inversion")]
     public Vector3 invertAxis;
 
-    [Tooltip("Vitesse sur spline looool")]
+    [Tooltip("Vitesse sur spline")]
     public float speedOnSpline;
-    public BezierSolution.BezierSpline spline;
+    public float settingDuration;
 }

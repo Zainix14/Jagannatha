@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +12,18 @@ public class FlockSettings : ScriptableObject
     {
         Bullet,
         Laser,
+        Kamikaze,
+
+        none
+    }
+
+    public AttackFocus attackFocus ;
+    public int damageOnSystem;
+    public enum AttackFocus
+    {
+        Display,
+        Movement,
+        Weapon,
 
         none
     }
@@ -34,24 +46,37 @@ public class FlockSettings : ScriptableObject
     [Tooltip("in Second, avant de retourner en roam")]
     public float activeDuration = 0;
 
+    [Header("Kamikaze")]
+    public float speedToTarget;
+
+
+    [Header("Reaction")]
+    [Tooltip("in second")]
+    public float reactionDuration = 3;
+    [Tooltip("Pourcentage de sensibilité a partir duquel le flock ne réagit plus au tir")]
+    public int maxReactionSensibilityPerCent = 50;
+
     [Header("Boids")]
 
 
-    [Tooltip("Index 0 : Roam | Index 1 : Attack")]
-    public BoidSettings[] boidSettings;
-
-    public int spawnTimer = 5;
-
-    public bool spawnRandom = false;
-
-    [Tooltip("si spawn non random")]
-    public Vector3 SpawnPosition;
+    [Tooltip("Index 0 : Spawn | Index 1 : Roam | Index 2 : Attack | Index 3 : Destruction | Index 4 : Réaction")]
+    public BoidSettings[] spawnSettings;
+    public BoidSettings[] roamSettings;
+    public BoidSettings[] attackSettings;
+    public BoidSettings[] destructionSettings;
+    public BoidSettings[] reactionSettings;
 
 
-    [Range(10,200)]
+    public BezierSolution.BezierSpline[] splines;
+
+
+    public int spawnTimer = 10;
+
+
+    [Range(10,100)]
     public int boidSpawn;
 
-    [Range(10,200)]
+    [Range(10,100)]
     public int maxBoid;
 
     [Tooltip("boids per min")]

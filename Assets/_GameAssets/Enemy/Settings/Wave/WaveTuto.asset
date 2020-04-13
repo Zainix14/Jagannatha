@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f853b98b2e469d4682403b69d26ee96, type: 3}
   m_Name: WaveTuto
   m_EditorClassIdentifier: 
-  initialSpawnFlockType:
-  - {fileID: 11400000, guid: c7d597753b94a2541a04e4a289b40492, type: 2}
-  initialSpawnFlockQuantity: 01000000
+  initialSpawnFlock:
+  - {fileID: 11400000, guid: f82209304fff8164ea83de5d8a88b24f, type: 2}
+  initialSpawnPosition: 00000000
+  timeBetweenSpawnInitial: 0
   backup: 0
-  backupSpawnFlockType:
-  - {fileID: 0}
-  backupSpawnFlockQuantity: 
+  backupSpawnFlock: []
+  backupSpawnPosition: 
   timeBeforeBackup: 0
   flockLeftBeforeBackup: 0
+  timeBetweenSpawnBackup: 0

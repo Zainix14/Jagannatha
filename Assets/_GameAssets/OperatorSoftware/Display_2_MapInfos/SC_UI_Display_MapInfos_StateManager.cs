@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    private static SC_UI_Display_MapInfos_StateManager _instance;
+    public static SC_UI_Display_MapInfos_StateManager Instance { get { return _instance; } }
+
+    #endregion
+
+
     enum StateOfCanvas
     {
         neutral,
@@ -12,32 +21,47 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
 
     StateOfCanvas curState;
 
-    public SC_RaycastRealWorld scriptRaycast; //Sur camera Full view
+    public SC_RaycastOPMapPerspective scriptRaycast; //Sur camera Full view
 
     int numChild;
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
     void Start()
     {
         curState = StateOfCanvas.neutral;
         numChild = this.transform.childCount;
+        checkState();
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkState();
+
     }
 
-    void checkState()
+    public void checkState()
     {
         if (scriptRaycast.objectOnclic == null)
         {
             curState = StateOfCanvas.neutral;
             checkChild(0);
+            SC_UI_Display_Flock.Instance.desactivateRender();
         }
         else if(scriptRaycast.objectOnclic.tag == "Koa")
         {
             curState = StateOfCanvas.koaView;
             checkChild(1);
+            SC_UI_Display_Flock.Instance.activateRender();
         }
     }
 
@@ -48,6 +72,7 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
             if(i == indexToActivate)
             {
                 activateChild(this.transform.GetChild(i));
+                
             }
             else
             {
@@ -59,11 +84,12 @@ public class SC_UI_Display_MapInfos_StateManager : MonoBehaviour
     
     void activateChild(Transform child)
     {
-        child.transform.gameObject.SetActive(true);
+        child.transform.localPosition = Vector3.zero;
     }
     void desactivateChild(Transform child)
     {
-        child.transform.gameObject.SetActive(false);
+        child.transform.localPosition = new Vector3(0,0,200);
+        
     }
 
 }

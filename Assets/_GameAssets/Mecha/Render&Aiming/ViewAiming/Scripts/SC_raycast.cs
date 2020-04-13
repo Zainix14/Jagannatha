@@ -10,16 +10,17 @@ using UnityEngine;
 public class SC_raycast : MonoBehaviour
 {
 
-    GameObject Mng_CheckList = null;
+    [Header("Get References")]
+    [SerializeField]
+    GameObject Target;
 
-    public GameObject Target;
+    [Header("Infos")]
+    [SerializeField]
     private RaycastHit hit;
-    public Vector3 VT3_CockpitAimRaycast;
-
-    private void Start()
-    {
-        Mng_CheckList = GameObject.FindGameObjectWithTag("Mng_CheckList");
-    }
+    [SerializeField]
+    Vector3 VT3_CockpitAimRaycast;
+    [SerializeField]
+    Vector3 VT3_HitPos;
 
     void Update()
     {
@@ -34,28 +35,28 @@ public class SC_raycast : MonoBehaviour
 
     void GetTarget()
     {
-        Target = Mng_CheckList.GetComponent<SC_CheckList_ViewAiming>().GetTarget();
+        Target = SC_CheckList_ViewAiming .Instance.Target;
     }
 
     void CastRayInCockpit()
     {
 
-        //int layerMask = 1 << 9;
-
         //Cast un ray à partir du casque
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100f))
         {
+
             if (hit.collider == Target.GetComponent<Collider>())
             {
-                //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 VT3_CockpitAimRaycast = hit.point - Target.transform.position;
+                VT3_HitPos = hit.point;
             }
+
         }
 
     }
 
     /// <summary>
-    /// Renvois le raycasthit du cockpit
+    /// Renvois le hit du raycast cockpit
     /// </summary>
     /// <returns></returns>
     public RaycastHit getRay()

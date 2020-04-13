@@ -14,12 +14,17 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     SC_KoaSettingsOP curKoaScriptKoaSettings;
 
-
     GameObject Mng_SyncVar = null;
     SC_SyncVar_calibr sc_syncvar;
+    SC_FixedData fixedData;
 
+    BoidSettings boidSettings;
 
     public bool activated;
+
+    public GameObject Amplitude;
+    public GameObject Frequence;
+    public GameObject Phase;
 
     [SerializeField]
     Text[] sensi = new Text[3];
@@ -31,17 +36,37 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     Text koaLife;
 
     [SerializeField]
-    Text optiWeapon;
+    SC_UI_SystmShield life;
+
+    [SerializeField]
+    Text koaStateTxt;
+    //[SerializeField]
+    //Text optiWeapon;
+
+    enum KoaState
+    {
+        Spawn = 0,
+        Roam = 1,
+        AttackPlayer = 2,
+        Death = 3,
+        Reaction = 4
+    }
+
+    KoaState curState;
+
+
+    [SerializeField]
+    Image[] barOpti = new Image[4];
 
 
     public float optiPercent;
-    public float fKoaLife;
+
+    public float fKoaLife = 100;
+    public float curfKoaLife = 100;
     public Vector3 koaSensibility;
     public Vector3 gunSensibility;
 
-    public Slider sliderLifeKoa;
-
-
+    bool secondaryBarChecker = false;
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -57,6 +82,7 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fixedData = SC_FixedData.Instance;
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
         activated = false;
@@ -66,9 +92,12 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     {
         curKoaScriptKoaSettings = newSettings;
         koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
-  
+        boidSettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+   
+
         activated = true;
     }
+
     void GetReferences()
     {
         if (Mng_SyncVar == null)
@@ -93,18 +122,71 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         {
             if (activated)
             {
-                sensi[0].text = (koaSensibility.x + 1).ToString();
+                curfKoaLife = fKoaLife;
+                
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.x)
+                    {
+                        Amplitude.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Amplitude.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.y)
+                    {
+                        Frequence.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Frequence.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+                for (int i = 0; i < 6; i++)
+                {
+
+                    if (i == koaSensibility.z)
+                    {
+                        Phase.transform.GetChild(i).GetComponent<Image>().enabled = true;
+                    }
+                    else
+                        Phase.transform.GetChild(i).GetComponent<Image>().enabled = false;
+                }
+
+                sensi [0].text = (koaSensibility.x + 1).ToString();
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
-                fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
-                koaLife.text = fKoaLife.ToString();
-                //Debug.Log(fKoaLife);
-                sliderLifeKoa.value = fKoaLife;
-                gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
-            
-                optiWeapon.text = GetOptiPerCent().ToString() + "%";
 
+
+                fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
+
+                koaLife.text = fKoaLife.ToString();
+                life.simpleValue = fKoaLife/100;
+
+                gunSensibility = new Vector3(sc_syncvar.CalibrInts[0], sc_syncvar.CalibrInts[1], sc_syncvar.CalibrInts[2]);
+
+                displayOptiBar();
                 type.text = "Type " + curKoaScriptKoaSettings.GetKoaID().ToString();
+                curState = (KoaState) curKoaScriptKoaSettings.GetKoaState();
+                koaStateTxt.text = curState.ToString().ToUpper();
+
+                if (curfKoaLife != fKoaLife)
+                {
+
+                    SC_UI_Display_MapInfos_KOAShake.Instance.ShakeIt(5f,0.5f);
+                    SC_UI_Display_MapInfos_StateManager.Instance.checkState();
+                }
+
+            
+                BoidSettings newBoidsettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
+                if (boidSettings != newBoidsettings)
+                {
+                    boidSettings = newBoidsettings;
+                    SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
+                }
+                
             }
 
         }
@@ -119,10 +201,53 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         float y = Mathf.Abs((int)gunSensibility.y - (int)koaSensibility.y);
         float z = Mathf.Abs((int)gunSensibility.z - (int)koaSensibility.z);
 
-        float power = 18 - (x + y + z);
+        float ecart = x + y + z;
 
-        float powerPerCent = (power / 18) * 100;
-        
+
+        float power = 6 - ecart;
+
+        if (power < 0) power = 0;
+        float powerPerCent = (power / 6) * 100;
+
+
         return (int)powerPerCent;
     }
+
+    void displayOptiBar()
+    {
+        
+        if (GetOptiPerCent() > 0)
+        {
+            barOpti[0].enabled = true;
+        }
+        else
+        {
+            barOpti[0].enabled = false;
+        }
+        if (GetOptiPerCent() >= 25)
+        {
+            barOpti[1].enabled = true;
+        }
+        else
+        {
+            barOpti[1].enabled = false;
+        }
+        if (GetOptiPerCent() >= 50)
+        {
+            barOpti[2].enabled = true;
+        }
+        else
+        {
+            barOpti[2].enabled = false;
+        }
+        if (GetOptiPerCent() >= 75)
+        {
+            barOpti[3].enabled = true;
+        }
+        else
+        {
+            barOpti[3].enabled = false;
+        }
+    }
+
 }
