@@ -94,7 +94,6 @@ public class SC_Triangle_Parameters : MonoBehaviour
         
         for (int i = 0; i < vertexPos.Length; i++)
         {
-            Debug.Log("Come here");
             vertex[i] = Vector3.zero;
             vertexPos[i] = Vector3.zero;
         }
@@ -111,11 +110,44 @@ public class SC_Triangle_Parameters : MonoBehaviour
 
             for (int i = 0; i < vertexPos.Length; i++)
             {
-                vertex[i] = Vector3.Lerp(vertex[i], vertexPos[i], Time.deltaTime * speed);
+                if(Vector3.Distance(vertex[0], vertexPos[0]) >0.1f)
+                {
+                    if (vertex[0].magnitude > vertexPos[0].magnitude)
+                    {
+                        vertex[0] += new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                    }
+                    else
+                    {
+                        vertex[0] -= new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                    }
+                }
+                if (Vector3.Distance(vertex[1], vertexPos[1]) > 0.1f)
+                {
+                    if (vertex[1].magnitude > vertexPos[1].magnitude)
+                    {
+                        vertex[1] -= new Vector3(0, (Time.deltaTime * speed), 0);
+                    }
+                    else
+                    {
+                        vertex[1] += new Vector3(0, (Time.deltaTime * speed), 0);
+                    }
+                }
+            if (Vector3.Distance(vertex[2], vertexPos[2]) > 0.1f)
+            {
+                if (vertex[2].magnitude > vertexPos[2].magnitude)
+                {
+                    vertex[2] += new Vector3(-Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                }
+                else
+                {
+                    vertex[2] += new Vector3(Time.deltaTime * speed * 0.86f, -(Time.deltaTime * speed) / 2, 0);
+                }
             }
 
+        }
 
-            triangleMesh.vertices = vertex;
+
+        triangleMesh.vertices = vertex;
             triangleMesh.triangles = triangles;
         
     }
