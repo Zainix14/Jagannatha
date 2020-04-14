@@ -83,10 +83,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             int n_BreakDownLvlTemp = n_BreakDownLvl + nbBreakdown;
             SetBreakdownLvl(n_BreakDownLvlTemp);
 
-            //Buttons
-            //SetInteractibleInBreakdown(n_BreakDownLvl);
-
-            //Sequences
             SetSequences(n_BreakDownLvl);
 
             CheckBreakdown();
@@ -151,80 +147,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    void SetInteractibleInBreakdown(int n_InteractibleToBreak)
-    {
-
-        bool newBreakdown = true;
-
-        for (int i = 0; i < n_InteractibleToBreak; i++)
-        {
-
-            if (newBreakdown && !b_MaxBreakdown)
-            {
-
-                //Nb d'Interactible deja en panne
-                n_InteractibleInBreakDown = CurNbInteractBreak();
-
-                //Si il y 'a deja plus d'Interactible en panne que demander
-                if (n_InteractibleInBreakDown >= n_InteractibleToBreak)
-                {
-                    newBreakdown = false;
-                    break;
-                }
-                else
-                    i = CurNbInteractBreak();
-
-                //Choix Aleatoire d'un nteractible
-                int rnd = Random.Range(0, interactible.Length);
-
-                //Si il est deja en panne la boucle recule de  (annule le passage actuel)
-                if (interactible[rnd].GetComponent<IInteractible>().isBreakdown())
-                    i--;
-
-                //Met un Interactible en Panne
-                else
-                {
-
-                    interactible[rnd].GetComponent<IInteractible>().ChangeDesired();
-
-                    n_InteractibleInBreakDown = CurNbInteractBreak();
-
-                    if (n_InteractibleInBreakDown == n_InteractibleToBreak)
-                    {
-                        newBreakdown = false;
-                        break;
-                    }
-
-                }
-
-            }
-
-        }
-
-    }   
-
     public void CheckBreakdown()
     {
-
-        /*
-        //Button
-
-        //on update le nombre de pannes
-        n_InteractibleInBreakDown = CurNbInteractBreak();
-
-        if(n_InteractibleInBreakDown == interactible.Length)
-            SetMaxBreakdown(true);
-
-        //Resolution du System (MaxBreakDown)
-        else if (n_InteractibleInBreakDown == 0 && b_MaxBreakdown)
-            EndBreakdown();
-
-        //Resolution du Systeme (Normal BreakDown)
-        else if (n_InteractibleInBreakDown == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
-            EndBreakdown();
-    */
-
-        //Sequences
         
         if (n_BreakDownLvl == n_MaxBreakdownLvl)
             SetMaxBreakdown(true);
@@ -269,22 +193,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
         }
         
-    }
-
-    int CurNbInteractBreak()
-    {
-
-        int n_InBreakdown = 0;
-
-        //Cb d'interactibles sont en Breakdown
-        for (int j = 0; j < interactible.Length; j++)
-        {
-            if (interactible[j].GetComponent<IInteractible>().isBreakdown())
-                n_InBreakdown++;
-        }
-
-        return n_InBreakdown;
-
     }
 
     void SetMaxBreakdown(bool TargetState)
