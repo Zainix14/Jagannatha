@@ -37,7 +37,10 @@ public class SC_FogOnCam : MonoBehaviour
         if (fog)
         {
             RenderSettings.fog = fog;
-            RenderSettings.fogColor = fogColor;
+            if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_1)
+                RenderSettings.fogColor = Color.white;
+            else
+                RenderSettings.fogColor = fogColor;
             RenderSettings.fogDensity = fogDensity;
             switch (fogMode)
             {
