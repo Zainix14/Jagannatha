@@ -101,6 +101,7 @@ public class SC_Triangle_Parameters : MonoBehaviour
         {
             vertex[i] = Vector3.zero;
             vertexPos[i] = Vector3.zero;
+            sensiTxt[i].text = "0";
         }
         triangleMesh.vertices = vertex;
         
