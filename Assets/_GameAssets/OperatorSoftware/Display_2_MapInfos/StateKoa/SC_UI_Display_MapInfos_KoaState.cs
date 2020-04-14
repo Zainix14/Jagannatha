@@ -93,8 +93,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         curKoaScriptKoaSettings = newSettings;
         koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
         boidSettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
-
-        _triangle.b_Init = true;
        activated = true;
     }
 
@@ -163,6 +161,11 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                     SC_UI_Display_Flock.Instance.StartNewBehavior(boidSettings);
                 }
                 
+            }
+            else
+            {
+                
+                _triangle.b_Init = true;
             }
 
         }

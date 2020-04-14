@@ -91,10 +91,15 @@ public class SC_Triangle_Parameters : MonoBehaviour
 
     void initTriangle()
     {
+        
         for (int i = 0; i < vertexPos.Length; i++)
         {
+            Debug.Log("Come here");
             vertex[i] = Vector3.zero;
+            vertexPos[i] = Vector3.zero;
         }
+        triangleMesh.vertices = vertex;
+        
     }
 
     void animTriangle()
