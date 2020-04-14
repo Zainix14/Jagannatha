@@ -84,11 +84,12 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SetBreakdownLvl(n_BreakDownLvlTemp);
 
             //Buttons
-            SetInteractibleInBreakdown(n_BreakDownLvl);
-            CheckBreakdown();
+            //SetInteractibleInBreakdown(n_BreakDownLvl);
 
             //Sequences
-            //SetSequences(n_BreakDownLvl);
+            SetSequences(n_BreakDownLvl);
+
+            CheckBreakdown();
 
         }
     }
