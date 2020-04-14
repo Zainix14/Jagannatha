@@ -199,7 +199,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                 SC_WaveManager.Instance.nextWave = false;
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+                {
                     SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
+                    SC_FogBreakDown.Instance.BreakDownDensity();
+                }   
 
                 //on fout tous les systemes en panne à balle
                 sc_screens_controller.PanneAll();
@@ -225,6 +228,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
             if(SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_8)
                 SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_9);
+            SC_FogBreakDown.Instance.ClearDensity();
 
         }
 
