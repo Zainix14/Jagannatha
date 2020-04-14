@@ -39,6 +39,9 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
     SC_UI_SystmShield life;
 
     [SerializeField]
+    SC_Triangle_Parameters _triangle;
+
+    [SerializeField]
     Text koaStateTxt;
     //[SerializeField]
     //Text optiWeapon;
@@ -93,9 +96,9 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
         curKoaScriptKoaSettings = newSettings;
         koaSensibility = new Vector3(curKoaScriptKoaSettings.GetSensibility().x, curKoaScriptKoaSettings.GetSensibility().y, curKoaScriptKoaSettings.GetSensibility().z);
         boidSettings = fixedData.GetBoidSettings(curKoaScriptKoaSettings.GetBoidSettingsIndex());
-   
 
-        activated = true;
+        _triangle.b_Init = true;
+       activated = true;
     }
 
     void GetReferences()
@@ -159,6 +162,11 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 sensi[1].text = (koaSensibility.y + 1).ToString();
                 sensi[2].text = (koaSensibility.z + 1).ToString();
 
+                _triangle.amplitudeValue = (koaSensibility.x + 1);
+                _triangle.frequenceValue = (koaSensibility.y + 1);
+                _triangle.phaseValue = (koaSensibility.z + 1);
+
+                _triangle.b_Init = false;
 
                 fKoaLife = (curKoaScriptKoaSettings.GetCurKoaLife() / curKoaScriptKoaSettings.GetMaxKoaLife()) * 100;
 
