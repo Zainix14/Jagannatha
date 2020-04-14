@@ -22,10 +22,6 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
 
     public bool activated;
 
-
-    [SerializeField]
-    Text[] sensi = new Text[3];
-
     [SerializeField]
     Text type;
 
@@ -124,13 +120,14 @@ public class SC_UI_Display_MapInfos_KoaState : MonoBehaviour
                 //_triangle.b_Init = true;
                 
 
-                sensi[0].text = (koaSensibility.x + 1).ToString();
-                sensi[1].text = (koaSensibility.y + 1).ToString();
-                sensi[2].text = (koaSensibility.z + 1).ToString();
+                //sensi[0].text = (koaSensibility.x + 1).ToString();
+                //sensi[1].text = (koaSensibility.y + 1).ToString();
+                //sensi[2].text = (koaSensibility.z + 1).ToString();
 
                 _triangle.amplitudeValue = (koaSensibility.x + 1);
                 _triangle.frequenceValue = (koaSensibility.y + 1);
                 _triangle.phaseValue = (koaSensibility.z + 1);
+                
 
                 _triangle.b_Init = false;
 

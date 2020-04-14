@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_Triangle_Parameters : MonoBehaviour
 {
     GameObject Mng_SyncVar = null;
     SC_SyncVar_calibr sc_syncvar;
+
     [SerializeField]
     Material triangleMat;
 
@@ -24,9 +26,12 @@ public class SC_Triangle_Parameters : MonoBehaviour
     float speed = 5;
     int[] triangles;
 
-    Vector3[] vertexPos;
+    public Vector3[] vertexPos;
 
     public bool b_Init = false;
+
+    [SerializeField]
+    Text[] sensiTxt = new Text[3];
     // Start is called before the first frame update
     void Start()
     {
@@ -110,42 +115,41 @@ public class SC_Triangle_Parameters : MonoBehaviour
 
             for (int i = 0; i < vertexPos.Length; i++)
             {
-                if(Vector3.Distance(vertex[0], vertexPos[0]) >0.1f)
-                {
-                    if (vertex[0].magnitude > vertexPos[0].magnitude)
+                    if(Vector3.Distance(vertex[0], vertexPos[0]) >0.1f)
                     {
-                        vertex[0] += new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                        if (vertex[0].magnitude > vertexPos[0].magnitude)
+                        {
+                            vertex[0] += new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                        }
+                        else
+                        {
+                            vertex[0] -= new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                        }
+                    }
+                    if (Vector3.Distance(vertex[1], vertexPos[1]) > 0.1f)
+                    {
+                        if (vertex[1].magnitude > vertexPos[1].magnitude)
+                        {
+                            vertex[1] -= new Vector3(0, (Time.deltaTime * speed), 0);
+                        }
+                        else
+                        {
+                            vertex[1] += new Vector3(0, (Time.deltaTime * speed), 0);
+                        }
+                    }
+                if (Vector3.Distance(vertex[2], vertexPos[2]) > 0.1f)
+                {
+                    if (vertex[2].magnitude > vertexPos[2].magnitude)
+                    {
+                        vertex[2] += new Vector3(-Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
                     }
                     else
                     {
-                        vertex[0] -= new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
+                        vertex[2] += new Vector3(Time.deltaTime * speed * 0.86f, -(Time.deltaTime * speed) / 2, 0);
                     }
                 }
-                if (Vector3.Distance(vertex[1], vertexPos[1]) > 0.1f)
-                {
-                    if (vertex[1].magnitude > vertexPos[1].magnitude)
-                    {
-                        vertex[1] -= new Vector3(0, (Time.deltaTime * speed), 0);
-                    }
-                    else
-                    {
-                        vertex[1] += new Vector3(0, (Time.deltaTime * speed), 0);
-                    }
-                }
-            if (Vector3.Distance(vertex[2], vertexPos[2]) > 0.1f)
-            {
-                if (vertex[2].magnitude > vertexPos[2].magnitude)
-                {
-                    vertex[2] += new Vector3(-Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
-                }
-                else
-                {
-                    vertex[2] += new Vector3(Time.deltaTime * speed * 0.86f, -(Time.deltaTime * speed) / 2, 0);
-                }
-            }
-
-        }
-
+            sensiTxt[i].text = Mathf.Round (vertex[i].magnitude).ToString();
+            }   
 
         triangleMesh.vertices = vertex;
             triangleMesh.triangles = triangles;
