@@ -29,6 +29,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     int[] tab_PilotSequence;
     [SerializeField]
     int CurPilotSeqLenght = 0;
+    [SerializeField]
+    bool b_SeqIsCorrect = false;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -81,7 +83,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             int n_BreakDownLvlTemp = n_BreakDownLvl + nbBreakdown;
             SetBreakdownLvl(n_BreakDownLvlTemp);
 
-            //Button
+            //Buttons
             SetInteractibleInBreakdown(n_BreakDownLvl);
             CheckBreakdown();
 
@@ -96,6 +98,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         tab_BreakdownSequence = new int[BreakdownLvl];
         tab_PilotSequence = new int[BreakdownLvl];
         CurPilotSeqLenght = 0;
+        b_SeqIsCorrect = false;
 
         for (int i = 0; i < tab_BreakdownSequence.Length; i++)
         {
@@ -119,7 +122,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     void CheckSequences(int CheckLenght)
     {
-
+   
         bool b_isCorrect = true;
 
         for (int i = 0; i < CheckLenght; i++)
@@ -133,8 +136,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             if (CheckLenght - 1 == tab_BreakdownSequence.Length)
             {
                 CurPilotSeqLenght = 0;
-                EndBreakdown();
-                //Ranger les Cords
+                b_SeqIsCorrect = true;
+                //Ranger les Cords              
             }
         }
         else
@@ -142,6 +145,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             //Ranger les Cords
             SetSequences(n_BreakDownLvl);
         }
+
+        CheckBreakdown();
 
     }
 
@@ -200,6 +205,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
+        /*
+        //Button
+
         //on update le nombre de pannes
         n_InteractibleInBreakDown = CurNbInteractBreak();
 
@@ -213,18 +221,35 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         //Resolution du Systeme (Normal BreakDown)
         else if (n_InteractibleInBreakDown == 0 && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
             EndBreakdown();
+    */
+
+        //Sequences
+        
+        if (n_BreakDownLvl == n_MaxBreakdownLvl)
+            SetMaxBreakdown(true);
+
+        //Resolution du System (MaxBreakDown)
+        else if (b_SeqIsCorrect && b_MaxBreakdown)
+            EndBreakdown();
+
+        //Resolution du Systeme (Normal BreakDown)
+        else if (b_SeqIsCorrect && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
+            EndBreakdown();
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
-        if (n_InteractibleInBreakDown > 0)
-        {
+        //if (n_InteractibleInBreakDown > 0)
+        if (n_BreakDownLvl > 0)
+            {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
         }
+
         else
         {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
         }
+
     }
 
     public void EndBreakdown()
