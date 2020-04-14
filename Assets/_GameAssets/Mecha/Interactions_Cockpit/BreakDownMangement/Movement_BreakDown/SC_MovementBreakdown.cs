@@ -44,8 +44,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         InitSingleton();
 
-        GetInteractibles();
-
         Invoke("Demarage", 0.5f);
 
     }
@@ -62,15 +60,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    void GetInteractibles()
-    {
-        //LES ITNERACTIBLES d'ARME NECESSITENT CE TAG
-        interactible = GameObject.FindGameObjectsWithTag("InteractibleMovement");
-    }
-
     void Demarage()
     {
-        StartNewBreakdown(interactible.Length);
+        StartNewBreakdown(3);
     }
 
     #endregion Init
@@ -92,14 +84,17 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     void SetSequences(int BreakdownLvl)
     {
+
+        Debug.Log("StartSequences");
+
         tab_BreakdownSequence = new int[BreakdownLvl];
         tab_PilotSequence = new int[BreakdownLvl];
         CurPilotSeqLenght = 0;
         b_SeqIsCorrect = false;
 
-        for (int i = 0; i < tab_BreakdownSequence.Length; i++)
+        for (int i = 0; i < BreakdownLvl; i++)
         {
-            int rnd = Random.Range(0, interactible.Length);
+            int rnd = Random.Range(0, BreakdownLvl);
             tab_BreakdownSequence[i] = rnd;
         }
 
