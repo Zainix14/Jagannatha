@@ -78,15 +78,15 @@ public class SC_UI_OngletContainer : MonoBehaviour
 
     public void ChangeWindow(Window newWindow)
     {
-        if(newWindow == Window.Hub)
-        {
-            StartCoroutine(ZoomInWindow_1(curWindow));
-        }
-        else
-        {
-            StartCoroutine(ZoomInHub_1(newWindow));
-        }
-        curWindow = newWindow;
+        //if(newWindow == Window.Hub)
+        //{
+        //    StartCoroutine(ZoomInWindow_1(curWindow));
+        //}
+        //else
+        //{
+        //    StartCoroutine(ZoomInHub_1(newWindow));
+        //}
+        //curWindow = newWindow;
 
 
     }
@@ -129,7 +129,35 @@ public class SC_UI_OngletContainer : MonoBehaviour
         }
         else wireBlink.SetBreakDown(false);*/
     }
+    #region AnimZoom
 
+    public void DisplayIn()
+    {
+        this.GetComponent<Animator>().SetBool("Display", true);
+    }
+    public void DisplayOut()
+    {
+        this.GetComponent<Animator>().SetBool("Display", false);
+    }
+    public void WeaponIn()
+    {
+        this.GetComponent<Animator>().SetBool("Weapon", true);
+    }
+    public void WeaponOut()
+    {
+        this.GetComponent<Animator>().SetBool("Weapon", false);
+    }
+
+    public void MoveIn()
+    {
+        this.GetComponent<Animator>().SetBool("Move", true);
+    }
+    public void MoveOut()
+    {
+        this.GetComponent<Animator>().SetBool("Move", false);
+    }
+
+    #endregion
 
     #region ZoomFromHub
 
