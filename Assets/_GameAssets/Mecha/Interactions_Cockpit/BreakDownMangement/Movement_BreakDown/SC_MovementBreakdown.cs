@@ -30,7 +30,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     int CurPilotSeqLenght = 0;
     [SerializeField]
-    bool b_SeqIsCorrect = false;
+    public bool b_SeqIsCorrect = false;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -155,27 +155,17 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         if (n_BreakDownLvl == n_MaxBreakdownLvl)
             SetMaxBreakdown(true);
 
-        //Resolution du System (MaxBreakDown)
-        else if (b_SeqIsCorrect && b_MaxBreakdown)
-            EndBreakdown();
-
-        //Resolution du Systeme (Normal BreakDown)
-        else if (b_SeqIsCorrect && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
+        //Normal Breakdown
+        else if (n_BreakDownLvl > 0 && b_SeqIsCorrect && !SC_MainBreakDownManager.Instance.b_BreakEngine)
             EndBreakdown();
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
 
-        //if (n_InteractibleInBreakDown > 0)
         if (n_BreakDownLvl > 0)
-        {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
-        }
-
         else
-        {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
-        }
 
     }
 
