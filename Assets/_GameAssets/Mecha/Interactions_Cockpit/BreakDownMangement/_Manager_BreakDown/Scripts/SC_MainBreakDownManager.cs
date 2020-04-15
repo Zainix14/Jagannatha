@@ -147,6 +147,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (!b_BreakEngine && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_BreakDownLvl >= nbOfBreakDownBeforeTotalBreak)
         {
 
+            Debug.Log("CheckBd - ToBd");
+
             //On s'assure que chaque system ai au moins une panne
             //important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
 
@@ -186,12 +188,15 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         }
 
+        //Si on est en panne Generale
         else if (b_BreakEngine)
         {
 
             //En Attente de Validation
             if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_BreakDownLvl == 0)
             {
+
+                Debug.Log("CheckBd - WaitValid");
 
                 //Fait clignoter le Text du bouton
                 SC_main_breakdown_validation.Instance.textBlink();
@@ -209,6 +214,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
             else if (SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
             {
+
+                Debug.Log("CheckBd - IsValid");
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                 {
@@ -245,22 +252,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
             }
 
-        }  
-
-        if(SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_4 && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
-        {
-            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
         }
 
-        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_5 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0)
-        {
-            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
-        }
-
-        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_6 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown == 0)
-        {
-            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
-        }
+        if(SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial || SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial2)
+        SetTutoState();
 
         SyncSystemsLifes();
 
@@ -404,6 +399,24 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_MovementSystem.Instance.b_BreakEngine = b_BreakEngine;
         SC_SyncVar_WeaponSystem.Instance.f_WeaponLife = Ratio(WeaponLife, 10, 1);
         SC_SyncVar_WeaponSystem.Instance.b_BreakEngine = b_BreakEngine;
+    }
+
+    void SetTutoState()
+    {
+        if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_4 && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
+        }
+
+        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_5 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
+        }
+
+        else if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_6 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown == 0)
+        {
+            SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_7);
+        }
     }
 
     float Ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)

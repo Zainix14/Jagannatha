@@ -114,7 +114,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     void CheckSequences(int CheckLenght)
     {
 
-        Debug.Log("Start CheckSq " + CheckLenght);
+        Debug.Log("Start CheckSq Mov " + CheckLenght);
 
         bool b_isCorrect = true;
 
@@ -124,13 +124,13 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
                 b_isCorrect = false;
         }
 
-        Debug.Log("CheckSq " + b_isCorrect);
+        Debug.Log("CheckSq Mov " + b_isCorrect);
 
         if (b_isCorrect)
         {
             if (CheckLenght == tab_BreakdownSequence.Length)
             {
-                Debug.Log("isCorrect");
+                Debug.Log("isCorrect Mov");
                 CurPilotSeqLenght = 0;
                 b_SeqIsCorrect = true;
                 //Ranger les Cords              
@@ -138,7 +138,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
         else
         {
-            Debug.Log("Reset");
+            Debug.Log("Reset Mov");
             //Ranger les Cords
             SetSequences();
         }
@@ -150,7 +150,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
-        Debug.Log("Check");
+        Debug.Log("Check Mov");
 
         if (n_BreakDownLvl == n_MaxBreakdownLvl)
             SetMaxBreakdown(true);
