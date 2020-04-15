@@ -103,8 +103,7 @@ public class SC_Cord : MonoBehaviour
             b_Enable = !b_Enable;
             b_InRange = false;
             SetMaterial();
-            if (b_Enable)
-                SC_MovementBreakdown.Instance.AddToPilotSeq(n_Index);
+            SC_MovementBreakdown.Instance.AddToPilotSeq(n_Index);
         }
 
         if (f_CurDistance > ConstraintRange + AddMaxRange)

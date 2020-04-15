@@ -61,6 +61,32 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         }
         ongletContainer.ChangeWindow(newWindow);
         OnClicAnimation();
+        #region AnimIn&Out
+        if(index == 0)
+        {
+            ongletContainer.DisplayIn();
+        }
+        if (index == 1)
+        {
+            ongletContainer.WeaponIn();
+        }
+        if (index == 2)
+        {
+            ongletContainer.MoveIn();
+        }
+        if (index == 3)
+        {
+            ongletContainer.DisplayOut();
+        }
+        if (index == 4)
+        {
+            ongletContainer.WeaponOut();
+        }
+        if (index == 5)
+        {
+            ongletContainer.MoveOut();
+        }
+        #endregion
     }
 
     public void HoverAction()
