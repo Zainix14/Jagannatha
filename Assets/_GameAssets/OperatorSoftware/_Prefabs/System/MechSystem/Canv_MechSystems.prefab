@@ -238,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1421818250078810676}
   - component: {fileID: 3801815549123785550}
+  - component: {fileID: 7928259255542689195}
   m_Layer: 5
   m_Name: childContainer
   m_TagString: Untagged
@@ -310,6 +311,25 @@ MonoBehaviour:
   ZoomInHubDuration_2: 2.5
   ZoomInWindowDuration_1: 0.5
   ZoomInWindowDuration_2: 0.5
+--- !u!95 &7928259255542689195
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157846064470919096}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a20e40f41c25344bb6d3d1be23fac8b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &5283548059076886130
 AudioSource:
   m_ObjectHideFlags: 0
