@@ -21,7 +21,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     [Header("BreakDown Var")]
     [SerializeField]
-    int n_MaxBreakInterB4MaxBD = 5;
+    public int n_MaxBreakInterB4MaxBD = 5;
     public bool b_MaxBreakdown = false;
     public int CurNbOfBreakdown = 0;
 

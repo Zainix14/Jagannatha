@@ -226,6 +226,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         CurPilotSeqLenght = tab_BreakdownSequence.Length;
         b_SeqIsCorrect = true;
 
+        CheckBreakdown();
+
     }
 
     public void RepairSingleBreakdownDebug()

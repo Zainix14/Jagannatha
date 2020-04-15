@@ -31,17 +31,37 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public SC_MovementBreakdown MovementBreakdownSC;
     GameObject MoveSystem;
 
-    [Header("System Lifes")]
+    [Header("Breakdown Infos")]
     public int nbOfBreakDownBeforeTotalBreak;
+    public bool b_BreakEngine = false;
+    
+
+    [Header("Display System Infos")]
     [SerializeField, Range(0,10)]
     int Displaylife = 10;
+    [SerializeField]
+    int n_MaxBreakInterB4MaxBD = 0;
+    [SerializeField]
+    bool ScreensMaxBreak = false;
+    [SerializeField]
+    int NbOfBreakDisplay = 0;
+
+    [Header("Weapon System Infos")]
     [SerializeField, Range(0, 10)]
     int WeaponLife = 10;
+    [SerializeField]
+    bool WeaponMaxBreak = false;
+    [SerializeField]
+    int NbOfBreakWeapon = 0;
+
+    [Header("Movement System Infos")]
     [SerializeField, Range(0, 10)]
     int MovementLife = 10;
+    [SerializeField]
+    bool MoveMaxBreak = false;
+    [SerializeField]
+    int MoveBreakLvl = 0;    
 
-    [Header("Systems States")]
-    public bool b_BreakEngine = false;
     /*
     public bool b_BreakMove = false;
     public bool b_BreakScreen = false;
@@ -78,16 +98,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     void Start()
     {       
-        GetReferences();
-    }
-
-    void GetReferences()
-    {
-
-        //get du script qui gere l'affichage des ecrans de panne
-        if (screenController != null && sc_screens_controller == null)
-            sc_screens_controller = screenController.GetComponent<SC_breakdown_displays_screens>();
-        
+        UpdateSystemInfos();
     }
 
     #endregion Init
@@ -107,7 +118,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_WeaponBreakdown.Instance.CheckBreakdown();
             Debug.Log("weapon : " +SC_WeaponBreakdown.Instance.CurNbOfBreakdown);
             SC_MovementBreakdown.Instance.CheckBreakdown();
-            Debug.Log("movement" +SC_MovementBreakdown.Instance.n_InteractibleInBreakDown);
+            Debug.Log("movement" +SC_MovementBreakdown.Instance.n_BreakDownLvl);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -115,6 +126,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_BreakdownDisplayManager.Instance.RepairBreakdownDebug();
             SC_WeaponBreakdown.Instance.RepairBreakdownDebug();
             SC_MovementBreakdown.Instance.RepairBreakdownDebug();
+            CheckBreakdown();
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -135,10 +147,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     }
 
     public void CheckBreakdown()
-    {
-        
-        if(sc_screens_controller == null)
-            GetReferences();
+    {      
+
+        UpdateSystemInfos();
 
         SyncSystemStates();
 
@@ -173,10 +184,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             {
                 SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
                 SC_FogBreakDown.Instance.BreakDownDensity();
-            }   
+            }
 
             //on fout tous les systemes en panne à balle
-            sc_screens_controller.PanneAll();
+            SC_breakdown_displays_screens.Instance.PanneAll();
 
             //descendre le bouton de validation
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
@@ -261,8 +272,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
     }
 
-
-
     /// <summary>
     /// Fonction de prise de dommage | 
     /// </summary>
@@ -274,7 +283,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_BreakdownDisplayManager.Instance.CheckBreakdown();
         SC_WeaponBreakdown.Instance.CheckBreakdown();
         SC_MovementBreakdown.Instance.CheckBreakdown();
-
         
         if ((SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_BreakDownLvl) < nbOfBreakDownBeforeTotalBreak && !b_BreakEngine)
         {
@@ -401,6 +409,21 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_WeaponSystem.Instance.b_BreakEngine = b_BreakEngine;
     }
 
+    void UpdateSystemInfos()
+    {
+
+        n_MaxBreakInterB4MaxBD = SC_BreakdownDisplayManager.Instance.n_MaxBreakInterB4MaxBD;
+
+        NbOfBreakDisplay = SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown;
+        NbOfBreakWeapon = SC_WeaponBreakdown.Instance.CurNbOfBreakdown;
+        MoveBreakLvl = SC_MovementBreakdown.Instance.n_BreakDownLvl;
+
+        ScreensMaxBreak = SC_BreakdownDisplayManager.Instance.b_MaxBreakdown;
+        WeaponMaxBreak = SC_WeaponBreakdown.Instance.b_MaxBreakdown;
+        MoveMaxBreak = SC_MovementBreakdown.Instance.b_MaxBreakdown;
+
+    }
+
     void SetTutoState()
     {
         if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_4 && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0)
@@ -424,6 +447,6 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         float product = (inputValue - inputMin) / (inputMax - inputMin);
         float output = ((outputMax - outputMin) * product) + outputMin;
         return output;
-    }
+    } 
 
 }
