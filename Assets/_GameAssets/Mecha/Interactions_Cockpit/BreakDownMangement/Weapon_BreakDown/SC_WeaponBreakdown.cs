@@ -210,12 +210,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
 
-        if (CurNbOfBreakdown > 0)
-            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(true);
-        else
-            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
+        SyncSystemState();
 
-        
     }
 
     public void EndBreakdown()
@@ -223,6 +219,15 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         b_MaxBreakdown = false;
         SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = false;
         offPercentage = 0;
+        SyncSystemState();
+    }
+
+    void SyncSystemState()
+    {
+        if (CurNbOfBreakdown > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
     }
 
     void BreakDownTimer()

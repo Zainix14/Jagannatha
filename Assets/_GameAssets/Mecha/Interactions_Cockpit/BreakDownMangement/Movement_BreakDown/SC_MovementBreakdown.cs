@@ -161,11 +161,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
-
-        if (n_BreakDownLvl > 0)
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
-        else
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+        SyncSystemState();
 
     }
 
@@ -180,14 +176,20 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         int rnd = Random.Range(0, 1);
         if(rnd == 0)
-        {
-            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Left);
-        }
+            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Left);       
         else
-        {
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
-        }
-        
+
+        SyncSystemState();
+
+    }
+
+    void SyncSystemState()
+    {
+        if (n_BreakDownLvl > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
     }
 
     void ResizeTab()
@@ -215,10 +217,15 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     /// </summary>
     public void RepairBreakdownDebug()
     {
-        for (int j = 0; j < interactible.Length; j++)
+
+        for (int i = 0; i < tab_BreakdownSequence.Length; i++)
         {
-            interactible[j].GetComponent<IInteractible>().Repair();
+            tab_PilotSequence[i] = tab_BreakdownSequence[i];
         }
+
+        CurPilotSeqLenght = tab_BreakdownSequence.Length;
+        b_SeqIsCorrect = true;
+
     }
 
     public void RepairSingleBreakdownDebug()

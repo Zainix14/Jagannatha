@@ -112,9 +112,9 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            DisplayBreakdownSC.RepairBreakdownDebug();
-            WeaponBreakdownSC.RepairBreakdownDebug();
-            MovementBreakdownSC.RepairBreakdownDebug();
+            SC_BreakdownDisplayManager.Instance.RepairBreakdownDebug();
+            SC_WeaponBreakdown.Instance.RepairBreakdownDebug();
+            SC_MovementBreakdown.Instance.RepairBreakdownDebug();
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -144,7 +144,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
         //Si on est pas encore en panne Generale
         //Ici on additionne toutes les pannes des sytemes pour savoir si on déclanche la Generale
-        if (!b_BreakEngine && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_InteractibleInBreakDown >= nbOfBreakDownBeforeTotalBreak)
+        if (!b_BreakEngine && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_BreakDownLvl >= nbOfBreakDownBeforeTotalBreak)
         {
 
             //On s'assure que chaque system ai au moins une panne
@@ -190,7 +190,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
 
             //En Attente de Validation
-            if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_InteractibleInBreakDown == 0)
+            if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_BreakDownLvl == 0)
             {
 
                 //Fait clignoter le Text du bouton
