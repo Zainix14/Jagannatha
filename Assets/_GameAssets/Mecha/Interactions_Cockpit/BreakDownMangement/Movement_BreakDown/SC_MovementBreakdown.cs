@@ -44,8 +44,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         InitSingleton();
 
-        GetInteractibles();
-
         Invoke("Demarage", 0.5f);
 
     }
@@ -62,44 +60,40 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
     }
 
-    void GetInteractibles()
-    {
-        //LES ITNERACTIBLES d'ARME NECESSITENT CE TAG
-        interactible = GameObject.FindGameObjectsWithTag("InteractibleMovement");
-    }
-
     void Demarage()
     {
-        StartNewBreakdown(interactible.Length);
+        StartNewBreakdown(3);
     }
 
     #endregion Init
 
     public void StartNewBreakdown(int nbBreakdown)
     {
+        Debug.Log("StartNewBdMov");
+
         if (!b_MaxBreakdown)
         {
 
             int n_BreakDownLvlTemp = n_BreakDownLvl + nbBreakdown;
             SetBreakdownLvl(n_BreakDownLvlTemp);
 
-            SetSequences(n_BreakDownLvl);
+            SetSequences();
 
             CheckBreakdown();
 
         }
     }
 
-    void SetSequences(int BreakdownLvl)
+    void SetSequences()
     {
-        tab_BreakdownSequence = new int[BreakdownLvl];
-        tab_PilotSequence = new int[BreakdownLvl];
+
+        ResizeTab();
         CurPilotSeqLenght = 0;
         b_SeqIsCorrect = false;
 
-        for (int i = 0; i < tab_BreakdownSequence.Length; i++)
+        for (int i = 0; i < n_BreakDownLvl; i++)
         {
-            int rnd = Random.Range(0, interactible.Length);
+            int rnd = Random.Range(1, 3);
             tab_BreakdownSequence[i] = rnd;
         }
 
@@ -119,7 +113,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     void CheckSequences(int CheckLenght)
     {
-   
+
+        Debug.Log("Start CheckSq " + CheckLenght);
+
         bool b_isCorrect = true;
 
         for (int i = 0; i < CheckLenght; i++)
@@ -128,10 +124,13 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
                 b_isCorrect = false;
         }
 
+        Debug.Log("CheckSq " + b_isCorrect);
+
         if (b_isCorrect)
         {
-            if (CheckLenght - 1 == tab_BreakdownSequence.Length)
+            if (CheckLenght == tab_BreakdownSequence.Length)
             {
+                Debug.Log("isCorrect");
                 CurPilotSeqLenght = 0;
                 b_SeqIsCorrect = true;
                 //Ranger les Cords              
@@ -139,8 +138,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
         else
         {
+            Debug.Log("Reset");
             //Ranger les Cords
-            SetSequences(n_BreakDownLvl);
+            SetSequences();
         }
 
         CheckBreakdown();
@@ -149,7 +149,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     public void CheckBreakdown()
     {
-        
+
+        Debug.Log("Check");
+
         if (n_BreakDownLvl == n_MaxBreakdownLvl)
             SetMaxBreakdown(true);
 
@@ -166,7 +168,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //if (n_InteractibleInBreakDown > 0)
         if (n_BreakDownLvl > 0)
-            {
+        {
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
         }
 
@@ -180,8 +182,11 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public void EndBreakdown()
     {
 
+        Debug.Log("End Mov Bd");
+
         SetMaxBreakdown(false);
         SetBreakdownLvl(0);
+        ResizeTab();
 
         int rnd = Random.Range(0, 1);
         if(rnd == 0)
@@ -193,6 +198,12 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
         }
         
+    }
+
+    void ResizeTab()
+    {
+        tab_BreakdownSequence = new int[n_BreakDownLvl];
+        tab_PilotSequence = new int[n_BreakDownLvl];
     }
 
     void SetMaxBreakdown(bool TargetState)
