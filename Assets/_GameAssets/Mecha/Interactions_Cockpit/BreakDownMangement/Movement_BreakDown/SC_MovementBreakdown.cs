@@ -156,7 +156,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SetMaxBreakdown(true);
 
         //Normal Breakdown
-        else if (n_BreakDownLvl > 0 && b_SeqIsCorrect && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+        else if (!SC_MainBreakDownManager.Instance.b_BreakEngine && n_BreakDownLvl > 0 && b_SeqIsCorrect )
             EndBreakdown();
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
@@ -224,9 +224,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         }
 
         CurPilotSeqLenght = tab_BreakdownSequence.Length;
-        b_SeqIsCorrect = true;
 
-        CheckBreakdown();
+        CheckSequences(CurPilotSeqLenght);
 
     }
 
