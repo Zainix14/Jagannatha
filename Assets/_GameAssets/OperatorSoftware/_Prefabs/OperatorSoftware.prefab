@@ -57,7 +57,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.001
   far clip plane: 154
   field of view: 60
   orthographic: 1
@@ -2418,7 +2418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4491294704425581225
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2516,10 +2516,9 @@ MonoBehaviour:
   objectPassword: {fileID: 4491294704368004503}
   canvasMng: {fileID: 1788410005633125423}
   textFeedback: {fileID: 4491294703372810754}
+  manager: {fileID: 0}
   unlock: 0
   b_IsConnected: 0
-  plugObject: {fileID: 1620917114691125540}
-  objectElectricPlug: {fileID: 5371511484075150673}
   cheatCode: 0
 --- !u!1 &4714200290168524695
 GameObject:
@@ -6321,6 +6320,16 @@ PrefabInstance:
     - target: {fileID: 3895402609089722173, guid: 1e95ffa6941bb5c44ab7e9b30ec4b7f4,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955398605406774542, guid: 1e95ffa6941bb5c44ab7e9b30ec4b7f4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955398605406774542, guid: 1e95ffa6941bb5c44ab7e9b30ec4b7f4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3984447414794564607, guid: 1e95ffa6941bb5c44ab7e9b30ec4b7f4,
