@@ -172,19 +172,23 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             EndBreakdown();
 
         else
+        {
             SyncSystemState();
             SC_MainBreakDownManager.Instance.CheckBreakdown();
+        }
 
     }
 
     public void EndBreakdown()
     {
+
         b_MaxBreakdown = false;
         SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = false;
         sc_screens_controller.RepairAll();
+
         SyncSystemState();
-        //SC_MainBreakDownManager.Instance.CheckBreakdown();
-        SC_MainBreakDownManager.Instance.UpdateSystemInfos();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
+
     }
 
     void SyncSystemState()

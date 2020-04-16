@@ -189,16 +189,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             //on fout tous les systemes en panne à balle
             SC_breakdown_displays_screens.Instance.PanneAll();
 
-            /*
             //descendre le bouton de validation
-            if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
-            {
-                SC_main_breakdown_validation.Instance.isValidated = false;
-                SC_main_breakdown_validation.Instance.textStopBlink();
-                SC_main_breakdown_validation.Instance.bringDown();
-            }
-            */
-
             SC_main_breakdown_validation.Instance.isValidated = false;
             SC_main_breakdown_validation.Instance.textStopBlink();
             SC_main_breakdown_validation.Instance.bringDown();
@@ -253,16 +244,16 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                 }
 
+                //Sortie de la Panne Globale
+                b_BreakEngine = false;
+
                 //remonter le bouton de validation
                 SC_main_breakdown_validation.Instance.bringUp();
 
                 //on répare touuuus les systemes
                 SC_BreakdownDisplayManager.Instance.EndBreakdown();
                 SC_WeaponBreakdown.Instance.EndBreakdown();
-                SC_MovementBreakdown.Instance.EndBreakdown();
-
-                //Sortie de la Panne Globale
-                b_BreakEngine = false;
+                SC_MovementBreakdown.Instance.EndBreakdown();      
 
                 //changement de state du tuto
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)

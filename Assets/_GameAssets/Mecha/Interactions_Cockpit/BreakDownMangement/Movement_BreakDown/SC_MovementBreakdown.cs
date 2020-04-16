@@ -165,7 +165,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SyncSystemState();
             SC_MainBreakDownManager.Instance.CheckBreakdown();
         }
-  
+
     }
 
     public void EndBreakdown()
@@ -184,9 +184,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
 
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
+
         SyncSystemState();
-        //SC_MainBreakDownManager.Instance.CheckBreakdown();
-        SC_MainBreakDownManager.Instance.UpdateSystemInfos();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
 
     }
 

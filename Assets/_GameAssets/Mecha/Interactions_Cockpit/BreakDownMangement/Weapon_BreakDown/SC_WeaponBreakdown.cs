@@ -202,19 +202,23 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         if (n_BreakdownValue == 0 && !SC_MainBreakDownManager.Instance.b_BreakEngine)
             EndBreakdown();
         else
+        {
             SyncSystemState();
             SC_MainBreakDownManager.Instance.CheckBreakdown();
+        }
 
     }
 
     public void EndBreakdown()
     {
+
         b_MaxBreakdown = false;
         SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = false;
         offPercentage = 0;
+
         SyncSystemState();
-        //SC_MainBreakDownManager.Instance.CheckBreakdown();
-        SC_MainBreakDownManager.Instance.UpdateSystemInfos();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
+
     }
 
     //Old EndBd
