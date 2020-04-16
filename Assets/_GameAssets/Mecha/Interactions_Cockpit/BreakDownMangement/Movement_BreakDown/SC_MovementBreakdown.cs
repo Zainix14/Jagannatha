@@ -158,11 +158,13 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         //Normal Breakdown
         else if (!SC_MainBreakDownManager.Instance.b_BreakEngine && n_BreakDownLvl > 0 && b_SeqIsCorrect )
             EndBreakdown();
-
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
-        SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
-        SyncSystemState();
-
+        else
+        {
+            SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
+            SyncSystemState();
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
+        }
+  
     }
 
     public void EndBreakdown()
@@ -180,7 +182,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         else
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
 
+        SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
         SyncSystemState();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
 
     }
 

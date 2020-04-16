@@ -193,10 +193,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         }
 
-        //Resolution
-        else if (n_BreakdownValue == 0 && !SC_MainBreakDownManager.Instance.b_BreakEngine)
-            EndBreakdown();
-
         //Old Resolution
         /*       
         else if (n_BreakdownValue == 0 && b_MaxBreakdown)
@@ -210,9 +206,12 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
             EndBreakdown();
         */
 
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
-
-        SyncSystemState();
+        //Resolution
+        if (n_BreakdownValue == 0 && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+            EndBreakdown();
+        else
+            SyncSystemState();
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
 
     }
 
@@ -222,6 +221,7 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = false;
         offPercentage = 0;
         SyncSystemState();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
     }
 
     //Old EndBd

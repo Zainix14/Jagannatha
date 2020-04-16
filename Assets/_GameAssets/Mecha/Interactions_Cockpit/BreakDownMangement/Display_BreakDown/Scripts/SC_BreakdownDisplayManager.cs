@@ -158,12 +158,6 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = true;
         }
 
-        //Resolution
-        else if (CurNbOfBreakdown == 0 && !SC_MainBreakDownManager.Instance.b_BreakEngine)
-        {
-            EndBreakdown();
-        }
-
         /*
         else if (CurNbOfBreakdown == 0 && b_MaxBreakdown)
             EndBreakdown();
@@ -173,9 +167,14 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
             EndBreakdown();
         */
 
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
-
-        SyncSystemState();
+        //Resolution
+        if (CurNbOfBreakdown == 0 && !SC_MainBreakDownManager.Instance.b_BreakEngine)
+        {
+            EndBreakdown();
+        }
+        else
+            SyncSystemState();
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
 
     }
 
@@ -185,6 +184,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_DisplaySystem.Instance.b_MaxBreakdown = false;
         sc_screens_controller.RepairAll();
         SyncSystemState();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
     }
 
     void SyncSystemState()
