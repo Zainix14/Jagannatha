@@ -69,7 +69,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     public void StartNewBreakdown(int nbBreakdown)
     {
-        Debug.Log("StartNewBdMov");
+        //Debug.Log("StartNewBdMov");
 
         if (!b_MaxBreakdown)
         {
@@ -156,8 +156,9 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             SetMaxBreakdown(true);
 
         //Normal Breakdown
-        else if (!SC_MainBreakDownManager.Instance.b_BreakEngine && n_BreakDownLvl > 0 && b_SeqIsCorrect )
+        if (!SC_MainBreakDownManager.Instance.b_BreakEngine && n_BreakDownLvl > 0 && b_SeqIsCorrect )
             EndBreakdown();
+
         else
         {
             SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
@@ -184,7 +185,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
         SyncSystemState();
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
+        //SC_MainBreakDownManager.Instance.CheckBreakdown();
+        SC_MainBreakDownManager.Instance.UpdateSystemInfos();
 
     }
 

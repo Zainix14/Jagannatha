@@ -415,7 +415,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_WeaponSystem.Instance.b_BreakEngine = b_BreakEngine;
     }
 
-    void UpdateSystemInfos()
+    public void UpdateSystemInfos()
     {
 
         n_MaxBreakInterB4MaxBD = SC_BreakdownDisplayManager.Instance.n_MaxBreakInterB4MaxBD;

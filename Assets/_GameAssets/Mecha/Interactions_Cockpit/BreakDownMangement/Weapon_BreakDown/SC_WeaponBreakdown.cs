@@ -175,22 +175,14 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //Lvl 01
         if (n_BreakdownValue == 1)
-        {
-
             offPercentage = 25 * CurNbOfBreakdown;
-
-
-        }
 
         //Lvl 02
         else if (n_BreakdownValue > 1)
         {
-
             offPercentage = 25 * CurNbOfBreakdown;
-
             b_MaxBreakdown = true;
             SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = true;
-
         }
 
         //Old Resolution
@@ -221,7 +213,8 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_WeaponSystem.Instance.b_MaxBreakdown = false;
         offPercentage = 0;
         SyncSystemState();
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
+        //SC_MainBreakDownManager.Instance.CheckBreakdown();
+        SC_MainBreakDownManager.Instance.UpdateSystemInfos();
     }
 
     //Old EndBd
