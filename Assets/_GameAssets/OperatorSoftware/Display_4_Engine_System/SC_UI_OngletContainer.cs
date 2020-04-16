@@ -64,6 +64,7 @@ public class SC_UI_OngletContainer : MonoBehaviour
         {
             _instance = this;
         }
+
     }
 
 
@@ -72,19 +73,20 @@ public class SC_UI_OngletContainer : MonoBehaviour
         particleFB = particleFB.GetComponent<RectTransform>();
 
 
+
     }
 
     public void ChangeWindow(Window newWindow)
     {
-        if(newWindow == Window.Hub)
-        {
-            StartCoroutine(ZoomInWindow_1(curWindow));
-        }
-        else
-        {
-            StartCoroutine(ZoomInHub_1(newWindow));
-        }
-        curWindow = newWindow;
+        //if(newWindow == Window.Hub)
+        //{
+        //    StartCoroutine(ZoomInWindow_1(curWindow));
+        //}
+        //else
+        //{
+        //    StartCoroutine(ZoomInHub_1(newWindow));
+        //}
+        //curWindow = newWindow;
 
 
     }
@@ -93,17 +95,69 @@ public class SC_UI_OngletContainer : MonoBehaviour
     public void playDisplayTabAlert(bool state)
     {
         onglet[0].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+   
     }
 
     public void playWeaponTabAlert(bool state)
     {
         onglet[1].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+     
     }
     public void playMovementTabAlert(bool state)
     {
         onglet[2].GetComponent<SC_UI_OngletSelection>().isBreakdownSystem(state);
+ 
+
     }
 
+    public void CheckBreakdownOnglet()
+    {
+        /*
+        int nbOngletBD = 0;
+        for (int i = 0; i < onglet.Length; i++)
+        {
+            if (onglet[i].GetComponent<SC_UI_OngletSelection>().isBreakdown)
+            {
+                nbOngletBD++;
+            }
+        }
+
+
+        if (nbOngletBD == onglet.Length)
+        {
+            wireBlink.SetBreakDown(true);
+        }
+        else wireBlink.SetBreakDown(false);*/
+    }
+    #region AnimZoom
+
+    public void DisplayIn()
+    {
+        this.GetComponent<Animator>().SetBool("Display", true);
+    }
+    public void DisplayOut()
+    {
+        this.GetComponent<Animator>().SetBool("Display", false);
+    }
+    public void WeaponIn()
+    {
+        this.GetComponent<Animator>().SetBool("Weapon", true);
+    }
+    public void WeaponOut()
+    {
+        this.GetComponent<Animator>().SetBool("Weapon", false);
+    }
+
+    public void MoveIn()
+    {
+        this.GetComponent<Animator>().SetBool("Move", true);
+    }
+    public void MoveOut()
+    {
+        this.GetComponent<Animator>().SetBool("Move", false);
+    }
+
+    #endregion
 
     #region ZoomFromHub
 

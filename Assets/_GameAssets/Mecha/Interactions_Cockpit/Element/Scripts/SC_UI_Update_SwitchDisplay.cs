@@ -24,8 +24,18 @@ public class SC_UI_Update_SwitchDisplay : MonoBehaviour
     GameObject sparkle;
     public int index;
 
+
+    [SerializeField]
+    int[] wireIndex;
+
+    bool isBreakdown;
+    SC_UI_WireBlink wireBlink;
+
+
     void Start()
     {
+        wireBlink = GetComponentInParent<SC_UI_WireBlink>();
+
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
         GetReferences();
     }
@@ -40,21 +50,43 @@ public class SC_UI_Update_SwitchDisplay : MonoBehaviour
         {
            // Debug.Log("CLIENT : NB éléments ds struc : " + sc_syncvar.m_pows[index].power);
 
-            if (sc_syncvar.SL_switches[index].isEnPanne)
+            if (sc_syncvar.SL_switches[index].isEnPanne && !isBreakdown)
             {
-                stateInterrupteur.material = breakdownMat;
-                warning.SetActive(true);
-                sparkle.SetActive(false);
+                ChangeState(true);
+       
             }
             //NO PANNE
-            else
+            else if(!sc_syncvar.SL_switches[index].isEnPanne && isBreakdown)
             {
-                stateInterrupteur.material = curMat;
-                warning.SetActive(false);
-                sparkle.SetActive(true);
+                ChangeState(false);
+
             }
         }
     }
+
+    void ChangeState(bool breakdown)
+    {
+        if(breakdown)
+        {
+            stateInterrupteur.material = breakdownMat;
+            warning.SetActive(true);
+            sparkle.SetActive(false);
+
+        }
+        else
+        {
+            stateInterrupteur.material = curMat;
+            warning.SetActive(false);
+            sparkle.SetActive(true);
+        }
+
+        for (int i = 0; i < wireIndex.Length; i++)
+        {
+            wireBlink.SetBreakDown(wireIndex[i], breakdown);
+        }
+        isBreakdown = breakdown;
+    }
+
 
     void GetReferences()
     {

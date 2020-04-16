@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class SC_UI_Update_SliderSolo : MonoBehaviour
 {
-    [SerializeField]
-    GameObject disquePotar;
 
     [SerializeField]
     Text textValue;
@@ -14,10 +12,6 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     [SerializeField]
     Text textWanted;
 
-    [SerializeField]
-    GameObject warning;
-    [SerializeField]
-    GameObject sparkle;
 
     GameObject Mng_SyncVar = null;
     SC_SyncVar_BreakdownDisplay sc_syncvar;
@@ -26,13 +20,23 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
     GameObject Bar;
 
     public int index;
+
+    bool isBreakdown;
+
+    SC_UI_WireBlink wireBlink;
+
+    [SerializeField]
+    int[] wireIndex;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        wireBlink = GetComponentInParent<SC_UI_WireBlink>();
         Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
     }
 
-    // Update is called once per frame
+    // Update is called once per frame²²
     void Update()
     {
         
@@ -51,24 +55,40 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
             updateSliderSolo();
             
             //PANNE
-            if (sc_syncvar.SL_sliders[index].isEnPanne)
+            if (sc_syncvar.SL_sliders[index].isEnPanne && !isBreakdown)
             {
-                textWanted.enabled = true;
-                //warning.SetActive(true);
-                //sparkle.SetActive(false);
-                //Debug.Log(sc_syncvar.SL_sliders[index].valueWanted);
-                textWanted.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].valueWanted,0.4f,10,-0.4f,0)).ToString();
-                
+                ChangeState(true);
+
             }
             //NO PANNE
-            else
+            else if(!sc_syncvar.SL_sliders[index].isEnPanne && isBreakdown)
             {
-                //warning.SetActive(false);
-                //sparkle.SetActive(true);
-                textWanted.enabled = false;
+                ChangeState(false);
             }
             
         }
+    }
+
+
+    void ChangeState(bool breakdown)
+    {
+        if (breakdown)
+        {
+            textWanted.enabled = true;
+            textWanted.text = Mathf.RoundToInt(ratio(sc_syncvar.SL_sliders[index].valueWanted, 0.4f, 10, -0.4f, 0)).ToString();
+
+        }
+        else
+        {
+            textWanted.enabled = false;
+
+        }
+
+        for (int i = 0; i < wireIndex.Length; i++)
+        {
+            wireBlink.SetBreakDown(wireIndex[i], breakdown);
+        }
+        isBreakdown = breakdown;
     }
 
     void updateSliderSolo()
@@ -79,15 +99,6 @@ public class SC_UI_Update_SliderSolo : MonoBehaviour
         
     }
 
-    /**
-     * Return the input value according a given range translated to an other range.
-     * @param float inputValue
-     * @param float inputMax
-     * @param float outputMax
-     * @param float inputMin
-     * @param float outputMin
-     * @return float
-     */
     float ratio(float inputValue, float inputMax, float outputMax, float inputMin = 0.0f, float outputMin = 0.0f)
     {
         float product = (inputValue - inputMin) / (inputMax - inputMin);

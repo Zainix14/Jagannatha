@@ -1,27 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class SC_Cord : MonoBehaviour
 {
-
     [Header("References")]
     [SerializeField]
-    Transform Base;
+    GameObject Base;
     [SerializeField]
-    SpringJoint SpringConstraint;
-    [SerializeField]
-    ConfigurableJoint ConfigConstraint;
-    [SerializeField]
-    Rigidbody RB;
+    GameObject Hand;
     [SerializeField]
     MeshRenderer Renderer;
     [SerializeField]
     Material[] tab_Materials;
 
     [Header("Parameters")]
-    [SerializeField, Range(0,1)]
+    [SerializeField]
+    int n_Index = 0;
+    [SerializeField, Range(0, 1)]
     float ConstraintRange = 0.7f;
     [SerializeField, Range(0, 0.5f)]
     float DeadZone = 0.15f;
@@ -35,6 +31,8 @@ public class SC_Cord : MonoBehaviour
     bool b_InRange;
     [SerializeField]
     bool b_Enable = false;
+    [SerializeField]
+    bool b_Grabbing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,43 +50,45 @@ public class SC_Cord : MonoBehaviour
 
         RangeEffect();
 
-    }
+        if (!b_Grabbing)
+            FollowByHand();
 
-    void SetConstraint()
-    {
-        SpringConstraint.maxDistance = ConstraintRange - 0.2f;
-        //Set Confinig Joint Limit to ConstraintRange + 0.4f;
-    }
-
-    void CalculateDistance()
-    {
-        Vector3 Distance = Base.position - this.transform.position;
-        f_CurDistance = Distance.magnitude;
     }
 
     void ObjectStatus()
     {
 
-    #if UNITY_EDITOR
-    
-        if (UnityEditor.Selection.activeObject == this.gameObject && !RB.isKinematic)
-            RB.isKinematic = true;
+        #if UNITY_EDITOR
 
-        else if (UnityEditor.Selection.activeObject != this.gameObject && RB.isKinematic)
-            RB.isKinematic = false;
+        if (UnityEditor.Selection.activeObject == Hand.gameObject && !b_Grabbing)
+            b_Grabbing = true;
 
-    #endif
+        else if (UnityEditor.Selection.activeObject != Hand.gameObject && b_Grabbing)
+            b_Grabbing = false;
 
+        #endif
+
+    }
+
+    void FollowByHand()
+    {
+        Hand.transform.position = this.transform.position;
+    }
+
+    void CalculateDistance()
+    {
+        Vector3 Distance = Base.transform.position - this.transform.position;
+        f_CurDistance = Distance.magnitude;
     }
 
     void ReleaseObject()
     {
 
-    #if UNITY_EDITOR
+        #if UNITY_EDITOR
 
         UnityEditor.Selection.SetActiveObjectWithContext(null, null);
 
-    #endif
+        #endif
 
     }
 
@@ -103,6 +103,7 @@ public class SC_Cord : MonoBehaviour
             b_Enable = !b_Enable;
             b_InRange = false;
             SetMaterial();
+            SC_MovementBreakdown.Instance.AddToPilotSeq(n_Index);
         }
 
         if (f_CurDistance > ConstraintRange + AddMaxRange)
@@ -119,3 +120,4 @@ public class SC_Cord : MonoBehaviour
     }
 
 }
+
