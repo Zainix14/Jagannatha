@@ -25,12 +25,7 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
 
     void Start() {
-
-        
         GetReferences();
-
-        
-
     }
 
     void GetReferences()
@@ -77,9 +72,9 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     public void Flip()
     {
 
-        Vector3 rotation = transform.localEulerAngles;
-        rotation.x *= -1;
-        transform.localEulerAngles = rotation;
+        //Vector3 rotation = transform.localEulerAngles;
+        //rotation.x *= -1;
+        //transform.localEulerAngles = rotation;
 
         curState = !curState;
         sendToSynchVar(curState);
