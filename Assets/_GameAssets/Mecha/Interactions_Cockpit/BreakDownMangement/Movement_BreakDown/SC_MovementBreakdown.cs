@@ -67,6 +67,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     #endregion Init
 
+    #region MainFunctions
+
     public void StartNewBreakdown(int nbBreakdown)
     {
         //Debug.Log("StartNewBdMov");
@@ -99,16 +101,6 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         //Call les Cords
 
-    }
-
-    public void AddToPilotSeq(int CordIndex)
-    {
-        if (CurPilotSeqLenght < tab_BreakdownSequence.Length)
-        {
-            tab_PilotSequence[CurPilotSeqLenght] = CordIndex;
-            CurPilotSeqLenght++;
-            CheckSequences(CurPilotSeqLenght);
-        }
     }
 
     void CheckSequences(int CheckLenght)
@@ -190,18 +182,36 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    void SyncSystemState()
+    #endregion MainFunctions
+
+    #region OtherFunctions
+
+    public void AddToPilotSeq(int CordIndex)
     {
-        if (n_BreakDownLvl > 0)
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
-        else
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+        if (CurPilotSeqLenght < tab_BreakdownSequence.Length)
+        {
+            tab_PilotSequence[CurPilotSeqLenght] = CordIndex;
+            CurPilotSeqLenght++;
+            CheckSequences(CurPilotSeqLenght);
+        }
     }
 
     void ResizeTab()
     {
         tab_BreakdownSequence = new int[n_BreakDownLvl];
         tab_PilotSequence = new int[n_BreakDownLvl];
+    }
+
+    #endregion OtherFunctions
+
+    #region SyncFunctions
+
+    void SyncSystemState()
+    {
+        if (n_BreakDownLvl > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
     }
 
     void SetMaxBreakdown(bool TargetState)
@@ -215,6 +225,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         n_BreakDownLvl = TargetLvl;
         SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl = TargetLvl;
     }
+
+    #endregion SyncFunctions
 
     #region DebugMethod
 

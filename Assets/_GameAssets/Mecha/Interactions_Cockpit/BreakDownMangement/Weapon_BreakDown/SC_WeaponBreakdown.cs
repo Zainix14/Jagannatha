@@ -79,6 +79,9 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         BreakDownTimer();
     }
+
+    #region MainFunctions
+
     public void StartNewBreakdown(int nbBreakdown)
     {
 
@@ -142,17 +145,6 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
         CheckBreakdown();
 
     }  
-
-    public void SetNewBreakdown(int percent, float frequency = 25)
-    {
-
-        offPercentage += percent;
-        if (offPercentage > 50)
-            offPercentage = 50;
-
-        this.frequency = frequency;
-
-    }
 
     public void CheckBreakdown()
     {
@@ -230,12 +222,19 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     }
     */
 
-    void SyncSystemState()
+    #endregion MainFunctions
+
+    #region OtherFunctions
+
+    public void SetNewBreakdown(int percent, float frequency = 25)
     {
-        if (CurNbOfBreakdown > 0)
-            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(true);
-        else
-            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
+
+        offPercentage += percent;
+        if (offPercentage > 50)
+            offPercentage = 50;
+
+        this.frequency = frequency;
+
     }
 
     void BreakDownTimer()
@@ -297,6 +296,16 @@ public class SC_WeaponBreakdown : MonoBehaviour, IF_BreakdownManager
     public bool CanFire()
     {
         return bCanFire;
+    }
+
+    #endregion OtherFunctions
+
+    void SyncSystemState()
+    {
+        if (CurNbOfBreakdown > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
     }
 
     #region DebugMethod

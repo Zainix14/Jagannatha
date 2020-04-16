@@ -84,6 +84,8 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     #endregion Init
 
+    #region MainFunctions
+
     public void StartNewBreakdown(int nbBreakdown)
     {
 
@@ -191,13 +193,7 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    void SyncSystemState()
-    {
-        if (CurNbOfBreakdown > 0)
-            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
-        else
-            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
-    }
+    #endregion MainFunctions
 
     int NumberOfBreakdown()
     {
@@ -214,6 +210,14 @@ public class SC_BreakdownDisplayManager : MonoBehaviour, IF_BreakdownManager
 
         return n_BreakdownValue;
 
+    }
+
+    void SyncSystemState()
+    {
+        if (CurNbOfBreakdown > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(false);
     }
     
     #region FX
