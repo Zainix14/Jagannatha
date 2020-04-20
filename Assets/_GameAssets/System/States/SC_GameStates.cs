@@ -83,7 +83,7 @@ public class SC_GameStates : NetworkBehaviour
 
             case GameState.Tutorial:
                 //Descendre le Bouton Reboot au tuto
-                ChangeTutoGameState(TutorialState.Tutorial1_1);
+                ChangeTutoGameState(TutorialState.Tutorial1_2);
 
                 break;
 

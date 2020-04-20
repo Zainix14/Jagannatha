@@ -107,7 +107,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: 290}
+  m_AnchoredPosition: {x: -16, y: 290.1}
   m_SizeDelta: {x: 160, y: 108.26999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7871289256091860435
@@ -141,11 +141,11 @@ MonoBehaviour:
     m_FontSize: 55
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 0
     m_MaxSize: 101
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1545,8 +1545,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 558, y: 250}
-  m_SizeDelta: {x: 160, y: 108.26999}
+  m_AnchoredPosition: {x: 558, y: 247.6}
+  m_SizeDelta: {x: 160, y: 49.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3952207436342803163
 CanvasRenderer:
@@ -1579,13 +1579,13 @@ MonoBehaviour:
     m_FontSize: 55
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 101
+    m_MinSize: 0
+    m_MaxSize: 55
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 0
 --- !u!1 &1646058442001844603
@@ -3432,12 +3432,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 7
-    m_Bottom: 7
+    m_Left: 6
+    m_Right: 6
+    m_Top: 3
+    m_Bottom: 6
   m_ChildAlignment: 0
-  m_Spacing: 10.83
+  m_Spacing: 5.66
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -5934,6 +5934,7 @@ GameObject:
   - component: {fileID: 6015426122488462358}
   - component: {fileID: 1837253989581257536}
   - component: {fileID: 597226971484357012}
+  - component: {fileID: 6482661034945226504}
   m_Layer: 5
   m_Name: Camera
   m_TagString: Player
@@ -6079,6 +6080,22 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &6482661034945226504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7343347394462461098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926aaae03f5367d41823b57310a4f2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fog: 1
+  fogColor: {r: 0, g: 0, b: 0, a: 1}
+  fogDensity: 0.005
+  fogMode: 0
 --- !u!1 &7358024185979552837
 GameObject:
   m_ObjectHideFlags: 0
@@ -6370,12 +6387,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 7
-    m_Bottom: 7
+    m_Left: 6
+    m_Right: 6
+    m_Top: 3
+    m_Bottom: 6
   m_ChildAlignment: 0
-  m_Spacing: 10.83
+  m_Spacing: 5.66
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -9417,6 +9434,7 @@ MonoBehaviour:
   amplitudeValue: 6
   frequenceValue: 1
   phaseValue: 1
+  precision: 0.1
   speed: 3
   vertexPos: []
   b_Init: 0
@@ -9424,6 +9442,8 @@ MonoBehaviour:
   - {fileID: 8774093978126411547}
   - {fileID: 8307431562379859245}
   - {fileID: 8416073149607232550}
+  ArialFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  sanskritFont: {fileID: 12800000, guid: f47f6e7b209bf514a8a2c736b0a64573, type: 3}
 --- !u!1 &9216963140617380800
 GameObject:
   m_ObjectHideFlags: 0
@@ -9458,7 +9478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 98, y: -205}
+  m_AnchoredPosition: {x: 97, y: -204.8}
   m_SizeDelta: {x: 160, y: 108.26999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1140306987803893040
@@ -9492,11 +9512,11 @@ MonoBehaviour:
     m_FontSize: 55
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 0
     m_MaxSize: 101
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1

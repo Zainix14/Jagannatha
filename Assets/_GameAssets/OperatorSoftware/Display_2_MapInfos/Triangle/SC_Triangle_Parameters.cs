@@ -23,7 +23,12 @@ public class SC_Triangle_Parameters : MonoBehaviour
     public float phaseValue;
 
     [SerializeField]
+    float precision = 0.2f;
+    [SerializeField]
     float speed = 5;
+
+    float delayLetter = 0.01f;
+
     int[] triangles;
 
     public Vector3[] vertexPos;
@@ -32,6 +37,13 @@ public class SC_Triangle_Parameters : MonoBehaviour
 
     [SerializeField]
     Text[] sensiTxt = new Text[3];
+
+    [SerializeField]
+    Font ArialFont;
+    [SerializeField]
+    Font sanskritFont;
+
+    Coroutine[] coroutine = new Coroutine[3];
     // Start is called before the first frame update
     void Start()
     {
@@ -116,7 +128,7 @@ public class SC_Triangle_Parameters : MonoBehaviour
 
             for (int i = 0; i < vertexPos.Length; i++)
             {
-                    if(Vector3.Distance(vertex[0], vertexPos[0]) >0.1f)
+                    if(Vector3.Distance(vertex[0], vertexPos[0]) > precision)
                     {
                         if (vertex[0].magnitude > vertexPos[0].magnitude)
                         {
@@ -127,7 +139,7 @@ public class SC_Triangle_Parameters : MonoBehaviour
                             vertex[0] -= new Vector3(Time.deltaTime * speed * 0.86f, (Time.deltaTime * speed) / 2, 0);
                         }
                     }
-                    if (Vector3.Distance(vertex[1], vertexPos[1]) > 0.1f)
+                    if (Vector3.Distance(vertex[1], vertexPos[1]) > precision)
                     {
                         if (vertex[1].magnitude > vertexPos[1].magnitude)
                         {
@@ -138,7 +150,7 @@ public class SC_Triangle_Parameters : MonoBehaviour
                             vertex[1] += new Vector3(0, (Time.deltaTime * speed), 0);
                         }
                     }
-                if (Vector3.Distance(vertex[2], vertexPos[2]) > 0.1f)
+                if (Vector3.Distance(vertex[2], vertexPos[2]) > precision)
                 {
                     if (vertex[2].magnitude > vertexPos[2].magnitude)
                     {
@@ -149,11 +161,78 @@ public class SC_Triangle_Parameters : MonoBehaviour
                         vertex[2] += new Vector3(Time.deltaTime * speed * 0.86f, -(Time.deltaTime * speed) / 2, 0);
                     }
                 }
-            sensiTxt[i].text = Mathf.Round (vertex[i].magnitude).ToString();
+                sensiTxt[i].text = Mathf.Round (vertex[i].magnitude).ToString();
+                animText();
             }   
 
         triangleMesh.vertices = vertex;
-            triangleMesh.triangles = triangles;
+        triangleMesh.triangles = triangles;
         
+    }
+
+    void animText()
+    {
+        
+        if (sensiTxt[0].text != (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.y + 1).ToString())
+        {
+            //sensiTxt[0].font = sanskritFont;
+            coroutine[0] =  StartCoroutine(multipleLetter(0));
+        }
+        else
+        {
+            StopCoroutine(coroutine[0]);
+            sensiTxt[0].font = ArialFont;
+        }
+        if (sensiTxt[1].text != (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.x + 1).ToString())
+        {
+            //sensiTxt[1].font = sanskritFont;
+            coroutine[1] = StartCoroutine(multipleLetter(1));
+
+        }
+        else
+        {
+            StopCoroutine(coroutine[1]);
+            sensiTxt[1].font = ArialFont;
+        }
+        if (sensiTxt[2].text != (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.z + 1).ToString())
+        {
+            //sensiTxt[2].font = sanskritFont;
+            coroutine[2] = StartCoroutine(multipleLetter(2));
+
+        }
+        else
+        {
+            StopCoroutine(coroutine[2]);
+            sensiTxt[2].font = ArialFont;
+        }
+    }
+
+    IEnumerator multipleLetter(int index)
+    {
+        sensiTxt[index].font = sanskritFont;
+        yield return new WaitForSeconds(delayLetter);
+        sensiTxt[index].text = "j";
+        yield return new WaitForSeconds(delayLetter);
+        sensiTxt[index].text = "u";
+        yield return new WaitForSeconds(delayLetter);
+        sensiTxt[index].text = "g";
+        yield return new WaitForSeconds(delayLetter);
+        sensiTxt[index].text = "e";
+        yield return new WaitForSeconds(delayLetter);
+        sensiTxt[index].text = "r";
+
+        if(index == 0)
+        {
+            sensiTxt[0].text = (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.y + 1).ToString();
+        }
+        if (index == 1)
+        {
+            sensiTxt[1].text = (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.x + 1).ToString();
+        }
+        if (index == 2)
+        {
+            sensiTxt[2].text = (SC_UI_Display_MapInfos_KoaState.Instance.koaSensibility.z + 1).ToString();
+        }
+        StopCoroutine("multipleLetter");
     }
 }   

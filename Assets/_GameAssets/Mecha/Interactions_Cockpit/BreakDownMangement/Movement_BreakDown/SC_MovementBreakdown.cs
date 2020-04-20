@@ -30,7 +30,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     [SerializeField]
     int CurPilotSeqLenght = 0;
     [SerializeField]
-    bool b_SeqIsCorrect = false;
+    public bool b_SeqIsCorrect = false;
 
     [Header("Interactibles"), SerializeField]
     public GameObject[] interactible;
@@ -67,9 +67,11 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     #endregion Init
 
+    #region MainFunctions
+
     public void StartNewBreakdown(int nbBreakdown)
     {
-        Debug.Log("StartNewBdMov");
+        //Debug.Log("StartNewBdMov");
 
         if (!b_MaxBreakdown)
         {
@@ -89,7 +91,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         ResizeTab();
         CurPilotSeqLenght = 0;
-        b_SeqIsCorrect = false;
+        SetSequenceState(false);
 
         for (int i = 0; i < n_BreakDownLvl; i++)
         {
@@ -101,20 +103,10 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
     }
 
-    public void AddToPilotSeq(int CordIndex)
-    {
-        if (CurPilotSeqLenght < tab_BreakdownSequence.Length)
-        {
-            tab_PilotSequence[CurPilotSeqLenght] = CordIndex;
-            CurPilotSeqLenght++;
-            CheckSequences(CurPilotSeqLenght);
-        }
-    }
-
     void CheckSequences(int CheckLenght)
     {
 
-        Debug.Log("Start CheckSq " + CheckLenght);
+        //Debug.Log("Start CheckSq Mov " + CheckLenght);
 
         bool b_isCorrect = true;
 
@@ -124,21 +116,21 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
                 b_isCorrect = false;
         }
 
-        Debug.Log("CheckSq " + b_isCorrect);
+        //Debug.Log("CheckSq Mov " + b_isCorrect);
 
         if (b_isCorrect)
         {
             if (CheckLenght == tab_BreakdownSequence.Length)
             {
-                Debug.Log("isCorrect");
+                //Debug.Log("isCorrect Mov");
                 CurPilotSeqLenght = 0;
-                b_SeqIsCorrect = true;
+                SetSequenceState(true);
                 //Ranger les Cords              
             }
         }
         else
         {
-            Debug.Log("Reset");
+            //Debug.Log("Reset Mov");
             //Ranger les Cords
             SetSequences();
         }
@@ -150,31 +142,20 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public void CheckBreakdown()
     {
 
-        Debug.Log("Check");
+        //Debug.Log("Check Mov");
 
         if (n_BreakDownLvl == n_MaxBreakdownLvl)
             SetMaxBreakdown(true);
 
-        //Resolution du System (MaxBreakDown)
-        else if (b_SeqIsCorrect && b_MaxBreakdown)
+        //Normal Breakdown
+        if (!SC_MainBreakDownManager.Instance.b_BreakEngine && n_BreakDownLvl > 0 && b_SeqIsCorrect )
             EndBreakdown();
-
-        //Resolution du Systeme (Normal BreakDown)
-        else if (b_SeqIsCorrect && !b_MaxBreakdown && SC_main_breakdown_validation.Instance.isValidated)
-            EndBreakdown();
-
-        SC_MainBreakDownManager.Instance.CheckBreakdown();
-        SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
-
-        //if (n_InteractibleInBreakDown > 0)
-        if (n_BreakDownLvl > 0)
-        {
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
-        }
 
         else
         {
-            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+            SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
+            SyncSystemState();
+            SC_MainBreakDownManager.Instance.CheckBreakdown();
         }
 
     }
@@ -182,7 +163,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     public void EndBreakdown()
     {
 
-        Debug.Log("End Mov Bd");
+        //Debug.Log("End Mov Bd");
 
         SetMaxBreakdown(false);
         SetBreakdownLvl(0);
@@ -190,20 +171,47 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         int rnd = Random.Range(0, 1);
         if(rnd == 0)
-        {
-            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Left);
-        }
+            SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Left);       
         else
-        {
             SC_JoystickMove.Instance.SetBrokenDir(SC_JoystickMove.Dir.Right);
+
+        SC_JoystickMove.Instance.AlignBreakdownLevel(n_BreakDownLvl);
+
+        SyncSystemState();
+        SC_MainBreakDownManager.Instance.CheckBreakdown();
+
+    }
+
+    #endregion MainFunctions
+
+    #region OtherFunctions
+
+    public void AddToPilotSeq(int CordIndex)
+    {
+        if (CurPilotSeqLenght < tab_BreakdownSequence.Length)
+        {
+            tab_PilotSequence[CurPilotSeqLenght] = CordIndex;
+            CurPilotSeqLenght++;
+            CheckSequences(CurPilotSeqLenght);
         }
-        
     }
 
     void ResizeTab()
     {
         tab_BreakdownSequence = new int[n_BreakDownLvl];
         tab_PilotSequence = new int[n_BreakDownLvl];
+    }
+
+    #endregion OtherFunctions
+
+    #region SyncFunctions
+
+    void SyncSystemState()
+    {
+        if (n_BreakDownLvl > 0)
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
+        else
+            SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
     }
 
     void SetMaxBreakdown(bool TargetState)
@@ -218,6 +226,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl = TargetLvl;
     }
 
+    void SetSequenceState(bool State)
+    {
+        b_SeqIsCorrect = State;
+        SC_SyncVar_MovementSystem.Instance.b_SeqIsCorrect = State;
+    }
+
+    #endregion SyncFunctions
+
     #region DebugMethod
 
     /// <summary>
@@ -225,10 +241,16 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     /// </summary>
     public void RepairBreakdownDebug()
     {
-        for (int j = 0; j < interactible.Length; j++)
+
+        for (int i = 0; i < tab_BreakdownSequence.Length; i++)
         {
-            interactible[j].GetComponent<IInteractible>().Repair();
+            tab_PilotSequence[i] = tab_BreakdownSequence[i];
         }
+
+        CurPilotSeqLenght = tab_BreakdownSequence.Length;
+
+        CheckSequences(CurPilotSeqLenght);
+
     }
 
     public void RepairSingleBreakdownDebug()
