@@ -70,6 +70,8 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     public int n_BreakDownLvl = 0;
     [SyncVar(hook = "OnChangeMaxBd")]
     public bool b_MaxBreakdown = false;
+    [SyncVar(hook = "OnChangeSequence")]
+    public bool b_SeqIsCorrect = false;
 
     void OnChangeBdLvl(int Target)
     {
@@ -80,6 +82,12 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     void OnChangeMaxBd(bool Target)
     {
         b_MaxBreakdown = Target;
+        UpdateOnClient();
+    }
+
+    void OnChangeSequence(bool Target)
+    {
+        b_SeqIsCorrect = Target;
         UpdateOnClient();
     }
 

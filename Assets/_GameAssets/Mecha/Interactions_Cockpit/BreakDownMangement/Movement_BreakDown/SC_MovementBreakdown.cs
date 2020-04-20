@@ -91,7 +91,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
 
         ResizeTab();
         CurPilotSeqLenght = 0;
-        b_SeqIsCorrect = false;
+        SetSequenceState(false);
 
         for (int i = 0; i < n_BreakDownLvl; i++)
         {
@@ -124,7 +124,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             {
                 //Debug.Log("isCorrect Mov");
                 CurPilotSeqLenght = 0;
-                b_SeqIsCorrect = true;
+                SetSequenceState(true);
                 //Ranger les Cords              
             }
         }
@@ -224,6 +224,12 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         n_BreakDownLvl = TargetLvl;
         SC_SyncVar_MovementSystem.Instance.n_BreakDownLvl = TargetLvl;
+    }
+
+    void SetSequenceState(bool State)
+    {
+        b_SeqIsCorrect = State;
+        SC_SyncVar_MovementSystem.Instance.b_SeqIsCorrect = State;
     }
 
     #endregion SyncFunctions
