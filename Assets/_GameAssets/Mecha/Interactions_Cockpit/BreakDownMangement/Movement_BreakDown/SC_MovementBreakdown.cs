@@ -99,6 +99,8 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
             tab_BreakdownSequence[i] = rnd;
         }
 
+        SendSequence();
+
         //Call les Cords
 
     }
@@ -230,6 +232,20 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     {
         b_SeqIsCorrect = State;
         SC_SyncVar_MovementSystem.Instance.b_SeqIsCorrect = State;
+    }
+
+    void SendSequence()
+    {
+
+        List<int> TempList = new List<int>();
+
+        for(int i = 0; i<tab_BreakdownSequence.Length; i++)
+        {
+            TempList.Add(tab_BreakdownSequence[i]);
+        }
+
+        SC_SyncVar_MovementSystem.Instance.SequenceList = new List<int>(TempList);
+
     }
 
     #endregion SyncFunctions
