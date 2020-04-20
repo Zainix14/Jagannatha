@@ -30,6 +30,9 @@ public class SC_UI_OngletContainer : MonoBehaviour
     GameObject[] onglet;
 
     [SerializeField]
+    Animator CamAnimator;
+
+    [SerializeField]
     Vector3[] positionHubTransition;
     [SerializeField]
     Vector3[] scaleHubTransition;
@@ -134,27 +137,33 @@ public class SC_UI_OngletContainer : MonoBehaviour
     public void DisplayIn()
     {
         this.GetComponent<Animator>().SetBool("Display", true);
+        CamAnimator.SetBool("DisplayCam", true);
     }
     public void DisplayOut()
     {
         this.GetComponent<Animator>().SetBool("Display", false);
+        CamAnimator.SetBool("DisplayCam", false);
     }
     public void WeaponIn()
     {
         this.GetComponent<Animator>().SetBool("Weapon", true);
+        CamAnimator.SetBool("WeaponCam", true);
     }
     public void WeaponOut()
     {
         this.GetComponent<Animator>().SetBool("Weapon", false);
+        CamAnimator.SetBool("WeaponCam", false);
     }
 
     public void MoveIn()
     {
         this.GetComponent<Animator>().SetBool("Move", true);
+        CamAnimator.SetBool("MoveCam", true);
     }
     public void MoveOut()
     {
         this.GetComponent<Animator>().SetBool("Move", false);
+        CamAnimator.SetBool("MoveCam", false);
     }
 
     #endregion
