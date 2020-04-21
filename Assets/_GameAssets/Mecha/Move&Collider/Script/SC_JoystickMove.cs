@@ -50,6 +50,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     float f_TransImpulseZ;
     float f_TorqueImpulseZ;
     Quaternion TargetRotY;
+    public float CurImpulse = 0;
 
     //Rotation Verticale
     [Header("Vertical Rotation Settings")]
@@ -63,7 +64,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
     public float f_LerpRotX = 1f;
     [Range(0.0f, 0.3f)]
     public float f_MaxRotUpX;
-    float f_ImpulseX;
+    public float f_ImpulseX;
     Quaternion xQuaternion;
 
     #endregion Variables
@@ -151,7 +152,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
 
             Quaternion zQuaternion = new Quaternion();
             float MixImpulseZ;
-            float CurImpulse = 0;
+            
 
             //Calcul Selon Mode de Rotation
             switch (TypeRotationZ)
@@ -236,6 +237,7 @@ public class SC_JoystickMove : MonoBehaviour, IF_BreakdownSystem
             TargetRotY = this.transform.rotation;
             if (b_UseCoroutine && CurDir != TargetDir && CoroDir != TargetDir)
                 CheckDir();
+            CurImpulse = 0; 
         }
 
     }
