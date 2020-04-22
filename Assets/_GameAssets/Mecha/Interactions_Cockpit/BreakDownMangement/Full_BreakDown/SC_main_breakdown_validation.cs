@@ -62,12 +62,12 @@ public class SC_main_breakdown_validation : MonoBehaviour
     public void Validate()
     {
 
-        Debug.Log("Valid - Display - " + SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + " - Weap - " + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + " - Move - " + SC_MovementBreakdown.Instance.b_SeqIsCorrect);
+        //Debug.Log("Valid - Display - " + SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + " - Weap - " + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + " - Move - " + SC_MovementBreakdown.Instance.b_SeqIsCorrect);
 
         //On check pour savoir si tous les systemes sont déjà réparés en additionant leurs compteurs
         if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
         {
-            Debug.Log("Validation");
+            //Debug.Log("Validation");
             isValidated = true;
             SyncVariables();
             SFX_Validate = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_voice_rebooting_system", false, 1f);
