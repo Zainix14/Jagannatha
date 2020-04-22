@@ -237,12 +237,14 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     void SendSequences()
     {
 
-        List<int> SeqList = new List<int>();
+        SC_SyncVar_MovementSystem.Instance.b_SeqIsSync = false;
+
+        SC_SyncVar_MovementSystem.Instance.BreakdownList.Clear();
 
         for (int i = 0; i < tab_BreakdownSequence.Length; i++)
-            SeqList.Add(tab_BreakdownSequence[i]);
+            SC_SyncVar_MovementSystem.Instance.BreakdownList.Add(tab_BreakdownSequence[i]);
 
-        //SC_SyncVar_MovementSystem.Instance.BreakdownSequences = SeqList;
+        SC_SyncVar_MovementSystem.Instance.b_SeqIsSync = true;
 
     }
 
