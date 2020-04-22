@@ -33,11 +33,6 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
     // Update is called once per frame
     void Update()
     {
-        if (animator != null)
-        {
-            animator.SetBool("Hover", false);
-            animator.SetBool("Clic", false);
-        }
     }
 
     public void Action()
@@ -110,6 +105,8 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if (animator != null)
         {
             animator.SetBool("Hover", true);
+            StartCoroutine(EndCoroutine("Hover"));
+
         }
 
     }
@@ -119,6 +116,13 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if (animator != null)
         {
             animator.SetBool("Clic", true);
+            StartCoroutine(EndCoroutine("Clic"));
         }
+    }
+
+    IEnumerator EndCoroutine(string Bool)
+    {
+        yield return new WaitForEndOfFrame();
+        animator.SetBool(Bool, false);
     }
 }
