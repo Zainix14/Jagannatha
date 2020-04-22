@@ -93,10 +93,20 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
         CurPilotSeqLenght = 0;
         SetSequenceState(false);
 
+        int oldrnd = 0;
+
         for (int i = 0; i < n_BreakDownLvl; i++)
         {
-            int rnd = Random.Range(1, 3);
-            tab_BreakdownSequence[i] = rnd;
+            int rnd = Random.Range(1, 4);
+
+            if (rnd != oldrnd)
+            {
+                tab_BreakdownSequence[i] = rnd;
+                oldrnd = rnd;
+            }
+            else
+                i--;
+
         }
 
         SendSequences();    
