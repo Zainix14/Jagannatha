@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SC_ShowSequence_OP : MonoBehaviour
@@ -24,11 +25,7 @@ public class SC_ShowSequence_OP : MonoBehaviour
     [SerializeField]
     bool b_UseDebugContent = false;
     [SerializeField]
-    GameObject DebugCnt01;
-    [SerializeField]
-    GameObject DebugCnt02;
-    [SerializeField]
-    GameObject DebugCnt03;
+    GameObject[] DebugContents;
 
     void Awake()
     {
@@ -42,8 +39,28 @@ public class SC_ShowSequence_OP : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+
+        if(!b_UseDebugContent)
+            for (int i = 0; i < DebugContents.Length; i++)
+                DebugContents[i].SetActive(false);
+
+    }
+
     public void DisplaySequence()
     {
+
+        for (int i = 0; i < DebugContents.Length; i++)
+            DebugContents[i].SetActive(false);
+
+        int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
+
+        for (int i = 0; i < SequenceLenght; i++)
+        {
+            DebugContents[i].SetActive(true);
+            DebugContents[i].GetComponent<TextMeshPro>().text = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
+        }
 
     }
 
