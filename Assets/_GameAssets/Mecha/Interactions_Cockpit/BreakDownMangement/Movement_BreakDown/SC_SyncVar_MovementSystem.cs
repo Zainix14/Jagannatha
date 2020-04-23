@@ -70,8 +70,11 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     public int n_BreakDownLvl = 0;
     [SyncVar(hook = "OnChangeMaxBd")]
     public bool b_MaxBreakdown = false;
-    [SyncVar(hook = "OnChangeSequence")]
+    [SyncVar(hook = "OnCheckSequence")]
     public bool b_SeqIsCorrect = false;
+    [SyncVar(hook = "OnSeqSync")]
+    public bool b_SeqIsSync = false;
+    public SyncListInt BreakdownList = new SyncListInt();
 
     void OnChangeBdLvl(int Target)
     {
@@ -85,10 +88,27 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
         UpdateOnClient();
     }
 
-    void OnChangeSequence(bool Target)
+    void OnCheckSequence(bool Target)
     {
         b_SeqIsCorrect = Target;
         UpdateOnClient();
+    }
+
+    void OnSeqSync(bool Target)
+    {
+        //Debug.Log("OnSeqSync");
+        b_SeqIsSync = Target;
+        UpdateOnClient();
+    }
+
+    public override void OnStartClient()
+    {
+        BreakdownList.Callback = OnSequenceChanged;
+    }
+
+    private void OnSequenceChanged(SyncListInt.Operation op, int index)
+    {
+        //Debug.Log("SyncListChange");
     }
 
     #endregion Var SC_MovementBreakDown
