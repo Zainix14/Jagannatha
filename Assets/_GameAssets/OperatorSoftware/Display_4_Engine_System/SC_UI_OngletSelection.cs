@@ -67,11 +67,13 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         {
           //  if (animator.GetBool("ClicWeapon") == true)
                 ongletContainer.WeaponIn();
+                animator.SetBool("ActivateWeapon", true);
         }
         if (index == 2)
         {
           //  if (animator.GetBool("ClicMove") == true)
                 ongletContainer.MoveIn();
+                animator.SetBool("ActivateMove", true);
         }
         if (index == 3)
         {
@@ -80,10 +82,12 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if (index == 4)
         {
             ongletContainer.WeaponOut();
+            animator.SetBool("ActivateWeapon", false);
         }
         if (index == 5)
         {
             ongletContainer.MoveOut();
+            animator.SetBool("ActivateMove", false);
         }
         #endregion
     }
@@ -111,25 +115,30 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     void IsHover()
     {
-        //if (animator != null)
-        //{
-        //    if(index == 0)
-        //    {
-        //        animator.SetBool("HoverDisplay", true);
-        //        StartCoroutine(EndCoroutine("HoverDisplay"));
-        //    }
-        //    if (index == 1)
-        //    {
-        //        animator.SetBool("HoverWeapon", true);
-        //       StartCoroutine(EndCoroutine("HoverWeapon"));
-        //    }
-        //    if (index == 2)
-        //    {
-        //        animator.SetBool("HoverMove", true);
-        //        StartCoroutine(EndCoroutine("HoverMove"));
-        //    }
+        if (animator != null)
+        {
+            if (index == 0 || index == 1 | index == 2)
+            {
+                animator.SetBool("Hover", true);
+                StartCoroutine(EndCoroutine("Hover"));
+            }
+            //if (index == 0)
+            //{
+            //    animator.SetBool("HoverDisplay", true);
+            //    StartCoroutine(EndCoroutine("HoverDisplay"));
+            //}
+            //if (index == 1)
+            //{
+            //    animator.SetBool("HoverWeapon", true);
+            //    StartCoroutine(EndCoroutine("HoverWeapon"));
+            //}
+            //if (index == 2)
+            //{
+            //    animator.SetBool("HoverMove", true);
+            //    StartCoroutine(EndCoroutine("HoverMove"));
+            //}
 
-        //}
+        }
 
     }
     void IsOut()
@@ -163,6 +172,11 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     void OnClicAnimation()
     {
+        if (index == 0 || index == 1 | index == 2)
+        {
+            animator.SetBool("Clic", true);
+            StartCoroutine(EndCoroutine("Clic"));
+        }
         //if (animator != null)
         //{
         //    if (index == 0)
