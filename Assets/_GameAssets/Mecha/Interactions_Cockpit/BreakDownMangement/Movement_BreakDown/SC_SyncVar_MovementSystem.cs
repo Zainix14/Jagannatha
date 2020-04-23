@@ -156,9 +156,9 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
         {
 
             SC_Movement_MechState.Instance.UpdateVar();
-
+          
             if (b_SeqIsSync)
-                SC_ShowSequence_OP.Instance.DisplaySequence();
+                SC_ShowSequence_OP.Instance.DisplaySequence();           
 
         }
             

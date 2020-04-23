@@ -51,6 +51,9 @@ public class SC_ShowSequence_OP : MonoBehaviour
     public void DisplaySequence()
     {
 
+        //Y'a un truc dedans qui bug donc a debug
+        /*
+
         for (int i = 0; i < DebugContents.Length; i++)
             DebugContents[i].SetActive(false);
 
@@ -61,6 +64,8 @@ public class SC_ShowSequence_OP : MonoBehaviour
             DebugContents[i].SetActive(true);
             DebugContents[i].GetComponent<TextMeshPro>().text = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
         }
+
+        */
 
     }
 
