@@ -856,7 +856,7 @@ MonoBehaviour:
   stateInterrupteur: {fileID: 2217822615184469940}
   curMat: {fileID: 2100000, guid: e8bd79c6418a4bb4fb755576a64840ca, type: 2}
   breakdownMat: {fileID: 2100000, guid: 97e03cbd94065564ea4d3417797d06e4, type: 2}
-  warning: {fileID: 1088212967967876223}
+  warning: {fileID: 0}
   sparkle: {fileID: 5924465883678737442}
 --- !u!1 &5946070115973365564
 GameObject:
@@ -2367,6 +2367,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 600773285e6c6da43955a885c956df25, type: 2}
+    - target: {fileID: 9500000, guid: 506bf96941dc9d84a91e6b707f383e35, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 506bf96941dc9d84a91e6b707f383e35, type: 3}
 --- !u!4 &3015967651102817635 stripped
@@ -2590,12 +2594,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1449074127440727917, guid: 8a55f547b3bc9dc48902990f4dd81dbc,
     type: 3}
   m_PrefabInstance: {fileID: 5056358657609419599}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1088212967967876223 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5274225908418686768, guid: 8a55f547b3bc9dc48902990f4dd81dbc,
-    type: 3}
-  m_PrefabInstance: {fileID: 5122615785089478903}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &464419212127345303 stripped
 RectTransform:

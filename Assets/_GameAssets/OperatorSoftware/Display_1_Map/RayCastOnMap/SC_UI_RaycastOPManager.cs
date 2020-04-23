@@ -43,12 +43,15 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
         Ray ray = camRaycast.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            
+
             if (hit.collider.GetComponent<IF_Hover>() != null)
             {
+
                 hit.collider.GetComponent<IF_Hover>().HoverAction();
             }
-
+            //else
+            //    hit.collider.GetComponent<IF_Hover>().OutAction();
+            
             //Cast un ray à partir du casque
             if (Input.GetMouseButtonDown(0))
             {

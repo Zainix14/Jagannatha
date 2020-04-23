@@ -57,17 +57,21 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         ongletContainer.ChangeWindow(newWindow);
         OnClicAnimation();
         #region AnimIn&Out
+        
         if(index == 0)
         {
-            ongletContainer.DisplayIn();
+         //   if (animator.GetBool("ClicDisplay") == true)
+                ongletContainer.DisplayIn();
         }
         if (index == 1)
         {
-            ongletContainer.WeaponIn();
+          //  if (animator.GetBool("ClicWeapon") == true)
+                ongletContainer.WeaponIn();
         }
         if (index == 2)
         {
-            ongletContainer.MoveIn();
+          //  if (animator.GetBool("ClicMove") == true)
+                ongletContainer.MoveIn();
         }
         if (index == 3)
         {
@@ -88,6 +92,11 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
     {
         IsHover();
     }
+    public void OutAction()
+    {
+        IsOut();
+    }
+
 
     public void isBreakdownSystem(bool state)
     {
@@ -102,22 +111,77 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     void IsHover()
     {
-        if (animator != null)
-        {
-            animator.SetBool("Hover", true);
-            StartCoroutine(EndCoroutine("Hover"));
+        //if (animator != null)
+        //{
+        //    if(index == 0)
+        //    {
+        //        animator.SetBool("HoverDisplay", true);
+        //        StartCoroutine(EndCoroutine("HoverDisplay"));
+        //    }
+        //    if (index == 1)
+        //    {
+        //        animator.SetBool("HoverWeapon", true);
+        //       StartCoroutine(EndCoroutine("HoverWeapon"));
+        //    }
+        //    if (index == 2)
+        //    {
+        //        animator.SetBool("HoverMove", true);
+        //        StartCoroutine(EndCoroutine("HoverMove"));
+        //    }
 
-        }
+        //}
 
+    }
+    void IsOut()
+    {
+        //if (animator != null)
+        //{
+        //    if(index == 0)
+        //    {
+        //        animator.SetBool("HoverDisplay", false);
+        //        //StartCoroutine(EndCoroutine("HoverDisplay"));
+        //    }
+        //    if (index == 1)
+        //    {
+        //        animator.SetBool("HoverWeapon", false);
+        //       // StartCoroutine(EndCoroutine("HoverWeapon"));
+        //    }
+        //    if (index == 2)
+        //    {
+        //        animator.SetBool("HoverMove", false);
+        //       // StartCoroutine(EndCoroutine("HoverMove"));
+        //    }
+
+        //}
+
+    }
+    public int GetIndex()
+    {
+
+        return (index);
     }
 
     void OnClicAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetBool("Clic", true);
-            StartCoroutine(EndCoroutine("Clic"));
-        }
+        //if (animator != null)
+        //{
+        //    if (index == 0)
+        //    {
+        //        animator.SetBool("ClicDisplay", true);
+        //        StartCoroutine(EndCoroutine("ClicDisplay"));
+        //    }
+        //    if (index == 1)
+        //    {
+        //        animator.SetBool("ClicWeapon", true);
+        //        StartCoroutine(EndCoroutine("ClicWeapon"));
+        //    }
+        //    if (index == 2)
+        //    {
+        //        animator.SetBool("ClicMove", true);
+        //        StartCoroutine(EndCoroutine("ClicMove"));
+        //    }
+
+        //}
     }
 
     IEnumerator EndCoroutine(string Bool)
