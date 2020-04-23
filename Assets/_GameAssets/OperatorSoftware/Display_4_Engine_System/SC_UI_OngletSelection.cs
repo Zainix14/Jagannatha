@@ -62,6 +62,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         {
          //   if (animator.GetBool("ClicDisplay") == true)
                 ongletContainer.DisplayIn();
+            animator.SetBool("ActivateDisplay", true);
         }
         if (index == 1)
         {
@@ -78,6 +79,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if (index == 3)
         {
             ongletContainer.DisplayOut();
+            animator.SetBool("ActivateDisplay", false);
         }
         if (index == 4)
         {
