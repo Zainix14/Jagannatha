@@ -1,33 +1,44 @@
 fileFormatVersion: 2
-guid: f1aab236b8d6e0648ab1d67d0ff398a6
+guid: 8860e1e4efd114645b7b0b0f8d68f4bf
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: C01
-    100002: C02
-    100004: C03
-    100006: C04
-    100008: //RootNode
-    400000: C01
-    400002: C02
-    400004: C03
-    400006: C04
-    400008: //RootNode
+    100000: arrow
+    100002: arrowsupport
+    100004: arrowzigwi
+    100006: circle
+    100008: doppleganger1
+    100010: doppleganger2
+    100012: //RootNode
+    400000: arrow
+    400002: arrowsupport
+    400004: arrowzigwi
+    400006: circle
+    400008: doppleganger1
+    400010: doppleganger2
+    400012: //RootNode
     2100000: No Name
-    2300000: C01
-    2300002: C02
-    2300004: C03
-    2300006: C04
-    3300000: C01
-    3300002: C02
-    3300004: C03
-    3300006: C04
-    4300000: C01
-    4300002: C02
-    4300004: C03
-    4300006: C04
-    7400000: DisplayHoverNew
-    7400002: DisplayClicNew
+    2300000: arrow
+    2300002: arrowsupport
+    2300004: arrowzigwi
+    2300006: circle
+    2300008: doppleganger1
+    2300010: doppleganger2
+    3300000: arrow
+    3300002: arrowsupport
+    3300004: arrowzigwi
+    3300006: circle
+    3300008: doppleganger1
+    3300010: doppleganger2
+    4300000: circle
+    4300002: arrow
+    4300004: arrowsupport
+    4300006: arrowzigwi
+    4300008: doppleganger2
+    4300010: doppleganger1
+    7400000: ClicReturn
+    7400002: HoverReturn
+    7400004: IdleReturn
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -58,7 +69,35 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: DisplayHoverNew
+      name: ClicReturn
+      takeName: Take 001
+      firstFrame: 21
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: HoverReturn
       takeName: Take 001
       firstFrame: 0
       lastFrame: 20
@@ -86,10 +125,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: DisplayClicNew
+      name: IdleReturn
       takeName: Take 001
-      firstFrame: 21
-      lastFrame: 50
+      firstFrame: 0
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
