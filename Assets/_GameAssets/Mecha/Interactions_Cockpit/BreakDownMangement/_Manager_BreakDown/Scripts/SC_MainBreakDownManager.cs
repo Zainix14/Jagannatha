@@ -158,7 +158,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (!b_BreakEngine && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_BreakDownLvl >= nbOfBreakDownBeforeTotalBreak)
         {
 
-            Debug.Log("CheckBd - ToBd");
+            //Debug.Log("CheckBd - ToBd");
 
             //On s'assure que chaque system ai au moins une panne
             //important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
@@ -200,64 +200,70 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         else if (b_BreakEngine)
         {
 
-            //En Attente de Validation
-            if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
+            //Les System ont été reparé
+            if(SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
             {
 
-                Debug.Log("CheckBd - WaitValid");
-
-                //Fait clignoter le Text du bouton
-                SC_main_breakdown_validation.Instance.textBlink();
-
-                //Désactive le timer
-                SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
-
-                if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_8)
-                    SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_9);
-
-                SC_FogBreakDown.Instance.ClearDensity();
-
-            }
-
-            //on additionne tout et on regarde si ya plus de panne et que le bouton de validation a été set par le joueur
-            else if (SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
-            {
-
-                Debug.Log("CheckBd - IsValid");
-                //SC_main_breakdown_validation.Instance.isValidated = false;
-
-                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+                //En Attente de Reboot (Validation)
+                if (!SC_main_breakdown_validation.Instance.isValidated)
                 {
 
-                    SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
+                    //Debug.Log("CheckBd - WaitValid");
 
-                    //protection pour les kamikazes en fin de wave
-                    if (SC_WaveManager.Instance.nextWave == false)
-                    {
+                    //Fait clignoter le Text du bouton
+                    SC_main_breakdown_validation.Instance.textBlink();
 
-                        SC_WaveManager.Instance.nextWave = true;
+                    //Désactive le timer
+                    SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();
 
-                        if (SC_WaveManager.Instance.waveEnded == true)
-                            SC_PhaseManager.Instance.EndWave();
+                    if (SC_GameStates.Instance.CurTutoState == SC_GameStates.TutorialState.Tutorial1_8)
+                        SC_GameStates.Instance.ChangeTutoGameState(SC_GameStates.TutorialState.Tutorial1_9);
 
-                    }
+                    SC_FogBreakDown.Instance.ClearDensity();
 
                 }
 
-                //Sortie de la Panne Globale
-                b_BreakEngine = false;
+                //Reboot (Validation)
+                else if (SC_main_breakdown_validation.Instance.isValidated)
+                {
 
-                //remonter le bouton de validation
-                SC_main_breakdown_validation.Instance.bringUp();
+                    //Debug.Log("CheckBd - IsValid");
+                    //SC_main_breakdown_validation.Instance.isValidated = false;
 
-                //on répare touuuus les systemes
-                SC_BreakdownDisplayManager.Instance.EndBreakdown();
-                SC_WeaponBreakdown.Instance.EndBreakdown();
-                SC_MovementBreakdown.Instance.EndBreakdown();      
+                    if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
+                    {
 
-                //changement de state du tuto
-                if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
-                    SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial2);
+                        SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
+
+                        //protection pour les kamikazes en fin de wave
+                        if (SC_WaveManager.Instance.nextWave == false)
+                        {
+
+                            SC_WaveManager.Instance.nextWave = true;
+
+                            if (SC_WaveManager.Instance.waveEnded == true)
+                                SC_PhaseManager.Instance.EndWave();
+
+                        }
+
+                    }
+
+                    //Sortie de la Panne Globale
+                    b_BreakEngine = false;
+
+                    //remonter le bouton de validation
+                    SC_main_breakdown_validation.Instance.bringUp();
+
+                    //on répare touuuus les systemes
+                    SC_BreakdownDisplayManager.Instance.EndBreakdown();
+                    SC_WeaponBreakdown.Instance.EndBreakdown();
+                    SC_MovementBreakdown.Instance.EndBreakdown();
+
+                    //changement de state du tuto
+                    if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Tutorial)
+                        SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.Tutorial2);
+
+                }
 
             }
 
