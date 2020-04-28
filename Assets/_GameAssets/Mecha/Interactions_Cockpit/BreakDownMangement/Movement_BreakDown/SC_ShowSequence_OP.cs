@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_ShowSequence_OP : MonoBehaviour
 {
@@ -42,7 +44,7 @@ public class SC_ShowSequence_OP : MonoBehaviour
     void Start()
     {
 
-        if(!b_UseDebugContent)
+        if (!b_UseDebugContent)
             for (int i = 0; i < DebugContents.Length; i++)
                 DebugContents[i].SetActive(false);
 
@@ -51,20 +53,22 @@ public class SC_ShowSequence_OP : MonoBehaviour
     public void DisplaySequence()
     {
 
-        //Y'a un truc dedans qui bug donc a debug
-
-        for (int i = 0; i < DebugContents.Length; i++)
-            DebugContents[i].SetActive(false);
-
-        int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
-
-        /*
-        for (int i = 0; i < SequenceLenght; i++)
+        if (b_UseDebugContent)
         {
-            DebugContents[i].SetActive(true);
-            DebugContents[i].GetComponent<TextMeshPro>().text = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
-        }    
-        */
+
+            for (int i = 0; i < DebugContents.Length; i++)
+                DebugContents[i].SetActive(false);
+
+            int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
+
+            for (int i = 0; i < SequenceLenght; i++)
+            {
+                DebugContents[i].SetActive(true);
+                string curValue = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
+                DebugContents[i].GetComponent<TextMeshPro>().text = curValue;
+            }
+
+        }  
 
     }
 
