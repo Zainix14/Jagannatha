@@ -40,14 +40,14 @@ public class SC_UI_Reboot_btn : MonoBehaviour
         {
             if(sc_syncvar.mustReboot)
             {
-                Debug.Log("Must Reboot");
+                //Debug.Log("OP : Must Reboot");
                 stateInterrupteur.material = breakdownMat;
                 warning.SetActive(true);
                 sparkle.SetActive(false);
             }
             else
             {
-                Debug.Log("No need reboot");
+                //Debug.Log(" OP : No need reboot");
                 stateInterrupteur.material = curMat;
                 warning.SetActive(false);
                 sparkle.SetActive(true);
