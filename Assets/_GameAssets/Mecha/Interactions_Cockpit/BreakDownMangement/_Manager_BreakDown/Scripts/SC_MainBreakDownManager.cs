@@ -158,7 +158,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         if (!b_BreakEngine && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown + SC_WeaponBreakdown.Instance.CurNbOfBreakdown + SC_MovementBreakdown.Instance.n_BreakDownLvl >= nbOfBreakDownBeforeTotalBreak)
         {
 
-            //Debug.Log("CheckBd - ToBd");
+            Debug.Log("CheckBd - ToBd");
 
             //On s'assure que chaque system ai au moins une panne
             //important doit etre avant le changement de booleen puisque checké dans le lancement de panne locale
@@ -201,10 +201,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
         {
 
             //En Attente de Validation
-            if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.n_BreakDownLvl == 0)
+            if (!SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
             {
 
-                //Debug.Log("CheckBd - WaitValid");
+                Debug.Log("CheckBd - WaitValid");
 
                 //Fait clignoter le Text du bouton
                 SC_main_breakdown_validation.Instance.textBlink();
@@ -223,7 +223,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             else if (SC_main_breakdown_validation.Instance.isValidated && SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown == 0 && SC_WeaponBreakdown.Instance.CurNbOfBreakdown == 0 && SC_MovementBreakdown.Instance.b_SeqIsCorrect)
             {
 
-                //Debug.Log("CheckBd - IsValid");
+                Debug.Log("CheckBd - IsValid");
                 //SC_main_breakdown_validation.Instance.isValidated = false;
 
                 if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
