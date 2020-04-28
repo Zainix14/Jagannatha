@@ -58,8 +58,6 @@ public class SC_ShowSequence_OP : MonoBehaviour
 
         int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
 
-        Debug.Log(SequenceLenght);  
-
         /*
         for (int i = 0; i < SequenceLenght; i++)
         {
