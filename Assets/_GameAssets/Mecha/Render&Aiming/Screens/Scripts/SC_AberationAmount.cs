@@ -18,7 +18,7 @@ public class SC_AberationAmount : MonoBehaviour
     {
         speedHorizontal = ratio(-(SC_JoystickMove.Instance.CurImpulse), 1, 0.002f, 0, 0);
         speedVertical = ratio((SC_JoystickMove.Instance.f_ImpulseX), 1, 0.003f, 0, 0);
-        Debug.Log(speedHorizontal);
+        //Debug.Log(speedHorizontal);
         screen.material.SetFloat("_AmountH", speedHorizontal);
         screen.material.SetFloat("_AmountV", speedVertical);
 
