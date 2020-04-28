@@ -53,17 +53,22 @@ public class SC_ShowSequence_OP : MonoBehaviour
     public void DisplaySequence()
     {
 
-        for (int i = 0; i < DebugContents.Length; i++)
-            DebugContents[i].SetActive(false);
-
-        int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;  
-        
-        for (int i = 0; i < SequenceLenght; i++)
+        if (b_UseDebugContent)
         {
-            DebugContents[i].SetActive(true);
-            string curValue = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();               
-            DebugContents[i].GetComponent<TextMeshPro>().text = curValue;
-        }   
+
+            for (int i = 0; i < DebugContents.Length; i++)
+                DebugContents[i].SetActive(false);
+
+            int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
+
+            for (int i = 0; i < SequenceLenght; i++)
+            {
+                DebugContents[i].SetActive(true);
+                string curValue = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
+                DebugContents[i].GetComponent<TextMeshPro>().text = curValue;
+            }
+
+        }  
 
     }
 
