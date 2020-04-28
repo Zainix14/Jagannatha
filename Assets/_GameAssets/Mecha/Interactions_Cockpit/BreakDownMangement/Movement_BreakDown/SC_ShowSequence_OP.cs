@@ -58,15 +58,20 @@ public class SC_ShowSequence_OP : MonoBehaviour
 
         int SequenceLenght = SC_SyncVar_MovementSystem.Instance.BreakdownList.Count;
 
-        Debug.Log(SequenceLenght);  
+        //Debug.Log(SequenceLenght);  
 
-        /*
+        
         for (int i = 0; i < SequenceLenght; i++)
         {
+
             DebugContents[i].SetActive(true);
-            DebugContents[i].GetComponent<TextMeshPro>().text = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
+
+
+
+            //DebugContents[i].GetComponent<TextMeshPro>().text = SC_SyncVar_MovementSystem.Instance.BreakdownList[i].ToString();
+
         }    
-        */
+        
 
     }
 
