@@ -36,9 +36,13 @@ public class SC_SimpleCord : MonoBehaviour
     [SerializeField]
     bool b_Enable = false;
 
+    //Non Public Refs
+    Rigidbody Rb;
+
     // Start is called before the first frame update
     void Start()
     {
+        Rb = this.GetComponent<Rigidbody>();
         SetMaterial();
     }
 
@@ -116,6 +120,12 @@ public class SC_SimpleCord : MonoBehaviour
             Renderer.material = tab_Materials[0];
         if (b_Enable)
             Renderer.material = tab_Materials[1];
+    }
+
+    public void HandKinematic(bool state)
+    {
+        Debug.Log("HandKinematic - " + state);
+        Rb.isKinematic = state;
     }
 
 }
