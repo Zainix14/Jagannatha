@@ -109,9 +109,9 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         while(isOnAnim)
         {
             Debug.Log("in Anim1");
-            gem.transform.localPosition -= new Vector3(0, 0, intervalle);
-            yield return new WaitForSeconds(0.1f);
-            if(gem.transform.localPosition.z < -0.03f)
+            gem.transform.localPosition -= new Vector3(0, 0,Time.deltaTime*0.1f);
+            yield return new WaitForSeconds(0);
+            if(gem.transform.localPosition.z < -0.02f)
             {
                 isOnAnim = false;
             }
@@ -119,9 +119,9 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         while(!isOnAnim)
         {
             Debug.Log("in Anim2");
-            gem.transform.localPosition += new Vector3(0, 0, intervalle);
-            yield return new WaitForSeconds(0.1f);
-            if (gem.transform.localPosition.z >= limitOfGemmeZ)
+            gem.transform.localPosition += new Vector3(0, 0, Time.deltaTime* 0.1f);
+            yield return new WaitForSeconds(0);
+            if (gem.transform.localPosition.z >= 0)
             {
                 StopAllCoroutines();
                 Debug.Log("StopAnim");
