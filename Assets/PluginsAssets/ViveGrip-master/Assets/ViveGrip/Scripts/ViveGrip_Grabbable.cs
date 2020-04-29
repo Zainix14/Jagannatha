@@ -72,11 +72,11 @@ public class ViveGrip_Grabbable : ViveGrip_Object {
   }
 
   void ViveGripGrabStart(ViveGrip_GripPoint gripPoint) {
-    attachedGripPoints.Add(gripPoint);
+    //attachedGripPoints.Add(gripPoint);
   }
 
   void ViveGripGrabStop(ViveGrip_GripPoint gripPoint) {
-    attachedGripPoints.Remove(gripPoint);
+    //attachedGripPoints.Remove(gripPoint);
   }
 
   public HashSet<ViveGrip_GripPoint> AttachedGripPoints() {
