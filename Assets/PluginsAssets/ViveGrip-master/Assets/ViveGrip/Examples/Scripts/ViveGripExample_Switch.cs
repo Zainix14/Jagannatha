@@ -26,10 +26,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
     [SerializeField]
     GameObject gem;
     float limitOfGemmeZ;
-
+    float intervalle;
     void Start() {
         GetReferences();
         limitOfGemmeZ = gem.transform.localPosition.z;
+        intervalle = Mathf.Abs(limitOfGemmeZ / 5);
     }
 
     void GetReferences()
@@ -108,8 +109,8 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         while(isOnAnim)
         {
             Debug.Log("in Anim1");
-            gem.transform.localPosition -= new Vector3(0, 0, 0.01f);
-            yield return new WaitForSeconds(0.01f);
+            gem.transform.localPosition -= new Vector3(0, 0, intervalle);
+            yield return new WaitForSeconds(0.1f);
             if(gem.transform.localPosition.z < -0.03f)
             {
                 isOnAnim = false;
@@ -118,8 +119,8 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         while(!isOnAnim)
         {
             Debug.Log("in Anim2");
-            gem.transform.localPosition += new Vector3(0, 0, 0.01f);
-            yield return new WaitForSeconds(0.01f);
+            gem.transform.localPosition += new Vector3(0, 0, intervalle);
+            yield return new WaitForSeconds(0.1f);
             if (gem.transform.localPosition.z >= limitOfGemmeZ)
             {
                 StopAllCoroutines();
