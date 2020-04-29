@@ -9,6 +9,7 @@ public interface IF_GetRightController
 
 public class SC_GetRightController : MonoBehaviour, IF_GetRightController
 {
+
     public GameObject getGameObject()
     {
         return gameObject;
