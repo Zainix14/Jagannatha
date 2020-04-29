@@ -376,10 +376,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     /// <summary>
     /// Syncronis l'etat des Sytems | 
     /// En Panne ou Non |
+    /// FONCTION A UTILITE DOUTEUSE | Marche mais peut etre qu'on peut la delete, a voir avec au moment d'une potentielle seconde croisade sur les breakdown
     /// </summary>
     void SyncSystemStates()
     {
-
+        
         //Display
         if (SC_BreakdownDisplayManager.Instance.CurNbOfBreakdown > 0)
             SC_SyncVar_Main_Breakdown.Instance.onPanneDisplayChange(true);
@@ -395,11 +396,13 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             SC_SyncVar_Main_Breakdown.Instance.onPanneWeaponChange(false);
 
         //Movement
-        if (SC_MovementBreakdown.Instance.n_InteractibleInBreakDown > 0)
+        if (!SC_MovementBreakdown.Instance.b_SeqIsCorrect)
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(true);
 
         else
             SC_SyncVar_Main_Breakdown.Instance.onPanneMovementChange(false);
+
+  
 
     }
 
