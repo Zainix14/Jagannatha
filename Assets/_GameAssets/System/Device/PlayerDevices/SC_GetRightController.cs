@@ -2,13 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IF_GetRightController
+public class SC_GetRightController : MonoBehaviour
 {
-    GameObject getGameObject();
-}
 
-public class SC_GetRightController : MonoBehaviour, IF_GetRightController
-{
+    #region Singleton
+
+    private static SC_GetRightController _instance;
+    public static SC_GetRightController Instance { get { return _instance; } }
+
+    #endregion
+
+    void Awake()
+    {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+    }
 
     public GameObject getGameObject()
     {
