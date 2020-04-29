@@ -71,18 +71,12 @@ public class ViveGrip_Grabbable : ViveGrip_Object {
     return rotation.mode == RotationMode.ApplyGripAndOrientation;
   }
 
-  void ViveGripGrabStart(ViveGrip_GripPoint gripPoint) 
-  {
-        Debug.Log(gripPoint);
-        Debug.Log(attachedGripPoints);
-        attachedGripPoints.Add(gripPoint);
+  void ViveGripGrabStart(ViveGrip_GripPoint gripPoint) {
+    //attachedGripPoints.Add(gripPoint);
   }
 
-  void ViveGripGrabStop(ViveGrip_GripPoint gripPoint) 
-  {
-        Debug.Log(gripPoint);
-        Debug.Log(attachedGripPoints);
-        attachedGripPoints.Remove(gripPoint);
+  void ViveGripGrabStop(ViveGrip_GripPoint gripPoint) {
+    //attachedGripPoints.Remove(gripPoint);
   }
 
   public HashSet<ViveGrip_GripPoint> AttachedGripPoints() {
