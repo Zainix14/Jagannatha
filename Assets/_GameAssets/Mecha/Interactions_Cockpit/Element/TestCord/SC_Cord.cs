@@ -34,9 +34,13 @@ public class SC_Cord : MonoBehaviour
     [SerializeField]
     bool b_Grabbing = false;
 
+    //Non Public Refs
+    Rigidbody HandRb;
+
     // Start is called before the first frame update
     void Start()
     {
+        HandRb = Hand.GetComponent<Rigidbody>();
         SetMaterial();
     }
 
@@ -117,6 +121,12 @@ public class SC_Cord : MonoBehaviour
             Renderer.material = tab_Materials[0];
         if (b_Enable)
             Renderer.material = tab_Materials[1];
+    }
+
+    public void HandKinematic(bool state)
+    {
+        Debug.Log("HandKinematic - " + state);
+        HandRb.isKinematic = state;
     }
 
 }
