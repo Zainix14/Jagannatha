@@ -12,7 +12,11 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     [SerializeField]
     GameObject animated;
+    [SerializeField]
+    GameObject additionalAnimated;
+
     Animator animator;
+    Animator additionalAnimator;
 
     [SerializeField]
     int[] wireIndex;
@@ -25,6 +29,8 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         ongletContainer = SC_UI_OngletContainer.Instance;
         if(animated != null)
         animator = animated.GetComponent<Animator>();
+        if(additionalAnimated != null)
+        additionalAnimator = additionalAnimated.GetComponent<Animator>();
         wireBlink = GetComponentInParent<SC_UI_WireBlink>();
 
 
@@ -61,7 +67,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         if(index == 0)
         {
          //   if (animator.GetBool("ClicDisplay") == true)
-                ongletContainer.DisplayIn();
+            ongletContainer.DisplayIn();
             animator.SetBool("ActivateDisplay", true);
         }
         if (index == 1)
@@ -76,20 +82,23 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
                 ongletContainer.MoveIn();
                 animator.SetBool("ActivateMove", true);
         }
+
+
+
         if (index == 3)
         {
             ongletContainer.DisplayOut();
-            animator.SetBool("ActivateDisplay", false);
+            additionalAnimator.SetBool("ActivateDisplay", false);
         }
         if (index == 4)
         {
             ongletContainer.WeaponOut();
-            animator.SetBool("ActivateWeapon", false);
+            additionalAnimator.SetBool("ActivateWeapon", false);
         }
         if (index == 5)
         {
             ongletContainer.MoveOut();
-            animator.SetBool("ActivateMove", false);
+            additionalAnimator.SetBool("ActivateMove", false);
         }
         #endregion
     }
@@ -119,11 +128,10 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
     {
         if (animator != null)
         {
-            if (index == 0 || index == 1 | index == 2)
-            {
+          
                 animator.SetBool("Hover", true);
-                StartCoroutine(EndCoroutine("Hover"));
-            }
+               StartCoroutine(EndCoroutine("Hover"));
+            
             //if (index == 0)
             //{
             //    animator.SetBool("HoverDisplay", true);
@@ -174,11 +182,10 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
 
     void OnClicAnimation()
     {
-        if (index == 0 || index == 1 | index == 2)
-        {
+       /*
             animator.SetBool("Clic", true);
-            StartCoroutine(EndCoroutine("Clic"));
-        }
+            StartCoroutine(EndCoroutine("Clic"));*/
+        
         //if (animator != null)
         //{
         //    if (index == 0)
