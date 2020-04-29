@@ -128,4 +128,9 @@ public class SC_SimpleCord : MonoBehaviour
         Rb.isKinematic = state;
     }
 
+    public void CreateConstraint()
+    {
+
+    }
+
 }
