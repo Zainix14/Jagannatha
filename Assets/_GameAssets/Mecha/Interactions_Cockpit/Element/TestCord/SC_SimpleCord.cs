@@ -27,6 +27,8 @@ public class SC_SimpleCord : MonoBehaviour
     float DeadZone = 0.15f;
     [SerializeField, Range(0, 0.5f)]
     float AddMaxRange = 0.3f;
+    [SerializeField]
+    float JointBeakFroce;
 
     [Header("Infos")]
     [SerializeField]
@@ -36,9 +38,14 @@ public class SC_SimpleCord : MonoBehaviour
     [SerializeField]
     bool b_Enable = false;
 
+    //Non Public Refs
+    Rigidbody Rb;
+    FixedJoint CurJoint;
+
     // Start is called before the first frame update
     void Start()
     {
+        Rb = this.GetComponent<Rigidbody>();
         SetMaterial();
     }
 
@@ -116,6 +123,36 @@ public class SC_SimpleCord : MonoBehaviour
             Renderer.material = tab_Materials[0];
         if (b_Enable)
             Renderer.material = tab_Materials[1];
+    }
+
+    public void HandKinematic(bool state)
+    {
+        Debug.Log("HandKinematic - " + state);
+        Rb.isKinematic = state;
+    }
+
+    public void CreateFixedJoint()
+    {
+
+        GameObject RightHand = SC_GetRightController.Instance.getGameObject();
+
+        CurJoint = AddFixedJoint(RightHand);
+        CurJoint.connectedBody = Rb;
+
+    }
+
+    public void DeleteFixedJoint()
+    {
+        CurJoint.connectedBody = null;
+        Destroy(CurJoint);
+    }
+
+    private FixedJoint AddFixedJoint(GameObject Target)
+    {
+        FixedJoint fx = Target.AddComponent<FixedJoint>();
+        fx.breakForce = JointBeakFroce;
+        fx.breakTorque = JointBeakFroce;
+        return fx;
     }
 
 }
