@@ -17,6 +17,7 @@ public class SC_DeviceManager : MonoBehaviour
     public bool b_IsVR = false;
     public bool b_IsFPS = false;
 
+    [SerializeField]
     string[] tab_Device;
 
     // Start is called before the first frame update
@@ -57,12 +58,6 @@ public class SC_DeviceManager : MonoBehaviour
     void GetJoyStickName()
     {
         tab_Device = Input.GetJoystickNames();
-
-        for(int i = 0; i < tab_Device.Length; i++)
-        {
-            Debug.Log(tab_Device[i]);
-        }
-
     }
 
 }

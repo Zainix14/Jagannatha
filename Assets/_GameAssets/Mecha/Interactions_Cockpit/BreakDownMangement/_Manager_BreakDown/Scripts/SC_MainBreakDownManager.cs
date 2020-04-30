@@ -18,6 +18,7 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     public GameObject Mng_Checklist;
     public GameObject Mng_BreakDownAlert;
     public GameObject screenController;
+    GameObject BreakDownAudioSource;
     private SC_breakdown_displays_screens sc_screens_controller;
 
     [Header("References breakDown SC")]
@@ -34,7 +35,8 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
     [Header("Breakdown Infos")]
     public int nbOfBreakDownBeforeTotalBreak;
     public bool b_BreakEngine = false;
-    
+    int SoundSourceNumb = 0;
+
 
     [Header("Display System Infos")]
     [SerializeField, Range(0,10)]
@@ -184,6 +186,11 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             {
                 SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
                 SC_FogBreakDown.Instance.BreakDownDensity();
+                if (SoundSourceNumb == 0)
+                {
+                    BreakDownAudioSource = CustomSoundManager.Instance.PlaySound(gameObject, "SFX_p_breackdown_alarm", true, 0.1f);
+                    SoundSourceNumb += 1;
+                }
             }
 
             //on fout tous les systemes en panne à balle
@@ -232,7 +239,12 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
 
                     if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
                     {
-
+                        if (BreakDownAudioSource.GetComponent<AudioSource>() != null && BreakDownAudioSource.GetComponent<AudioSource>().isPlaying)
+                        {
+                            //Debug.Log(BreakDownAudioSource.GetComponent<AudioClip>().name);
+                            BreakDownAudioSource.GetComponent<AudioSource>().Stop();
+                            SoundSourceNumb = 0; 
+                        }
                         SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
 
                         //protection pour les kamikazes en fin de wave
