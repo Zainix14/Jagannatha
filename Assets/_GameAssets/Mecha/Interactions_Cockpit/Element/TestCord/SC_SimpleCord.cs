@@ -143,8 +143,11 @@ public class SC_SimpleCord : MonoBehaviour
 
     public void DeleteFixedJoint()
     {
-        CurJoint.connectedBody = null;
-        Destroy(CurJoint);
+        if(CurJoint != null)
+        {
+            CurJoint.connectedBody = null;
+            Destroy(CurJoint);
+        }    
     }
 
     private FixedJoint AddFixedJoint(GameObject Target)
