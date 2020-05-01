@@ -12,6 +12,9 @@ public class SC_GetRightController : MonoBehaviour
 
     #endregion
 
+    [SerializeField]
+    GameObject GripPoint;
+
     void Awake()
     {
 

@@ -41,11 +41,14 @@ public class SC_SimpleCord : MonoBehaviour
     //Non Public Refs
     Rigidbody Rb;
     FixedJoint CurJoint;
+    ViveGrip_GripPoint RightHandGripPoint;
+    ViveGrip_ControllerHandler RightHandController;
 
     // Start is called before the first frame update
     void Start()
     {
         Rb = this.GetComponent<Rigidbody>();
+
         SetMaterial();
     }
 
