@@ -5,6 +5,4 @@ using UnityEngine;
 public  interface IF_Hover
 {
     void HoverAction();
-    int GetIndex();
-    void OutAction();
 }

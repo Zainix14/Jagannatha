@@ -44,19 +44,19 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
 
+            SC_RaycastOPMapPerspective.Instance.castRayInWorld(hit);
+
             if (hit.collider.GetComponent<IF_Hover>() != null)
             {
-
                 hit.collider.GetComponent<IF_Hover>().HoverAction();
             }
             //else
             //    hit.collider.GetComponent<IF_Hover>().OutAction();
-            
+
             //Cast un ray à partir du casque
             if (Input.GetMouseButtonDown(0))
             {
-                SC_RaycastOPMapPerspective.Instance.castRayInWorld(hit);
-
+                
                 if (hit.collider.GetComponent<IF_clicableAction>() != null)
                 {
                     hit.collider.GetComponent<IF_clicableAction>().Action();
@@ -65,9 +65,11 @@ public class SC_UI_RaycastOPManager : MonoBehaviour
             }
         }
 
+
+     
         #region CheatChode
 
-        if(Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             camRaycast = otherCam[0];
         }
