@@ -97,6 +97,7 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
     void OnSeqSync(bool Target)
     {
         b_SeqIsSync = Target;
+        Debug.Log("b_SeqIsSync = " + b_SeqIsSync);
         UpdateOnClient();
     }
 
@@ -156,9 +157,15 @@ public class SC_SyncVar_MovementSystem : NetworkBehaviour
         {
 
             SC_Movement_MechState.Instance.UpdateVar();
-          
+
+            Debug.Log("UpdateOnClient b_SeqIsSync " + b_SeqIsSync);
+
             if (b_SeqIsSync)
-                SC_ShowSequence_OP.Instance.DisplaySequence();           
+            {
+                Debug.Log("UpdateOnClient b_SeqIsSync IN");
+                SC_ShowSequence_OP.Instance.DisplaySequence();
+            }
+                
 
         }
             
