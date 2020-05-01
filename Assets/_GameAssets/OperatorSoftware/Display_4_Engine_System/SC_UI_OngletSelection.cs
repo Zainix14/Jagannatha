@@ -107,10 +107,6 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
     {
         IsHover();
     }
-    public void OutAction()
-    {
-        IsOut();
-    }
 
 
     public void isBreakdownSystem(bool state)
@@ -151,34 +147,7 @@ public class SC_UI_OngletSelection : MonoBehaviour, IF_clicableAction, IF_Hover
         }
 
     }
-    void IsOut()
-    {
-        //if (animator != null)
-        //{
-        //    if(index == 0)
-        //    {
-        //        animator.SetBool("HoverDisplay", false);
-        //        //StartCoroutine(EndCoroutine("HoverDisplay"));
-        //    }
-        //    if (index == 1)
-        //    {
-        //        animator.SetBool("HoverWeapon", false);
-        //       // StartCoroutine(EndCoroutine("HoverWeapon"));
-        //    }
-        //    if (index == 2)
-        //    {
-        //        animator.SetBool("HoverMove", false);
-        //       // StartCoroutine(EndCoroutine("HoverMove"));
-        //    }
-
-        //}
-
-    }
-    public int GetIndex()
-    {
-
-        return (index);
-    }
+ 
 
     void OnClicAnimation()
     {

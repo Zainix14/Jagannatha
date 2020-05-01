@@ -179,11 +179,12 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
             b_BreakEngine = true;
 
             //On met en pause les Wave
-            SC_WaveManager.Instance.nextWave = false;
+            
 
             //FB Alert
             if (SC_GameStates.Instance.CurState == SC_GameStates.GameState.Game)
             {
+                SC_WaveManager.Instance.b_nextWave = false;
                 SC_BreakdownOnBreakdownAlert.Instance.LaunchGlobalAlert();
                 SC_FogBreakDown.Instance.BreakDownDensity();
                 if (SoundSourceNumb == 0)
@@ -248,10 +249,10 @@ public class SC_MainBreakDownManager : MonoBehaviour, IF_BreakdownManager
                         SC_BreakdownOnBreakdownAlert.Instance.StopGlobalAlert();
 
                         //protection pour les kamikazes en fin de wave
-                        if (SC_WaveManager.Instance.nextWave == false)
+                        if (SC_WaveManager.Instance.b_nextWave == false)
                         {
 
-                            SC_WaveManager.Instance.nextWave = true;
+                            SC_WaveManager.Instance.b_nextWave = true;
 
                             if (SC_WaveManager.Instance.waveEnded == true)
                                 SC_PhaseManager.Instance.EndWave();
