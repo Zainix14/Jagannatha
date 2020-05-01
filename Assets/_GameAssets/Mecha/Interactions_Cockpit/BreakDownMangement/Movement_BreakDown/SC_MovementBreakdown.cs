@@ -247,7 +247,7 @@ public class SC_MovementBreakdown : MonoBehaviour, IF_BreakdownManager
     void SendSequences()
     {
 
-        Debug.Log("Send Sequences");
+        //Debug.Log("Send Sequences");
 
         SC_SyncVar_MovementSystem.Instance.b_SeqIsSync = false;
 
