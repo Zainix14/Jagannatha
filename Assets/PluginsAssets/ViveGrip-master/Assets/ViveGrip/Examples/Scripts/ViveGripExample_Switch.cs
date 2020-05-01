@@ -104,11 +104,9 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
 
     IEnumerator animGemme()
     {
-        Debug.Log("Rentre Coroutine");
         bool isOnAnim = true;
         while(isOnAnim)
         {
-            Debug.Log("in Anim1");
             gem.transform.localPosition -= new Vector3(0, 0,Time.deltaTime*0.1f);
             yield return new WaitForSeconds(0);
             if(gem.transform.localPosition.z < -0.02f)
@@ -118,13 +116,11 @@ public class ViveGripExample_Switch : MonoBehaviour, IInteractible
         }
         while(!isOnAnim)
         {
-            Debug.Log("in Anim2");
             gem.transform.localPosition += new Vector3(0, 0, Time.deltaTime* 0.1f);
             yield return new WaitForSeconds(0);
             if (gem.transform.localPosition.z >= 0)
             {
                 StopAllCoroutines();
-                Debug.Log("StopAnim");
             }
         }
     }
