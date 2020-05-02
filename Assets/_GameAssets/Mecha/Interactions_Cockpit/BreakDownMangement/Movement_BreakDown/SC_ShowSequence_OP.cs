@@ -53,8 +53,12 @@ public class SC_ShowSequence_OP : MonoBehaviour
     public void DisplaySequence()
     {
 
+        //Debug.Log("Aff Sequence 01");
+
         if (b_UseDebugContent)
         {
+
+            //Debug.Log("Aff Sequence 02");
 
             for (int i = 0; i < DebugContents.Length; i++)
                 DebugContents[i].SetActive(false);
