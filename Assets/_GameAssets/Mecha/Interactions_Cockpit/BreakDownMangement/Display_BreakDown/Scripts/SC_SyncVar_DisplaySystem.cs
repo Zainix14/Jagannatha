@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class SC_SyncVar_DisplaySystem : NetworkBehaviour
@@ -19,15 +18,6 @@ public class SC_SyncVar_DisplaySystem : NetworkBehaviour
     [Header("Var SC_GameStates")]
     [SyncVar(hook = "OnChangeGameState")]
     public SC_GameStates.GameState CurState = SC_GameStates.GameState.Lobby;
-
-    [Header("Var SC_EnemyManager")]
-    [SyncVar(hook = "OnDownload")]
-    public float progress;
-
-    public void OnDownload(float newProgress)
-    {
-        progress = newProgress;
-    }
 
     void OnChangeGameState(SC_GameStates.GameState _CurState)
     {

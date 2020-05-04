@@ -21,9 +21,6 @@ public class SC_EnemyManager : MonoBehaviour
     public PhaseSettings[] phases;
     public Slider Progress;
     public  int curPhaseIndex;
-    private GameObject Mng_SyncVar;
-    private SC_SyncVar_DisplaySystem sc_syncvar;
-
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -36,20 +33,12 @@ public class SC_EnemyManager : MonoBehaviour
         }
     }
 
-    void GetReferences()
-    {
-        if (Mng_SyncVar == null)
-            Mng_SyncVar = GameObject.FindGameObjectWithTag("Mng_SyncVar");
-        if (Mng_SyncVar != null && sc_syncvar == null)
-            sc_syncvar = Mng_SyncVar.GetComponent<SC_SyncVar_DisplaySystem>();
-    }
-
+ 
     public void Initialize()
     {
         InitNewPhase(0);
         Progress = GameObject.FindGameObjectWithTag("ProgressBar").GetComponent<Slider>();
         Progress.value = 0;
-        sendToSynchVar(Progress.value);
     }
 
     public void InitNewPhase(int phaseIndex)
@@ -62,21 +51,6 @@ public class SC_EnemyManager : MonoBehaviour
         }
     }
 
-    public void sendToSynchVar(float Dlvalue)
-    {
-
-        if (sc_syncvar == null)
-        {
-            GetReferences();
-        }
-        else
-        {
-
-            sc_syncvar.OnDownload(Dlvalue);
-
-        }
-
-    }
 
     public void EndPhase()
     {
@@ -85,7 +59,6 @@ public class SC_EnemyManager : MonoBehaviour
         {
             SC_GameStates.Instance.ChangeGameState(SC_GameStates.GameState.GameEnd);
             Progress.value = 100f;
-            sendToSynchVar(Progress.value);
         }
         else
          InitNewPhase(curPhaseIndex);
