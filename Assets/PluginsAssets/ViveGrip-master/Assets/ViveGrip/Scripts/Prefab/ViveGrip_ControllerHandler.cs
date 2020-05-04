@@ -69,8 +69,10 @@ public class ViveGrip_ControllerHandler : MonoBehaviour {
   public bool Released(Action action) {
     if (Device() == null) { return false; }
     ViveInput input = InputFor(action);
-    return InputPerformed(input, Device().GetPressUp);
-  }
+        Debug.Log("ViveGrip_ControllerHandler - Released");
+        return InputPerformed(input, Device().GetPressUp);
+        
+    }
 
   public bool Holding(Action action) {
     if (Device() == null) { return false; }
