@@ -14,6 +14,8 @@ public class SC_UI_BlinkBreakdown : MonoBehaviour
 
     int nbIndex;
 
+    Coroutine blinkCoro;
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -43,14 +45,43 @@ public class SC_UI_BlinkBreakdown : MonoBehaviour
     // Start is called before the first frame update
     public void StartTotalBreakDownBlink()
     {
-        for(int i =0; i < nbIndex; i++)
+        if(blinkCoro != null)
+        StopCoroutine(blinkCoro);
+        blinkCoro = StartCoroutine(NewCoroutine());
+    }
+
+    IEnumerator NewCoroutine()
+    {
+        while(true)
         {
-            wireBlink.SetBreakDown(i, true,0.5f,1,1);
+            int rndInt = Random.Range(0, 3);
+            if(rndInt >0)
+            {
+                for (int i = 0; i < nbIndex; i++)
+                {
+                    wireBlink.SetBreakDown(i, true, 0.5f, 0.1f, 0.1f);
+                }
+                yield return new WaitForSeconds(0.5f);
+
+            }
+            else
+            {
+                float rnd = Random.Range(0.05f, 0.2f);
+                for (int i = 0; i < nbIndex; i++)
+                {
+                    wireBlink.SetBreakDown(i, true, rnd, 0.1f, 1);
+                }
+
+                yield return new WaitForSeconds(rnd);
+            }
+       
         }
     }
 
+
     public void StopTotalBreakDownBlink()
     {
+        StopCoroutine(blinkCoro);
         for (int i = 0; i < nbIndex; i++)
         {
             wireBlink.SetBreakDown(i, false);
