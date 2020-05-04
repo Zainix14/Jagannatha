@@ -39,10 +39,6 @@ public class SC_Weapon_MechState : MonoBehaviour
     [SerializeField]
     GameObject LaunchedOffState;
 
-    [SerializeField]
-    Image[] _ActiveImage;
-
-    bool activated = true;
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
 
@@ -71,7 +67,6 @@ public class SC_Weapon_MechState : MonoBehaviour
 
         _curTarget.text = SC_SyncVar_WeaponSystem.Instance.s_KoaID;
 
-        
         _Amplitude.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_AmplitudeCalib;
         _Frequence.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_FrequenceCalib;
         _Phase.fillAmount = SC_SyncVar_WeaponSystem.Instance.f_PhaseCalib;
@@ -126,7 +121,6 @@ public class SC_Weapon_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
-                SetActiveDisplay(false);
                 break;
 
             case SystemState.Connected:
@@ -134,8 +128,6 @@ public class SC_Weapon_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
-                SetActiveDisplay(true);
-
                 break;
 
             case SystemState.Initialize:
@@ -143,8 +135,6 @@ public class SC_Weapon_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
-                SetActiveDisplay(true);
-
                 break;
 
             case SystemState.Launched:
@@ -152,24 +142,10 @@ public class SC_Weapon_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
                 GeneralOffState.SetActive(false);
-                SetActiveDisplay(true);
-
                 break;
 
         }
 
-    }
-
-    void SetActiveDisplay(bool state)
-    {
-        if(state != activated)
-        {
-            for (int i = 0; i < _ActiveImage.Length; i++)
-            {
-                _ActiveImage[i].enabled = state;
-            }
-            activated = state;
-        }
     }
 
     #endregion States
