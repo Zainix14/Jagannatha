@@ -82,6 +82,7 @@ public class SC_main_breakdown_validation : MonoBehaviour
 
         SC_MainBreakDownManager.Instance.CheckBreakdown();
         textStopBlink();
+        SC_UI_BlinkBreakdown.Instance.StopTotalBreakDownBlink();
 
         //Désactive le timer
         SC_BreakdownOnBreakdownAlert.Instance.StopAllCoroutines();

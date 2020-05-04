@@ -39,7 +39,6 @@ public class SC_SyncVar_StateMecha_Display : NetworkBehaviour
 
     void reactivateAllDispay()
     {
-        Debug.Log("BACK TO REALITY");
         for (int i = 0; i < nbDisplay; i++)
         {
             displayAll[i] = false;
