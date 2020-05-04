@@ -79,8 +79,7 @@ public class ViveGrip_GripPoint : MonoBehaviour {
       firmlyGrabbed = firmlyGrabbed || withinRadius;
       if (firmlyGrabbed && !withinRadius) {
         DestroyConnection();
-                Debug.Log("ViveGrip_GripPoint - HandleFumbling");
-            }
+      }
     }
   }
 

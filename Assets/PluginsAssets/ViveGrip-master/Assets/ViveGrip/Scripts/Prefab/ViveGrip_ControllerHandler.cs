@@ -66,13 +66,12 @@ public class ViveGrip_ControllerHandler : MonoBehaviour {
     return InputPerformed(input, Device().GetPressDown);
   }
 
+    //Passe la dedans tant que l'objet est tenu
   public bool Released(Action action) {
     if (Device() == null) { return false; }
     ViveInput input = InputFor(action);
-        Debug.Log("ViveGrip_ControllerHandler - Released");
-        return InputPerformed(input, Device().GetPressUp);
-        
-    }
+    return InputPerformed(input, Device().GetPressUp);       
+  }
 
   public bool Holding(Action action) {
     if (Device() == null) { return false; }

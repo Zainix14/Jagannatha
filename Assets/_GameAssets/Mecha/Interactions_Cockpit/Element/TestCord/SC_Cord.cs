@@ -8,8 +8,6 @@ public class SC_Cord : MonoBehaviour
     [SerializeField]
     GameObject Base;
     [SerializeField]
-    GameObject Hand;
-    [SerializeField]
     MeshRenderer Renderer;
     [SerializeField]
     Material[] tab_Materials;
@@ -23,6 +21,8 @@ public class SC_Cord : MonoBehaviour
     float DeadZone = 0.15f;
     [SerializeField, Range(0, 0.5f)]
     float AddMaxRange = 0.3f;
+    [SerializeField]
+    float JointBeakFroce;
 
     [Header("Infos")]
     [SerializeField]
@@ -35,12 +35,15 @@ public class SC_Cord : MonoBehaviour
     bool b_Grabbing = false;
 
     //Non Public Refs
-    Rigidbody HandRb;
+    Rigidbody Rb;
+    FixedJoint CurJoint;
+    ViveGrip_GripPoint RightHandGripPoint;
+    ViveGrip_ControllerHandler RightHandController;
 
     // Start is called before the first frame update
     void Start()
     {
-        HandRb = Hand.GetComponent<Rigidbody>();
+        Rb = this.GetComponent<Rigidbody>();
         SetMaterial();
     }
 
@@ -54,29 +57,6 @@ public class SC_Cord : MonoBehaviour
 
         RangeEffect();
 
-        if (!b_Grabbing)
-            FollowByHand();
-
-    }
-
-    void ObjectStatus()
-    {
-
-        #if UNITY_EDITOR
-
-        if (UnityEditor.Selection.activeObject == Hand.gameObject && !b_Grabbing)
-            b_Grabbing = true;
-
-        else if (UnityEditor.Selection.activeObject != Hand.gameObject && b_Grabbing)
-            b_Grabbing = false;
-
-        #endif
-
-    }
-
-    void FollowByHand()
-    {
-        Hand.transform.position = this.transform.position;
     }
 
     void CalculateDistance()
@@ -85,12 +65,16 @@ public class SC_Cord : MonoBehaviour
         f_CurDistance = Distance.magnitude;
     }
 
-    void ReleaseObject()
+    void ObjectStatus()
     {
 
         #if UNITY_EDITOR
 
-        UnityEditor.Selection.SetActiveObjectWithContext(null, null);
+        if (UnityEditor.Selection.activeObject == this.gameObject && !Rb.isKinematic)
+            Rb.isKinematic = true;
+
+        else if (UnityEditor.Selection.activeObject != this.gameObject && Rb.isKinematic)
+            Rb.isKinematic = false;
 
         #endif
 
@@ -115,6 +99,17 @@ public class SC_Cord : MonoBehaviour
 
     }
 
+    void ReleaseObject()
+    {
+
+        #if UNITY_EDITOR
+
+        UnityEditor.Selection.SetActiveObjectWithContext(null, null);
+
+        #endif
+
+    }
+    
     void SetMaterial()
     {
         if (!b_Enable)
@@ -126,7 +121,34 @@ public class SC_Cord : MonoBehaviour
     public void HandKinematic(bool state)
     {
         Debug.Log("HandKinematic - " + state);
-        HandRb.isKinematic = state;
+        Rb.isKinematic = state;
+    }
+
+    public void CreateFixedJoint()
+    {
+
+        GameObject RightHand = SC_GetRightController.Instance.getGameObject();
+
+        CurJoint = AddFixedJoint(RightHand);
+        CurJoint.connectedBody = Rb;
+
+    }
+
+    public void DeleteFixedJoint()
+    {
+        if (CurJoint != null)
+        {
+            CurJoint.connectedBody = null;
+            Destroy(CurJoint);
+        }
+    }
+
+    private FixedJoint AddFixedJoint(GameObject Target)
+    {
+        FixedJoint fx = Target.AddComponent<FixedJoint>();
+        fx.breakForce = JointBeakFroce;
+        fx.breakTorque = JointBeakFroce;
+        return fx;
     }
 
 }

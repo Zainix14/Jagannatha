@@ -91,17 +91,6 @@ public class SC_SimpleCord : MonoBehaviour
 
     }
 
-    void ReleaseObject()
-    {
-
-    #if UNITY_EDITOR
-
-        UnityEditor.Selection.SetActiveObjectWithContext(null, null);
-
-    #endif
-
-    }
-
     void RangeEffect()
     {
 
@@ -119,6 +108,17 @@ public class SC_SimpleCord : MonoBehaviour
             ReleaseObject();
 
     }
+
+    void ReleaseObject()
+    {
+
+    #if UNITY_EDITOR
+
+        UnityEditor.Selection.SetActiveObjectWithContext(null, null);
+
+    #endif
+
+    } 
 
     void SetMaterial()
     {
