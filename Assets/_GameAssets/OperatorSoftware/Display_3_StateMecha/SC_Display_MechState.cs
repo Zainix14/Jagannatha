@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SC_Display_MechState : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class SC_Display_MechState : MonoBehaviour
     GameObject InitializeOffState;
     [SerializeField]
     GameObject LaunchedOffState;
+
+    [SerializeField]
+    Image[] _ActiveImage;
+
+    bool activated = true;
 
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
@@ -93,6 +99,8 @@ public class SC_Display_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                SetActiveDisplay(false);
+
                 break;
 
             case SystemState.Connected:               
@@ -100,6 +108,8 @@ public class SC_Display_MechState : MonoBehaviour
                 InitializeOffState.SetActive(true);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                SetActiveDisplay(true);
+
                 break;
 
             case SystemState.Initialize:               
@@ -107,6 +117,8 @@ public class SC_Display_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(true);
                 GeneralOffState.SetActive(true);
+                SetActiveDisplay(true);
+
                 break;
 
             case SystemState.Launched:               
@@ -114,12 +126,23 @@ public class SC_Display_MechState : MonoBehaviour
                 InitializeOffState.SetActive(false);
                 LaunchedOffState.SetActive(false);
                 GeneralOffState.SetActive(false);
+                SetActiveDisplay(true);
                 break;
 
         }
 
     }
-
+    void SetActiveDisplay(bool state)
+    {
+        if(state != activated)
+        {
+            for (int i = 0; i < _ActiveImage.Length; i++)
+            {
+                _ActiveImage[i].enabled = state;
+            }
+            activated = state;
+        }
+    }
     #endregion States
 
 }
