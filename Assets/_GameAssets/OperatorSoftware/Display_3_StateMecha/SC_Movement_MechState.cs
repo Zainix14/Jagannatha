@@ -45,11 +45,6 @@ public class SC_Movement_MechState : MonoBehaviour
     public enum SystemState { Disconnected, Connected, Initialize, Launched }
     public SystemState CurState;
 
-    [SerializeField]
-    Image[] _ActiveImage;
-
-    bool activated = true;
-
     void Awake()
     {
 
@@ -121,8 +116,6 @@ public class SC_Movement_MechState : MonoBehaviour
                 GeneralOffState.SetActive(true);
                 RightOffState.SetActive(true);
                 LeftOffState.SetActive(true);
-                SetActiveDisplay(false);
-
                 break;
 
             case SystemState.Connected:
@@ -132,8 +125,6 @@ public class SC_Movement_MechState : MonoBehaviour
                 GeneralOffState.SetActive(true);
                 RightOffState.SetActive(true);
                 LeftOffState.SetActive(true);
-                SetActiveDisplay(true);
-
                 break;
 
             case SystemState.Initialize:
@@ -143,8 +134,6 @@ public class SC_Movement_MechState : MonoBehaviour
                 GeneralOffState.SetActive(true);
                 RightOffState.SetActive(true);
                 LeftOffState.SetActive(true);
-                SetActiveDisplay(true);
-
                 break;
 
             case SystemState.Launched:
@@ -154,24 +143,12 @@ public class SC_Movement_MechState : MonoBehaviour
                 GeneralOffState.SetActive(false);
                 RightOffState.SetActive(false);
                 LeftOffState.SetActive(false);
-                SetActiveDisplay(true);
-
                 break;
 
         }
 
     }
-    void SetActiveDisplay(bool state)
-    {
-        if (state != activated)
-        {
-            for (int i = 0; i < _ActiveImage.Length; i++)
-            {
-                _ActiveImage[i].enabled = state;
-            }
-            activated = state;
-        }
-    }
+
     #endregion States
 
     #region Directions

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SC_UI_WireBlink : MonoBehaviour
 {
     [SerializeField]
-    public Image[] img_ToBreakDown;
+    Image[] img_ToBreakDown;
 
     Material[] wireSafe;
 
@@ -17,11 +17,6 @@ public class SC_UI_WireBlink : MonoBehaviour
 
 
     bool isActive;
-
-
-    float animTime = 0.5f;
-    float minOpacity = 0;
-    float maxOpacity = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -41,16 +36,11 @@ public class SC_UI_WireBlink : MonoBehaviour
     }
 
 
-    public void SetBreakDown(int index, bool activate, float animTime = 0.5f, float minOpacity = 0, float maxOpacity = 1)
+    public void SetBreakDown(int index, bool activate)
     {
-        this.animTime = animTime;
-        this.minOpacity = minOpacity;
-        this.maxOpacity = maxOpacity;
-
-        if (activate && !IndexToActivate[index])
+        if(activate && !IndexToActivate[index])
         {
-            img_ToBreakDown[index].material = wireBreakdown;      
-            
+            img_ToBreakDown[index].material = wireBreakdown;            
         }
         if (!activate && IndexToActivate[index])
         {
@@ -71,7 +61,9 @@ public class SC_UI_WireBlink : MonoBehaviour
 
     IEnumerator RedWireCoro()
     {
-
+        float animTime = 0.5f;
+        float maxOpacity = 1;
+        float minOpacity = 0f;
         float ratePerSec = (maxOpacity - minOpacity / animTime) * 2;
         float curOpacity;
         bool Add = true;
